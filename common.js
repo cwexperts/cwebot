@@ -1,0 +1,28 @@
+require('dotenv').config()
+
+var irc = require('irc');
+
+var config = {
+    server: process.env.IRC_SERVER,
+    botName: process.env.IRC_USERNAME,
+};
+
+module.exports = {
+    db: require('mongojs').connect(process.env.MONGO_URL, ['users', 'channels', 'crashers']),
+      bot: new irc.Client(config.server, config.botName, {
+        userName: config.botName,
+        realName: config.botName,
+        showErrors: true,
+        autoRejoin: true, 
+        autoConnect: true,
+        retryCount: 1000
+    }),
+
+    utils: require('./utils.js'),
+    commands: require('./commands.js'),
+
+    env: process.env.ENVIRONMENT,
+    config: config,
+
+    wdym: []
+};

@@ -1,0 +1,2091 @@
+var name, alt;
+
+Commands.addalt = function(Common, from, to, message) {
+    if (Common.utils.msg(message)) {
+        name = Common.utils.toDb(from);
+	alt = message.match(/\S+/g);
+	var time = new Date();
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+				if (err || !saved) {
+					console.log('Error', err)
+				} else {
+					Common.bot.say(to, "2" + name + ", you have been added to the database and your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
+				}
+			});
+		} else {
+			if (to == '#cwexperts') {
+			Common.bot.say(to, "5" + name + ", you already have an alt RSN registered! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
+			} else {
+			Common.bot.say(to, "5" + name + ", you already have an alt RSN registered! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
+			}
+		}
+	});
+    } else {
+        Common.bot.say(to, '5You must specify the RSN of your level 90+ combat alt when using this command.')   
+    }
+};
+
+Commands.editalt = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (Common.utils.msg(message)) {
+			name = Common.utils.toDb(from);
+			var alt = message.match(/\S+/g);
+			Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+				var alt_msg = "2" + name + ", your alts have been changed to: " + Common.utils.toLc(alt[1]) + "";
+				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				}
+				});
+				if (alt[2] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[2]) + "";
+					Common.db.users.update({name: name}, {$set: {alt2: Common.utils.toDb(alt[2])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt2: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[3] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[3]) + "";
+					Common.db.users.update({name: name}, {$set: {alt3: Common.utils.toDb(alt[3])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt3: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[4] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[4]) + "";
+					Common.db.users.update({name: name}, {$set: {alt4: Common.utils.toDb(alt[4])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt4: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[5] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[5]) + "";
+					Common.db.users.update({name: name}, {$set: {alt5: Common.utils.toDb(alt[5])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt5: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[6] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[6]) + "";
+					Common.db.users.update({name: name}, {$set: {alt6: Common.utils.toDb(alt[6])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt6: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[7] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[7]) + "";
+					Common.db.users.update({name: name}, {$set: {alt7: Common.utils.toDb(alt[7])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt7: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[8] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[8]) + "";
+					Common.db.users.update({name: name}, {$set: {alt8: Common.utils.toDb(alt[8])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt8: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[9] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[9]) + "";
+					Common.db.users.update({name: name}, {$set: {alt9: Common.utils.toDb(alt[9])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt9: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[10] !== undefined) {
+					alt_msg += ", " + Common.utils.toLc(alt[10]) + "";
+					Common.db.users.update({name: name}, {$set: {alt10: Common.utils.toDb(alt[10])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt10: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (alt[11] !== undefined) {
+					alt_msg += " - 5You may only link your main RSN with a maximum of 10 alt RSNs.";	
+				}
+				Common.bot.say(to, alt_msg);
+			}
+			});
+		} else {
+			Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
+		}
+	}
+};
+
+Commands.adddiscordid = function(Common, from, to, message) {
+	if (Common.utils.msg(message)) {
+		name = Common.utils.toDb(from);
+		var disc = message.match(/\S+/g);
+		var discname = '';
+		if (disc[1] !== undefined && disc[2] !== undefined) {
+			if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
+				if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+				    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+					disc1 = Common.utils.toLc(disc[1]);
+					disc1 = disc1.toString();
+					disc2 = disc[2].toString();
+					disc3 = disc[3].toString();
+					disc4 = disc[4].toString();
+					disc5 = disc[5].toString();
+					disc6 = disc[6].toString();
+					discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+					Common.db.users.findOne({name: name}, function(err, user) {
+						if (err || !user) {
+							console.log(err);
+							Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						} else if (user.discord === undefined || user.discord == 'unknown') {
+							Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
+								if (err || !updated) {
+									console.log('Error', err);
+								} 
+							});
+							Common.bot.say(to, "2" + name + ", your Discord ID has been set to: " + discname + "");
+						} else {
+							if (to == '#cwexperts') {
+								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
+							} else {
+								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.");
+							}
+						}
+					});
+				} else {
+					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+				}
+			} else {
+				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+			}
+		} else {
+			Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+		}
+	} else {
+		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+	}
+};
+
+Commands.adddid = function(Common, from, to, message) {
+	Commands.adddiscordid(Common, from, to, message);
+};
+
+Commands.editdiscordid = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (Common.utils.msg(message)) {
+		name = Common.utils.toDb(from);
+		var disc = message.match(/\S+/g);
+		var discname = '';
+		if (disc[1] !== undefined && disc[2] !== undefined) {
+			if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
+				if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+				    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+					disc1 = Common.utils.toLc(disc[1]);
+					disc1 = disc1.toString();
+					disc2 = disc[2].toString();
+					disc3 = disc[3].toString();
+					disc4 = disc[4].toString();
+					disc5 = disc[5].toString();
+					disc6 = disc[6].toString();
+					discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+					Common.db.users.findOne({name: name}, function(err, user) {
+						if (err || !user) {
+							console.log(err);
+							Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						} else {
+							Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
+								if (err || !updated) {
+									console.log('Error', err);
+								} 
+							});
+							Common.bot.say(to, "2" + name + ", your Discord ID has been changed to: " + discname + "");
+						}
+					});
+				} else {
+					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+				}
+			} else {
+				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+			}
+		} else {
+			Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+		}
+	} else {
+		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+	}
+	}
+};
+	
+Commands.editdid = function(Common, from, to, message) {
+	Commands.editdiscordid(Common, from, to, message);
+};
+
+function main(Common, from, to, message) {
+	var alt = message.match(/\S+/g);
+	var final_list = '';
+			Common.db.users.find({alt: Common.utils.toDb(alt[1])}, function(err, users) {
+			var main_list1 = '';
+			users.forEach(function(alt) {
+				main_list1 += '' + alt.name + ', ';
+			});
+				Common.db.users.find({alt2: Common.utils.toDb(alt[1])}, function(err, users) {
+				var main_list2 = '';
+				users.forEach(function(alt2) {
+					main_list2 += '' + alt2.name + ', ';
+				});
+					Common.db.users.find({alt3: Common.utils.toDb(alt[1])}, function(err, users) {
+					var main_list3 = '';
+					users.forEach(function(alt3) {
+						main_list3 += '' + alt3.name + ', ';
+					});
+						Common.db.users.find({alt4: Common.utils.toDb(alt[1])}, function(err, users) {
+						var main_list4 = '';
+						users.forEach(function(alt4) {
+							main_list4 += '' + alt4.name + ', ';
+						});
+							Common.db.users.find({alt5: Common.utils.toDb(alt[1])}, function(err, users) {
+							var main_list5 = '';
+							users.forEach(function(alt5) {
+								main_list5 += '' + alt5.name + ', ';
+							});
+								Common.db.users.find({alt6: Common.utils.toDb(alt[1])}, function(err, users) {
+								var main_list6 = '';
+								users.forEach(function(alt6) {
+									main_list6 += '' + alt6.name + ', ';
+								});
+									Common.db.users.find({alt7: Common.utils.toDb(alt[1])}, function(err, users) {
+									var main_list7 = '';
+									users.forEach(function(alt7) {
+										main_list7 += '' + alt7.name + ', ';
+									});
+										Common.db.users.find({alt8: Common.utils.toDb(alt[1])}, function(err, users) {
+										var main_list8 = '';
+										users.forEach(function(alt8) {
+											main_list8 += '' + alt8.name + ', ';
+										});
+											Common.db.users.find({alt9: Common.utils.toDb(alt[1])}, function(err, users) {
+											var main_list9 = '';
+											users.forEach(function(alt9) {
+												main_list9 += '' + alt9.name + ', ';
+											});
+												Common.db.users.find({alt10: Common.utils.toDb(alt[1])}, function(err, users) {
+												var main_list10 = '';
+												users.forEach(function(alt10) {
+													main_list10 += '' + alt10.name + ', ';
+												});
+													var final_list = '';
+													if (main_list1 != '') {
+														final_list += main_list1;
+													}
+													if (main_list2 != '') {
+														final_list += main_list2;
+													}
+													if (main_list3 != '') {
+														final_list += main_list3;
+													}
+													if (main_list4 != '') {
+														final_list += main_list4;
+													}
+													if (main_list5 != '') {
+														final_list += main_list5;
+													}
+													if (main_list6 != '') {
+														final_list += main_list6;
+													}
+													if (main_list7 != '') {
+														final_list += main_list7;
+													}
+													if (main_list8 != '') {
+														final_list += main_list8;
+													}
+													if (main_list9 != '') {
+														final_list += main_list9;
+													}
+													if (main_list10 != '') {
+														final_list += main_list10;
+													}
+													if (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
+														var newfinal_list = final_list.substr(0, final_list.length-2);
+														Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
+													} else {
+														Common.bot.say(to, "5" + "Alt RSN " + Common.utils.toLc(alt[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+													}
+												});
+											});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+};
+
+Commands.main = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (Common.utils.msg(message)) {
+			var alt = message.match(/\S+/g);
+			var final_list = '';
+			if (alt[2] !== undefined) { 
+				if (alt[2] == '#') {
+					var disc = message.match(/\S+/g);
+					var discname = '';
+					if (disc[6] !== undefined) {
+						if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				   		  (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				  		  (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+				  		  (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+							disc1 = Common.utils.toLc(disc[1]);
+							disc1 = disc1.toString();
+							disc2 = disc[2].toString();
+							disc3 = disc[3].toString();
+							disc4 = disc[4].toString();
+							disc5 = disc[5].toString();
+							disc6 = disc[6].toString();
+							discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+							Common.db.users.find({discord: discname}, function(err, users) {
+								var disc_list = '';
+								users.forEach(function(discord) {
+									disc_list += '' + discord.name + ', ';
+								});
+								if (disc_list != '') {
+									disc_list = disc_list.substr(0, disc_list.length-2);
+									Common.bot.say(to, "2Discord ID: " + discname + ", Main RSNs: " + disc_list);
+								} else {
+									Common.bot.say(to, "5" + "Discord ID " + discname + " not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+								}
+							});
+						} else {
+							Common.bot.say(to, '5You must specify an alt RSN or a valid Discord ID when using this command. Use !main ALT_RSN_HERE or !main EXAMPLE_NAME # 0 0 0 0 to search for a main RSN.');
+						}
+					} else {
+						Common.bot.say(to, '5You must specify an alt RSN or a valid Discord ID when using this command. Use !main ALT_RSN_HERE or !main EXAMPLE_NAME # 0 0 0 0 to search for a main RSN.');
+					}
+				} else {
+					main(Common, from, to, message);
+				}
+			} else {
+				main(Common, from, to, message);
+			}
+		} else {
+			Common.bot.say(to, '5You must specify an alt RSN or a valid Discord ID when using this command. Use !main ALT_RSN_HERE or !main EXAMPLE_NAME # 0 0 0 0 to search for a main RSN.');
+		}
+	}
+};
+
+function altmsg(Common, from, to, message) {
+			name = message.match(/\S+/g);
+			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+			if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+			var alt_msg = "2Main RSN: " + Common.utils.toLc(name[1]) + ", Alt RSNs: " + user.alt + "";
+			if (user.alt2 !== 0 && user.alt2 !== undefined) {
+				alt_msg += ", " + user.alt2 + "";
+			}
+			if (user.alt3 !== 0 && user.alt3 !== undefined) {
+				alt_msg += ", " + user.alt3 + "";
+			}
+			if (user.alt4 !== 0 && user.alt4 !== undefined) {
+				alt_msg += ", " + user.alt4 + "";
+			}
+			if (user.alt5 !== 0 && user.alt5 !== undefined) {
+				alt_msg += ", " + user.alt5 + "";
+			}
+			if (user.alt6 !== 0 && user.alt6 !== undefined) {
+				alt_msg += ", " + user.alt6 + "";
+			}
+			if (user.alt7 !== 0 && user.alt7 !== undefined) {
+				alt_msg += ", " + user.alt7 + "";
+			}
+			if (user.alt8 !== 0 && user.alt8 !== undefined) {
+				alt_msg += ", " + user.alt8 + "";
+			}
+			if (user.alt9 !== 0 && user.alt9 !== undefined) {
+				alt_msg += ", " + user.alt9 + "";
+			}
+			if (user.alt10 !== 0 && user.alt10 !== undefined) {
+				alt_msg += ", " + user.alt10 + "";
+			}
+			Common.bot.say(to, alt_msg);
+			}
+			});
+};
+Commands.alt = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (Common.utils.msg(message)) {
+			var alt = message.match(/\S+/g);
+			if (alt[2] !== undefined) { 
+				if (alt[2] == '#') {
+					var disc = message.match(/\S+/g);
+					var discname = '';
+					if (disc[6] !== undefined) {
+						if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				   		  (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				  		  (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+				  		  (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+							disc1 = Common.utils.toLc(disc[1]);
+							disc1 = disc1.toString();
+							disc2 = disc[2].toString();
+							disc3 = disc[3].toString();
+							disc4 = disc[4].toString();
+							disc5 = disc[5].toString();
+							disc6 = disc[6].toString();
+							discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+							Common.db.users.find({discord: discname}, function(err, users) {
+								var disc_list = '';
+								users.forEach(function(discord) {
+									disc_list += '' + discord.alt + ', ';
+									if (discord.alt2 !== 0 && discord.alt2 !== undefined) {
+										disc_list += '' + discord.alt2 + ', ';
+									}
+									if (discord.alt3 !== 0 && discord.alt3 !== undefined) {
+										disc_list += '' + discord.alt3 + ', ';
+									}
+									if (discord.alt4 !== 0 && discord.alt4 !== undefined) {
+										disc_list += '' + discord.alt4 + ', ';
+									}
+									if (discord.alt5 !== 0 && discord.alt5 !== undefined) {
+										disc_list += '' + discord.alt5 + ', ';
+									}
+									if (discord.alt6 !== 0 && discord.alt6 !== undefined) {
+										disc_list += '' + discord.alt6 + ', ';
+									}
+									if (discord.alt7 !== 0 && discord.alt7 !== undefined) {
+										disc_list += '' + discord.alt7 + ', ';
+									}
+									if (discord.alt8 !== 0 && discord.alt8 !== undefined) {
+										disc_list += '' + discord.alt8 + ', ';
+									}
+									if (discord.alt9 !== 0 && discord.alt9 !== undefined) {
+										disc_list += '' + discord.alt9 + ', ';
+									}
+									if (discord.alt10 !== 0 && discord.alt10 !== undefined) {
+										disc_list += '' + discord.alt10 + ', ';
+									}
+								});
+								if (disc_list != '') {
+									disc_list = disc_list.substr(0, disc_list.length-2);
+									Common.bot.say(to, "2Discord ID: " + discname + ", Alt RSNs: " + disc_list);
+								} else {
+									Common.bot.say(to, "5" + "Discord ID " + discname + " not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+								}
+							});
+						} else {
+							Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+						}
+					} else {
+						Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+					}
+				} else {
+					altmsg(Common, from, to, message);
+				}
+			} else {
+				altmsg(Common, from, to, message);
+			}
+		} else {
+			name = Common.utils.toDb(from);
+			Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+			var alt_msg = "2Main RSN: " + Common.utils.toLc(from) + ", Alt RSNs: " + user.alt + "";
+			if (user.alt2 !== 0 && user.alt2 !== undefined) {
+				alt_msg += ", " + user.alt2 + "";
+			}
+			if (user.alt3 !== 0 && user.alt3 !== undefined) {
+				alt_msg += ", " + user.alt3 + "";
+			}
+			if (user.alt4 !== 0 && user.alt4 !== undefined) {
+				alt_msg += ", " + user.alt4 + "";
+			}
+			if (user.alt5 !== 0 && user.alt5 !== undefined) {
+				alt_msg += ", " + user.alt5 + "";
+			}
+			if (user.alt6 !== 0 && user.alt6 !== undefined) {
+				alt_msg += ", " + user.alt6 + "";
+			}
+			if (user.alt7 !== 0 && user.alt7 !== undefined) {
+				alt_msg += ", " + user.alt7 + "";
+			}
+			if (user.alt8 !== 0 && user.alt8 !== undefined) {
+				alt_msg += ", " + user.alt8 + "";
+			}
+			if (user.alt9 !== 0 && user.alt9 !== undefined) {
+				alt_msg += ", " + user.alt9 + "";
+			}
+			if (user.alt10 !== 0 && user.alt10 !== undefined) {
+				alt_msg += ", " + user.alt10 + "";
+			}
+			Common.bot.say(to, alt_msg);
+			}
+			});
+		}
+	}
+};
+
+Commands.discordid = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (Common.utils.msg(message)) {
+		var name = message.match(/\S+/g);
+			Common.db.users.find({alt: Common.utils.toDb(name[1])}, function(err, users) {
+			var disc_list1 = '';
+			var un_list1 = '';
+			users.forEach(function(alt) {
+				if (alt.discord != 'unknown' && alt.discord !== undefined) {
+					disc_list1 += '' + alt.discord + ', ';
+				} else {
+					un_list1 += '1, ';
+				}
+			});
+				Common.db.users.find({alt2: Common.utils.toDb(name[1])}, function(err, users) {
+				var disc_list2 = '';
+				var un_list2 = '';
+				users.forEach(function(alt2) {
+					if (alt2.discord != 'unknown' && alt2.discord !== undefined) {
+						disc_list2 += '' + alt2.discord + ', ';
+					} else {
+						un_list2 += '1, ';
+					}
+				});
+					Common.db.users.find({alt3: Common.utils.toDb(name[1])}, function(err, users) {
+					var disc_list3 = '';
+					var un_list3 = '';
+					users.forEach(function(alt3) {
+						if (alt3.discord != 'unknown' && alt3.discord !== undefined) {
+							disc_list3 += '' + alt3.discord + ', ';
+						} else {
+							un_list3 += '1, ';
+						}
+					});
+						Common.db.users.find({alt4: Common.utils.toDb(name[1])}, function(err, users) {
+						var disc_list4 = '';
+						var un_list4 = '';
+						users.forEach(function(alt4) {
+							if (alt4.discord != 'unknown' && alt4.discord !== undefined) {
+								disc_list4 += '' + alt4.discord + ', ';
+							} else {
+								un_list4 += '1, ';
+							}
+						});
+							Common.db.users.find({alt5: Common.utils.toDb(name[1])}, function(err, users) {
+							var disc_list5 = '';
+							var un_list5 = '';
+							users.forEach(function(alt5) {
+								if (alt5.discord != 'unknown' && alt5.discord !== undefined) {
+									disc_list5 += '' + alt5.discord + ', ';
+								} else {
+									un_list5 += '1, ';
+								}
+							});
+								Common.db.users.find({alt6: Common.utils.toDb(name[1])}, function(err, users) {
+								var disc_list6 = '';
+								var un_list6 = '';
+								users.forEach(function(alt6) {
+									if (alt6.discord != 'unknown' && alt6.discord !== undefined) {
+										disc_list6 += '' + alt6.discord + ', ';
+									} else {
+										un_list6 += '1, ';
+									}
+								});
+									Common.db.users.find({alt7: Common.utils.toDb(name[1])}, function(err, users) {
+									var disc_list7 = '';
+									var un_list7 = '';
+									users.forEach(function(alt7) {
+										if (alt7.discord != 'unknown' && alt7.discord !== undefined) {
+											disc_list7 += '' + alt7.discord + ', ';
+										} else {
+											un_list7 += '1, ';
+										}
+									});
+										Common.db.users.find({alt8: Common.utils.toDb(name[1])}, function(err, users) {
+										var disc_list8 = '';
+										var un_list8 = '';
+										users.forEach(function(alt8) {
+											if (alt8.discord != 'unknown' && alt8.discord !== undefined) {
+												disc_list8 += '' + alt8.discord + ', ';
+											} else {
+												un_list8 += '1, ';
+											}
+										});
+											Common.db.users.find({alt9: Common.utils.toDb(name[1])}, function(err, users) {
+											var disc_list9 = '';
+											var un_list9 = '';
+											users.forEach(function(alt9) {
+												if (alt9.discord != 'unknown' && alt9.discord !== undefined) {
+													disc_list9 += '' + alt9.discord + ', ';
+												} else {
+													un_list9 += '1, ';
+												}
+											});
+												Common.db.users.find({alt10: Common.utils.toDb(name[1])}, function(err, users) {
+												var disc_list10 = '';
+												var un_list10 = '';
+												users.forEach(function(alt10) {
+													if (alt10.discord != 'unknown' && alt10.discord !== undefined) {
+														disc_list10 += '' + alt10.discord + ', ';
+													} else {
+														un_list10 += '1, ';
+													}
+												});
+													Common.db.users.find({name: Common.utils.toDb(name[1])}, function(err, users) {
+													var disc_list11 = '';
+													var un_list11 = '';
+													users.forEach(function(name) {
+														if (name.discord != 'unknown' && name.discord !== undefined) {
+															disc_list11 += '' + name.discord + ', ';
+														} else {
+															un_list11 += '1, ';
+														}
+													});
+													var final_list = '';
+													if (disc_list11 != '') {
+														final_list += disc_list11;
+													} 
+													if (disc_list1 != '') {
+														final_list += disc_list1;
+													}
+													if (disc_list2 != '') {
+														final_list += disc_list2;
+													}
+													if (disc_list3 != '') {
+														final_list += disc_list3;
+													}
+													if (disc_list4 != '') {
+														final_list += disc_list4;
+													}
+													if (disc_list5 != '') {
+														final_list += disc_list5;
+													}
+													if (disc_list6 != '') {
+														final_list += disc_list6;
+													}
+													if (disc_list7 != '') {
+														final_list += disc_list7;
+													}
+													if (disc_list8 != '') {
+														final_list += disc_list8;
+													}
+													if (disc_list9 != '') {
+														final_list += disc_list9;
+													}
+													if (disc_list10 != '') {
+														final_list += disc_list10;
+													}
+													if (disc_list1 != '' || disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '' || disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '') {
+														if (disc_list11 == '') {
+															var newfinal_list = final_list.substr(0, final_list.length-2);
+															Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+														} else if (disc_list1 == '' && disc_list2 == '' && disc_list3 == '' && disc_list4 == '' && disc_list5 == '' && disc_list6 == '' && disc_list7 == '' && disc_list8 == '' && disc_list9 == '' && disc_list10 == '') {
+															var newfinal_list = final_list.substr(0, final_list.length-2);
+															Common.bot.say(to, "2Main RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+														} else {
+															var newfinal_list = final_list.substr(0, final_list.length-2);
+															Common.bot.say(to, "2Main/Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+														}
+													} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '') {
+														if (un_list11 == '') {
+															Common.bot.say(to, "5" + "Alt RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+														} else if (un_list1 == '' && un_list2 == '' && un_list3 == '' && un_list4 == '' && un_list5 == '' && un_list6 == '' && un_list7 == '' && un_list8 == '' && un_list9 == '' && un_list10 == '') {
+															Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+														} else {
+															Common.bot.say(to, "5" + "Main/Alt RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+														}
+													} else {
+														Common.bot.say(to, "5" + "Main/Alt RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+													}
+													});
+												});
+											});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+	} else {
+		var name = Common.utils.toDb(from);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else if (user.discord == 'unknown' || user.discord === undefined) {
+				Common.bot.say(to, "5" + name + ", you do not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+			} else {
+				Common.bot.say(to, "2Main RSN: " + name + ", Discord ID: " + user.discord + "");
+			}
+		});
+	}
+	}
+};
+
+Commands.did = function(Common, from, to, message) {
+	Commands.discordid(Common, from, to, message);
+};
+
+Commands.setleavedate = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (ops[to].indexOf(from) > -1) {
+			if (Common.utils.msg(message)) {
+				name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1])
+				time = new Date();
+				timemsg = time.toString();
+				timemsg = timemsg.substr(0, timemsg.length-14);
+				timemsg = timemsg + "UTC";
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else {
+						if (user.joinDate === undefined) {
+							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: time}}, function(err, updated) {
+								if (err || !updated) {
+									console.log("User not updated!");
+								}
+							});
+							Common.bot.say(to, "2" + from + " has set the leave date for " + name + " to: " + timemsg);
+						} else {
+							if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
+								Common.db.users.update({name: name}, {$set: {leaveDate: time}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+								Common.bot.say(to, "2" + from + " has set the leave date for " + name + " to: " + timemsg);
+							} else {
+								leaved = user.leaveDate;
+								leaved = leaved.toString();
+								leaved = leaved.substr(0, leaved.length-14);
+								leaved = leaved + "UTC";
+								Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - you may not change this date.");
+							}
+						}
+					}
+				});
+			} else {
+				Common.bot.say(to, '5You must specify a member to set the leave date for when using this command.');
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by operators to set the leave date for a member.");
+		}
+	}
+};
+
+Commands.sld = function(Common, from, to, message) {
+	Commands.setleavedate(Common, from, to, message);
+};
+
+Commands.forcesetjoindate = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (ops[to].indexOf(from) > -1 && (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+			if (Common.utils.msg(message)) {
+				var date = message.match(/\S+/g);
+				var name = Common.utils.toLc(date[1]);
+				if (typeof date[2] != 'undefined') {
+				if (typeof date[8] != 'undefined' || Common.utils.toLc(date[2]) == 'unknown') {
+					var year = date[2];
+					var month = date[3];
+					var day = date[4];
+					var hours = date[5];
+					var minutes = date[6];
+					var seconds = date[7];
+					var mseconds = date[8];
+					var newdate = new Date(year, month, day, hours, minutes, seconds, mseconds);
+					if (Common.utils.toLc(date[2]) == 'unknown') {
+						newdate = 'unknown';
+					}
+					Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else {
+						if (Common.utils.toLc(date[2]) != 'unknown') {
+							var timemsg = newdate.toString();
+							timemsg = timemsg.substr(0, timemsg.length-14);
+							timemsg = timemsg + "UTC";
+						} else {
+							var timemsg = 'unknown';
+						}
+						var datestring = '';
+						var newdatestring = newdate.toString();
+						if (user.joinDate != undefined) {
+							var datestring = user.joinDate;
+							datestring = datestring.toString();
+						}
+						if (datestring == newdatestring) {
+							Common.bot.say(to, "5The join date for " + name + " is already set to " + timemsg + ".");
+						} else {
+						if (newdate != "Invalid Date") {
+							if (user.joinDate === undefined) {
+								Common.db.users.update({name: name}, {$set: {joinDate: newdate, leaveDate: 'unknown'}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+							} else {
+								Common.db.users.update({name: name}, {$set: {joinDate: newdate}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+							}
+							Common.bot.say(to, "2" + from + " has force set the join date for " + name + " to: " + timemsg);
+						} else {
+							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+						}
+						}
+					}
+					});
+				} else {
+					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				}
+				} else {
+					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				}
+			} else {
+				Common.bot.say(to, '5You must specify a member to force set the join date for when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to force set the join date for a member.");
+		}
+	}
+};
+
+Commands.fsjd = function(Common, from, to, message) {
+	Commands.forcesetjoindate(Common, from, to, message);
+};
+
+Commands.forcesetleavedate = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (ops[to].indexOf(from) > -1 && (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+			if (Common.utils.msg(message)) {
+				var date = message.match(/\S+/g);
+				var name = Common.utils.toLc(date[1]);
+				if (typeof date[2] != 'undefined') {
+				if (typeof date[8] != 'undefined' || Common.utils.toLc(date[2]) == 'unknown' || date[2] == '0') {
+					var year = date[2];
+					var month = date[3];
+					var day = date[4];
+					var hours = date[5];
+					var minutes = date[6];
+					var seconds = date[7];
+					var mseconds = date[8];
+					var newdate = new Date(year, month, day, hours, minutes, seconds, mseconds);
+					if (Common.utils.toLc(date[2]) == 'unknown') {
+						newdate = 'unknown';
+					} else if (date[2] == '0') {
+						newdate = 0;
+					}
+					Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else {
+						if (Common.utils.toLc(date[2]) != 'unknown' && date[2] != '0') {
+							var timemsg = newdate.toString();
+							timemsg = timemsg.substr(0, timemsg.length-14);
+							timemsg = timemsg + "UTC";
+						} else if (Common.utils.toLc(date[2]) == 'unknown') {
+							var timemsg = 'unknown';
+						} else {
+							var timemsg = 'n/a';
+						}
+						var datestring = '';
+						var newdatestring = newdate.toString();
+						if (user.leaveDate != undefined) {
+							var datestring = user.leaveDate;
+							datestring = datestring.toString();
+						}
+						if (datestring == newdatestring) {
+							Common.bot.say(to, "5The leave date for " + name + " is already set to " + timemsg + ".");
+						} else {
+						if (newdate != "Invalid Date") {
+							if (user.joinDate === undefined) {
+								Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: newdate}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+							} else {
+								Common.db.users.update({name: name}, {$set: {leaveDate: newdate}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+							}
+							Common.bot.say(to, "2" + from + " has force set the leave date for " + name + " to: " + timemsg);
+						} else {
+							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+						}
+						}
+					}
+					});
+				} else {
+					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				}
+				} else {
+					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				}
+			} else {
+				Common.bot.say(to, '5You must specify a member to force set the leave date for when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to force set the leave date for a member.");
+		}
+	}
+};
+
+Commands.fsld = function(Common, from, to, message) {
+	Commands.forcesetleavedate(Common, from, to, message);
+};
+
+Commands.penreminder = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+		Common.db.channels.findOne({channel: to}, function(err, channel) {
+			if (err || !channel) {
+			   	console.log("Channel not found.");    
+			} else {
+			   	var isPenToggled = channel.pen;
+			   	if (isPenToggled == 1) {
+			       	isPenToggled = 0;
+			   	} else {
+			       	isPenToggled = 1;
+			   	}
+			   	Common.db.channels.update({channel: to}, {$set: {pen: isPenToggled}}, function(err, updated) {
+			       	if (err || !updated) {
+						console.log("Channel not updated!");
+					} else {
+						if (isPenToggled == 1) {
+					  		Common.bot.say(to, "6" + from + " has enabled the pen reminder for idiots - the voluntary pen reminder has been disabled.");
+						} else {
+					  		Common.bot.say(to, "6" + from + " has enabled the voluntary pen reminder - the pen reminder for idiots has been disabled.");
+						}
+			                }
+			   	});
+			}
+		});
+	} else { 
+		Common.bot.say(to, "5This command may only be used by staff members to switch between the voluntary pen reminder and the pen reminder for idiots.");
+	}
+	}
+};
+
+Commands.penr = function(Common, from, to, message) {
+	Commands.penreminder(Common, from, to, message);
+};
+
+Commands.rolereminder = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+		Common.db.channels.findOne({channel: to}, function(err, channel) {
+			if (err || !channel) {
+			   	console.log("Channel not found.");    
+			} else {
+			   	var isRoleToggled = channel.role;
+			   	if (isRoleToggled == 1) {
+			       	isRoleToggled = 0;
+			   	} else {
+			       	isRoleToggled = 1;
+			   	}
+			   	Common.db.channels.update({channel: to}, {$set: {role: isRoleToggled}}, function(err, updated) {
+			       	if (err || !updated) {
+						console.log("Channel not updated!");
+					} else {
+						if (isRoleToggled == 1) {
+					  		Common.bot.say(to, "7" + from + " has disabled the role reminder - members assigned roles will no longer be highlighted, so please remember your roles!");
+						} else {
+					  		Common.bot.say(to, "7" + from + " has enabled the role reminder - members assigned roles will now be highlighted 20 seconds, 9 minutes, or 14 minutes after !hopw, depending on their role(s).");
+						}
+			                }
+			   	});
+			}
+		});
+	} else { 
+		Common.bot.say(to, "5This command may only be used by staff members to switch the role reminder on and off.");
+	}
+	}
+};
+
+Commands.roler = function(Common, from, to, message) {
+	Commands.rolereminder(Common, from, to, message);
+};
+
+Commands.pentoggle = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (Common.utils.msg(message)) {
+			var who = message.match(/\S+/g);
+			if (who[1] == from) {
+				Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
+					if (err || !user) {
+						console.log("User not found.");
+						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+					} else {
+						var isPenToggled = user.pen;
+						if (isPenToggled == 1) {
+						isPenToggled = 0;
+						} else {
+						isPenToggled = 1;
+						}
+						Common.db.users.update({name: Common.utils.toDb(from)}, {$set: {pen: isPenToggled}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("User not updated!");
+						} else {
+							if (isPenToggled == 1) {
+							Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+						} else {
+							Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you have been removed from the voluntary pen reminder.");
+						}
+						}
+						});
+					}
+				});
+			} else {
+				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					Common.db.users.findOne({name: Common.utils.toDb(who[1])}, function(err, user) {
+					if (err || !user) {
+						console.log("User not found.");
+						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(who[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+					} else {
+						var isPenToggled = user.pen;
+						if (isPenToggled == 1) {
+						isPenToggled = 0;
+						} else {
+						isPenToggled = 1;
+						}
+						Common.db.users.update({name: Common.utils.toDb(who[1])}, {$set: {pen: isPenToggled}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("User not updated!");
+						} else {
+							if (isPenToggled == 1) {
+							Common.bot.say(to, "6" + Common.utils.toLc(who[1]) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+						} else {
+							Common.bot.say(to, "6" + Common.utils.toLc(who[1]) + ", you have been removed from the voluntary pen reminder.");
+						}
+						}
+						});
+					}
+					});
+				} else {
+					Common.bot.say(to, "5This command may only be used by staff members to switch the voluntary pen reminder on and off for a member.");
+				}
+			}
+		} else {
+			Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
+				if (err || !user) {
+					console.log("User not found.");
+					Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+				} else {
+					var isPenToggled = user.pen;
+					if (isPenToggled == 1) {
+					isPenToggled = 0;
+					} else {
+					isPenToggled = 1;
+					}
+					Common.db.users.update({name: Common.utils.toDb(from)}, {$set: {pen: isPenToggled}}, function(err, updated) {
+					if (err || !updated) {
+						console.log("User not updated!");
+					} else {
+						if (isPenToggled == 1) {
+						Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+					} else {
+						Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you have been removed from the voluntary pen reminder.");
+					}
+					}
+					});
+				}
+			});
+		}
+	}
+};
+
+Commands.pent = function(Common, from, to, message) {
+	Commands.pentoggle(Common, from, to, message);
+};
+
+Commands.idiot = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+	if (Common.utils.msg(message)) {
+	name = message.match(/\S+/g);
+	if (name.indexOf("abdel") > -1) {
+		Common.bot.say(to, "Nice try, " + from + "! Abdel is the smartest person on the planet!");
+	} else {
+		Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+			if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+				if (user.idiot == 1) {
+					Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already an idiot!");
+				} else {
+					Common.db.users.update({name: Common.utils.toDb(name[1])}, {$set: {idiot: 1}}, function(err, updated) {
+					if (err || !updated) {
+						console.log("User not updated");
+					} else {
+						Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+					}
+					});
+				}
+			}
+		});
+	}
+	} else {
+		Common.bot.say(to, '5You must specify a member to add to the idiot list when using this command.');
+	}
+	} else {
+		Common.bot.say(to, "5This command may only be used by staff members to add a member to the idiot list.");
+	}
+	}
+};
+
+Commands.genius = function(Common, from, to, message) {
+    if (to == '#cwexperts') {
+        Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+    } else {
+     if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+          if (Common.utils.msg(message)) {
+              name = message.match(/\S+/g);
+              if (name.indexOf("abdel") > -1) {
+                   Common.bot.say(to, "No need to mention it, " + from + "! Everyone knows Abdel is the smartest person on the planet!");
+              } else {
+			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+			if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+				if (user.idiot == 0) {
+					Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already not an idiot!");
+				} else {
+					Common.db.users.update({name: Common.utils.toDb(name[1])}, {$set: {idiot: 0}}, function(err, updated) {
+					if (err || !updated) {
+						console.log("User not updated");
+					} else {
+						Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're not an idiot! You have been removed from the pen reminder for idiots.");
+					}
+					});
+				}
+			}
+			});
+	      }
+        } else {
+            Common.bot.say(to, '5You must specify a member to delete from the idiot list when using this command.')   
+        }
+     } else {
+         Common.bot.say(to, "5This command may only be used by staff members to delete a member from the idiot list.");
+     }
+    }
+};
+
+Commands.idiots = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		Common.db.users.find({idiot: 1}, function(err, idiots) {
+			var idiots_list = '';
+			idiots.forEach(function(idiot) {
+				idiots_list += Common.utils.toView(idiot.name) + ', ';
+			});
+			if (idiots_list != '') {
+				var newidiots_list = idiots_list.substr(0, idiots_list.length-2);
+				Common.bot.say(to, "6Featuring #CwExperts Idiots: " + newidiots_list);
+			} else {
+				Common.bot.say(to, "3Surprisingly, there aren't any idiots!");
+			}
+		});
+	}
+};
+
+Commands.warn = function(Common, from, to, message) {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+		if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		if (name.indexOf("abdel") > -1) {
+			Common.bot.say(to, "4Nice try, " + from + "! Abdel never fucks up!");
+		} else {
+			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+			if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+				Common.db.users.update({name: Common.utils.toDb(name[1])}, {$inc: { "warns": 1 }}, function(err, updated) {
+				if (err || !updated) {
+				console.log("User not updated");
+				}
+				Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+					if (user.warns == 1) {
+						var warn_msg = "4" + Common.utils.toLc(name[1]) + ", you just fucked up! You now have a total of " + user.warns + " warn.";
+					} else {
+						var warn_msg = "4" + Common.utils.toLc(name[1]) + ", you just fucked up! You now have a total of " + user.warns + " warns.";
+					}
+				if (user.warns == 1 || user.warns == 4 || user.warns == 10 || user.warns == 13) {
+					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns.";
+				} else if (user.warns == 2 || user.warns == 5 || user.warns == 11 || user.warns == 14) {
+					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn.";
+				} else if (user.warns == 3 || user.warns == 6 || user.warns == 12 || user.warns == 15) {
+					warn_msg += " Oh no, you have earned a 24 hour temporary ban!";
+					setTimeout(function() {
+						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
+					}, 5000);
+					setTimeout(function() {
+						to = "#cwexperts1";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts2";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts.staff";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+				} else if (user.warns == 7 || user.warns == 16) {
+					warn_msg += " You will earn a 72 hour temporary ban after 2 more warns.";
+				} else if (user.warns == 8 || user.warns == 17) {
+					warn_msg += " You will earn a 72 hour temporary ban after 1 more warn.";
+				} else if (user.warns == 9 || user.warns == 18) {
+					warn_msg += " Oh no, you have earned a 72 hour temporary ban!";
+					setTimeout(function() {
+						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
+					}, 5000);
+					setTimeout(function() {
+						to = "#cwexperts1";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts2";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts.staff";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+				} else if (user.warns == 19) {
+					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and then you must make a 500m deposit to continue playing games.";
+				} else if (user.warns == 20) {
+					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and then you must make a 500m deposit to continue playing games.";
+				} else if (user.warns == 21) {
+					warn_msg += " Oh no, you have earned a 24 hour temporary ban, after which you must make a 500m deposit to continue playing games!";
+					setTimeout(function() {
+						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
+					}, 5000);
+					setTimeout(function() {
+						to = "#cwexperts1";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts2";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts.staff";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+				} else if (user.warns == 22) {
+					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and you will earn a permanent ban after 3 more warns.";
+				} else if (user.warns == 23) {
+					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and you will earn a permanent ban after 2 more warns.";
+				} else if (user.warns == 24) {
+					warn_msg += " Oh no, you have earned a 24 hour temporary ban, and you will earn a permanent ban after 1 more warn!";
+					setTimeout(function() {
+						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
+					}, 5000);
+					setTimeout(function() {
+						to = "#cwexperts1";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts2";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts.staff";
+						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+					}, 35000);
+				} else if (user.warns == 25) {
+					warn_msg += " Oh no, you have earned a permanent ban, and you will not be refunded your 500m deposit!";
+					setTimeout(function() {
+						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be permanently banned in 30 seconds, any last words?");
+					}, 5000);
+					setTimeout(function() {
+						to = "#cwexperts1";
+						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts2";
+						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
+					}, 35000);
+					setTimeout(function() {
+						to = "#cwexperts.staff";
+						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
+					}, 35000);
+				} else if (user.warns == 100 || user.warns == 500|| user.warns == 1000|| user.warns == 10000) {
+					warn_msg += " You should probably stop fucking up...";
+				} else {
+					warn_msg += " No one is surprised.";
+				}
+				Common.bot.say(to, warn_msg);
+				});
+				});
+			}
+			});
+		}
+		} else {
+			Common.bot.say(to, '5You must specify a member to warn when using this command.');
+		}
+	} else {
+		Common.bot.say(to, "5This command may only be used by staff members to warn a member.");
+	}
+};
+
+Commands.warns = function(Common, from, to, message) {
+	if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		if (name.indexOf("abdel") > -1) {
+			Common.bot.say(to, "4Abdel fucked up .. oh wait .. Abdel never fucks up. Nice try, " + from + "!");
+		} else {
+			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+			if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			} else {
+			if (user.warns == 1) {
+				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
+			} else {
+				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has fucked up a total of "  + user.warns + " times! You can learn more about our warning system here: http://cwexperts.org/management/.");
+			}
+			}
+			});
+		}
+	} else {
+		name = from;
+		if (name.indexOf("abdel") > -1) {
+			Common.bot.say(to, "4Abdel fucked up .. oh wait .. Abdel never fucks up. Nice try, " + from + "!");
+		} else {
+			Common.db.users.findOne({name: Common.utils.toDb(name)}, function(err, user) {
+			if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			} else {
+			if (user.warns == 1) {
+				Common.bot.say(to, "4" + Common.utils.toLc(name) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
+			} else {
+				Common.bot.say(to, "4" + Common.utils.toLc(name) + " has fucked up a total of "  + user.warns + " times! You can learn more about our warning system here: http://cwexperts.org/management/.");
+			}
+			}
+			});
+		}
+	}
+};
+
+Commands.rolelock = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+		Common.db.channels.findOne({channel: to}, function(err, channel) {
+			if (err || !channel) {
+			   	console.log("Channel not found.");    
+			} else {
+			   	var isRoleLockToggled = channel.role_lock;
+			   	if (isRoleLockToggled == 1) {
+			       	isRoleLockToggled = 0;
+			   	} else {
+			       	isRoleLockToggled = 1;
+			   	}
+			   	Common.db.channels.update({channel: to}, {$set: {role_lock: isRoleLockToggled}}, function(err, updated) {
+			       	if (err || !updated) {
+						console.log("Channel not updated!");
+					} else {
+						if (isRoleLockToggled == 1) {
+					  		Common.bot.say(to, "2" + from+" has enabled the role lock - only staff members may now edit roles.");
+						} else {
+					  		Common.bot.say(to, "2" + from+" has disabled the role lock - all members may now edit roles.");
+						}
+			                }
+			   	});
+			}
+		});
+	} else { 
+		Common.bot.say(to, "5This command may only be used by staff members to switch the role lock on and off.");
+	}
+	}
+};
+
+Commands.rolel = function(Common, from, to, message) {
+	Commands.rolelock(Common, from, to, message);
+};
+
+Commands.gamelock = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+		Common.db.channels.findOne({channel: to}, function(err, channel) {
+			if (err || !channel) {
+			   	console.log("Channel not found.");    
+			} else {
+			   	var isGameLockToggled = channel.game_lock;
+			   	if (isGameLockToggled == 1) {
+			       	isGameLockToggled = 0;
+			   	} else {
+			       	isGameLockToggled = 1;
+			   	}
+			   	Common.db.channels.update({channel: to}, {$set: {game_lock: isGameLockToggled}}, function(err, updated) {
+			       	if (err || !updated) {
+						console.log("Channel not updated!");
+					} else {
+						if (isGameLockToggled == 1) {
+					  		Common.bot.say(to, "2" + from+" has enabled the game lock - only the lead, the coordinator, and staff members may now use game commands.");
+						} else {
+					  		Common.bot.say(to, "2" + from+" has disabled the game lock - all members may now use game commands.");
+						}
+			                }
+			   	});
+			}
+		});
+	} else { 
+		Common.bot.say(to, "5This command may only be used by staff members to switch the game lock on and off.");
+	}
+	}
+};
+
+Commands.gamel = function(Common, from, to, message) {
+	Commands.gamelock(Common, from, to, message);
+};
+
+Commands.member = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	name = message.match(/\S+/g);
+	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+	Common.db.users.findOne({name: name}, function(err, user) {
+	if (err || !user) {
+		Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+	} else {
+		var member_msg = "2Main RSN: " + Common.utils.toLc(name) + "";
+		member_msg += ", Alt RSNs: " + user.alt + "";
+		if (user.alt2 !== 0 && user.alt2 !== undefined) {
+			member_msg += ", " + user.alt2 + "";
+		} else if (user.alt2 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt2: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt3 !== 0 && user.alt3 !== undefined) {
+			member_msg += ", " + user.alt3 + "";
+		} else if (user.alt3 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt3: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt4 !== 0 && user.alt4 !== undefined) {
+			member_msg += ", " + user.alt4 + "";
+		} else if (user.alt4 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt4: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt5 !== 0 && user.alt5 !== undefined) {
+			member_msg += ", " + user.alt5 + "";
+		} else if (user.alt5 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt5: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt6 !== 0 && user.alt6 !== undefined) {
+			member_msg += ", " + user.alt6 + "";
+		} else if (user.alt6 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt6: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt7 !== 0 && user.alt7 !== undefined) {
+			member_msg += ", " + user.alt7 + "";
+		} else if (user.alt7 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt7: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt8 !== 0 && user.alt8 !== undefined) {
+			member_msg += ", " + user.alt8 + "";
+		} else if (user.alt8 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt8: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt9 !== 0 && user.alt9 !== undefined) {
+			member_msg += ", " + user.alt9 + "";
+		} else if (user.alt9 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt9: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt10 !== 0 && user.alt10 !== undefined) {
+			member_msg += ", " + user.alt10 + "";
+		} else if (user.alt10 === undefined) {
+			Common.db.users.update({name: name}, {$set: {alt10: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.discord !== undefined) {
+			member_msg += ", Discord ID: " + user.discord + "";
+		} else if (user.discord === undefined) {
+			member_msg += ", Discord ID: unknown";
+			Common.db.users.update({name: name}, {$set: {discord: 'unknown'}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.pen == 1) {
+			member_msg += ", Voluntary pen: On";
+		} else if (user.pen == 0) {
+			member_msg += ", Voluntary pen: Off";
+		} else {
+			member_msg += ", Voluntary pen: On";
+			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {pen: 1}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated!");
+			} else {
+				setTimeout(function() {
+					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6" + Common.utils.toLc(name) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+				}, 1000);
+			}
+			});
+		} if (user.idiot == 1) {
+			member_msg += ", Idiot pen: On";
+		} else if (user.idiot == 0) {
+			member_msg += ", Idiot pen: Off";
+		} else {
+			member_msg += ", Idiot pen: On";
+			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {idiot: 1}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated!");
+			} else {
+				setTimeout(function() {
+					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6Congratulations " + Common.utils.toLc(name) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+				}, 1000);
+			}
+			});
+		}
+		member_msg += ", Total warns: " + user.warns + "";
+		if (user.joinDate === undefined) {
+			member_msg += ", Join date: unknown";
+			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {joinDate: 'unknown'}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated!");
+			}
+			});
+		} else if (user.joinDate == 'unknown') {
+			member_msg += ", Join date: unknown";
+		} else {
+			joind = user.joinDate;
+			joind = joind.toString();
+			joind = joind.substr(0, joind.length-14);
+			joind = joind + "UTC";
+			member_msg += ", Join date: " + joind + "";
+		} if (user.leaveDate === undefined) {
+			member_msg += ", Leave date: unknown";
+			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {leaveDate: 'unknown'}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated!");
+			}
+			});
+		} else if (user.leaveDate == 'unknown') {
+			member_msg += ", Leave date: unknown";
+		} else if (user.leaveDate === 0) {
+			member_msg += ", Leave date: n/a";
+		} else {
+			leaved = user.leaveDate;
+			leaved = leaved.toString();
+			leaved = leaved.substr(0, leaved.length-14);
+			leaved = leaved + "UTC";
+			member_msg += ", Leave date: " + leaved + "";
+		}
+		Common.bot.say(to, member_msg);
+	}
+	});
+	}
+};
+
+Commands.mem = function(Common, from, to, message) {
+	Commands.member(Common, from, to, message);
+};
+
+Commands.user = function(Common, from, to, message) {
+	Commands.member(Common, from, to, message);
+};
+
+Commands.channel = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		name = message.match(/\S+/g);
+		chanl = !Common.utils.msg(message) ? Common.utils.toDb(to) : Common.utils.toDb(name[1]);
+			if (chanl == 'cwexperts') {
+				chanl = '#cwexperts';
+			} if (chanl == 'cwexperts1') {
+				chanl = '#cwexperts1';
+			} if (chanl == 'cwexperts2') {
+				chanl = '#cwexperts2';
+			} if (chanl == 'cwexperts.staff') {
+				chanl = '#cwexperts.staff';
+			} if (chanl == '0') {
+				chanl = '#cwexperts';
+			} if (chanl == '1') {
+				chanl = '#cwexperts1';
+			} if (chanl == '2') {
+				chanl = '#cwexperts2';
+			} if (chanl == '3') {
+				chanl = '#cwexperts.staff';
+			}
+			Common.db.channels.findOne({channel: chanl}, function(err, channel) {
+				if (err || !channel) {
+			   		console.log("Channel not found.");
+					Common.bot.say(to, "5Channel " + Common.utils.toLc(chanl) + " not found. You must specify an official #CwExperts SwiftIRC channel when using this command: #cwexperts, #cwexperts1, #cwexperts2, or #cwexperts.staff. Use the format !channel CHANNEL_HERE.");
+				} else {
+					var channel_msg = "2Channel: " + chanl + "";
+					if (channel.games !== 0) {
+						channel_msg += ", Games: Yes";
+					} else if (channel.games === 0) {
+						channel_msg += ", Games: No";
+					} if (channel.world !== 0) {
+						channel_msg += ", Current world: " + channel.world + "";
+					} else if (channel.world === 0) {
+						channel_msg += ", Current world: n/a";
+					} if (channel.prev_world !== 0) {
+						channel_msg += ", Previous world: " + channel.prev_world + "";
+					} else if (channel.prev_world === 0) {
+						channel_msg += ", Previous world: n/a";
+					} if (channel.prev_world2 !== 0) {
+						channel_msg += ", Grandprevious world: " + channel.prev_world2 + "";
+					} else if (channel.prev_world2 === 0) {
+						channel_msg += ", Grandprevious world: n/a";
+					} if (channel.cycle === 2) {
+						channel_msg += ", World cycle: Two";
+					} else if (channel.cycle === 3) {
+						channel_msg += ", World cycle: Three";
+					} if (channel.team == 'saradomin') {
+						channel_msg += ", Winning team: 10Saradomin2";
+					} else if (channel.team == 'zamorak') {
+						channel_msg += ", Winning team: 4Zamorak2";
+					} else {
+						channel_msg += ", Winning team: 10Saradomin2";
+						Common.db.channels.update({channel: chanl}, {$set: {team: 'saradomin'}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Channel not updated!");
+						} else {
+							setTimeout(function() {
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 2" + from + " has changed the winning team to: 10Saradomin2.");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 2" + from + " has changed the winning team to: 10Saradomin2.");
+							}, 1000);
+						}
+						});
+					} if (channel.lead !== 0) {
+						channel_msg += ", Lead:7 " + channel.lead + "2";
+					} else if (channel.lead === 0) {
+						channel_msg += ", Lead: 7n/a2";
+					} if (channel.salt !== 0) {
+						channel_msg += ", Salt:7 " + channel.salt + "2";
+					} else if (channel.salt === 0) {
+						channel_msg += ", Salt: 7n/a2";
+					} if (channel.flag !== 0) {
+						channel_msg += ", Flag:7 " + channel.flag + "2";
+					} else if (channel.flag === 0) {
+						channel_msg += ", Flag: 7n/a2";
+					}
+					channel_msg += ", Early Tickers:";
+					if (channel.et1 !== 0) {
+						channel_msg += " (1)7 " + channel.et1 + "2";
+					} else if (channel.et1 === 0) {
+						channel_msg += " (1) 7n/a2";
+					} if (channel.et2 !== 0) {
+						channel_msg += ", (2)7 " + channel.et2 + "2";
+					} else if (channel.et2 === 0) {
+						channel_msg += ", (2) 7n/a2";
+					} if (channel.et3 !== 0) {
+						channel_msg += ", (3)7 " + channel.et3 + "2";
+					} else if (channel.et3 === 0) {
+						channel_msg += ", (3) 7n/a2";
+					} if (channel.coor !== 0) {
+						channel_msg += ", Coordinator:7 " + channel.coor + "2";
+					} else if (channel.coor === 0) {
+						channel_msg += ", Coordinator: 7n/a2";
+					} if (channel.pen == 0) {
+						channel_msg += ", Pen reminder: Voluntary";
+					} else if (channel.pen == 1) {
+						channel_msg += ", Pen reminder: Idiot";
+					} else {
+						channel_msg += ", Pen reminder: Voluntary";
+						Common.db.channels.update({channel: chanl}, {$set: {pen: 0}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Channel not updated!");
+						} else {
+							setTimeout(function() {
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the voluntary pen reminder - the pen reminder for idiots has been disabled.");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the voluntary pen reminder - the pen reminder for idiots has been disabled.");
+							}, 1000);
+						}
+						});
+					} if (channel.role == 0) {
+						channel_msg += ", Role reminder: On";
+					} else if (channel.role == 1) {
+						channel_msg += ", Role reminder: Off";
+					} else {
+						channel_msg += ", Role reminder: On";
+						Common.db.channels.update({channel: chanl}, {$set: {role: 0}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Channel not updated!");
+						} else {
+							setTimeout(function() {
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 7" + from+" has enabled the role reminder - members assigned roles will now be highlighted 20 seconds, 9 minutes, or 14 minutes after !hopw, depending on their role(s).");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 7" + from+" has enabled the role reminder - members assigned roles will now be highlighted 20 seconds, 9 minutes, or 14 minutes after !hopw, depending on their role(s).");
+							}, 1000);
+						}
+						});
+					} if (channel.game_lock == 0) {
+						channel_msg += ", Game lock: Off";
+					} else if (channel.game_lock == 1) {
+						channel_msg += ", Game lock: On";
+					} else {
+						channel_msg += ", Game lock: Off";
+						Common.db.channels.update({channel: chanl}, {$set: {game_lock: 0}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Channel not updated!");
+						} else {
+							setTimeout(function() {
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 2" + from+" has disabled the game lock - all members may now use game commands.");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 2" + from+" has disabled the game lock - all members may now use game commands.");
+							}, 1000);
+						}
+						});
+					} if (channel.role_lock == 0) {
+						channel_msg += ", Role lock: Off";
+					} else if (channel.role_lock == 1) {
+						channel_msg += ", Role lock: On";
+					} else {
+						channel_msg += ", Role lock: Off";
+						Common.db.channels.update({channel: chanl}, {$set: {role_lock: 0}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Channel not updated!");
+						} else {
+							setTimeout(function() {
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 2" + from+" has disabled the role lock - normal members may now edit roles.");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 2" + from+" has disabled the role lock - normal members may now edit roles.");
+							}, 1000);
+						}
+						});
+					}
+					Common.bot.say(to, channel_msg);
+				}
+			});
+	}
+};
+
+Commands.chan = function(Common, from, to, message) {
+	Commands.channel(Common, from, to, message);
+};
+
+Commands.addcrasher = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.db.crashers.save({crasher: Common.utils.toDb(name[1]), threat: 2}, function(err, saved) {
+			if (err || !saved) {
+				console.log('Error', err)
+			} else {
+				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has been added to the crasher list; it is recommended that all members add this player to all of their ignore lists!");
+			}
+			});
+		} else if (user.threat == 0) {
+			Common.db.crashers.update({crasher: Common.utils.toDb(name[1])}, {$set: {threat: 2}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated");
+			} else {
+				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has been readded to the crasher list; they once again pose a threat!");
+			}
+			});
+		} else if (user.threat == 1) {
+			Common.db.crashers.update({crasher: Common.utils.toDb(name[1])}, {$set: {threat: 2}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated");
+			} else {
+				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has been readded to the crasher list and deleted from the reformed crasher list; they once again pose a threat!");
+			}
+			});
+		} else if (user.threat == 2) {
+			Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already on the crasher list! Use !crashers to display the crasher list.");
+		}
+		});
+	} else {
+		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.')   
+	}
+	} else {
+		Common.bot.say(to, "5This command may only be used by staff members to add a crasher to the crasher list.");
+	}
+	}
+};
+
+Commands.addc = function(Common, from, to, message) {
+	Commands.addcrasher(Common, from, to, message);
+};
+
+Commands.delcrasher = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + name[1] + " is not on the crasher list or the reformed crasher list. Use !crashers to display the crasher list, or use !crashersreformed to display the reformed crasher list.");
+		} else if (user.threat == 2) {
+			Common.db.crashers.update({crasher: Common.utils.toDb(name[1])}, {$set: {threat: 1}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated");
+			} else {
+				Common.bot.say(to, "3" + Common.utils.toLc(name[1]) + " has been deleted from the crasher list and added to the reformed crasher list; they no longer pose a threat.");
+			}
+			});
+		} else if (user.threat == 1) {
+			Common.db.crashers.update({crasher: Common.utils.toDb(name[1])}, {$set: {threat: 0}}, function(err, updated) {
+			if (err || !updated) {
+				console.log("User not updated");
+			} else {
+				Common.bot.say(to, "3" + Common.utils.toLc(name[1]) + " has been deleted from the reformed crasher list.");
+			}
+			});
+		} else if (user.threat == 0) {
+			Common.bot.say(to, "5" + name[1] + " is not on the crasher list or the reformed crasher list. Use !crashers to display the crasher list, or use !crashersreformed to display the reformed crasher list.");
+		}
+		});
+        } else {
+		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.')   
+	}
+	} else {
+		Common.bot.say(to, "5This command may only be used by staff members to delete a crasher from the crasher list.");
+	}
+	}
+};
+
+Commands.delc = function(Common, from, to, message) {
+	Commands.delcrasher(Common, from, to, message);
+};
+
+Commands.checkcrasher = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "3" + name[1] + " is not on the crasher list or the reformed crasher list - you should immediately inform a staff member if you suspect that they are a crasher.");
+		} else if (user.threat == 2) {
+			Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " is on the crasher list! BEWARE! Use !anticrash to notify all members to prepare to anti-crash!");
+		} else if (user.threat == 1) {
+			Common.bot.say(to, "3" + Common.utils.toLc(name[1]) + " is on the reformed crasher list; they probably do not pose a threat.");
+		} else if (user.threat == 0) {
+			Common.bot.say(to, "3" + name[1] + " is not on the crasher list or the reformed crasher list - you should immediately inform a staff member if you suspect that they are a crasher.");
+		}
+		});
+        } else {
+		Common.bot.say(to, '5You must specify a crasher RSN when using this command. Use !checkCrasher CRASHER_RSN_HERE to check the crasher lists for a crasher RSN.');
+	}
+	}
+};
+
+Commands.checkc = function(Common, from, to, message) {
+	Commands.checkcrasher(Common, from, to, message);
+};
+
+Commands.crashers = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	Common.db.crashers.find({threat: 2}, function(err, crashers) {
+		var crashers_list = '';
+		crashers.forEach(function(threat) {
+			crashers_list += Common.utils.toView(threat.crasher) + ', ';
+		});
+		if (crashers_list != '') {
+			var newcrashers_list = crashers_list.substr(0, crashers_list.length-2);
+			Common.bot.say(to, "4Castle Wars Crashers: "+newcrashers_list);
+		} else {
+			Common.bot.say(to, "3Surprisingly, there aren't any crashers!");
+		}
+	});
+	}
+};
+
+Commands.crashersreformed = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	Common.db.crashers.find({threat: 1}, function(err, crashers) {
+		var crashersr_list = '';
+		crashers.forEach(function(threat) {
+			crashersr_list += Common.utils.toView(threat.crasher) + ', ';
+		});
+		if (crashersr_list != '') {
+			var newcrashersr_list = crashersr_list.substr(0, crashersr_list.length-2);
+			Common.bot.say(to, "4Castle Wars Reformed Crashers: "+newcrashersr_list);
+		} else {
+			Common.bot.say(to, "3Unsurprisingly, there aren't any reformed crashers!");
+		}
+	});
+	}
+};
+
+Commands.crashersr = function(Common, from, to, message) {
+	Commands.crashersreformed(Common, from, to, message);
+};
+
+Commands.members = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	Common.db.users.find({usercount: undefined}, function(err, users) {
+		var user_count = 0;
+		users.forEach(function(usercount) {
+			user_count++;
+		});
+		var new_user_count = user_count + 100;
+		Common.bot.say(to, "2Total members since May 25th, 2014: " + user_count + ", Total members since July 4th, 2013: ~" + new_user_count + " (use !data to learn more)");
+	});
+	}
+};
+
+Commands.users = function(Common, from, to, message) {
+	Commands.members(Common, from, to, message);
+};
+
+Commands.mems = function(Common, from, to, message) {
+	Commands.members(Common, from, to, message);
+};
+
+Commands.data = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		Common.bot.say(to, "2The total #CwExperts member count since the creation of the superboosting Castle Wars method on July 4th, 2013 is estimated because our first IRC bot did not have the ability to store data.");
+	}
+};
