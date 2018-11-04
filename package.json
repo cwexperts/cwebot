@@ -5,7 +5,7 @@
   "description": "An intelligent IRC bot for CwExperts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/abdel/cwebot.git"
+    "url": "git://github.com/cwexperts/cwebot.git"
   },
   "main": "bot.js",
   "scripts": {
@@ -13,13 +13,13 @@
   },
   "engines": {
     "node": "4.8.7"
-  }
+  },
   "keywords": [
     "irc",
     "bot",
     "heroku"
   ],
-  "author": "abdel",
+  "author": "CWExperts",
   "license": "MIT",
   "dependencies": {
     "dotenv": "2.0.0",
