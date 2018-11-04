@@ -11,6 +11,9 @@
   "scripts": {
     "start": "node bot.js"
   },
+  "engines": {
+    "node": "4.8.7"
+  }
   "keywords": [
     "irc",
     "bot",
