@@ -1,4 +1,6 @@
-// require('dotenv').config()
+if (process.env.HEROKU !== 'true') {
+    require('dotenv').config()
+}
 
 var irc = require('irc');
 
