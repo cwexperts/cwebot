@@ -133,7 +133,8 @@ Commands.anticrash = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					anticrash(Common, from, to, message);
@@ -175,7 +176,8 @@ Commands.world = function(Common, from, to, message) {
 	} else {
     Common.db.channels.findOne({channel: to}, function(err, channel) {
         if (err || !channel) {
-           	console.log("Error: Unable to fetch world");
+           	console.log("Error: Unable to fetch world for " + channel);
+		console.log(err);
         } else {
             if (channel.games !== 0) {
 		var players = [];
@@ -239,7 +241,8 @@ function setworlds(Common, from, to, message) {
 		var wthreechan = '';
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			}
 			if (channel.games === 0) {
 				Common.db.channels.update({channel: to}, {$set: {games: 1}}, function(err, updated) {
@@ -321,7 +324,8 @@ Commands.setworlds = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					setworlds(Common, from, to, message);
@@ -364,7 +368,8 @@ Commands.games = function(Common, from, to, message) {
 function hopm(Common, from, to, message) {
     Common.db.channels.findOne({channel: to}, function(err, channel) {
         if (err || !channel) {
-           	console.log("Error: Unable to fetch world");
+           	console.log("Error: Unable to fetch world for " + channel);
+		console.log(err);
         } else {
             if (channel.world !== 0) {
             	if (typeof time[to] === 'undefined') {
@@ -385,7 +390,8 @@ Commands.hopm = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					hopm(Common, from, to, message);
@@ -430,7 +436,8 @@ Commands.ticksleft = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else {
 				if (channel.games !== 0) {
 					var world_msg = "2Current world: ";
@@ -467,7 +474,8 @@ function setticksleft(Common, from, to, message) {
 		if (stl[1] == '1' || stl[1] == '2' || stl[1] == '3' || stl[1] == '4' || stl[1] == '5' || stl[1] == '6' || stl[1] == '7' || stl[1] == '8' || stl[1] == '9' || stl[1] == '10' || stl[1] == '11' || stl[1] == '12' || stl[1] == '13') {
 			Common.db.channels.findOne({channel: to}, function(err, channel) {
 				if (err || !channel) {
-					console.log("Error: Unable to fetch world");
+					console.log("Error: Unable to fetch world for " + channel);
+					console.log(err);
 				} else {
 					if (channel.games !== 0) {
 						var theworld = '';
@@ -513,7 +521,8 @@ Commands.setticksleft = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					setticksleft(Common, from, to, message);
@@ -558,7 +567,8 @@ Commands.count = function(Common, from, to, message) {
 	}
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else {
 				if (to == "#cwexperts") {
 					Common.bot.say(to, "2Active user count: " + players.length + "");
@@ -607,7 +617,8 @@ Commands.teamtoggle = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					teamtoggle(Common, from, to, message);
@@ -708,7 +719,8 @@ Commands.worldcycletoggle = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					worldcycletoggle(Common, from, to, message);
@@ -783,7 +795,8 @@ Commands.wc = function(Common, from, to, message) {
 function startplaytime(Common, from, to, message) {
 	Common.db.channels.findOne({channel: to}, function(err, channel) {
 		if (err || !channel) {
-			console.log("Channel not found.");
+			console.log("Channel not found: " + channel);
+			console.log(err);
 		} else {
 			if (channel.games === 0) {
 				Common.db.channels.update({channel: to}, {$set: {games: 1}}, function(err, updated) {
@@ -807,7 +820,8 @@ Commands.startplaytime = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else if (channel.game_lock == 1) {
 				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
 					startplaytime(Common, from, to, message);
@@ -849,7 +863,8 @@ Commands.playtime = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-			   	console.log("Channel not found.");
+			   	console.log("Channel not found: " + channel);
+				console.log(err);
 			}
 			if (channel.games === 0 && channel.days === 0 && channel.hours === 0 && channel.minutes === 0 && channel.seconds === 0) {
 				Common.bot.say(to, "2" + "The playtime counters have not started; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
@@ -895,7 +910,8 @@ Commands.playtimetotal = function(Common, from, to, message) {
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
-			   	console.log("Channel not found.");
+			   	console.log("Channel not found: " + channel);
+				console.log(err);
 			} else {
 				var gtdays = 0;
 				var gthours = 0;
