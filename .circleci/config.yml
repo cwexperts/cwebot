@@ -26,23 +26,3 @@ jobs:
         
       # Check syntax
       - run: find ~/repo/ -path ~/repo/node_modules -prune -o -name "*.js" -print0 | xargs -0 -n1 node -c
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - run:
-          name: Deploy Over SSH
-          command: |
-            ssh $SSH_USER@$SSH_HOST "cd ~/cwebot; git pull origin master; pm2 restart CWEBot; exit"
-
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
