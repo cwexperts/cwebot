@@ -176,14 +176,14 @@ Common.bot.addListener('part', function(channel, by, mode, argument, message) {
 });
 
 Common.bot.addListener('kick', function(channel, nick, by, reason, message) {
-    Common.bot.send("NAMES", channel);
-	var kickmsg = "4[KICK]: 2" + nick + " has been kicked from " + channel + ". [" + reason + "]";
-	var to = '#cwexperts';
-	Common.bot.say(to, kickmsg);
-	var to = '#cwexperts1';
-	Common.bot.say(to, kickmsg);
-	var to = '#cwexperts2';
-	Common.bot.say(to, kickmsg);
+  Common.bot.send("NAMES", channel);
+//   var kickmsg = "4[KICK]: 2" + nick + " has been kicked from " + channel + ". [" + reason + "]";
+//   var to = '#cwexperts';
+//   Common.bot.say(to, kickmsg);
+//   var to = '#cwexperts1';
+//   Common.bot.say(to, kickmsg);
+//   var to = '#cwexperts2';
+//   Common.bot.say(to, kickmsg);
 });
 
 Common.bot.addListener('nick', function(oldnick, newnick, channels, message) {
@@ -197,29 +197,29 @@ Common.bot.addListener('nick', function(oldnick, newnick, channels, message) {
 });
 
 Common.bot.addListener('quit', function(nick, reason, channels, message) {
-    for (var i = 0; i < channels.length; i++) {
-        Common.bot.send("NAMES", channels[i]);
-    }
-	var quitmsg = "4[FAREWELL]: 2" + nick + " has quit SwiftIRC. [" + reason + "]";
-	var to = '#cwexperts';
-	Common.bot.say(to, quitmsg);
-	var to = '#cwexperts1';
-	Common.bot.say(to, quitmsg);
-	var to = '#cwexperts2';
-	Common.bot.say(to, quitmsg);
+  for (var i = 0; i < channels.length; i++) {
+    Common.bot.send("NAMES", channels[i]);
+  }
+//   var quitmsg = "4[FAREWELL]: 2" + nick + " has quit SwiftIRC. [" + reason + "]";
+//   var to = '#cwexperts';
+//   Common.bot.say(to, quitmsg);
+//   var to = '#cwexperts1';
+//   Common.bot.say(to, quitmsg);
+//   var to = '#cwexperts2';
+//   Common.bot.say(to, quitmsg);
 });
 
 Common.bot.addListener('kill', function(nick, reason, channels, message) {
-    for (var i = 0; i < channels.length; i++) {
-        Common.bot.send("NAMES", channels[i]);
-    }
-	var killmsg = "4[KILL]: 2" + nick + " has been killed. [" + reason + "]";
-	var to = '#cwexperts';
-	Common.bot.say(to, killmsg);
-	var to = '#cwexperts1';
-	Common.bot.say(to, killmsg);
-	var to = '#cwexperts2';
-	Common.bot.say(to, killmsg);
+  for (var i = 0; i < channels.length; i++) {
+    Common.bot.send("NAMES", channels[i]);
+  }
+// 	var killmsg = "4[KILL]: 2" + nick + " has been killed. [" + reason + "]";
+// 	var to = '#cwexperts';
+// 	Common.bot.say(to, killmsg);
+// 	var to = '#cwexperts1';
+// 	Common.bot.say(to, killmsg);
+// 	var to = '#cwexperts2';
+// 	Common.bot.say(to, killmsg);
 });
 
 Common.bot.addListener('error', function(message) {
