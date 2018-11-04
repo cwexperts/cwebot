@@ -223,11 +223,10 @@ Common.bot.addListener('kill', function(nick, reason, channels, message) {
 });
 
 Common.bot.addListener('error', function(message) {
-    console.log('[', new Date().toString(), ']', 'error: ', message);
-  
+  console.log('[', new Date().toString(), ']', 'error: ', message);
+
+  if (message.args[2].indexOf('No external channel messages') === -1) {
     error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
-    Common.bot.say('#cwexperts', error_msg);
-    Common.bot.say('#cwexperts1', error_msg);
-    Common.bot.say('#cwexperts2', error_msg);
     Common.bot.say('#cwexperts.staff', error_msg);
+  }
 });
