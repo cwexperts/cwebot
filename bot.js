@@ -120,7 +120,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (err || !ch) {
-				console.log("Error: Unable to fetch world");
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
 			} else {
 				if (ch.games !== 0) {
 					if (ch.world === 0) {
