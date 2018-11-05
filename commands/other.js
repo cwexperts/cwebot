@@ -1070,3 +1070,7 @@ Commands.jmod = function(Common, from, to, message) {
 Commands.viable = function(Common, from, to, message) {
     Common.bot.say(to, "yeah but the only people who can possibly beat this time is us, and there's no point in doing more floors so it's going to be #1.");
 };
+
+Commands.mary = function(Common, from, to, message) {
+	Common.bot.say(to, "FWB called me and asked me why i was taking so long and i told him i had to do my makeup so he wouldn’t look down and see a boiled egg during sex. halfway thru sex i start talking dirty like oh yeah u like fucking humpty dumpty huh??? he got soft and got off me LMFAOOO");
+};
