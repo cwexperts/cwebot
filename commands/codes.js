@@ -67,7 +67,7 @@ Commands.oct2018 = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for October 2018.");
 		} else {
 			if (user.oct2018 == 'oct2018') {
-				Common.bot.say(to, "working");
+				Common.bot.say(to, "working!");
 			} else {
 				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for October 2018.");
 			}
@@ -83,7 +83,7 @@ Commands.nov2018 = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for November 2018.");
 		} else {
 			if (user.nov2018 == 'nov2018') {
-				Common.bot.say(to, "working");
+				Common.bot.say(to, "working!");
 			} else {
 				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for November 2018.");
 			}
