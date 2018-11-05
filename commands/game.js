@@ -1632,6 +1632,14 @@ Commands.l = function(Common, from, to, message) {
 	Commands.lobby(Common, from, to, message);
 };
 
+Commands.lobbymains = function(Common, from, to, message) {
+	Commands.lobby(Common, from, to, message);
+};
+
+Commands.lm = function(Common, from, to, message) {
+	Commands.lobby(Common, from, to, message);
+};
+
 function ls(Common, from, to, message) {
 	var all = message.match(/\S+/g);
 	if (all[1] == "all" || all[1] == "ALL" || all[1] == "All" || all[1] == "ALl" || all[1] == "AlL" || all[1] == "aLl" || all[1] == "aLL" || all[1] == "alL") {
