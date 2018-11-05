@@ -2,7 +2,7 @@ Commands.activepromocodes = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		Common.bot.say(to, "6Active promotional codes:13 oct2018, nov2018, nov1st2018sl");
+		Common.bot.say(to, "6Active promotional codes:13 nov2018");
 	}
 };
 
@@ -27,26 +27,10 @@ Commands.claimcode = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1]) {
 				Common.bot.say(to, "5" + from + ", you have already claimed this code: " + code[1] + ".");
-			} else if (code[1] == 'invalidCodeTest') {
-				Common.bot.say(to, "5Sorry " + from + ", this code expired on Fri Nov 02 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'oct2018') {
-//				Common.db.users.find({oct2018: code[1]}, function(err, users) {
-//					var codes = 0;
-//					users.forEach(function(oct2018) {
-//						codes++;
-//					});
-//					if (codes == 1) {
-//						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
-//					} else {
-						Common.db.users.update({name: name}, {$set: {oct2018: code[1]}}, {upsert: false}, function(err, updated) {
-							if (err || !updated) {
-								console.log('Error', err);
-							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the October 2018 command: tba");
-							}
-						});
-//					}
-//				});
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Thu Nov 01 2018 00:00:00 UTC: " + code[1] + ".");
+			} else if (code[1] == 'nov1st2018sl') {
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Sun Nov 04 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'nov2018') {
 //				Common.db.users.find({nov2018: code[1]}, function(err, users) {
 //					var codes = 0;
@@ -61,24 +45,6 @@ Commands.claimcode = function(Common, from, to, message) {
 								console.log('Error', err);
 							} else {
 								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the November 2018 command: tba");
-							}
-						});
-//					}
-//				});
-			} else if (code[1] == 'nov1st2018sl') {
-//				Common.db.users.find({nov1st2018sl: code[1]}, function(err, users) {
-//					var codes = 0;
-//					users.forEach(function(nov1st2018sl) {
-//						codes++;
-//					});
-//					if (codes == 1) {
-//						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
-//					} else {
-						Common.db.users.update({name: name}, {$set: {nov1st2018sl: code[1]}}, {upsert: false}, function(err, updated) {
-							if (err || !updated) {
-								console.log('Error', err);
-							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this CW SL: Thu Nov 1st-Sun Nov 4th 2018 00:00 GT");
 							}
 						});
 //					}
