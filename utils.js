@@ -266,9 +266,9 @@ module.exports = {
 					from = 'self';
 				} else {
 					var today = new Date();
-					var slStart = new Date("2018-11-01T00:00:00Z");
-					var slEnd = new Date("2018-11-04T00:00:00Z");
-					var slStart2 = new Date("2018-12-01T00:00:00Z");
+					var slStart = new Date("2018-12-01T00:00:00Z");
+					var slEnd = new Date("2018-12-04T00:00:00Z");
+					var slStart2 = new Date("2018-12-28T00:00:00Z");
 					var slDays = '';
 					var slHours = '';
 					var slMinutes = '';
@@ -367,10 +367,10 @@ module.exports = {
 						slDays = daysRemain;
 						slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 					}
-					var slStartNotif1 = new Date("2018-11-01T00:00:00Z");
-					var slStartNotif2 = new Date("2018-11-01T00:00:01Z");
-					var slEndNotif1 = new Date("2018-11-04T00:00:00Z");
-					var slEndNotif2 = new Date("2018-11-04T00:00:01Z");
+					var slStartNotif1 = new Date("2018-12-01T00:00:00Z");
+					var slStartNotif2 = new Date("2018-12-01T00:00:01Z");
+					var slEndNotif1 = new Date("2018-12-04T00:00:00Z");
+					var slEndNotif2 = new Date("2018-12-04T00:00:01Z");
 					if (today>slStartNotif1 && today<slStartNotif2) {
 						Common.bot.say(channel, "14*** ( 2THE CASTLE WARS SPOTLIGHT HAS JUST STARTED! 14) ***");
 					} if (today>slEndNotif1 && today<slEndNotif2) {
