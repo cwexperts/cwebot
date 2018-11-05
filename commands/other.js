@@ -328,12 +328,17 @@ Commands.abdel_dirt = function(Common, from, to, message) {
  Commands.kat = function(Common, from, to, message) {
     Commands.katarina(Common, from, to, message);
 };
- 
+
 // Commands.uwu = function(Common, from, to, message) {
 //     Common.bot.say(to, "dicks are so cute omg (⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄ when you hold one in your hand and it starts twitching like it’s nuzzling you (/ω＼) " +
 //                    "or when they perk up and look at you like 'owo nya? :3' hehe ~ penis-kun is happy to see me!!（＾ワ＾）");
 //};
- 
+
+Commands.uwu = function(Common, from, to, message) {
+	Common.bot.say(to, "dicks are so cute omg when you hold one in your hand and it starts twitching like it’s nuzzling you " +
+			"or when they perk up and look at you like 'owo nya? :3' hehe ~ penis-kun is happy to see me!!");
+};
+
  Commands.dsos = function(Common, from, to, message) {
      var list = [
           "oh my god guys I'm totally shaking I have received the dormant staff of sliske drop",
