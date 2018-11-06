@@ -3096,14 +3096,14 @@ Commands.gw = function(Common, from, to, message) {
 	var time = message.match(/\S+/g);
 	if (typeof time[1] != 'undefined') {
 		if (time[1] == '0' || time[1] == '1' || Common.utils.toLc(time[1]) == 'now') {
-		Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
+		Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
 		} else if (Common.utils.toLc(time[1]) == 'soon') {
-		Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
+		Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
 		} else {
-		Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
+		Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
 		}
 	} else {
-	  	Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
+	  	Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
 	}
 	}
 };
