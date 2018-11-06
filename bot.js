@@ -187,13 +187,26 @@ Common.bot.addListener('part', function(channel, by, mode, argument, message) {
 
 Common.bot.addListener('kick', function(channel, nick, by, reason, message) {
   Common.bot.send("NAMES", channel);
-//   var kickmsg = "4[KICK]: 2" + nick + " has been kicked from " + channel + ". [" + reason + "]";
-//   var to = '#cwexperts';
-//   Common.bot.say(to, kickmsg);
-//   var to = '#cwexperts1';
-//   Common.bot.say(to, kickmsg);
-//   var to = '#cwexperts2';
-//   Common.bot.say(to, kickmsg);
+  Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts1', "4[KICK]: 2" + nick + " has been kicked from " + channel + ". [" + reason + "]");
+                }
+              }
+  });
+  Common.db.channels.findOne({channel: '#cwexperts2'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts2', "4[KICK]: 2" + nick + " has been kicked from " + channel + ". [" + reason + "]");
+                }
+              }
+  });
 });
 
 Common.bot.addListener('nick', function(oldnick, newnick, channels, message) {
@@ -211,33 +224,62 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
-//   var quitmsg = "4[FAREWELL]: 2" + nick + " has quit SwiftIRC. [" + reason + "]";
-//   var to = '#cwexperts';
-//   Common.bot.say(to, quitmsg);
-//   var to = '#cwexperts1';
-//   Common.bot.say(to, quitmsg);
-//   var to = '#cwexperts2';
-//   Common.bot.say(to, quitmsg);
+  Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts1', "4[FAREWELL]: 2" + nick + " has quit SwiftIRC. [" + reason + "]");
+                }
+              }
+  });
+  Common.db.channels.findOne({channel: '#cwexperts2'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts2', "4[FAREWELL]: 2" + nick + " has quit SwiftIRC. [" + reason + "]");
+                }
+              }
+  });
 });
 
 Common.bot.addListener('kill', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
-// 	var killmsg = "4[KILL]: 2" + nick + " has been killed. [" + reason + "]";
-// 	var to = '#cwexperts';
-// 	Common.bot.say(to, killmsg);
-// 	var to = '#cwexperts1';
-// 	Common.bot.say(to, killmsg);
-// 	var to = '#cwexperts2';
-// 	Common.bot.say(to, killmsg);
+  Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts1', "4[KILL]: 2" + nick + " has been killed. [" + reason + "]");
+                }
+              }
+  });
+  Common.db.channels.findOne({channel: '#cwexperts2'}, function(err, ch) {
+              if (err || !ch) {
+                console.log("Error: Unable to fetch world for #cwexperts1");
+                console.log(err);
+              } else {
+                if (ch.games !== 0) {
+                  Common.bot.say('#cwexperts2', "4[KILL]: 2" + nick + " has been killed. [" + reason + "]");
+                }
+              }
+  });
 });
 
 Common.bot.addListener('error', function(message) {
   console.log('[', new Date().toString(), ']', 'error: ', message);
 
   if (message.args[2].indexOf('No external channel messages') === -1) {
-    error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
+    var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
+    Common.bot.say('#cwexperts', error_msg);
+    Common.bot.say('#cwexperts1', error_msg);
+    Common.bot.say('#cwexperts2', error_msg);
     Common.bot.say('#cwexperts.staff', error_msg);
   }
 });
