@@ -857,6 +857,114 @@ Commands.startpt = function(Common, from, to, message) {
 	Commands.startplaytime(Common, from, to, message);
 };
 
+Commands.spt = function(Common, from, to, message) {
+	Commands.startplaytime(Common, from, to, message);
+};
+
+function restartplaytime(Common, from, to, message) {
+	Common.db.channels.findOne({channel: to}, function(err, channel) {
+		if (err || !channel) {
+			console.log("Channel not found: " + channel);
+			console.log(err);
+		} else {
+			if (channel.games === 0) {
+				Common.db.channels.update({channel: to}, {$set: {games: 1}}, function(err, updated) {
+			     		if (err || !updated) {
+						console.log("Channel not updated!");
+					} else {
+						Common.utils.remindPlaytime(Common, to, 1, 'playtime');
+						Common.bot.say(to, "2" + from + " has started the playtime counters in this channel.");
+					}
+				});
+			} else {
+				if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
+					var gtdays = 0;
+					var gthours = 0;
+					var gtminutes = 0;
+					var gtseconds = 0;
+					var thdays = 0;
+					var thhours = 0;
+					var thminutes = 0;
+					var thseconds = 0;
+					if (channel.days != 0) {
+						gtdays = channel.days * 216;
+						thdays = channel.days * 244.8;
+					} if (channel.hours != 0) {
+						gthours = channel.hours * 9;
+						thhours = channel.hours * 10.2;
+					} if (channel.minutes != 0) {
+						gtminutes = channel.minutes * 0.15;
+						thminutes = channel.minutes * 0.17;
+					} if (channel.seconds != 0) {
+						gtseconds = channel.seconds * 0.0025;
+						thseconds = channel.seconds * 0.00283;
+					}
+					var gtall = gtdays + gthours + gtminutes + gtseconds;
+					var gtallen = gtall * 2;
+					var thall = thdays + thhours + thminutes + thseconds;
+					var thallsl = thall * 5;
+					setTimeout(function() {
+						Common.bot.say(to, "2Ended session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
+					}, 1000);
+					Common.db.channels.update({channel: to}, {$set: {days: 0, hours: 0, minutes: 0, seconds: 0}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("Error: Playtime not updated!");
+						}
+					});
+				}
+				Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");	
+			}
+		}
+	});
+};
+
+Commands.restartplaytime = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		Common.db.channels.findOne({channel: to}, function(err, channel) {
+			if (err || !channel) {
+				console.log("Error: Unable to fetch world for " + channel);
+				console.log(err);
+			} else if (channel.game_lock == 1) {
+				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					restartplaytime(Common, from, to, message);
+				} else if (channel.lead !== 0) {
+					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
+						restartplaytime(Common, from, to, message);
+					} else if (channel.coor !== 0) {
+						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
+							restartplaytime(Common, from, to, message);
+						} else {
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						}
+					} else {
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					}
+				} else if (channel.coor !== 0) {
+					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
+						restartplaytime(Common, from, to, message);
+					} else {
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					}
+				} else {
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+				}
+			} else {
+				restartplaytime(Common, from, to, message);
+			}
+		});
+	}
+};
+			
+Commands.restartpt = function(Common, from, to, message) {
+	Commands.restartplaytime(Common, from, to, message);
+};
+
+Commands.rspt = function(Common, from, to, message) {
+	Commands.restartplaytime(Common, from, to, message);
+};
+
 Commands.playtime = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
