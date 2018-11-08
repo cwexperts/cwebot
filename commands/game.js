@@ -886,7 +886,6 @@ function restartplaytime(Common, from, to, message) {
 						} else {
 							var seconds2 = channel.seconds;
 							if (seconds1 == seconds2) {
-								Common.bot.say(to, "2the reminders were frozen because bot dc.");
 								Common.bot.say(to, "2" + from + " has restarted the playtime counters for this channel.");
 								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
 									var gtdays = 0;
