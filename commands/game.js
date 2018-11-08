@@ -877,42 +877,89 @@ function restartplaytime(Common, from, to, message) {
 					}
 				});
 			} else {
-				if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
-					var gtdays = 0;
-					var gthours = 0;
-					var gtminutes = 0;
-					var gtseconds = 0;
-					var thdays = 0;
-					var thhours = 0;
-					var thminutes = 0;
-					var thseconds = 0;
-					if (channel.days != 0) {
-						gtdays = channel.days * 216;
-						thdays = channel.days * 244.8;
-					} if (channel.hours != 0) {
-						gthours = channel.hours * 9;
-						thhours = channel.hours * 10.2;
-					} if (channel.minutes != 0) {
-						gtminutes = channel.minutes * 0.15;
-						thminutes = channel.minutes * 0.17;
-					} if (channel.seconds != 0) {
-						gtseconds = channel.seconds * 0.0025;
-						thseconds = channel.seconds * 0.00283;
-					}
-					var gtall = gtdays + gthours + gtminutes + gtseconds;
-					var gtallen = gtall * 2;
-					var thall = thdays + thhours + thminutes + thseconds;
-					var thallsl = thall * 5;
-					setTimeout(function() {
-						Common.bot.say(to, "2Ended session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
-					}, 1000);
-					Common.db.channels.update({channel: to}, {$set: {days: 0, hours: 0, minutes: 0, seconds: 0}}, function(err, updated) {
-						if (err || !updated) {
-							console.log("Error: Playtime not updated!");
+				var seconds1 = channel.seconds;
+				setTimeout(function() {
+					Common.db.channels.findOne({channel: to}, function(err, channel) {
+						if (err || !channel) {
+							console.log("Channel not found: " + channel);
+							console.log(err);
+						} else {
+							var seconds2 = channel.seconds;
+							if (seconds1 == seconds2) {
+								Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");
+								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
+									var gtdays = 0;
+									var gthours = 0;
+									var gtminutes = 0;
+									var gtseconds = 0;
+									var thdays = 0;
+									var thhours = 0;
+									var thminutes = 0;
+									var thseconds = 0;
+									if (channel.days != 0) {
+										gtdays = channel.days * 216;
+										thdays = channel.days * 244.8;
+									} if (channel.hours != 0) {
+										gthours = channel.hours * 9;
+										thhours = channel.hours * 10.2;
+									} if (channel.minutes != 0) {
+										gtminutes = channel.minutes * 0.15;
+										thminutes = channel.minutes * 0.17;
+									} if (channel.seconds != 0) {
+										gtseconds = channel.seconds * 0.0025;
+										thseconds = channel.seconds * 0.00283;
+									}
+									var gtall = gtdays + gthours + gtminutes + gtseconds;
+									var gtallen = gtall * 2;
+									var thall = thdays + thhours + thminutes + thseconds;
+									var thallsl = thall * 5;
+									Common.bot.say(to, "2Ended session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
+								}
+								Common.db.channels.update({channel: to}, {$set: {days: 0, hours: 0, minutes: 0, seconds: 0}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("Error: Playtime not updated!");
+									}
+									Common.utils.remindPlaytime(Common, to, 1, 'playtime');
+								});
+							} else {
+								Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");
+								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
+									var gtdays = 0;
+									var gthours = 0;
+									var gtminutes = 0;
+									var gtseconds = 0;
+									var thdays = 0;
+									var thhours = 0;
+									var thminutes = 0;
+									var thseconds = 0;
+									if (channel.days != 0) {
+										gtdays = channel.days * 216;
+										thdays = channel.days * 244.8;
+									} if (channel.hours != 0) {
+										gthours = channel.hours * 9;
+										thhours = channel.hours * 10.2;
+									} if (channel.minutes != 0) {
+										gtminutes = channel.minutes * 0.15;
+										thminutes = channel.minutes * 0.17;
+									} if (channel.seconds != 0) {
+										gtseconds = channel.seconds * 0.0025;
+										thseconds = channel.seconds * 0.00283;
+									}
+									var gtall = gtdays + gthours + gtminutes + gtseconds;
+									var gtallen = gtall * 2;
+									var thall = thdays + thhours + thminutes + thseconds;
+									var thallsl = thall * 5;
+									Common.bot.say(to, "2Ended session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
+									Common.db.channels.update({channel: to}, {$set: {days: 0, hours: 0, minutes: 0, seconds: 0}}, function(err, updated) {
+										if (err || !updated) {
+											console.log("Error: Playtime not updated!");
+										}
+									});
+								}
+							}
 						}
 					});
-				}
-				Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");	
+				}, 1000);
 			}
 		}
 	});
