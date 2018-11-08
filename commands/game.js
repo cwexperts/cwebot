@@ -804,11 +804,11 @@ function startplaytime(Common, from, to, message) {
 						console.log("Channel not updated!");
 					} else {
 						Common.utils.remindPlaytime(Common, to, 1, 'playtime');
-						Common.bot.say(to, "2" + from + " has started the playtime counters in this channel.");
+						Common.bot.say(to, "2" + from + " has started the playtime counters for this channel.");
 					}
 				});
 			} else {
-				Common.bot.say(to, "5The playtime counters are already active in this channel - use !playtime to view the current playtime, or use !playtimeTotal to view the total playtime.");	
+				Common.bot.say(to, "5The playtime counters are already active for this channel - use !playtime to view the current playtime, or use !playtimeTotal to view the total playtime.");	
 			}
 		}
 	});
@@ -873,7 +873,7 @@ function restartplaytime(Common, from, to, message) {
 						console.log("Channel not updated!");
 					} else {
 						Common.utils.remindPlaytime(Common, to, 1, 'playtime');
-						Common.bot.say(to, "2" + from + " has started the playtime counters in this channel.");
+						Common.bot.say(to, "2" + from + " has started the playtime counters for this channel.");
 					}
 				});
 			} else {
@@ -886,7 +886,8 @@ function restartplaytime(Common, from, to, message) {
 						} else {
 							var seconds2 = channel.seconds;
 							if (seconds1 == seconds2) {
-								Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");
+								Common.bot.say(to, "2the reminders were frozen because bot dc.");
+								Common.bot.say(to, "2" + from + " has restarted the playtime counters for this channel.");
 								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
 									var gtdays = 0;
 									var gthours = 0;
@@ -922,7 +923,7 @@ function restartplaytime(Common, from, to, message) {
 									Common.utils.remindPlaytime(Common, to, 1, 'playtime');
 								});
 							} else {
-								Common.bot.say(to, "2" + from + " has restarted the playtime counters in this channel.");
+								Common.bot.say(to, "2" + from + " has restarted the playtime counters for this channel.");
 								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
 									var gtdays = 0;
 									var gthours = 0;
