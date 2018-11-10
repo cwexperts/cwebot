@@ -4,22 +4,26 @@ Commands.setstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		if (ops[to].indexOf(from) > -1) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (Common.utils.msg(message)) {
 				var status = message.match(/\S+/g);
 				var name = Common.utils.toLc(status[1]);
 				if (status[2] !== undefined) {
-					if (status[2] == '3' || status[2] == '4' || status[2] == '5' || status[2] == '6' || status[2] == '7' || Common.utils.toLc(status[2]) == 'normal' || Common.utils.toLc(status[2]) == 'staff' || Common.utils.toLc(status[2]) == 'admin' || Common.utils.toLc(status[2]) == 'veteran' || Common.utils.toLc(status[2]) == 'vet' || Common.utils.toLc(status[2]) == 'owner') {
+					if (status[2] == '1' || status[2] == '2' || status[2] == '3' || status[2] == '4' || status[2] == '5' || status[2] == '6' || Common.utils.toLc(status[2]) == 'angry' || Common.utils.toLc(status[2]) == 'normal' || Common.utils.toLc(status[2]) == 'vet' || Common.utils.toLc(status[2]) == 'veteran' || Common.utils.toLc(status[2]) == 'staff' || Common.utils.toLc(status[2]) == 'admin' || Common.utils.toLc(status[2]) == 'owner') {
 						var stat = Common.utils.toLc(status[2]);
-						if (stat == '3' || stat == 'normal') {
+						if (stat == '1' || stat == 'angry') {
+							stat = 'Angry Gamer';
+						} else if (stat == '2' || stat == 'normal') {
 							stat = 'Normal';
+						} else if (stat == '3' || stat == 'vet' || stat == 'veteran') {
+							stat = 'Veteran';
 						} else if (stat == '4' || stat == 'staff') {
 							stat = 'Staff';
 						} else if (stat == '5' || stat == 'admin') {
 							stat = 'Admin';
-						} else if (stat == '6' || stat == 'vet' || stat == 'veteran') {
-							stat = 'Veteran';
-						} else if (stat == '7' || stat == 'owner') {
+						} else if (stat == '6' || stat == 'owner') {
 							stat = 'Owner';
 						}
 						Common.db.users.findOne({name: name}, function(err, user) {
@@ -27,8 +31,8 @@ Commands.setstatus = function(Common, from, to, message) {
 								console.log(err);
 								Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 							} else {
-								if (stat == 'Owner') {
-									if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
+								if (stat == 'Admin' || stat == 'Owner') {
+									if (perms.status == 'Owner') {
 										if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
@@ -40,7 +44,22 @@ Commands.setstatus = function(Common, from, to, message) {
 											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 										}
 									} else {
-										Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to change the member status of a member to Owner.")
+										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin or Owner.");
+									}
+								} else if (stat == 'Staff') {
+									if (perms.status == 'Admin' || perms.status == 'Owner') {
+										if (user.status != stat) {
+											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												}
+												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+											});
+										} else {
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										}
+									} else {
+										Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to change the member status of a member to Staff.");
 									}
 								} else {
 									if (user.status != stat) {
@@ -56,22 +75,27 @@ Commands.setstatus = function(Common, from, to, message) {
 								}
 							}
 						});
-					} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
-						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					} else if (perms.status == 'Owner') {
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), or 6 (owner). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					} else if (perms.status == 'Admin') {
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), or 4 (staff). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					} else {
-						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), or 3 (veteran). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					}
-				} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
-					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				} else if (perms.status == 'Owner') {
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), or 6 (owner). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				} else if (perms.status == 'Admin') {
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), or 4 (staff). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				} else {
-					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), or 3 (veteran). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				}
 			} else {
 				Common.bot.say(to, '5You must specify a member to change the member status for when using this command. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by operators to change the member status of a member.");
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the member status of a member.");
 		}
+		});
 	}
 };
 
