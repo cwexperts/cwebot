@@ -133,7 +133,7 @@ Commands.setstatus = function(Common, from, to, message) {
 					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), or 3 (veteran). Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a member to change the member status for when using this command. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				Common.bot.say(to, '5You must specify a member to change the member status of when using this command. Use the format !setStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the member status of a member.");
