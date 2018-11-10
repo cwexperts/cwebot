@@ -949,7 +949,9 @@ Commands.setleavedate = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		if (ops[to].indexOf(from) > -1) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (ops[to].indexOf(from) > -1 && (perms.status == 'Admin' || perms.status == 'Owner')) {
 			if (Common.utils.msg(message)) {
 				name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1])
@@ -991,8 +993,9 @@ Commands.setleavedate = function(Common, from, to, message) {
 				Common.bot.say(to, '5You must specify a member to set the leave date for when using this command.');
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by operators to set the leave date for a member.");
+			Common.bot.say(to, "5This command may only be used by operators with Admin or Owner member status to set the leave date for a member.");
 		}
+		});
 	}
 };
 
