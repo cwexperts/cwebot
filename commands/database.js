@@ -37,7 +37,7 @@ Commands.status = function(Common, from, to, message) {
 												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat ".");
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to change the member status of a member to owner.")
@@ -51,7 +51,7 @@ Commands.status = function(Common, from, to, message) {
 											Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 										});
 									} else {
-										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat ".");
+										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 									}
 								}
 							}
