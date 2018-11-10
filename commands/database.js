@@ -1,5 +1,80 @@
 var name, alt;
 
+Commands.status = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		if (ops[to].indexOf(from) > -1) {
+			if (Common.utils.msg(message)) {
+				var status = message.match(/\S+/g);
+				var name = Common.utils.toLc(status[1]);
+				if (status[2] !== undefined) {
+					if (status[2] == '3' || status[2] == '4' || status[2] == '5' || status[2] == '6' || status[2] == '7' || Common.utils.toLc(status[2]) == 'normal' || Common.utils.toLc(status[2]) == 'staff' || Common.utils.toLc(status[2]) == 'admin' || Common.utils.toLc(status[2]) == 'veteran' || Common.utils.toLc(status[2]) == 'vet' || Common.utils.toLc(status[2]) == 'owner') {
+						var stat = Common.utils.toLc(status[2]);
+						if (stat == '3' || stat == 'normal') {
+							stat = 'Normal';
+						} else if (stat == '4' || stat == 'staff') {
+							stat = 'Staff';
+						} else if (stat == '5' || stat == 'admin') {
+							stat = 'Admin';
+						} else if (stat == '6' || stat == 'vet' || stat == 'veteran') {
+							stat = 'Veteran';
+						} else if (stat == '7' || stat == 'owner') {
+							stat = 'Owner';
+						}
+						Common.db.users.findOne({name: name}, function(err, user) {
+							if (err || !user) {
+								console.log(err);
+								Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+							} else {
+								if (stat == 'Owner') {
+									if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
+										if (user.status != stat) {
+											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												}
+												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+											});
+										} else {
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat ".");
+										}
+									} else {
+										Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to change the member status of a member to owner.")
+									}
+								} else {
+									if (user.status != stat) {
+										Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+											if (err || !updated) {
+												console.log('Error', err);
+											}
+											Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+										});
+									} else {
+										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat ".");
+									}
+								}
+							}
+						});
+					} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					} else {
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					}
+				} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				} else {
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				}
+			} else {
+				Common.bot.say(to, '5You must specify a member to change the member status for when using this command. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by operators to change the member status of a member.");
+		}
+	}
+};
+
 Commands.addalt = function(Common, from, to, message) {
     if (Common.utils.msg(message)) {
         name = Common.utils.toDb(from);
@@ -8,7 +83,7 @@ Commands.addalt = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0, status: 'Normal'}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
@@ -1641,6 +1716,16 @@ Commands.member = function(Common, from, to, message) {
 		} else if (user.discord === undefined) {
 			member_msg += ", Discord ID: unknown";
 			Common.db.users.update({name: name}, {$set: {discord: 'unknown'}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.status !== undefined) {
+			member_msg += ", Member status: " + user.status + "";
+		} else if (user.status === undefined) {
+			member_msg += ", Member status: Normal";
+			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
 				}
