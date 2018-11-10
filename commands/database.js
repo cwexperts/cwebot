@@ -83,7 +83,7 @@ Commands.addalt = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0, status: 'Normal'}, function(err, saved) {
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
