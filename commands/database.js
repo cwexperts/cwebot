@@ -53,7 +53,7 @@ Commands.setstatus = function(Common, from, to, message) {
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Owner.");
 									}
-								if (stat == 'Admin') {
+								} else if (stat == 'Admin') {
 									if (perms.status == 'Owner') {
 										if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
