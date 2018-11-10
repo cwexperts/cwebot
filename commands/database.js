@@ -951,7 +951,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 	} else {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (ops[to].indexOf(from) > -1 && (perms.status == 'Admin' || perms.status == 'Owner')) {
+		if (perms.status == 'Admin' || perms.status == 'Owner')) {
 			if (Common.utils.msg(message)) {
 				name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1])
@@ -993,7 +993,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 				Common.bot.say(to, '5You must specify a member to set the leave date for when using this command.');
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by operators with Admin or Owner member status to set the leave date for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to set the leave date for a member.");
 		}
 		});
 	}
@@ -1007,7 +1007,9 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		if (ops[to].indexOf(from) > -1 && (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Owner')) {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
@@ -1076,8 +1078,9 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 				Common.bot.say(to, '5You must specify a member to force set the join date for when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to force set the join date for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the join date for a member.");
 		}
+		});
 	}
 };
 
@@ -1089,7 +1092,9 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		if (ops[to].indexOf(from) > -1 && (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Owner')) {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
@@ -1162,8 +1167,9 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 				Common.bot.say(to, '5You must specify a member to force set the leave date for when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by Abdel, Dxnxex7, and Hanna to force set the leave date for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the leave date for a member.");
 		}
+		});
 	}
 };
 
@@ -1175,7 +1181,9 @@ Commands.penreminder = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1199,9 +1207,10 @@ Commands.penreminder = function(Common, from, to, message) {
 			   	});
 			}
 		});
-	} else { 
-		Common.bot.say(to, "5This command may only be used by staff members to switch between the voluntary pen reminder and the pen reminder for idiots.");
+	} else {
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch between the voluntary pen reminder and the pen reminder for idiots.");
 	}
+	});
 	}
 };
 
@@ -1213,7 +1222,9 @@ Commands.rolereminder = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1238,8 +1249,9 @@ Commands.rolereminder = function(Common, from, to, message) {
 			}
 		});
 	} else { 
-		Common.bot.say(to, "5This command may only be used by staff members to switch the role reminder on and off.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role reminder on and off.");
 	}
+	});
 	}
 };
 
@@ -1279,7 +1291,9 @@ Commands.pentoggle = function(Common, from, to, message) {
 					}
 				});
 			} else {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					Common.db.users.findOne({name: Common.utils.toDb(who[1])}, function(err, user) {
 					if (err || !user) {
 						console.log("User not found.");
@@ -1305,8 +1319,9 @@ Commands.pentoggle = function(Common, from, to, message) {
 					}
 					});
 				} else {
-					Common.bot.say(to, "5This command may only be used by staff members to switch the voluntary pen reminder on and off for a member.");
+					Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the voluntary pen reminder on and off for a member.");
 				}
+				});
 			}
 		} else {
 			Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
@@ -1345,7 +1360,9 @@ Commands.idiot = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (Common.utils.msg(message)) {
 	name = message.match(/\S+/g);
 	if (name.indexOf("abdel") > -1) {
@@ -1374,8 +1391,9 @@ Commands.idiot = function(Common, from, to, message) {
 		Common.bot.say(to, '5You must specify a member to add to the idiot list when using this command.');
 	}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to add a member to the idiot list.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the idiot list.");
 	}
+	});
 	}
 };
 
@@ -1383,7 +1401,9 @@ Commands.genius = function(Common, from, to, message) {
     if (to == '#cwexperts') {
         Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
     } else {
-     if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+     var member = Common.utils.toLc(from);
+     Common.db.users.findOne({name: member}, function(err, perms) {
+     if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
           if (Common.utils.msg(message)) {
               name = message.match(/\S+/g);
               if (name.indexOf("abdel") > -1) {
@@ -1412,8 +1432,9 @@ Commands.genius = function(Common, from, to, message) {
             Common.bot.say(to, '5You must specify a member to delete from the idiot list when using this command.')   
         }
      } else {
-         Common.bot.say(to, "5This command may only be used by staff members to delete a member from the idiot list.");
+        Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a member from the idiot list.");
      }
+     });
     }
 };
 
@@ -1437,7 +1458,9 @@ Commands.idiots = function(Common, from, to, message) {
 };
 
 Commands.warn = function(Common, from, to, message) {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		if (name.indexOf("abdel") > -1) {
@@ -1574,8 +1597,9 @@ Commands.warn = function(Common, from, to, message) {
 			Common.bot.say(to, '5You must specify a member to warn when using this command.');
 		}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to warn a member.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
 	}
+	});
 };
 
 Commands.warns = function(Common, from, to, message) {
@@ -1620,7 +1644,9 @@ Commands.rolelock = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1645,8 +1671,9 @@ Commands.rolelock = function(Common, from, to, message) {
 			}
 		});
 	} else { 
-		Common.bot.say(to, "5This command may only be used by staff members to switch the role lock on and off.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role lock on and off.");
 	}
+	});
 	}
 };
 
@@ -1658,7 +1685,9 @@ Commands.gamelock = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1683,8 +1712,9 @@ Commands.gamelock = function(Common, from, to, message) {
 			}
 		});
 	} else { 
-		Common.bot.say(to, "5This command may only be used by staff members to switch the game lock on and off.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the game lock on and off.");
 	}
+	});
 	}
 };
 
@@ -2058,7 +2088,9 @@ Commands.addcrasher = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
@@ -2095,8 +2127,9 @@ Commands.addcrasher = function(Common, from, to, message) {
 		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.')   
 	}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to add a crasher to the crasher list.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a crasher to the crasher list.");
 	}
+	});
 	}
 };
 
@@ -2108,7 +2141,9 @@ Commands.delcrasher = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
@@ -2139,8 +2174,9 @@ Commands.delcrasher = function(Common, from, to, message) {
 		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.')   
 	}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to delete a crasher from the crasher list.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a crasher from the crasher list.");
 	}
+	});
 	}
 };
 
@@ -2228,7 +2264,7 @@ Commands.members = function(Common, from, to, message) {
 			user_count++;
 		});
 		var new_user_count = user_count + 100;
-		Common.bot.say(to, "2Total members since May 25th, 2014: " + user_count + ", Total members since July 4th, 2013: ~" + new_user_count + " (use !data to learn more)");
+		Common.bot.say(to, "2Total members since May 25th, 2014: " + user_count + " - Total members since July 4th, 2013: ~" + new_user_count + " (use !data to learn more)");
 	});
 	}
 };
