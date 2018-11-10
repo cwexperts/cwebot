@@ -56,12 +56,12 @@ Commands.status = function(Common, from, to, message) {
 								}
 							}
 						});
-					} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+					} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
 						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					} else {
 						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					}
-				} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna")) {
+				} else if (Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7" || Common.utils.toLc(from) == "hanna") {
 					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, veteran, 7, or owner. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				} else {
 					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 3, normal, 4, staff, 5, admin, 6, or veteran. Use the format !status MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
