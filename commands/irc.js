@@ -1,5 +1,7 @@
 Commands.plusops = function(Common, from, to, message) {
-	if (ops[to].indexOf(from) > -1 && (from == "Abdel" || from == "Dxnxex7" || from == "Hanna")) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Owner') {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9999');
@@ -10,10 +12,13 @@ Commands.plusops = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9999');
 	Common.bot.say(to, "3Success.");
 	}
+	});
 };
 
 Commands.minusops = function(Common, from, to, message) {
-	if (ops[to].indexOf(from) > -1 && (from == "Abdel" || from == "Dxnxex7" || from == "Hanna")) {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Owner') {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9998');
@@ -24,6 +29,7 @@ Commands.minusops = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9998');
 	Common.bot.say(to, "3Success.");
 	}
+	});
 };
 
 //REMOVE ALL RANKS
@@ -139,7 +145,9 @@ function removeallwnick(Common, from, to, message) {
 Commands.d = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	if (Common.utils.msg(message)) {	 
-		if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1 || Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7") {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (opsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1 || halfopsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1 || voicesLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -186,8 +194,9 @@ Commands.d = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + nick[1] + " is not a user in this channel.");
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by staff members to change the SwiftIRC ranks for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
 		}
+		});
 	} else {
 		if (opsLc[to].indexOf(Common.utils.toLc(from)) > -1 || halfopsLc[to].indexOf(Common.utils.toLc(from)) > -1 || voicesLc[to].indexOf(Common.utils.toLc(from)) > -1) {
 			removeallnonick(Common, from, to, message);
@@ -310,7 +319,9 @@ function removeallplusvoicewnick(Common, from, to, message) {
 Commands.v = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	if (Common.utils.msg(message)) {	 
-		if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1 || Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7") {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (voicesLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -357,8 +368,9 @@ Commands.v = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + nick[1] + " is not a user in this channel.");
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by staff members to change the SwiftIRC ranks for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
 		}
+		});
 	} else {
 		if (voicesLc[to].indexOf(Common.utils.toLc(from)) > -1) {
 			Common.bot.say(to, "5" + from + ", you already have the voice rank in this channel.");
@@ -543,7 +555,9 @@ function removeallplushalfopwnick(Common, from, to, message) {
 Commands.h = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	if (Common.utils.msg(message)) {	 
-		if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1 || Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7") {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (halfopsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -590,8 +604,9 @@ Commands.h = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + nick[1] + " is not a user in this channel.");
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by staff members to change the SwiftIRC ranks for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
 		}
+		});
 	} else {
 		if (halfopsLc[to].indexOf(Common.utils.toLc(from)) > -1) {
 			Common.bot.say(to, "5" + from + ", you already have the half-operator rank in this channel.");
@@ -742,7 +757,9 @@ function removeallplusopwnick(Common, from, to, message) {
 Commands.o = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	if (Common.utils.msg(message)) {	 
-		if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1 || Common.utils.toLc(from) == "abdel" || Common.utils.toLc(from) == "dxnxex7") {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (opsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -789,8 +806,9 @@ Commands.o = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + nick[1] + " is not a user in this channel.");
 			}
 		} else {
-			Common.bot.say(to, "5This command may only be used by staff members to change the SwiftIRC ranks for a member.");
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
 		}
+		});
 	} else {
 		if (opsLc[to].indexOf(Common.utils.toLc(from)) > -1) {
 			Common.bot.say(to, "5" + from + ", you already have the operator rank in this channel.");
@@ -802,8 +820,9 @@ Commands.o = function(Common, from, to, message) {
 
 Commands.i = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
-
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (typeof nick[1] != 'undefined') {
 				if (Common.utils.toLc(nick[1]) == 'rs') {
 					Common.bot.say(to, "3Attempting to send an invitation for " + to + " to RuneScript...");
@@ -819,6 +838,7 @@ Commands.i = function(Common, from, to, message) {
 			Common.bot.say(to, "5You must specify a user to invite to this channel when using this command. 4DO NOT SEND INVALID INVITATIONS!");
 		}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to invite a user to this channel. 4DO NOT SEND INVALID INVITATIONS!");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to invite a user to this channel. 4DO NOT SEND INVALID INVITATIONS!");
 	}
+	});
 };
