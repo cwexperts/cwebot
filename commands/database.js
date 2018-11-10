@@ -37,11 +37,18 @@ Commands.setstatus = function(Common, from, to, message) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Owner.");
@@ -52,11 +59,18 @@ Commands.setstatus = function(Common, from, to, message) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin.");
@@ -67,11 +81,18 @@ Commands.setstatus = function(Common, from, to, message) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to change the member status of a member to Staff.");
@@ -81,11 +102,18 @@ Commands.setstatus = function(Common, from, to, message) {
 										Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
 												console.log('Error', err);
+											} else if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											}
-											Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 										});
 									} else {
-										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										if (member == name) {
+											Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+										} else {
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										}
 									}
 								}
 							}
