@@ -4,7 +4,9 @@ Commands.masshl = function(Common, from, to, message) {
 		if (err || !channel) {
 			console.log("Error: Unable to fetch world");
 		}
-		if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (msg[1] !== undefined || users[to] != '') {
 				if (Common.utils.msg(message)) {
 					Common.bot.say(to, " 14*** ( 4@!@!@!@ " + from + " HAS AN IMPORANT MESSAGE FOR EVERYONE! PLEASE READ! @!@!@!@ 14) ***");
@@ -22,11 +24,12 @@ Commands.masshl = function(Common, from, to, message) {
 			}
 		} else {
 			if (channel.games !== 0) {
-				Common.bot.say(to, "5This command may only be used by staff members to highlight all active players in this channel.");
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active players in this channel.");
 			} else {
-				Common.bot.say(to, "5This command may only be used by staff members to highlight all active members in this channel.");
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active members in this channel.");
 			}
 		}
+		});
 	});
 };
 
@@ -36,7 +39,9 @@ Commands.mhl = function(Common, from, to, message) {
 
 Commands.masshleveryone = function(Common, from, to, message) {
 	var msg = message.match(/\S+/g);
-	if (ops[to].indexOf(from) > -1)  {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Admin' || perms.status == 'Owner') {
 		if (msg[1] !== undefined || everyoneLc[to] != '') {
 			var everyone = everyoneLc[to];
 			everyone = everyone.toString()
@@ -54,8 +59,9 @@ Commands.masshleveryone = function(Common, from, to, message) {
 			Common.bot.say(to, "5There are no users to highlight in this channel.");
 		}
 	} else {
-		Common.bot.say(to, "5This command may only be used by operators to highlight all users in this channel.");
+		Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to highlight all users in this channel.");
 	}
+	});
 };
 
 Commands.mhle = function(Common, from, to, message) {
@@ -67,7 +73,9 @@ Commands.masshlstaff = function(Common, from, to, message) {
 	var filtered_ops = Common.utils.removeByValue(ops[to], 'Abdel')
 	var filtered_hops = Common.utils.removeByValue(halfops[to], 'Abdel')
 	var hl_list = filtered_ops.join(' ') + ' ' + filtered_hops.join(' ')
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (msg[1] !== undefined || hl_list != ' ') {
 			if (Common.utils.msg(message)) {
 				Common.bot.say(to, " 14*** ( 4@!@!@!@ ATTENTION ALL STAFF MEMBERS! PLEASE READ! @!@!@!@ 14) ***");
@@ -82,8 +90,9 @@ Commands.masshlstaff = function(Common, from, to, message) {
 			Common.bot.say(to, "5There are no staff members to highlight in this channel.");
 		}
 	} else {
-		Common.bot.say(to, "5This command may only be used by staff members to highlight all staff members in this channel.");
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all staff members in this channel.");
 	}
+	});
 };
 
 Commands.mhls = function(Common, from, to, message) {

@@ -809,11 +809,14 @@ module.exports = {
 			   	console.log("Channel not found.");    
 			} else {
 		if (ch.lead === 0 && ch.salt === 0 && ch.flag === 0 && ch.et1 === 0 && ch.et2 === 0 && ch.et3 === 0 && ch.coor === 0) {
-			if (ops[channel].indexOf(from) > -1 || halfops[channel].indexOf(from) > -1)  {
+			var member = Common.utils.toLc(from);
+			Common.db.users.findOne({name: member}, function(err, perms) {
+			if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 				Common.bot.say(channel, '7Roles have not been set! You may set roles randomly by using !ROLE_HERE, or you may force set roles by using !ROLE_HERE NAME.');
 			} else {
 				Common.bot.say(channel, '7Roles have not been set! You may set roles randomly by using !ROLE_HERE, or you may request a role to be assigned to a member by using !rolerequest ROLE_HERE NAME.');
 			}
+			});
 		} else {
 			setTimeout(function() {
 			if (ch.lead !== 0) {
