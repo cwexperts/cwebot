@@ -951,7 +951,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 	} else {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Admin' || perms.status == 'Owner')) {
+		if (perms.status == 'Admin' || perms.status == 'Owner') {
 			if (Common.utils.msg(message)) {
 				name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1])
@@ -1009,7 +1009,7 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 	} else {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Owner')) {
+		if (perms.status == 'Owner') {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
@@ -1094,7 +1094,7 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 	} else {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Owner')) {
+		if (perms.status == 'Owner') {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
