@@ -31,20 +31,49 @@ Commands.setstatus = function(Common, from, to, message) {
 								console.log(err);
 								Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 							} else {
-								if (stat == 'Admin' || stat == 'Owner') {
+								if (stat == 'Owner') {
 									if (perms.status == 'Owner') {
 										if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
 										}
 									} else {
-										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin or Owner.");
+										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Owner.");
+									}
+								} else if (stat == 'Admin') {
+									if (perms.status == 'Owner') {
+										if (user.status != stat) {
+											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+												}
+											});
+										} else {
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
+										}
+									} else {
+										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin.");
 									}
 								} else if (stat == 'Staff') {
 									if (perms.status == 'Admin' || perms.status == 'Owner') {
@@ -52,11 +81,18 @@ Commands.setstatus = function(Common, from, to, message) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
+												} else if (member == name) {
+													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											}
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to change the member status of a member to Staff.");
@@ -66,11 +102,18 @@ Commands.setstatus = function(Common, from, to, message) {
 										Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
 												console.log('Error', err);
+											} else if (member == name) {
+												Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
+											} else {
+												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											}
-											Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 										});
 									} else {
-										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										if (member == name) {
+											Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
+										} else {
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										}
 									}
 								}
 							}
