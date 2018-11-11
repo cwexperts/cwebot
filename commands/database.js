@@ -1,5 +1,10 @@
 var name, alt;
 
+Commands.testkey= function(Common, from, to, message) {
+	var key = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+	Common.bot.say(to, key);
+};
+
 Commands.setmemberstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
