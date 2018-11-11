@@ -214,7 +214,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 		var name = Common.utils.toDb(from);
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
-			var pk = Common.utils.toLc(pk[1]);
+			var pk = Common.utils.toLc(prof[1]);
 		}
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
