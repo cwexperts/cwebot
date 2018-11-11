@@ -13,7 +13,7 @@ Commands.profilekey = function(Common, from, to, message) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + ", a unique profile key has been sent to your private messages.");
+						Common.bot.say(to, "2" + name + ", a unique profile key has been sent to your private messages. Use !editProfileKey to edit your profile key.");
 						Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
 						Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
 					}
