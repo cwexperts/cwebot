@@ -208,10 +208,10 @@ Commands.pk = function(Common, from, to, message) {
 };
 
 Commands.editprofilekey = function(Common, from, to, message) {
+	var name = Common.utils.toDb(from);
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else if (to == '#cwexperts.key') {
-		var name = Common.utils.toDb(from);
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
 			var pk = prof[1];
