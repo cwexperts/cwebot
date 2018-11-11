@@ -224,8 +224,8 @@ Commands.editprofilekey = function(Common, from, to, message) {
 			} else {
 				if (user.key !== undefined) {
 				if (name == 'dxnxex7') {
-					if (dxnxex7['#cwexperts.key'] === undefined || dxnxex7['#cwexperts.key'] === 0 || dxnxex7['#cwexperts.key'] === 5) {
-						dxnxex7['#cwexperts.key'] = 1;
+					if (name['#cwexperts.key'] === undefined || name['#cwexperts.key'] === 0 || name['#cwexperts.key'] === 5) {
+						name['#cwexperts.key'] = 1;
 						tempkey['#cwexperts.key'] = 0;
 						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 					} else if (dxnxex7['#cwexperts.key'] === 1) {
