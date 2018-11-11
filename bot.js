@@ -4,6 +4,9 @@ everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
 lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
 
+//TEMP VARIABLES FOR MEMBER PROFILE KEYS
+tempkey = [], dxnxex7 = [], alexis = [], abdel = [], hanna = [], fable = [], base_tank = [], alan_ = [], alan__ = [], ipso = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
@@ -15,6 +18,7 @@ Common.bot.addListener('registered', function(message) {
   console.log('Identifying...');
   Common.bot.send('NS', 'identify', process.env.IRC_PASSWORD);
   setTimeout(function() {
+    Common.bot.join('#cwexperts.key');
     Common.bot.join('#cwexperts.staff');
     Common.bot.join('#cwexperts2');
     Common.bot.join('#cwexperts1');
