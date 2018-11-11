@@ -1,10 +1,5 @@
 var name, alt;
 
-Commands.testkey= function(Common, from, to, message) {
-	var key = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-	Common.bot.say(to, key);
-};
-
 Commands.setmemberstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
@@ -158,19 +153,21 @@ Commands.addalt = function(Common, from, to, message) {
 	var time = new Date();
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			console.log(err);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', key: key, pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
-					Common.bot.say(to, "2" + name + ", you have been added to the database and your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
+					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
+					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+					Common.bot.notice(from, "2You will not be able to view your profile code again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
 				}
 			});
 		} else {
 			if (to == '#cwexperts') {
-			Common.bot.say(to, "5" + name + ", you already have an alt RSN registered! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
+			Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
 			} else {
-			Common.bot.say(to, "5" + name + ", you already have an alt RSN registered! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
+			Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
 			}
 		}
 	});
