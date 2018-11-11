@@ -207,6 +207,105 @@ Commands.pk = function(Common, from, to, message) {
 	Commands.profilekey(Common, from, to, message);
 };
 
+Commands.editprofilekey = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else if (to == '#cwexperts.key') {
+		var name = Common.utils.toDb(from);
+		var prof = message.match(/\S+/g);
+		if (prof[1] !== undefined) {
+			var pk = Common.utils.toLc(pk[1]);
+		}
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else {
+				if (name == 'dxnxex7') {
+					if (dxnxex7 === undefined || dxnxex7 === 0 || dxnxex7 === 5) {
+						dxnxex7 = 1;
+						tempkey = 0;
+						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+					} else if (dxnxex7 === 1) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								dxnxex7 = 0;
+								tempkey = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (pk == user.key) {
+								dxnxex7 = 2;
+								tempkey = 0;
+								Common.bot.say(to, "2[2/5]: " + name + ", your profile key was accepted. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							} else {
+								Common.bot.say(to, "4[1/5]: " + name + ", your profile key was rejected. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[1/5]: " + name + ", you must enter your current profile key to edit your profile key. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (dxnxex7 === 2) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								dxnxex7 = 0;
+								tempkey = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else {
+								dxnxex7 = 3;
+								tempkey = pk;
+								Common.bot.say(to, "2[3/5]: " + name + ", enter your new profile key again to confirm your new profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[2/5]: " + name + ", you must enter a new profile key to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (dxnxex7 === 3) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								dxnxex7 = 0;
+								tempkey = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (tempkey = pk) {
+								dxnxex7 = 4;
+								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + pk + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+							} else {
+								Common.bot.say(to, "4[3/5]: " + name + ", your profile key was rejected. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[3/5]: " + name + ", you must enter your new profile key again to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (dxnxex7 === 4) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								dxnxex7 = 0;
+								tempkey = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (pk == 'yes') {
+								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
+								Common.db.users.update({name: name}, {$set: {key: tempkey}}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										dxnxex7 = 0;
+										tempkey = 0;
+									}
+								});
+							} else {
+								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					}
+				}
+			}
+		});
+	} else {
+		Common.bot.say(to, "5If you wish to edit your profile key, please ask a member with Owner member status for an invitation to join the #cwexperts.key channel, and then use !editProfileKey for further instructions.");
+	}
+};
+					
+Commands.epk = function(Common, from, to, message) {
+	Commands.editprofilekey(Common, from, to, message);
+};
+
 Commands.editalt = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
