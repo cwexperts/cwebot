@@ -214,7 +214,8 @@ Commands.editprofilekey = function(Common, from, to, message) {
 		var name = Common.utils.toDb(from);
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
-			var pk = Common.utils.toLc(prof[1]);
+			var pk = prof[1];
+			var conf = Common.utils.toLc(prof[1]);
 		}
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
@@ -229,7 +230,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 					} else if (dxnxex7['#cwexperts.key'] === 1) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								dxnxex7['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -245,7 +246,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (dxnxex7['#cwexperts.key'] === 2) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								dxnxex7['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -259,7 +260,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (dxnxex7['#cwexperts.key'] === 3) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								dxnxex7['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -274,11 +275,11 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (dxnxex7['#cwexperts.key'] === 4) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								dxnxex7['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (pk == 'yes') {
+							} else if (conf == 'yes') {
 								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
 								var newkey = tempkey['#cwexperts.key'];
 								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
@@ -303,7 +304,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 					} else if (hanna['#cwexperts.key'] === 1) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								hanna['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -319,7 +320,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (hanna['#cwexperts.key'] === 2) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								hanna['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -333,7 +334,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (hanna['#cwexperts.key'] === 3) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								hanna['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
@@ -348,11 +349,11 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					} else if (hanna['#cwexperts.key'] === 4) {
 						if (prof[1] !== undefined) {
-							if (pk == 'no') {
+							if (conf == 'no') {
 								hanna['#cwexperts.key'] = 0;
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (pk == 'yes') {
+							} else if (conf == 'yes') {
 								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
 								var newkey = tempkey['#cwexperts.key'];
 								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
@@ -377,7 +378,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 			}
 		});
 	} else {
-		Common.bot.say(to, "5If you wish to edit your profile key, please ask a member with Owner member status for an invitation to join the #cwexperts.key channel, and then use !editProfileKey for further instructions.");
+		Common.bot.say(to, "5" + name + ", if you wish to edit your profile key, please ask a member with Owner member status for an invitation to join the #cwexperts.key channel, and then use !editProfileKey for further instructions.");
 	}
 };
 					
