@@ -49,7 +49,6 @@ Commands.editprofilekey = function(Common, from, to, message) {
 			} else {
 				if (user.key !== undefined) {
 				if (name == 'dxnxex7') {
-					dxnxex7['#cwexperts.key'] = 0;
 					userkey1 = dxnxex7['#cwexperts.key'];
 					userkey2 = function(Common, from, to, message) {
 						dxnxex7['#cwexperts.key']++;
@@ -59,6 +58,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 					}
 				}
 					if (userkey1 === undefined || userkey1 === 0 || userkey1 === 5) {
+						userkey3(Common, from, to, message);
 						userkey2(Common, from, to, message);
 						tempkey['#cwexperts.key'] = 0;
 						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
