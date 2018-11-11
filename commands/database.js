@@ -160,7 +160,7 @@ Commands.addalt = function(Common, from, to, message) {
 				} else {
 					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
 					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-					Common.bot.notice(from, "2You will not be able to view your profile code again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
 				}
 			});
 		} else {
@@ -174,6 +174,37 @@ Commands.addalt = function(Common, from, to, message) {
     } else {
         Common.bot.say(to, '5You must specify the RSN of your level 90+ combat alt when using this command.')   
     }
+};
+
+Commands.profilekey = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		name = Common.utils.toDb(from);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else if (user.key === undefined) {
+				var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+				Common.db.users.update({name: name}, {$set: {key: key}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} else {
+						Common.bot.say(to, "2" + name + ", a unique profile key has been sent to your private messages.");
+						Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+						Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+					}
+				});
+			} else {
+				Common.bot.say(to, "5" + name + ", your profile key has already been set - you may not view your profile key again.");
+			}
+		});
+	}
+};
+					
+Commands.pk = function(Common, from, to, message) {
+	Commands.profilekey(Common, from, to, message);
 };
 
 Commands.editalt = function(Common, from, to, message) {
