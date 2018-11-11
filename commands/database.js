@@ -221,6 +221,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 				console.log(err);
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 			} else {
+				if (user.key !== undefined) {
 				if (name == 'dxnxex7') {
 					if (dxnxex7['#cwexperts.key'] === undefined || dxnxex7['#cwexperts.key'] === 0 || dxnxex7['#cwexperts.key'] === 5) {
 						dxnxex7['#cwexperts.key'] = 1;
@@ -369,6 +370,9 @@ Commands.editprofilekey = function(Common, from, to, message) {
 							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 						}
 					}
+				}
+				} else {
+					Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 				}
 			}
 		});
