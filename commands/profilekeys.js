@@ -205,7 +205,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 						}
 					}
-*/				} else {
+				} else {
 					Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 				}
 			}
