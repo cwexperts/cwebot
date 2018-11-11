@@ -48,90 +48,6 @@ Commands.editprofilekey = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 			} else {
 				if (user.key !== undefined) {
-/*				if (name == 'dxnxex7') {
-					userkey1 = dxnxex7['#cwexperts.key'];
-					userkey2 = function(Common, from, to, message) {
-						dxnxex7['#cwexperts.key']++;
-					}
-					userkey3 = function(Common, from, to, message) {
-						dxnxex7['#cwexperts.key'] = 0;
-					}
-				}
-					if (userkey1 === undefined || userkey1 === 0 || userkey1 === 5) {
-						userkey3(Common, from, to, message);
-						userkey2(Common, from, to, message);
-						tempkey['#cwexperts.key'] = 0;
-						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-					} else if (userkey1 === 1) {
-						if (prof[1] !== undefined) {
-							if (conf == 'no') {
-								userkey3(Common, from, to, message);
-								tempkey['#cwexperts.key'] = 0;
-								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (pk == user.key) {
-								userkey2(Common, from, to, message);
-								tempkey['#cwexperts.key'] = 0;
-								Common.bot.say(to, "2[2/5]: " + name + ", your profile key was accepted. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-							} else {
-								Common.bot.say(to, "4[1/5]: " + name + ", your profile key was rejected. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-							}
-						} else {
-							Common.bot.say(to, "5[1/5]: " + name + ", you must enter your current profile key to edit your profile key. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-						}
-					} else if (dxnxex7['#cwexperts.key'] === 2) {
-						if (prof[1] !== undefined) {
-							if (conf == 'no') {
-								dxnxex7['#cwexperts.key'] = 0;
-								tempkey['#cwexperts.key'] = 0;
-								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else {
-								dxnxex7['#cwexperts.key'] = 3;
-								tempkey['#cwexperts.key'] = pk;
-								Common.bot.say(to, "2[3/5]: " + name + ", enter your new profile key again to confirm your new profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-							}
-						} else {
-							Common.bot.say(to, "5[2/5]: " + name + ", you must enter a new profile key to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-						}
-					} else if (dxnxex7['#cwexperts.key'] === 3) {
-						if (prof[1] !== undefined) {
-							if (conf == 'no') {
-								dxnxex7['#cwexperts.key'] = 0;
-								tempkey['#cwexperts.key'] = 0;
-								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (tempkey['#cwexperts.key'] == pk) {
-								dxnxex7['#cwexperts.key'] = 4;
-								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + pk + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
-							} else {
-								Common.bot.say(to, "4[3/5]: " + name + ", your profile key was rejected. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-							}
-						} else {
-							Common.bot.say(to, "5[3/5]: " + name + ", you must enter your new profile key again to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-						}
-					} else if (dxnxex7['#cwexperts.key'] === 4) {
-						if (prof[1] !== undefined) {
-							if (conf == 'no') {
-								dxnxex7['#cwexperts.key'] = 0;
-								tempkey['#cwexperts.key'] = 0;
-								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (conf == 'yes') {
-								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
-								var newkey = tempkey['#cwexperts.key'];
-								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
-									if (err || !updated) {
-										console.log('Error', err);
-									} else {
-										dxnxex7['#cwexperts.key'] = 0;
-										tempkey['#cwexperts.key'] = 0;
-									}
-								});
-							} else {
-								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
-							}
-						} else {
-							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
-						}
-					}
-*/
 					if (memlist[name] === undefined || memlist[name] === 0 || memlist[name] === 5) {
 						memlist[name] = 1;
 						tempkey[name] = 0;
@@ -188,7 +104,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 								tempkey[name] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
 							} else if (conf == 'yes') {
-								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
+								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget, and then leave this channel.");
 								var newkey = tempkey[name];
 								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
 									if (err || !updated) {
