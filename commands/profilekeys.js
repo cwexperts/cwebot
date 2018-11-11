@@ -31,6 +31,9 @@ Commands.pk = function(Common, from, to, message) {
 
 Commands.editprofilekey = function(Common, from, to, message) {
 	var name = Common.utils.toDb(from);
+	var userkey1 = '';
+	var userkey2 = '';
+	var userkey3 = '';
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else if (to == '#cwexperts.key') {
@@ -46,18 +49,27 @@ Commands.editprofilekey = function(Common, from, to, message) {
 			} else {
 				if (user.key !== undefined) {
 				if (name == 'dxnxex7') {
-					if (dxnxex7['#cwexperts.key'] === undefined || dxnxex7['#cwexperts.key'] === 0 || dxnxex7['#cwexperts.key'] === 5) {
-						dxnxex7['#cwexperts.key'] = 1;
+					dxnxex7['#cwexperts.key'] = 0;
+					userkey1 = dxnxex7['#cwexperts.key'];
+					userkey2 = function(Common, from, to, message) {
+						dxnxex7['#cwexperts.key']++;
+					}
+					userkey3 = function(Common, from, to, message) {
+						dxnxex7['#cwexperts.key'] = 0;
+					}
+				}
+					if (userkey1 === undefined || userkey1 === 0 || userkey1 === 5) {
+						userkey2(Common, from, to, message);
 						tempkey['#cwexperts.key'] = 0;
 						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
-					} else if (dxnxex7['#cwexperts.key'] === 1) {
+					} else if (userkey1 === 1) {
 						if (prof[1] !== undefined) {
 							if (conf == 'no') {
-								dxnxex7['#cwexperts.key'] = 0;
+								userkey3(Common, from, to, message);
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
 							} else if (pk == user.key) {
-								dxnxex7['#cwexperts.key'] = 2;
+								userkey2(Common, from, to, message);
 								tempkey['#cwexperts.key'] = 0;
 								Common.bot.say(to, "2[2/5]: " + name + ", your profile key was accepted. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 							} else {
@@ -119,7 +131,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 						}
 					}
-				}  else if (name == 'hanna') {
+/*				}  else if (name == 'hanna') {
 					if (hanna['#cwexperts.key'] === undefined || hanna['#cwexperts.key'] === 0 || hanna['#cwexperts.key'] === 5) {
 						hanna['#cwexperts.key'] = 1;
 						tempkey['#cwexperts.key'] = 0;
@@ -194,7 +206,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 						}
 					}
 				}
-				} else {
+*/				} else {
 					Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 				}
 			}
