@@ -145,7 +145,9 @@ Commands.anticrash = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Admin' || perms.status == 'Owner') {
 					anticrash(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -154,20 +156,21 @@ Commands.anticrash = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							anticrash(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						anticrash(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				anticrash(Common, from, to, message);
 			}
@@ -336,7 +339,9 @@ Commands.setworlds = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					setworlds(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -345,20 +350,21 @@ Commands.setworlds = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							setworlds(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						setworlds(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				setworlds(Common, from, to, message);
 			}
@@ -402,7 +408,9 @@ Commands.hopm = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					hopm(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -411,20 +419,21 @@ Commands.hopm = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							hopm(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						hopm(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				hopm(Common, from, to, message);
 			}
@@ -533,7 +542,9 @@ Commands.setticksleft = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					setticksleft(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -542,20 +553,21 @@ Commands.setticksleft = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							setticksleft(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						setticksleft(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				setticksleft(Common, from, to, message);
 			}
@@ -629,7 +641,9 @@ Commands.teamtoggle = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					teamtoggle(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -638,20 +652,21 @@ Commands.teamtoggle = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							teamtoggle(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						teamtoggle(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				teamtoggle(Common, from, to, message);
 			}
@@ -731,7 +746,9 @@ Commands.worldcycletoggle = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					worldcycletoggle(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -740,20 +757,21 @@ Commands.worldcycletoggle = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							worldcycletoggle(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						worldcycletoggle(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				worldcycletoggle(Common, from, to, message);
 			}
@@ -832,7 +850,9 @@ Commands.startplaytime = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					startplaytime(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -841,20 +861,21 @@ Commands.startplaytime = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							startplaytime(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						startplaytime(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				startplaytime(Common, from, to, message);
 			}
@@ -984,7 +1005,9 @@ Commands.restartplaytime = function(Common, from, to, message) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					restartplaytime(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -993,20 +1016,21 @@ Commands.restartplaytime = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							restartplaytime(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						restartplaytime(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				restartplaytime(Common, from, to, message);
 			}
@@ -1365,7 +1389,9 @@ Commands.tick = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					tick(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1374,20 +1400,21 @@ Commands.tick = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							tick(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						tick(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				tick(Common, from, to, message);
 			}
@@ -1459,7 +1486,9 @@ Commands.notick = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					notick(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1468,20 +1497,21 @@ Commands.notick = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							notick(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						notick(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				notick(Common, from, to, message);
 			}
@@ -1523,7 +1553,9 @@ Commands.guthix = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					guthix(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1532,20 +1564,21 @@ Commands.guthix = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							guthix(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						guthix(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+			});
 			} else {
 				guthix(Common, from, to, message);
 			}
@@ -1636,7 +1669,9 @@ Commands.order = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					order(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1645,20 +1680,21 @@ Commands.order = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							order(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						order(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				order(Common, from, to, message);
 			}
@@ -1716,7 +1752,9 @@ Commands.tie = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					tie(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1725,20 +1763,21 @@ Commands.tie = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							tie(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						tie(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				tie(Common, from, to, message);
 			}
@@ -1763,7 +1802,9 @@ Commands.lobby = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					lobby(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1772,20 +1813,21 @@ Commands.lobby = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							lobby(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						lobby(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				lobby(Common, from, to, message);
 			}
@@ -1866,7 +1908,9 @@ Commands.ls = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					ls(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1875,20 +1919,21 @@ Commands.ls = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							ls(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						ls(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				ls(Common, from, to, message);
 			}
@@ -1957,7 +2002,9 @@ Commands.lz = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					lz(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -1966,20 +2013,21 @@ Commands.lz = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							lz(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						lz(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				lz(Common, from, to, message);
 			}
@@ -2004,7 +2052,9 @@ Commands.unlobby = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					unlobby(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2013,20 +2063,21 @@ Commands.unlobby = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							unlobby(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						unlobby(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				unlobby(Common, from, to, message);
 			}
@@ -2099,7 +2150,9 @@ Commands.uls = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					uls(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2108,20 +2161,21 @@ Commands.uls = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							uls(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						uls(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				uls(Common, from, to, message);
 			}
@@ -2190,7 +2244,9 @@ Commands.ulz = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					ulz(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2199,20 +2255,21 @@ Commands.ulz = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							ulz(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						ulz(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				ulz(Common, from, to, message);
 			}
@@ -2294,7 +2351,9 @@ Commands.hopw = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					hopw(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2303,20 +2362,21 @@ Commands.hopw = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							hopw(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						hopw(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				hopw(Common, from, to, message);
 			}
@@ -2410,7 +2470,9 @@ Commands.lh = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					lh(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2419,20 +2481,21 @@ Commands.lh = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							lh(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						lh(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				lh(Common, from, to, message);
 			}
@@ -2522,7 +2585,9 @@ Commands.uh = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					uh(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2531,20 +2596,21 @@ Commands.uh = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							uh(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						uh(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				uh(Common, from, to, message);
 			}
@@ -2620,7 +2686,9 @@ Commands.hopnextw = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					hopnextw(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2629,20 +2697,21 @@ Commands.hopnextw = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							hopnextw(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						hopnextw(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				hopnextw(Common, from, to, message);
 			}
@@ -2747,7 +2816,9 @@ Commands.lhnw = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					lhnw(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2756,20 +2827,21 @@ Commands.lhnw = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							lhnw(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						lhnw(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				lhnw(Common, from, to, message);
 			}
@@ -2874,7 +2946,9 @@ Commands.uhnw = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
 			} else if (channel.game_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					uhnw(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -2883,20 +2957,21 @@ Commands.uhnw = function(Common, from, to, message) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							uhnw(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else if (channel.coor !== 0) {
 					if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 						uhnw(Common, from, to, message);
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
 				} else {
-					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 				}
+				});
 			} else {
 				uhnw(Common, from, to, message);
 			}
@@ -2920,7 +2995,9 @@ Commands.et = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Channel not found.");    
 			} else if (channel.role_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					if (Common.utils.msg(message)) {
 						Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !et to pick 3 random members to early tick, or use !et1 NAME, !et2 NAME, or !et3 NAME to force set a member to an early tick role.");
 					} else {
@@ -2929,13 +3006,17 @@ Commands.et = function(Common, from, to, message) {
 				} else {
 					Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 				}
+				});
 			} else {
 				if (Common.utils.msg(message)) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !et to pick 3 random members to early tick, or use !et1 NAME, !et2 NAME, or !et3 NAME to force set a member to an early tick role.");
 					} else {
 						Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !et to pick 3 random members to early tick, or use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					Common.utils.pickUser(Common, to, 'et123', 'et');
 				}
@@ -2956,7 +3037,9 @@ function role_picker(Common, from, to, message, role_type) {
 			if (err || !channel) {
 				console.log("Channel not found.");    
 			} else if (channel.role_lock == 1) {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					var nick  = message.match(/\S+/g);
 					if ((role_type == 'lead' && channel.lead === 0) || (role_type == 'salt' && channel.salt === 0) || (role_type == 'zalt' && channel.salt === 0) || (role_type == 'flag' && channel.flag === 0) || 
 					   (role_type == 'et1' && channel.et1 === 0) || (role_type == 'et2' && channel.et2 === 0) || (role_type == 'et3' && channel.et3 === 0) || (role_type == 'coor' && channel.coor === 0)) {
@@ -2995,8 +3078,11 @@ function role_picker(Common, from, to, message, role_type) {
 				} else {
 					Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 				}
+				});
 			} else {
-				if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+				var member = Common.utils.toLc(from);
+				Common.db.users.findOne({name: member}, function(err, perms) {
+				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					var nick  = message.match(/\S+/g);
 					if ((role_type == 'lead' && channel.lead === 0) || (role_type == 'salt' && channel.salt === 0) || (role_type == 'zalt' && channel.salt === 0) || (role_type == 'flag' && channel.flag === 0) || 
 					   (role_type == 'et1' && channel.et1 === 0) || (role_type == 'et2' && channel.et2 === 0) || (role_type == 'et3' && channel.et3 === 0) || (role_type == 'coor' && channel.coor === 0)) {
@@ -3041,6 +3127,7 @@ function role_picker(Common, from, to, message, role_type) {
 						Common.utils.pickUser(Common, to, role_type, from);
 					}
 				}
+				});
 			}
 		});
 	}
@@ -3094,8 +3181,10 @@ Commands.rolerequest = function(Common, from, to, message) {
 	var filtered_hops = Common.utils.removeByValue(halfops[to], 'Abdel')
 	var hl_list = filtered_ops.join(' ') + ' ' + filtered_hops.join(' ')
 	var role = message.match(/\S+/g);
-	if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
-		Common.bot.say(to, "5This command may only be used by normal members to request a role to be assigned to a member.");
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		Common.bot.say(to, "5This command may only be used by members without Staff, Admin, or Owner member status to request a role to be assigned to a member.");
 	} else {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 		if (err || !channel) {
@@ -3247,6 +3336,7 @@ Commands.rolerequest = function(Common, from, to, message) {
 		}
 		});
 	}
+	});
 	}
 };
 
@@ -3296,7 +3386,9 @@ Commands.no = function(Common, from, to, message) {
 			} else if (Common.utils.msg(message)) {
 			if (Common.utils.toLc(game[1]) == 'lead') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.lead === 0) {
 							Common.bot.say(to, "5The lead role is already cleared in this channel.");
 						} else {
@@ -3311,6 +3403,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.lead === 0) {
 						Common.bot.say(to, "5The lead role is already cleared in this channel.");
@@ -3326,7 +3419,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'salt') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.salt === 0) {
 							Common.bot.say(to, "5The salt role is already cleared in this channel.");
 						} else {
@@ -3341,6 +3436,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.salt === 0) {
 						Common.bot.say(to, "5The salt role is already cleared in this channel.");
@@ -3356,7 +3452,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'zalt') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.salt === 0) {
 							Common.bot.say(to, "5The zalt role is already cleared in this channel.");
 						} else {
@@ -3371,6 +3469,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.salt === 0) {
 						Common.bot.say(to, "5The zalt role is already cleared in this channel.");
@@ -3386,7 +3485,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'et1') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.et1 === 0) {
 							Common.bot.say(to, "5The et1 role is already cleared in this channel.");
 						} else {
@@ -3401,6 +3502,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.et1 === 0) {
 						Common.bot.say(to, "5The et1 role is already cleared in this channel.");
@@ -3416,7 +3518,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'et2') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.et2 === 0) {
 							Common.bot.say(to, "5The et2 role is already cleared in this channel.");
 						} else {
@@ -3431,6 +3535,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.et2 === 0) {
 						Common.bot.say(to, "5The et2 role is already cleared in this channel.");
@@ -3446,7 +3551,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'et3') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.et3 === 0) {
 							Common.bot.say(to, "5The et3 role is already cleared in this channel.");
 						} else {
@@ -3461,6 +3568,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.et3 === 0) {
 						Common.bot.say(to, "5The et3 role is already cleared in this channel.");
@@ -3476,7 +3584,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'et') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0) {
 							Common.bot.say(to, "5Early ticking is already ended - there are no set early tick roles in this channel.");
 						} else {
@@ -3491,6 +3601,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0) {
 						Common.bot.say(to, "5Early ticking is already ended - there are no set early tick roles in this channel.");
@@ -3506,7 +3617,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'flag') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.flag === 0) {
 							Common.bot.say(to, "5The flag role is already cleared in this channel.");
 						} else {
@@ -3533,6 +3646,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.flag === 0) {
 						Common.bot.say(to, "5The flag role is already cleared in this channel.");
@@ -3560,7 +3674,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'coor') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.coor === 0) {
 							Common.bot.say(to, "5The coordinator role is already cleared in this channel.");
 						} else {
@@ -3575,6 +3691,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.coor === 0) {
 						Common.bot.say(to, "5The coordinator role is already cleared in this channel.");
@@ -3590,7 +3707,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'roles') {
 				if (channel.role_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1)  {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 							Common.bot.say(to, "5All roles are already cleared in this channel.");
 						} else {
@@ -3605,6 +3724,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 						Common.bot.say(to, "5All roles are already cleared in this channel.");
@@ -3620,7 +3740,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'games') {
 				if (channel.game_lock == 1 && channel.role_lock == 0) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.games === 0 && (time[to] == 0 || time[to] == undefined) && channel.world === 0 && channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 							time[to] = 0;
 							ticksecs[to] = 0;
@@ -3770,10 +3892,10 @@ Commands.no = function(Common, from, to, message) {
 									});
 								}
 							} else {
-								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 							}
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else if (channel.coor !== 0) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
@@ -3826,13 +3948,16 @@ Commands.no = function(Common, from, to, message) {
 								});
 							}
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
+					});
 				} else if (channel.role_lock == 1 && channel.game_lock == 0) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.games === 0 && (time[to] == 0 || time[to] == undefined) && channel.world === 0 && channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 							time[to] = 0;
 							ticksecs[to] = 0;
@@ -3884,8 +4009,11 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The role lock is enabled - use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else if (channel.role_lock == 1 && channel.game_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.games === 0 && (time[to] == 0 || time[to] == undefined) && channel.world === 0 && channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 							time[to] = 0;
 							ticksecs[to] = 0;
@@ -3937,6 +4065,7 @@ Commands.no = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5The game lock and role lock are enabled - only the lead, the coordinator, and staff members may use game commands | use !rolerequest ROLE_HERE NAME to request a role to be assigned to a member.");
 					}
+					});
 				} else {
 					if (channel.games === 0 && (time[to] == 0 || time[to] == undefined) && channel.world === 0 && channel.lead === 0 && channel.salt === 0 && channel.flag === 0 && channel.et1 === 0 && channel.et2 === 0 && channel.et3 === 0 && channel.coor === 0) {
 						time[to] = 0;
@@ -3989,7 +4118,9 @@ Commands.no = function(Common, from, to, message) {
 				}
 			} else if (Common.utils.toLc(game[1]) == 'ticks') {
 				if (channel.game_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						noticks(Common, from, to, message);
 					} else if (channel.lead !== 0) {
 						if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
@@ -3998,26 +4129,29 @@ Commands.no = function(Common, from, to, message) {
 							if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 								noticks(Common, from, to, message);
 							} else {
-								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 							}
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else if (channel.coor !== 0) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
 							noticks(Common, from, to, message);
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
+					});
 				} else {
 					noticks(Common, from, to, message);
 				}
 			} else if (Common.utils.toLc(game[1]) == 'worlds') {
 				if (channel.game_lock == 1) {
-					if (ops[to].indexOf(from) > -1 || halfops[to].indexOf(from) > -1) {
+					var member = Common.utils.toLc(from);
+					Common.db.users.findOne({name: member}, function(err, perms) {
+					if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 						if (channel.world === 0) {
 							Common.bot.say(to, "5The active worlds are already cleared in this channel.");
 						} else {
@@ -4056,10 +4190,10 @@ Commands.no = function(Common, from, to, message) {
 									});
 								}
 							} else {
-								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+								Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 							}
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else if (channel.coor !== 0) {
 						if (Common.utils.toLc(channel.coor) == Common.utils.toLc(from)) {
@@ -4075,11 +4209,12 @@ Commands.no = function(Common, from, to, message) {
 								});
 							}
 						} else {
-							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+							Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 						}
 					} else {
-						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and staff members may use game commands.");
+						Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
 					}
+					});
 				} else {
 					if (channel.world === 0) {
 						Common.bot.say(to, "5The active worlds are already cleared in this channel.");
@@ -4111,3 +4246,4 @@ Commands.clear = function(Common, from, to, message) {
 Commands.end = function(Common, from, to, message) {
 	Commands.no(Common, from, to, message);
 };
+
