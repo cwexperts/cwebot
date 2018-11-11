@@ -4,6 +4,9 @@ everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
 lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
 
+//TEMP VARIABLES FOR MEMBER PROFILE KEYS
+dxnxex7 = [], alexis = [], abdel = [], hanna = [], fable = [], base_tank = [], alan_ = [], alan__ = [], ipso = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
