@@ -289,10 +289,84 @@ Commands.editprofilekey = function(Common, from, to, message) {
 									}
 								});
 							} else {
-								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 							}
 						} else {
-							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					}
+				}  else if (name == 'hanna') {
+					if (hanna['#cwexperts.key'] === undefined || hanna['#cwexperts.key'] === 0 || hanna['#cwexperts.key'] === 5) {
+						hanna['#cwexperts.key'] = 1;
+						tempkey['#cwexperts.key'] = 0;
+						Common.bot.say(to, "2[1/5]: " + name + ", your request to edit your profile key has been recognised. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+					} else if (hanna['#cwexperts.key'] === 1) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								hanna['#cwexperts.key'] = 0;
+								tempkey['#cwexperts.key'] = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (pk == user.key) {
+								hanna['#cwexperts.key'] = 2;
+								tempkey['#cwexperts.key'] = 0;
+								Common.bot.say(to, "2[2/5]: " + name + ", your profile key was accepted. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							} else {
+								Common.bot.say(to, "4[1/5]: " + name + ", your profile key was rejected. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[1/5]: " + name + ", you must enter your current profile key to edit your profile key. Use !editProfileKey CURRENT_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (hanna['#cwexperts.key'] === 2) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								hanna['#cwexperts.key'] = 0;
+								tempkey['#cwexperts.key'] = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else {
+								hanna['#cwexperts.key'] = 3;
+								tempkey['#cwexperts.key'] = pk;
+								Common.bot.say(to, "2[3/5]: " + name + ", enter your new profile key again to confirm your new profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[2/5]: " + name + ", you must enter a new profile key to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (hanna['#cwexperts.key'] === 3) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								hanna['#cwexperts.key'] = 0;
+								tempkey['#cwexperts.key'] = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (tempkey['#cwexperts.key'] == pk) {
+								hanna['#cwexperts.key'] = 4;
+								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + pk + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+							} else {
+								Common.bot.say(to, "4[3/5]: " + name + ", your profile key was rejected. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "5[3/5]: " + name + ", you must enter your new profile key again to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+						}
+					} else if (hanna['#cwexperts.key'] === 4) {
+						if (prof[1] !== undefined) {
+							if (pk == 'no') {
+								hanna['#cwexperts.key'] = 0;
+								tempkey['#cwexperts.key'] = 0;
+								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
+							} else if (pk == 'yes') {
+								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited.");
+								var newkey = tempkey['#cwexperts.key'];
+								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										hanna['#cwexperts.key'] = 0;
+										tempkey['#cwexperts.key'] = 0;
+									}
+								});
+							} else {
+								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
+							}
+						} else {
+							Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + tempkey['#cwexperts.key'] + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 						}
 					}
 				}
