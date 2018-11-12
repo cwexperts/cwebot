@@ -7,7 +7,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
-			if (memlist[member] != 5) {
+			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before using this command. Use !unlockProfile to unlock your profile.");
 			} else {
 			if (Common.utils.msg(message)) {
