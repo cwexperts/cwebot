@@ -4,14 +4,20 @@ Commands.plusops = function(Common, from, to, message) {
 	if (perms.status == 'Owner') {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Dxnxex7', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Dxnxex7', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Dxnxex7', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Dxnxex7', '9999');
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9999');
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Dxnxex7', '9999');
+	Common.bot.send('CS', 'OWNER');
 	Common.bot.say(to, "3Success.");
 	}
 	});
@@ -29,8 +35,8 @@ Commands.minusops = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Hanna', '9998');
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9998');
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9998');
 	Common.bot.say(to, "3Success.");
 	}
 	});
