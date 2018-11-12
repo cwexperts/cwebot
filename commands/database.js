@@ -1,15 +1,5 @@
 var name, alt;
 
-Commands.newchan = function(Common, from, to, message) {
-	Common.db.channels.save({channel: '#key'}, function(err, saved) {
-		if (err || !saved) {
-			console.log('Error', err)
-		} else {
-			Common.bot.say(to, "success");
-		}
-	});
-};
-
 Commands.setmemberstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
