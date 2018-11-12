@@ -7,6 +7,9 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+			if (memlist[member] != 5) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before using this command. Use !unlockProfile to unlock your profile.");
+			} else {
 			if (Common.utils.msg(message)) {
 				var status = message.match(/\S+/g);
 				var name = Common.utils.toLc(status[1]);
@@ -134,6 +137,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 				}
 			} else {
 				Common.bot.say(to, '5You must specify a member to change the member status of when using this command. Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+			}
 			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the member status of a member.");

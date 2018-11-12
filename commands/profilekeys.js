@@ -1,7 +1,5 @@
 Commands.profilekey = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
 		var name = Common.utils.toDb(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
@@ -22,6 +20,8 @@ Commands.profilekey = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + name + ", your profile key has already been set - you may not view your profile key again. Use !editProfileKey to edit your profile key.");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	}
 };
 					
@@ -34,9 +34,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 	var userkey1 = '';
 	var userkey2 = '';
 	var userkey3 = '';
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
-	} else if (to == '#key') {
+	if (to == '#key') {
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
 			var pk = prof[1];
@@ -128,8 +126,10 @@ Commands.editprofilekey = function(Common, from, to, message) {
 				}
 			}
 		});
-	} else {
+	} else if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.bot.say(to, "5This command may only be used in the profile key channel to edit your profile key. Use /join #key to join the #CwExperts profile key channel, and then use !editProfileKey for further instructions.");
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	}
 };
 					
@@ -138,9 +138,7 @@ Commands.epk = function(Common, from, to, message) {
 };
 
 Commands.unlockprofile = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
-	} else if (to == '#key') {
+	if (to == '#key') {
 		var name = Common.utils.toDb(from);
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
@@ -181,8 +179,10 @@ Commands.unlockprofile = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 			}
 		});
-	} else {
+	} else if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.bot.say(to, "5This command may only be used in the profile key channel to unlock your profile. Use /join #key to join the #CwExperts profile key channel, and then use !unlockProfile for further instructions.");
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	}
 };
 
@@ -195,9 +195,7 @@ Commands.up = function(Common, from, to, message) {
 };
 
 Commands.lockprofile = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
 		var name = Common.utils.toDb(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
@@ -214,6 +212,8 @@ Commands.lockprofile = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	}
 };
 					
