@@ -165,7 +165,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 					} else if (memlist[name] === undefined || memlist[name] === 0) {
 						if (pk == user.key) {
 							memlist[name] = 5;
-							Common.bot.say(to, "3" + name + ", your profile has been unlocked. Use !lockProfile to lock your profile.");
+							Common.bot.say(to, "3" + name + ", your profile has been unlocked - please leave this channel. Use !lockProfile to lock your profile.");
 						} else {
 							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 						}
