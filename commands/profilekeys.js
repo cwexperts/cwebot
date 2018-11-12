@@ -74,8 +74,8 @@ Commands.editprofilekey = function(Common, from, to, message) {
 								memlist[name] = 0;
 								tempkey[name] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
-							} else if (conf == 'yes') {
-								Common.bot.say(to, "4[2/5]: " + name + ", your profile key was rejected. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+							} else if (pk.length < 10) {
+								Common.bot.say(to, "4[2/5]: " + name + ", your new profile key was rejected - it must contain at least 10 characters. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 							} else {
 								memlist[name] = 3;
 								tempkey[name] = pk;
@@ -94,7 +94,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 								memlist[name] = 4;
 								Common.bot.say(to, "2[4/5]: " + name + ", are you sure you want to edit your profile key to: " + pk + "? Use !editProfileKey YES to advance your request, or use !editProfileKey NO to abandon your request.");
 							} else {
-								Common.bot.say(to, "4[3/5]: " + name + ", your profile key was incorrect. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
+								Common.bot.say(to, "4[3/5]: " + name + ", your new profile key was incorrect. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
 							}
 						} else {
 							Common.bot.say(to, "5[3/5]: " + name + ", you must enter your new profile key again to edit your profile key. Use !editProfileKey NEW_PROFILE_KEY to advance your request, or use !editProfileKey NO to abandon your request.");
