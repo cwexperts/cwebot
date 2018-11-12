@@ -174,6 +174,10 @@ Common.bot.addListener('join', function(channel, nick, message) {
     }
   } else if (channel == '#cwexperts.staff') {
 //     4red 7orange 8yellow 9lightgreen 10cyan 11lightcyan 12lightblue 2blue 6purple 13pink 3green
+  } else if (channel == 'key') {
+     if (Common.utils.toLc(nick) != 'abdel' && Common.utils.toLc(nick) != 'dxnxex7' && Common.utils.toLc(nick) != 'hanna') {
+       Common.bot.say(channel, "4[WARNING]: Do not enter your profile key if there are other users present in this channel - ask a member with Owner member status for guidance!");
+     }
   }
 });
 
