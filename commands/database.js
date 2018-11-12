@@ -1934,6 +1934,8 @@ Commands.channel = function(Common, from, to, message) {
 				chanl = '#cwexperts2';
 			} if (chanl == 'cwexperts.staff') {
 				chanl = '#cwexperts.staff';
+			} if (chanl == 'key') {
+				chanl = '#key';
 			} if (chanl == '0') {
 				chanl = '#cwexperts';
 			} if (chanl == '1') {
@@ -1942,6 +1944,8 @@ Commands.channel = function(Common, from, to, message) {
 				chanl = '#cwexperts2';
 			} if (chanl == '3') {
 				chanl = '#cwexperts.staff';
+			} if (chanl == '4') {
+				chanl = '#key';
 			}
 			Common.db.channels.findOne({channel: chanl}, function(err, channel) {
 				if (err || !channel) {
