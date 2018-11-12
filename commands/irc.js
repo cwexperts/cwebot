@@ -10,6 +10,8 @@ Commands.plusops = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9999');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Abdel', '9999');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Hanna', '9999');
 	Common.bot.say(to, "3Success.");
 	}
 	});
@@ -27,6 +29,8 @@ Commands.minusops = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9998');
 	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9998');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Abdel', '9998');
+	Common.bot.send('CS', 'ACCESS', '#cwexperts.key', 'ADD', 'Hanna', '9998');
 	Common.bot.say(to, "3Success.");
 	}
 	});
