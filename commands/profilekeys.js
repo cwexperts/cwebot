@@ -35,7 +35,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 	var userkey2 = '';
 	var userkey3 = '';
 	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	} else if (to == '#cwexperts.key') {
 		var prof = message.match(/\S+/g);
 		if (prof[1] !== undefined) {
@@ -127,7 +127,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 			}
 		});
 	} else {
-		Common.bot.say(to, "5" + name + ", if you wish to edit your profile key, please ask a member with Owner member status for an invitation to join the #cwexperts.key channel, and then use !editProfileKey for further instructions.");
+		Common.bot.say(to, "5This command may only be used in the profile key channel to edit your profile key. Use /join #key to join the #CwExperts profile key channel, and then use !editProfileKey for further instructions.");
 	}
 };
 					
