@@ -2,7 +2,7 @@ Commands.profilekey = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	} else {
-		name = Common.utils.toDb(from);
+		var name = Common.utils.toDb(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
@@ -137,7 +137,7 @@ Commands.epk = function(Common, from, to, message) {
 	Commands.editprofilekey(Common, from, to, message);
 };
 
-Commands.confirmprofilekey = function(Common, from, to, message) {
+Commands.unlockprofile = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	} else if (to == '#key') {
@@ -158,33 +158,69 @@ Commands.confirmprofilekey = function(Common, from, to, message) {
 					} else if (memlist[name] === 1 || memlist[name] === 2 || memlist[name] === 3 || memlist[name] === 4) {
 						if (conf == 'no') {
 							memlist[name] = 0;
-							Common.bot.say(to, "2" + name + ", your request to edit your profile key has been abandoned - use !confirmProfileKey CURRENT_PROFILE_KEY to unlock your profile.");
+							Common.bot.say(to, "2" + name + ", your request to edit your profile key has been abandoned - use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 						} else {
-							Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !confirmProfileKey NO to unlock your profile, or use !editProfileKey to edit your profile key.");
+							Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !unlockProfile NO to unlock your profile, or use !editProfileKey to edit your profile key.");
 						}
 					} else if (memlist[name] === undefined || memlist[name] === 0) {
 						if (pk == user.key) {
+							memlist[name] = 5;
 							Common.bot.say(to, "3" + name + ", your profile has been unlocked. Use !lockProfile to lock your profile.");
 						} else {
-							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !confirmProfileKey CURRENT_PROFILE_KEY to unlock your profile, or use !editProfileKey to edit your profile key.");
+							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 						}
 					}
 				} else if (memlist[name] === 5) {
 					Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
 				} else if (memlist[name] === 1 || memlist[name] === 2 || memlist[name] === 3 || memlist[name] === 4) {
-					Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !confirmProfileKey NO to unlock your profile, or use !editProfileKey to edit your profile key.");
+					Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !unlockProfile NO to unlock your profile, or use !editProfileKey to edit your profile key.");
 				} else {
-					Common.bot.say(to, "5" + name + ", you must enter your current profile key to unlock your profile. Use !confirmProfileKey CURRENT_PROFILE_KEY to unlock your profile, or use !editProfileKey to edit your profile key.");
+					Common.bot.say(to, "5" + name + ", you must enter your current profile key to unlock your profile. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 				}
 			} else {
 				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
 			}
 		});
 	} else {
-		Common.bot.say(to, "5This command may only be used in the profile key channel to unlock your profile. Use /join #key to join the #CwExperts profile key channel, and then use !confirmProfileKey for further instructions.");
+		Common.bot.say(to, "5This command may only be used in the profile key channel to unlock your profile. Use /join #key to join the #CwExperts profile key channel, and then use !unlockProfile for further instructions.");
+	}
+};
+
+Commands.unlockp = function(Common, from, to, message) {
+	Commands.unlockprofile(Common, from, to, message);
+};
+
+Commands.up = function(Common, from, to, message) {
+	Commands.unlockprofile(Common, from, to, message);
+};
+
+Commands.lockprofile = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+		var name = Common.utils.toDb(from);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else if (user.key !== undefined) {
+				if (memlist[name] === 5) {
+					memlist[name] = 0;
+					Common.bot.say(to, "3" + name + ", your profile has been locked. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+				} else {
+					Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+				}		
+			} else {
+				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
+			}
+		});
 	}
 };
 					
-Commands.cpk = function(Common, from, to, message) {
-	Commands.confirmprofilekey(Common, from, to, message);
+Commands.lockp = function(Common, from, to, message) {
+	Commands.lockprofile(Common, from, to, message);
+};
+
+Commands.lp = function(Common, from, to, message) {
+	Commands.lockprofile(Common, from, to, message);
 };
