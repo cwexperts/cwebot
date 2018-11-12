@@ -129,6 +129,7 @@ Commands.add = function(Common, from, to, message) {
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], level);
         Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". You're almost done, just a few steps left!");
         Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
         Common.bot.say(to, "Type: /join #cwexperts1");
@@ -190,10 +191,12 @@ Commands.del = function(Common, from, to, message) {
 			Common.bot.send("CS", "ACCESS", "#cwexperts", "DEL", access[1]);
 			Common.bot.send("CS", "ACCESS", "#cwexperts1", "DEL", access[1]);
 			Common.bot.send("CS", "ACCESS", "#cwexperts2", "DEL", access[1]);
+			Common.bot.send("CS", "ACCESS", "#key", "DEL", access[1]);
 			Common.bot.send("CS", "KICK", "#cwexperts.staff", access[1], kick_msg);
 			Common.bot.send("CS", "KICK", "#cwexperts", access[1], kick_msg);
 			Common.bot.send("CS", "KICK", "#cwexperts1", access[1], kick_msg);
 			Common.bot.send("CS", "KICK", "#cwexperts2", access[1], kick_msg);
+			Common.bot.send("CS", "KICK", "#key", access[1], kick_msg);
 			Common.bot.say(to, "4" + from + " has deleted " + access[1] + " from the #CwExperts SwiftIRC access list. Cya hick!");
 		} else {
 			Common.bot.say(to, "5You must specify a member to delete from the #CwExperts SwiftIRC access list when using this command. Use the format !del NICKNAME.");
