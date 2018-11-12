@@ -104,7 +104,11 @@ Commands.editprofilekey = function(Common, from, to, message) {
 								tempkey[name] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
 							} else if (conf == 'yes') {
-								Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget, and then leave this channel.");
+								if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
+									Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget.");
+								} else {
+									Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget, and then leave this channel.");
+								}
 								var newkey = tempkey[name];
 								Common.db.users.update({name: name}, {$set: {key: newkey}}, {upsert: false}, function(err, updated) {
 									if (err || !updated) {
@@ -163,7 +167,11 @@ Commands.unlockprofile = function(Common, from, to, message) {
 					} else if (memlist[name] === undefined || memlist[name] === 0) {
 						if (pk == user.key) {
 							memlist[name] = 5;
-							Common.bot.say(to, "3" + name + ", your profile has been unlocked - please leave this channel. Use !lockProfile to lock your profile.");
+							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
+								Common.bot.say(to, "3" + name + ", your profile has been unlocked. Use !lockProfile to lock your profile.");
+							} else {
+								Common.bot.say(to, "3" + name + ", your profile has been unlocked - please leave this channel. Use !lockProfile to lock your profile.");
+							}
 						} else {
 							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 						}
@@ -173,7 +181,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 				} else if (memlist[name] === 1 || memlist[name] === 2 || memlist[name] === 3 || memlist[name] === 4) {
 					Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !unlockProfile NO to unlock your profile, or use !editProfileKey to edit your profile key.");
 				} else {
-					Common.bot.say(to, "5" + name + ", you must enter your current profile key to unlock your profile. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+					Common.bot.say(to, "5" + name + ", you must enter your profile key to unlock your profile. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 				}
 			} else {
 				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
