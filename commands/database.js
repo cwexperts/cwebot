@@ -1,15 +1,5 @@
 var name, alt;
 
-Commands.newchan = function(Common, from, to, message) {
-	Common.db.channels.save({channel: '#key'}, function(err, saved) {
-		if (err || !saved) {
-			console.log('Error', err)
-		} else {
-			Common.bot.say(to, "success");
-		}
-	});
-};
-
 Commands.setmemberstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
@@ -1944,6 +1934,8 @@ Commands.channel = function(Common, from, to, message) {
 				chanl = '#cwexperts2';
 			} if (chanl == 'cwexperts.staff') {
 				chanl = '#cwexperts.staff';
+			} if (chanl == 'key') {
+				chanl = '#key';
 			} if (chanl == '0') {
 				chanl = '#cwexperts';
 			} if (chanl == '1') {
@@ -1952,6 +1944,8 @@ Commands.channel = function(Common, from, to, message) {
 				chanl = '#cwexperts2';
 			} if (chanl == '3') {
 				chanl = '#cwexperts.staff';
+			} if (chanl == '4') {
+				chanl = '#key';
 			}
 			Common.db.channels.findOne({channel: chanl}, function(err, channel) {
 				if (err || !channel) {
