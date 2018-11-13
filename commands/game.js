@@ -1543,9 +1543,7 @@ function guthix(Common, from, to, message) {
 };
 
 Commands.guthix = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1580,6 +1578,8 @@ Commands.guthix = function(Common, from, to, message) {
 				guthix(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1659,9 +1659,7 @@ function order(Common, from, to, message) {
 };
 
 Commands.order = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1696,6 +1694,8 @@ Commands.order = function(Common, from, to, message) {
 				order(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1742,9 +1742,7 @@ function tie(Common, from, to, message) {
 };
 
 Commands.tie = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1779,6 +1777,8 @@ Commands.tie = function(Common, from, to, message) {
 				tie(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
