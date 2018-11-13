@@ -37,9 +37,9 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 								if (stat == 'Owner') {
 									if (perms.status == 'Owner') {
 										if (member == name) {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status.");
 										} else if (user.status == 'Owner') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Owner member status.");
 										} else if (user.status != stat) {
 											Common.bot.say(to, "5Permission denied - the ability to assign Owner member status is currently disabled.");
 //											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
@@ -56,9 +56,9 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 								} else if (stat == 'Admin') {
 									if (perms.status == 'Owner') {
 										if (member == name) {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status.");
 										} else if (user.status == 'Owner') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Owner member status.");
 										} else if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
@@ -76,12 +76,12 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 								} else if (stat == 'Staff') {
 									if (perms.status == 'Admin' || perms.status == 'Owner') {
 										if (member == name) {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status.");
 										} else if (user.status == 'Owner') {
 											if (perms.status == 'Owner') {
-												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+												Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Owner member status.");
 											} else if (perms.status == 'Admin') {
-												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+												Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Admin or Owner member status.");
 											}
 										} else if (user.status == 'Admin') {
 											if (perms.status == 'Owner') {
@@ -93,7 +93,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 													}
 												});
 											} else if (perms.status == 'Admin') {
-												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+												Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Admin or Owner member status.");
 											}
 										} else if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
@@ -111,14 +111,14 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 									}
 								} else {
 									if (member == name) {
-										Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+										Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status.");
 									} else if (user.status == 'Owner') {
 										if (perms.status == 'Owner') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Owner member status.");
 										} else if (perms.status == 'Admin') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Admin or Owner member status.");
 										} else if (perms.status == 'Staff') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
 										}
 									} else if (user.status == 'Admin') {
 										if (perms.status == 'Owner') {
@@ -130,9 +130,9 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												}
 											});
 										} else if (perms.status == 'Admin') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Admin or Owner member status.");
 										} else if (perms.status == 'Staff') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
 										}
 									} else if (user.status == 'Staff') {
 										if (perms.status == 'Admin' || perms.status == 'Owner') {
@@ -144,7 +144,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												}
 											});
 										} else if (perms.status == 'Staff') {
-											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+											Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
 										}
 									} else if (user.status != stat) {
 										Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
