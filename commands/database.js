@@ -202,33 +202,33 @@ Commands.memberstatus = function(Common, from, to, message) {
 					console.log('Error', err);
 				} else {
 					if (user.retired === 1) {
-						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired");
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired.");
 					} else if (user.retired === undefined) {
 						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+								Common.bot.say(to, "2" + name + "'s member status is set to: Normal.");
 							}
 						});
 					} else {
-						Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal.");
 					}
 				}
 			});
 		} else {
 			if (user.retired === 1) {
-				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired");
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired.");
 			} else if (user.retired === undefined) {
 				Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + ".");
 					}
 				});
 			} else {
-				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + ".");
 			}
 		}
 	});
@@ -1196,12 +1196,13 @@ Commands.did = function(Common, from, to, message) {
 };
 
 Commands.setleavedate = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Admin' || perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
 			if (Common.utils.msg(message)) {
 				name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1])
@@ -1242,10 +1243,13 @@ Commands.setleavedate = function(Common, from, to, message) {
 			} else {
 				Common.bot.say(to, '5You must specify a member to set the leave date for when using this command.');
 			}
+			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to set the leave date for a member.");
 		}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1254,12 +1258,13 @@ Commands.sld = function(Common, from, to, message) {
 };
 
 Commands.forcesetjoindate = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
@@ -1327,10 +1332,13 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 			} else {
 				Common.bot.say(to, '5You must specify a member to force set the join date for when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
+			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the join date for a member.");
 		}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1339,12 +1347,13 @@ Commands.fsjd = function(Common, from, to, message) {
 };
 
 Commands.forcesetleavedate = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
 			if (Common.utils.msg(message)) {
 				var date = message.match(/\S+/g);
 				var name = Common.utils.toLc(date[1]);
@@ -1416,10 +1425,13 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 			} else {
 				Common.bot.say(to, '5You must specify a member to force set the leave date for when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
+			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the leave date for a member.");
 		}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
