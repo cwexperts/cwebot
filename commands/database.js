@@ -1440,9 +1440,7 @@ Commands.fsld = function(Common, from, to, message) {
 };
 
 Commands.penreminder = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -1473,6 +1471,8 @@ Commands.penreminder = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch between the voluntary pen reminder and the pen reminder for idiots.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1481,9 +1481,7 @@ Commands.penr = function(Common, from, to, message) {
 };
 
 Commands.rolereminder = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -1514,6 +1512,8 @@ Commands.rolereminder = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role reminder on and off.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1522,9 +1522,7 @@ Commands.roler = function(Common, from, to, message) {
 };
 
 Commands.pentoggle = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		if (Common.utils.msg(message)) {
 			var who = message.match(/\S+/g);
 			if (who[1] == from) {
@@ -1556,6 +1554,9 @@ Commands.pentoggle = function(Common, from, to, message) {
 				var member = Common.utils.toLc(from);
 				Common.db.users.findOne({name: member}, function(err, perms) {
 				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+					if (memlist[member] != 5 || perms.key === undefined) {
+						Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+					} else {
 					Common.db.users.findOne({name: Common.utils.toDb(who[1])}, function(err, user) {
 					if (err || !user) {
 						console.log("User not found.");
@@ -1580,6 +1581,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 						});
 					}
 					});
+					}
 				} else {
 					Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the voluntary pen reminder on and off for a member.");
 				}
@@ -1611,6 +1613,8 @@ Commands.pentoggle = function(Common, from, to, message) {
 				}
 			});
 		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1619,53 +1623,58 @@ Commands.pent = function(Common, from, to, message) {
 };
 
 Commands.idiot = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
-	if (Common.utils.msg(message)) {
-	name = message.match(/\S+/g);
-	if (name.indexOf("abdel") > -1) {
-		Common.bot.say(to, "Nice try, " + from + "! Abdel is the smartest person on the planet!");
-	} else {
-		Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-			} else {
-				if (user.idiot == 1) {
-					Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already an idiot!");
+		if (memlist[member] != 5 || perms.key === undefined) {
+			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
+		if (Common.utils.msg(message)) {
+		name = message.match(/\S+/g);
+		if (name.indexOf("abdel") > -1) {
+			Common.bot.say(to, "Nice try, " + from + "! Abdel is the smartest person on the planet!");
+		} else {
+			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
+				if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 				} else {
-					Common.db.users.update({name: Common.utils.toDb(name[1])}, {$set: {idiot: 1}}, function(err, updated) {
-					if (err || !updated) {
-						console.log("User not updated");
+					if (user.idiot == 1) {
+						Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already an idiot!");
 					} else {
-						Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+						Common.db.users.update({name: Common.utils.toDb(name[1])}, {$set: {idiot: 1}}, function(err, updated) {
+						if (err || !updated) {
+							console.log("User not updated");
+						} else {
+							Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+						}
+						});
 					}
-					});
 				}
-			}
-		});
-	}
-	} else {
-		Common.bot.say(to, '5You must specify a member to add to the idiot list when using this command.');
-	}
+			});
+		}
+		} else {
+			Common.bot.say(to, '5You must specify a member to add to the idiot list when using this command.');
+		}
+		}
 	} else {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the idiot list.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
 Commands.genius = function(Common, from, to, message) {
-    if (to == '#cwexperts') {
-        Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-    } else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
      var member = Common.utils.toLc(from);
      Common.db.users.findOne({name: member}, function(err, perms) {
      if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (memlist[member] != 5 || perms.key === undefined) {
+		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+	} else {
           if (Common.utils.msg(message)) {
               name = message.match(/\S+/g);
               if (name.indexOf("abdel") > -1) {
@@ -1693,17 +1702,18 @@ Commands.genius = function(Common, from, to, message) {
         } else {
             Common.bot.say(to, '5You must specify a member to delete from the idiot list when using this command.')   
         }
+	}
      } else {
         Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a member from the idiot list.");
      }
      });
-    }
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
 };
 
 Commands.idiots = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.users.find({idiot: 1}, function(err, idiots) {
 			var idiots_list = '';
 			idiots.forEach(function(idiot) {
@@ -1716,6 +1726,8 @@ Commands.idiots = function(Common, from, to, message) {
 				Common.bot.say(to, "3Surprisingly, there aren't any idiots!");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
