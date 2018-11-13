@@ -1732,9 +1732,13 @@ Commands.idiots = function(Common, from, to, message) {
 };
 
 Commands.warn = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (memlist[member] != 5 || perms.key === undefined) {
+			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
 		if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		if (name.indexOf("abdel") > -1) {
@@ -1870,13 +1874,18 @@ Commands.warn = function(Common, from, to, message) {
 		} else {
 			Common.bot.say(to, '5You must specify a member to warn when using this command.');
 		}
+		}
 	} else {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
 };
 
 Commands.warns = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		if (name.indexOf("abdel") > -1) {
@@ -1911,13 +1920,13 @@ Commands.warns = function(Common, from, to, message) {
 			}
 			});
 		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
 };
 
 Commands.rolelock = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -1948,6 +1957,8 @@ Commands.rolelock = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role lock on and off.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1956,9 +1967,7 @@ Commands.rolel = function(Common, from, to, message) {
 };
 
 Commands.gamelock = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -1989,6 +1998,8 @@ Commands.gamelock = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the game lock on and off.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
