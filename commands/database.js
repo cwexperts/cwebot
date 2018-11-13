@@ -289,6 +289,13 @@ Commands.unretire = function(Common, from, to, message) {
 					}
 				});
 			} else if (user.retired === undefined || user.retired === 0) {
+				if (user.retired === undefined) {
+					Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err);
+						}
+					});
+				}
 				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to give yourself Retired member status.");
 			}
 		}
