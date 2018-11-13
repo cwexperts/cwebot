@@ -2,17 +2,25 @@ Commands.plusops = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Owner') {
-	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Hanna', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9999');
-	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9999');
-	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9999');
-	Common.bot.say(to, "3Success.");
+		if (memlist[member] != 5 || perms.key === undefined) {
+			if (to == '#cwexperts.staff') {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			}
+		} else {
+		Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Hanna', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Abdel', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9999');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9999');
+		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9999');
+		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9999');
+		if (to == '#cwexperts.staff') {
+			Common.bot.say(to, "3Success.");
+		}
+		}
 	}
 	});
 };
@@ -21,17 +29,25 @@ Commands.minusops = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Owner') {
-	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Hanna', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9998');
-	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9998');
-	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9998');
-	Common.bot.say(to, "3Success.");
+		if (memlist[member] != 5 || perms.key === undefined) {
+			if (to == '#cwexperts.staff') {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			}
+		} else {
+		Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Abdel', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', 'Hanna', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Abdel', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', 'Hanna', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Abdel', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', 'Hanna', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Abdel', '9998');
+		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', 'Hanna', '9998');
+		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Abdel', '9998');
+		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', 'Hanna', '9998');
+		if (to == '#cwexperts.staff') {
+			Common.bot.say(to, "3Success.");
+		}
+		}
 	}
 	});
 };

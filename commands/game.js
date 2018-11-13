@@ -1,9 +1,6 @@
 Commands.masshl = function(Common, from, to, message) {
 	var msg = message.match(/\S+/g);
 	Common.db.channels.findOne({channel: to}, function(err, channel) {
-		if (err || !channel) {
-			console.log("Error: Unable to fetch world");
-		}
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -16,14 +13,14 @@ Commands.masshl = function(Common, from, to, message) {
 					Common.bot.say(to, "4Message: " + Common.utils.msg(message));
 				}
 			} else {
-				if (channel.games !== 0) {
+				if (channel.games === 1) {
 					Common.bot.say(to, "5There are no active players to highlight in this channel.");
 				} else {
 					Common.bot.say(to, "5There are no active members to highlight in this channel.");
 				}
 			}
 		} else {
-			if (channel.games !== 0) {
+			if (channel.games === 1) {
 				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active players in this channel.");
 			} else {
 				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active members in this channel.");
@@ -137,9 +134,7 @@ function anticrash(Common, from, to, message) {
 };
 
 Commands.anticrash = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -175,6 +170,8 @@ Commands.anticrash = function(Common, from, to, message) {
 				anticrash(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -183,9 +180,7 @@ Commands.ac = function(Common, from, to, message) {
 };
 
 Commands.world = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
     Common.db.channels.findOne({channel: to}, function(err, channel) {
         if (err || !channel) {
            	console.log("Error: Unable to fetch world for " + channel);
@@ -234,6 +229,8 @@ Commands.world = function(Common, from, to, message) {
             }
         }
     });
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -331,9 +328,7 @@ function setworlds(Common, from, to, message) {
 };
 
 Commands.setworlds = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -369,6 +364,8 @@ Commands.setworlds = function(Common, from, to, message) {
 				setworlds(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -400,9 +397,7 @@ function hopm(Common, from, to, message) {
 };
 
 Commands.hopm = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -438,6 +433,8 @@ Commands.hopm = function(Common, from, to, message) {
 				hopm(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -449,9 +446,7 @@ Commands.hopm = function(Common, from, to, message) {
 // };
 
 Commands.ticksleft = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -479,6 +474,8 @@ Commands.ticksleft = function(Common, from, to, message) {
 				}
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -534,9 +531,7 @@ function setticksleft(Common, from, to, message) {
 };
 
 Commands.setticksleft = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -572,6 +567,8 @@ Commands.setticksleft = function(Common, from, to, message) {
 				setticksleft(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -593,7 +590,7 @@ Commands.count = function(Common, from, to, message) {
 			} else {
 				if (to == "#cwexperts") {
 					Common.bot.say(to, "2Active user count: " + players.length + "");
-				} else if (channel.games !== 0) {
+				} else if (channel.games === 1) {
 					Common.bot.say(to, "2Active player count: " + players.length + "");
 				} else {
 					Common.bot.say(to, "2" + "Active member count: " + players.length + "; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
@@ -633,9 +630,7 @@ function teamtoggle(Common, from, to, message) {
 };
 
 Commands.teamtoggle = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -671,6 +666,8 @@ Commands.teamtoggle = function(Common, from, to, message) {
 				teamtoggle(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -679,9 +676,7 @@ Commands.teamt = function(Common, from, to, message) {
 };
 
 Commands.team = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");
@@ -707,6 +702,8 @@ Commands.team = function(Common, from, to, message) {
 				Common.bot.say(to, "2" + "Winning team: 4Zamorak");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -738,9 +735,7 @@ function worldcycletoggle(Common, from, to, message) {
 };
 
 Commands.worldcycletoggle = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -776,6 +771,8 @@ Commands.worldcycletoggle = function(Common, from, to, message) {
 				worldcycletoggle(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -784,9 +781,7 @@ Commands.wct = function(Common, from, to, message) {
 };
 
 Commands.worldcycle = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");
@@ -812,6 +807,8 @@ Commands.worldcycle = function(Common, from, to, message) {
 				Common.bot.say(to, "2" + "World cycle: Three");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 		
@@ -842,9 +839,7 @@ function startplaytime(Common, from, to, message) {
 };
 
 Commands.startplaytime = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -880,6 +875,8 @@ Commands.startplaytime = function(Common, from, to, message) {
 				startplaytime(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 			
@@ -997,9 +994,7 @@ function restartplaytime(Common, from, to, message) {
 };
 
 Commands.restartplaytime = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
@@ -1035,6 +1030,8 @@ Commands.restartplaytime = function(Common, from, to, message) {
 				restartplaytime(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 			
@@ -1047,9 +1044,7 @@ Commands.rspt = function(Common, from, to, message) {
 };
 
 Commands.playtime = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found: " + channel);
@@ -1086,6 +1081,8 @@ Commands.playtime = function(Common, from, to, message) {
 				Common.bot.say(to, "2Current session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1094,9 +1091,7 @@ Commands.pt = function(Common, from, to, message) {
 };
 
 Commands.playtimetotal = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found: " + channel);
@@ -1130,6 +1125,8 @@ Commands.playtimetotal = function(Common, from, to, message) {
 				Common.bot.say(to, "2All-time " + to + " playtime:10 " + channel.daysTotal + "d " + channel.hoursTotal + "h " + channel.minutesTotal + "m " + channel.secondsTotal + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1382,9 +1379,7 @@ function tick(Common, from, to, message) {
 };
 
 Commands.tick = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1419,6 +1414,8 @@ Commands.tick = function(Common, from, to, message) {
 				tick(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1479,9 +1476,7 @@ function notick(Common, from, to, message) {
 };
 
 Commands.notick = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1516,6 +1511,8 @@ Commands.notick = function(Common, from, to, message) {
 				notick(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1546,9 +1543,7 @@ function guthix(Common, from, to, message) {
 };
 
 Commands.guthix = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1583,6 +1578,8 @@ Commands.guthix = function(Common, from, to, message) {
 				guthix(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1662,9 +1659,7 @@ function order(Common, from, to, message) {
 };
 
 Commands.order = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1699,6 +1694,8 @@ Commands.order = function(Common, from, to, message) {
 				order(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1745,9 +1742,7 @@ function tie(Common, from, to, message) {
 };
 
 Commands.tie = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1782,6 +1777,8 @@ Commands.tie = function(Common, from, to, message) {
 				tie(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1795,9 +1792,7 @@ function lobby(Common, from, to, message) {
 };
 
 Commands.lobby = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1832,6 +1827,8 @@ Commands.lobby = function(Common, from, to, message) {
 				lobby(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1901,9 +1898,7 @@ function ls(Common, from, to, message) {
 };
 
 Commands.ls = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -1938,6 +1933,8 @@ Commands.ls = function(Common, from, to, message) {
 				ls(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -1995,9 +1992,7 @@ function lz(Common, from, to, message) {
 };
 
 Commands.lz = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2032,6 +2027,8 @@ Commands.lz = function(Common, from, to, message) {
 				lz(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2045,9 +2042,7 @@ function unlobby(Common, from, to, message) {
 };
 
 Commands.unlobby = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2082,6 +2077,8 @@ Commands.unlobby = function(Common, from, to, message) {
 				unlobby(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2143,9 +2140,7 @@ function uls(Common, from, to, message) {
 };
 
 Commands.uls = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2180,6 +2175,8 @@ Commands.uls = function(Common, from, to, message) {
 				uls(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2237,9 +2234,7 @@ function ulz(Common, from, to, message) {
 };
 
 Commands.ulz = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2274,6 +2269,8 @@ Commands.ulz = function(Common, from, to, message) {
 				ulz(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2344,9 +2341,7 @@ function hopw(Common, from, to, message) {
 };
 
 Commands.hopw = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2381,6 +2376,8 @@ Commands.hopw = function(Common, from, to, message) {
 				hopw(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2463,9 +2460,7 @@ function lh(Common, from, to, message) {
 };
 
 Commands.lh = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2500,6 +2495,8 @@ Commands.lh = function(Common, from, to, message) {
 				lh(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2578,9 +2575,7 @@ function uh(Common, from, to, message) {
 };
 
 Commands.uh = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2615,6 +2610,8 @@ Commands.uh = function(Common, from, to, message) {
 				uh(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2679,9 +2676,7 @@ function hopnextw(Common, from, to, message) {
 };
 
 Commands.hopnextw = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2716,6 +2711,8 @@ Commands.hopnextw = function(Common, from, to, message) {
 				hopnextw(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2809,9 +2806,7 @@ function lhnw(Common, from, to, message) {
 };
 
 Commands.lhnw = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2846,6 +2841,8 @@ Commands.lhnw = function(Common, from, to, message) {
 				lhnw(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2939,9 +2936,7 @@ function uhnw(Common, from, to, message) {
 };
 
 Commands.uhnw = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world");
@@ -2976,6 +2971,8 @@ Commands.uhnw = function(Common, from, to, message) {
 				uhnw(Common, from, to, message);
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2988,9 +2985,7 @@ Commands.un = function(Common, from, to, message) {
 };
 
 Commands.et = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Channel not found.");    
@@ -3022,6 +3017,8 @@ Commands.et = function(Common, from, to, message) {
 				}
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -3030,9 +3027,7 @@ Commands.earlytick = function(Common, from, to, message) {
 };
 
 function role_picker(Common, from, to, message, role_type) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 				console.log("Channel not found.");    
@@ -3130,6 +3125,8 @@ function role_picker(Common, from, to, message, role_type) {
 				});
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 }
 
@@ -3166,17 +3163,15 @@ Commands.coor = function(Common, from, to, message) {
 };
 
 Commands.roles = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.utils.getRoles(Common, from, to);
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
 Commands.rolerequest = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var filtered_ops = Common.utils.removeByValue(ops[to], 'Abdel')
 	var filtered_hops = Common.utils.removeByValue(halfops[to], 'Abdel')
 	var hl_list = filtered_ops.join(' ') + ' ' + filtered_hops.join(' ')
@@ -3337,6 +3332,8 @@ Commands.rolerequest = function(Common, from, to, message) {
 		});
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -3345,9 +3342,7 @@ Commands.rolerq = function(Common, from, to, message) {
 };
 
 Commands.gw = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var time = message.match(/\S+/g);
 	if (typeof time[1] != 'undefined') {
 		if (time[1] == '0' || time[1] == '1' || Common.utils.toLc(time[1]) == 'now') {
@@ -3360,6 +3355,8 @@ Commands.gw = function(Common, from, to, message) {
 	} else {
 	  	Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -3376,9 +3373,7 @@ function noticks(Common, from, to, message) {
 };
 
 Commands.no = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var game = message.match(/\S+/g);
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
@@ -4235,6 +4230,8 @@ Commands.no = function(Common, from, to, message) {
 				Common.bot.say(to, "5You must specify game information to clear when using this command: lead, salt, zalt, flag, et1, et2, et3, et, coor, roles, ticks, worlds, or games. Use the format !no GAME_INFO_HERE.");
 			}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
