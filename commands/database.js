@@ -1,9 +1,7 @@
 var name, alt;
 
 Commands.setmemberstatus = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -182,6 +180,8 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the member status of a member.");
 		}
 		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -190,9 +190,7 @@ Commands.sms = function(Common, from, to, message) {
 };
 
 Commands.memberstatus = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var name = message.match(/\S+/g);
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
@@ -234,6 +232,8 @@ Commands.memberstatus = function(Common, from, to, message) {
 			}
 		}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -242,8 +242,36 @@ Commands.ms = function(Common, from, to, message) {
 };
 
 Commands.retire = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+	if (Common.utils.msg(message)) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Admin' || perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
+				var name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1]);
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else if (user.retired === undefined || user.retired === 0) {
+						Common.db.users.update({name: name}, {$set: {retired: 1}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + " has been given Retired member status.");
+							}
+						});
+					} else if (user.retired === 1) {
+						Common.bot.say(to, "5" + name + " is already retired! Use !unretire MEMBER_HERE to remove Retired member status from a member.");
+					}
+				});
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add Retired member status to a member.");
+		}
+		});
 	} else {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
@@ -257,7 +285,7 @@ Commands.retire = function(Common, from, to, message) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + ", you have successfully retired. Use !unretire to remove your Retired member status.");
+						Common.bot.say(to, "2" + name + ", you have been given Retired member status.");
 					}
 				});
 			} else if (user.retired === 1) {
@@ -266,12 +294,50 @@ Commands.retire = function(Common, from, to, message) {
 		}
 	});
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
 };
 
 
 Commands.unretire = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+	if (Common.utils.msg(message)) {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (perms.status == 'Admin' || perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
+				var name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1]);
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else if (user.retired === 1) {
+						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + " has been given Unretired member status.");
+							}
+						});
+					} else if (user.retired === undefined || user.retired === 0) {
+						if (user.retired === undefined) {
+							Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+								if (err || !updated) {
+									console.log('Error', err);
+								}
+							});
+						}
+						Common.bot.say(to, "5" + name + " is already unretired! Use !retire MEMBER_HERE to add Retired member status to a member.");
+					}
+				});
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to remove Retired member status from a member.");
+		}
+		});
 	} else {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
@@ -285,7 +351,7 @@ Commands.unretire = function(Common, from, to, message) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + ", you have successfully unretired. Use !retire to give yourself Retired member status.");
+						Common.bot.say(to, "2" + name + ", you have been given Unretired member status.");
 					}
 				});
 			} else if (user.retired === undefined || user.retired === 0) {
@@ -296,14 +362,18 @@ Commands.unretire = function(Common, from, to, message) {
 						}
 					});
 				}
-				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to give yourself Retired member status.");
+				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to remove your Unretired member status.");
 			}
 		}
 	});
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
 };
 
 Commands.addalt = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
     if (Common.utils.msg(message)) {
         name = Common.utils.toDb(from);
 	alt = message.match(/\S+/g);
@@ -321,22 +391,23 @@ Commands.addalt = function(Common, from, to, message) {
 				}
 			});
 		} else {
-			if (to == '#cwexperts') {
-			Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
+			if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
 			} else {
-			Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
 			}
 		}
 	});
     } else {
         Common.bot.say(to, '5You must specify the RSN of your level 90+ combat alt when using this command.')   
     }
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
 };
 
 Commands.editalt = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		if (Common.utils.msg(message)) {
 			name = Common.utils.toDb(from);
 			var alt = message.match(/\S+/g);
@@ -477,6 +548,8 @@ Commands.editalt = function(Common, from, to, message) {
 		} else {
 			Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
 		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
