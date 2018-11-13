@@ -189,6 +189,54 @@ Commands.sms = function(Common, from, to, message) {
 	Commands.setmemberstatus(Common, from, to, message);
 };
 
+Commands.memberstatus = function(Common, from, to, message) {
+	var name = message.match(/\S+/g);
+	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+		} else if (user.status === undefined) {
+			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				} else {
+					if (user.retired === 1) {
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired");
+					} else if (user.retired === undefined) {
+						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+							}
+						});
+					} else {
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+					}
+				}
+			});
+		} else {
+			if (user.retired === 1) {
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired");
+			} else if (user.retired === undefined) {
+				Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} else {
+						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+					}
+				});
+			} else {
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+			}
+		}
+	});
+};
+
+Commands.ms = function(Common, from, to, message) {
+	Commands.memberstatus(Common, from, to, message);
+};
+
 Commands.addalt = function(Common, from, to, message) {
     if (Common.utils.msg(message)) {
         name = Common.utils.toDb(from);
@@ -197,7 +245,7 @@ Commands.addalt = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', key: key, pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, key: key, pen: 1, idiot: 1, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
@@ -1010,7 +1058,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 					} else {
 						if (user.joinDate === undefined) {
-							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: time}}, function(err, updated) {
+							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: time, retired: 1}}, function(err, updated) {
 								if (err || !updated) {
 									console.log("User not updated!");
 								}
@@ -1018,7 +1066,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 							Common.bot.say(to, "2" + from + " has set the leave date for " + name + " to: " + timemsg);
 						} else {
 							if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
-								Common.db.users.update({name: name}, {$set: {leaveDate: time}}, function(err, updated) {
+								Common.db.users.update({name: name}, {$set: {leaveDate: time, retired: 1}}, function(err, updated) {
 									if (err || !updated) {
 										console.log("User not updated!");
 									}
@@ -1875,6 +1923,15 @@ Commands.member = function(Common, from, to, message) {
 		} else if (user.status === undefined) {
 			member_msg += ", Member status: Normal";
 			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		} 
+		if (user.retired === 1) {
+			member_msg += " & Retired";
+		} else if (user.retired === undefined) {
+			Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
 				}
