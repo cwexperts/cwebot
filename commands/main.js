@@ -185,6 +185,9 @@ Commands.del = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Owner') {
+		if (memlist[member] != 5 || perms.key === undefined) {
+			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
 		if (Common.utils.msg(message)) {
 			var kick_msg = "You were deleted from the #CwExperts SwiftIRC access list.";
 			Common.bot.send("CS", "ACCESS", "#cwexperts.staff", "DEL", access[1]);
@@ -200,6 +203,7 @@ Commands.del = function(Common, from, to, message) {
 			Common.bot.say(to, "4" + from + " has deleted " + access[1] + " from the #CwExperts SwiftIRC access list. Cya hick!");
 		} else {
 			Common.bot.say(to, "5You must specify a member to delete from the #CwExperts SwiftIRC access list when using this command. Use the format !del NICKNAME.");
+		}
 		}
 	} else {
 		Common.bot.say(to, "5This command may only be used by members with Owner member status to delete a member from the #CwExperts SwiftIRC access list.");
@@ -226,9 +230,9 @@ Commands.web = function(Common, from, to, message) {
 Commands.irc = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	if (typeof nick[1] != 'undefined') {
-		Common.bot.say(to, "3Would you like a free personalized CWEBot command, " + nick[1] + "? All #CwExperts members are entitled to one simple CWEBot command - contact an operator and provide the message that you would like your command to say.");
+		Common.bot.say(to, "3Would you like a free personalized CWEBot command, " + nick[1] + "? All #CwExperts members are entitled to one simple CWEBot command - contact a member with Owner members status and provide the message that you would like your command to say.");
 	} else {
-		Common.bot.say(to, "3All #CwExperts members are entitled to one simple CWEBot command - contact an operator and provide the message that you would like your command to say.");
+		Common.bot.say(to, "3All #CwExperts members are entitled to one simple CWEBot command - contact a member with Owner members status and provide the message that you would like your command to say.");
 	}
 };
 
@@ -424,9 +428,9 @@ Commands.msg = function(Common, from, to, message) {
 
 Commands.criterror = function(Common, from, to, message) {
 	Common.bot.say(to, "4When a critical error occurs, CWEBot may be prevented from fully functioning as intended, and a notification will be sent to all official #CwExperts SwiftIRC channels. " +
-		"If you have reason to believe that your actions may have lead to a critical error, please contact a #CwExperts SwiftIRC operator and provide as much context as you can. Some critical errors can not be avoided.");
+		"If you have reason to believe that your actions may have lead to a critical error, please contact a member with Owner members status and provide as much context as you can. Some critical errors can not be avoided.");
 	Common.bot.notice(from, "4When a critical error occurs, CWEBot may be prevented from fully functioning as intended, and a notification will be sent to all official #CwExperts SwiftIRC channels. " +
-		"If you have reason to believe that your actions may have lead to a critical error, please contact a #CwExperts SwiftIRC operator and provide as much context as you can. Some critical errors can not be avoided.");
+		"If you have reason to believe that your actions may have lead to a critical error, please contact a member with Owner members status and provide as much context as you can. Some critical errors can not be avoided.");
 };
 
 Commands.afk = function(Common, from, to, message) {
@@ -434,9 +438,9 @@ Commands.afk = function(Common, from, to, message) {
   var time = ((data[1] % 1 === 0) ? data[1] : 4);
   Common.utils.goingAfk(Common, to, time, from, 'afk');
 	if (data[1] == 1) {
-		Common.bot.say(to, "4" + from + ", you will be highlighted in " + time + " minute.");
+		Common.bot.say(to, "4" + from + ", you will be highlighted in " + time + " minute.");
 	} else {
-		Common.bot.say(to, "4" + from + ", you will be highlighted in " + time + " minutes.");
+		Common.bot.say(to, "4" + from + ", you will be highlighted in " + time + " minutes.");
 	}
 };
 
