@@ -8,7 +8,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
-				Common.bot.say(to, "5" + member + ", you must unlock your profile before using this command. Use !unlockProfile to unlock your profile.");
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
 			if (Common.utils.msg(message)) {
 				var status = message.match(/\S+/g);
@@ -36,87 +36,126 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 							} else {
 								if (stat == 'Owner') {
 									if (perms.status == 'Owner') {
-										if (user.status != stat) {
-											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
-												if (err || !updated) {
-													console.log('Error', err);
-												} else if (member == name) {
-													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
-												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
-												}
-											});
-										} else {
-											if (member == name) {
-												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
-											} else {
-												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
-											}
+										if (member == name) {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+										} else if (user.status == 'Owner') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+										} else if (user.status != stat) {
+											Common.bot.say(to, "5Permission denied - the ability to assign Owner member status is currently disabled.");
+//											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+//												if (err || !updated) {
+//													console.log('Error', err);
+//												} else {
+//													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+//												}
+//											});
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Owner.");
 									}
 								} else if (stat == 'Admin') {
 									if (perms.status == 'Owner') {
-										if (user.status != stat) {
+										if (member == name) {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+										} else if (user.status == 'Owner') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+										} else if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
-												} else if (member == name) {
-													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
 												} else {
 													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
 											});
 										} else {
-											if (member == name) {
-												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
-											} else {
-												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
-											}
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin.");
 									}
 								} else if (stat == 'Staff') {
 									if (perms.status == 'Admin' || perms.status == 'Owner') {
-										if (user.status != stat) {
+										if (member == name) {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+										} else if (user.status == 'Owner') {
+											if (perms.status == 'Owner') {
+												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+											} else if (perms.status == 'Admin') {
+												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+											}
+										} else if (user.status == 'Admin') {
+											if (perms.status == 'Owner') {
+												Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+													if (err || !updated) {
+														console.log('Error', err);
+													} else {
+														Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+													}
+												});
+											} else if (perms.status == 'Admin') {
+												Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+											}
+										} else if (user.status != stat) {
 											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
 													console.log('Error', err);
-												} else if (member == name) {
-													Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
 												} else {
 													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 												}
 											});
 										} else {
-											if (member == name) {
-												Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
-											} else {
-												Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
-											}
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to change the member status of a member to Staff.");
 									}
 								} else {
-									if (user.status != stat) {
+									if (member == name) {
+										Common.bot.say(to, "5Permission denied - " + name + ", you may not change your own member status.");
+									} else if (user.status == 'Owner') {
+										if (perms.status == 'Owner') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Owner member status.");
+										} else if (perms.status == 'Admin') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+										} else if (perms.status == 'Staff') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+										}
+									} else if (user.status == 'Admin') {
+										if (perms.status == 'Owner') {
+											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+												}
+											});
+										} else if (perms.status == 'Admin') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Admin or Owner member status.");
+										} else if (perms.status == 'Staff') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+										}
+									} else if (user.status == 'Staff') {
+										if (perms.status == 'Admin' || perms.status == 'Owner') {
+											Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												} else {
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+												}
+											});
+										} else if (perms.status == 'Staff') {
+											Common.bot.say(to, "5Permission denied - " + name + ", you may not change the member status of a member with Staff, Admin, or Owner member status.");
+										}
+									} else if (user.status != stat) {
 										Common.db.users.update({name: name}, {$set: {status: stat}}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
 												console.log('Error', err);
-											} else if (member == name) {
-												Common.bot.say(to, "5" + name + ", your member status has been changed to: " + stat + ".");
 											} else {
 												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
 											}
 										});
 									} else {
-										if (member == name) {
-											Common.bot.say(to, "5" + name + ", your member status is already set to: " + stat + ".");
-										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
-										}
+										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
 									}
 								}
 							}
