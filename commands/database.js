@@ -408,6 +408,11 @@ Commands.addalt = function(Common, from, to, message) {
 
 Commands.editalt = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (memlist[member] != 5 || perms.key === undefined) {
+			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
 		if (Common.utils.msg(message)) {
 			name = Common.utils.toDb(from);
 			var alt = message.match(/\S+/g);
@@ -548,6 +553,8 @@ Commands.editalt = function(Common, from, to, message) {
 		} else {
 			Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
 		}
+		}
+		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
