@@ -189,6 +189,54 @@ Commands.sms = function(Common, from, to, message) {
 	Commands.setmemberstatus(Common, from, to, message);
 };
 
+Commands.memberstatus = function(Common, from, to, message) {
+	var name = message.match(/\S+/g);
+	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+		} else if (user.status === undefined) {
+			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				} else {
+					if (user.retired === 1) {
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired");
+					} else if (user.retired === undefined) {
+						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+							}
+						});
+					} else {
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+					}
+				}
+			});
+		} else {
+			if (user.retired === 1) {
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired");
+			} else if (user.retired === undefined) {
+				Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} else {
+						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+					}
+				});
+			} else {
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+			}
+		}
+	});
+};
+
+Commands.ms = function(Common, from, to, message) {
+	Commands.memberstatus(Common, from, to, message);
+};
+
 Commands.addalt = function(Common, from, to, message) {
     if (Common.utils.msg(message)) {
         name = Common.utils.toDb(from);
