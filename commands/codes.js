@@ -1,8 +1,8 @@
 Commands.activepromocodes = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.bot.say(to, "6Active promotional codes:13 nov2018");
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -15,9 +15,7 @@ Commands.cc = function(Common, from, to, message) {
 };
 
 Commands.claimcode = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		name = Common.utils.toDb(from);
 		var code = message.match(/\S+/g);
@@ -56,6 +54,8 @@ Commands.claimcode = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, "5You must enter a promotional code when using this command. Use the format !claimCode CODE_HERE to claim a code - codes are case-sensitive.");
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
