@@ -1525,11 +1525,14 @@ Commands.pentoggle = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		if (Common.utils.msg(message)) {
 			var who = message.match(/\S+/g);
-			if (who[1] == from) {
+			if (Common.utils.toLc(who[1]) == Common.utils.toLc(from)) {
+				who = Common.utils.toLc(who[1]);
 				Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
 					if (err || !user) {
 						console.log("User not found.");
 						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+					} else if (memlist[who] != 5 || user.key === undefined) {
+						Common.bot.say(to, "5" + who + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 					} else {
 						var isPenToggled = user.pen;
 						if (isPenToggled == 1) {
@@ -1588,10 +1591,13 @@ Commands.pentoggle = function(Common, from, to, message) {
 				});
 			}
 		} else {
+			var member = Common.utils.toLc(from);
 			Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
 				if (err || !user) {
 					console.log("User not found.");
 					Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+				} else if (memlist[member] != 5 || user.key === undefined) {
+					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
 					var isPenToggled = user.pen;
 					if (isPenToggled == 1) {
