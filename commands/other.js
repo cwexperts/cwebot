@@ -1078,3 +1078,7 @@ Commands.mary = function(Common, from, to, message) {
 Commands.derpyduck = function(Common, from, to, message) {
 	Common.bot.say(to, "first of all, you have almost half of my exp and probably don't even have trim yet, so your acc must be twice as shit haha. Secondly, your posts further prove how pathetic and child like you are, bravo for letting this person promote your fc.. loll");
 };
+
+Commands.polly = function(Common, from, to, message) {
+	Common.bot.say(to, "More then once a day I see a post of someone saying they want to die, please grow up and appreciate what you got, I assure you life is worth more than you believe.");
+};
