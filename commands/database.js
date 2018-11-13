@@ -190,11 +190,14 @@ Commands.sms = function(Common, from, to, message) {
 };
 
 Commands.memberstatus = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
 	var name = message.match(/\S+/g);
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 		} else if (user.status === undefined) {
 			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
@@ -231,10 +234,73 @@ Commands.memberstatus = function(Common, from, to, message) {
 			}
 		}
 	});
+	}
 };
 
 Commands.ms = function(Common, from, to, message) {
 	Commands.memberstatus(Common, from, to, message);
+};
+
+Commands.retire = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	var name = Common.utils.toLc(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+		} else if (memlist[name] != 5 || user.key === undefined) {
+			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
+			if (user.retired === undefined || user.retired === 0) {
+				Common.db.users.update({name: name}, {$set: {retired: 1}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} else {
+						Common.bot.say(to, "2" + name + ", you have successfully retired. Use !unretire to remove your Retired member status.");
+					}
+				});
+			} else if (user.retired === 1) {
+				Common.bot.say(to, "5" + name + ", you are already retired! Use !unretire to remove your Retired member status.");
+			}
+		}
+	});
+	}
+};
+
+
+Commands.unretire = function(Common, from, to, message) {
+	if (to == '#cwexperts') {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	} else {
+	var name = Common.utils.toLc(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+		} else if (memlist[name] != 5 || user.key === undefined) {
+			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
+			if (user.retired === 1) {
+				Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} else {
+						Common.bot.say(to, "2" + name + ", you have successfully unretired. Use !retire to give yourself Retired member status.");
+					}
+				});
+			} else if (user.retired === undefined || user.retired === 0) {
+				if (user.retired === undefined) {
+					Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err);
+						}
+					});
+				}
+				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to give yourself Retired member status.");
+			}
+		}
+	});
+	}
 };
 
 Commands.addalt = function(Common, from, to, message) {
