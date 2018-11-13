@@ -1920,13 +1920,14 @@ Commands.warns = function(Common, from, to, message) {
 			}
 			});
 		}
+	} 
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
 };
 
 Commands.rolelock = function(Common, from, to, message) {
-	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -1967,7 +1968,7 @@ Commands.rolel = function(Common, from, to, message) {
 };
 
 Commands.gamelock = function(Common, from, to, message) {
-	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
@@ -2008,9 +2009,7 @@ Commands.gamel = function(Common, from, to, message) {
 };
 
 Commands.member = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	name = message.match(/\S+/g);
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
@@ -2197,6 +2196,8 @@ Commands.member = function(Common, from, to, message) {
 		Common.bot.say(to, member_msg);
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2209,9 +2210,7 @@ Commands.user = function(Common, from, to, message) {
 };
 
 Commands.channel = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		name = message.match(/\S+/g);
 		chanl = !Common.utils.msg(message) ? Common.utils.toDb(to) : Common.utils.toDb(name[1]);
 			if (chanl == 'cwexperts') {
@@ -2375,6 +2374,8 @@ Commands.channel = function(Common, from, to, message) {
 					Common.bot.say(to, channel_msg);
 				}
 			});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2383,12 +2384,13 @@ Commands.chan = function(Common, from, to, message) {
 };
 
 Commands.addcrasher = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (memlist[member] != 5 || perms.key === undefined) {
+		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+	} else {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
@@ -2424,10 +2426,13 @@ Commands.addcrasher = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.')   
 	}
+	}
 	} else {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a crasher to the crasher list.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2436,12 +2441,13 @@ Commands.addc = function(Common, from, to, message) {
 };
 
 Commands.delcrasher = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (memlist[member] != 5 || perms.key === undefined) {
+		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+	} else {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
@@ -2471,10 +2477,13 @@ Commands.delcrasher = function(Common, from, to, message) {
         } else {
 		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.')   
 	}
+	}
 	} else {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a crasher from the crasher list.");
 	}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2483,9 +2492,7 @@ Commands.delc = function(Common, from, to, message) {
 };
 
 Commands.checkcrasher = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		name = message.match(/\S+/g);
 		Common.db.crashers.findOne({crasher: Common.utils.toDb(name[1])}, function(err, user) {
@@ -2503,6 +2510,8 @@ Commands.checkcrasher = function(Common, from, to, message) {
         } else {
 		Common.bot.say(to, '5You must specify a crasher RSN when using this command. Use !checkCrasher CRASHER_RSN_HERE to check the crasher lists for a crasher RSN.');
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2511,9 +2520,7 @@ Commands.checkc = function(Common, from, to, message) {
 };
 
 Commands.crashers = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	Common.db.crashers.find({threat: 2}, function(err, crashers) {
 		var crashers_list = '';
 		crashers.forEach(function(threat) {
@@ -2526,13 +2533,13 @@ Commands.crashers = function(Common, from, to, message) {
 			Common.bot.say(to, "3Surprisingly, there aren't any crashers!");
 		}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
 Commands.crashersreformed = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	Common.db.crashers.find({threat: 1}, function(err, crashers) {
 		var crashersr_list = '';
 		crashers.forEach(function(threat) {
@@ -2545,6 +2552,8 @@ Commands.crashersreformed = function(Common, from, to, message) {
 			Common.bot.say(to, "3Unsurprisingly, there aren't any reformed crashers!");
 		}
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2553,9 +2562,7 @@ Commands.crashersr = function(Common, from, to, message) {
 };
 
 Commands.members = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	Common.db.users.find({usercount: undefined}, function(err, users) {
 		var user_count = 0;
 		users.forEach(function(usercount) {
@@ -2564,6 +2571,8 @@ Commands.members = function(Common, from, to, message) {
 		var new_user_count = user_count + 100;
 		Common.bot.say(to, "2Total members since May 25th, 2014: " + user_count + " - Total members since July 4th, 2013: ~" + new_user_count + " (use !data to learn more)");
 	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -2576,9 +2585,9 @@ Commands.mems = function(Common, from, to, message) {
 };
 
 Commands.data = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.bot.say(to, "2The total #CwExperts member count since the creation of the superboosting Castle Wars method on July 4th, 2013 is estimated because our first IRC bot did not have the ability to store data.");
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
