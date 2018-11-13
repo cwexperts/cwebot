@@ -561,6 +561,7 @@ Commands.editalt = function(Common, from, to, message) {
 };
 
 Commands.adddiscordid = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		name = Common.utils.toDb(from);
 		var disc = message.match(/\S+/g);
@@ -591,10 +592,10 @@ Commands.adddiscordid = function(Common, from, to, message) {
 							});
 							Common.bot.say(to, "2" + name + ", your Discord ID has been set to: " + discname + "");
 						} else {
-							if (to == '#cwexperts') {
-								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
-							} else {
+							if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.");
+							} else {
+								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
 							}
 						}
 					});
@@ -610,6 +611,9 @@ Commands.adddiscordid = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
 };
 
 Commands.adddid = function(Common, from, to, message) {
@@ -617,8 +621,11 @@ Commands.adddid = function(Common, from, to, message) {
 };
 
 Commands.editdiscordid = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+	var member = Common.utils.toLc(from);
+	Common.db.users.findOne({name: member}, function(err, perms) {
+	if (memlist[member] != 5 || perms.key === undefined) {
+		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 	} else {
 	if (Common.utils.msg(message)) {
 		name = Common.utils.toDb(from);
@@ -663,6 +670,9 @@ Commands.editdiscordid = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
 	}
+	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 	
@@ -773,9 +783,7 @@ function main(Common, from, to, message) {
 };
 
 Commands.main = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		if (Common.utils.msg(message)) {
 			var alt = message.match(/\S+/g);
 			var final_list = '';
@@ -823,6 +831,8 @@ Commands.main = function(Common, from, to, message) {
 		} else {
 			Common.bot.say(to, '5You must specify an alt RSN or a valid Discord ID when using this command. Use !main ALT_RSN_HERE or !main EXAMPLE_NAME # 0 0 0 0 to search for a main RSN.');
 		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
@@ -866,9 +876,7 @@ function altmsg(Common, from, to, message) {
 			});
 };
 Commands.alt = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		if (Common.utils.msg(message)) {
 			var alt = message.match(/\S+/g);
 			if (alt[2] !== undefined) { 
@@ -978,13 +986,13 @@ Commands.alt = function(Common, from, to, message) {
 			}
 			});
 		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
 Commands.discordid = function(Common, from, to, message) {
-	if (to == '#cwexperts') {
-		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
-	} else {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		var name = message.match(/\S+/g);
 			Common.db.users.find({alt: Common.utils.toDb(name[1])}, function(err, users) {
@@ -1177,6 +1185,8 @@ Commands.discordid = function(Common, from, to, message) {
 			}
 		});
 	}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
 
