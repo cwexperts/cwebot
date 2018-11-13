@@ -156,7 +156,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 			} else if (user.key !== undefined) {
 				if (prof[1] !== undefined) {
 					if (memlist[name] === 5) {
-						Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
+						Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
 					} else if (memlist[name] === 1 || memlist[name] === 2 || memlist[name] === 3 || memlist[name] === 4) {
 						if (conf == 'no') {
 							memlist[name] = 0;
@@ -168,16 +168,16 @@ Commands.unlockprofile = function(Common, from, to, message) {
 						if (pk == user.key) {
 							memlist[name] = 5;
 							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
-								Common.bot.say(to, "3" + name + ", your profile has been unlocked. Use !lockProfile to lock your profile.");
+								Common.bot.say(to, "3" + name + ", your profile has been unlocked. Use !lockProfile to lock your profile.");
 							} else {
-								Common.bot.say(to, "3" + name + ", your profile has been unlocked - please leave this channel. Use !lockProfile to lock your profile.");
+								Common.bot.say(to, "3" + name + ", your profile has been unlocked - please leave this channel. Use !lockProfile to lock your profile.");
 							}
 						} else {
 							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 						}
 					}
 				} else if (memlist[name] === 5) {
-					Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
+					Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
 				} else if (memlist[name] === 1 || memlist[name] === 2 || memlist[name] === 3 || memlist[name] === 4) {
 					Common.bot.say(to, "5" + name + ", you were in the process of editing your profile key - use !unlockProfile NO to unlock your profile, or use !editProfileKey to edit your profile key.");
 				} else {
@@ -212,9 +212,9 @@ Commands.lockprofile = function(Common, from, to, message) {
 			} else if (user.key !== undefined) {
 				if (memlist[name] === 5) {
 					memlist[name] = 0;
-					Common.bot.say(to, "4" + name + ", your profile has been locked. Use !unlockProfile to unlock your profile.");
+					Common.bot.say(to, "4" + name + ", your profile has been locked. Use !unlockProfile to unlock your profile.");
 				} else {
-					Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile to unlock your profile.");
+					Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile to unlock your profile.");
 				}		
 			} else {
 				Common.bot.say(to, "5" + name + ", your profile key has not been set. Use !profileKey to set your profile key.");
