@@ -319,7 +319,7 @@ Commands.unretire = function(Common, from, to, message) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "2" + name + " has been given Unretired member status.");
+								Common.bot.say(to, "2" + name + " has had their Retired member status removed.");
 							}
 						});
 					} else if (user.retired === undefined || user.retired === 0) {
@@ -351,7 +351,7 @@ Commands.unretire = function(Common, from, to, message) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + ", you have been given Unretired member status.");
+						Common.bot.say(to, "2" + name + ", your Retired member status has been removed.");
 					}
 				});
 			} else if (user.retired === undefined || user.retired === 0) {
@@ -362,7 +362,7 @@ Commands.unretire = function(Common, from, to, message) {
 						}
 					});
 				}
-				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to remove your Unretired member status.");
+				Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to give yourself Retired member status.");
 			}
 		}
 	});
