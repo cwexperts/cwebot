@@ -202,33 +202,33 @@ Commands.memberstatus = function(Common, from, to, message) {
 					console.log('Error', err);
 				} else {
 					if (user.retired === 1) {
-						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired");
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal & Retired.");
 					} else if (user.retired === undefined) {
 						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+								Common.bot.say(to, "2" + name + "'s member status is set to: Normal.");
 							}
 						});
 					} else {
-						Common.bot.say(to, "2" + name + "'s member status is set to: Normal");
+						Common.bot.say(to, "2" + name + "'s member status is set to: Normal.");
 					}
 				}
 			});
 		} else {
 			if (user.retired === 1) {
-				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired");
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + " & Retired.");
 			} else if (user.retired === undefined) {
 				Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 					if (err || !updated) {
 						console.log('Error', err);
 					} else {
-						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+						Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + ".");
 					}
 				});
 			} else {
-				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + "");
+				Common.bot.say(to, "2" + name + "'s member status is set to: " + user.status + ".");
 			}
 		}
 	});
