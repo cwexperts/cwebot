@@ -671,6 +671,7 @@ Commands.editdiscordid = function(Common, from, to, message) {
 		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
 	}
 	}
+	});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
