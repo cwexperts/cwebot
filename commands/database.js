@@ -385,6 +385,7 @@ Commands.addalt = function(Common, from, to, message) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
+					memlist[name] = 5;
 					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
 					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
 					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
@@ -408,19 +409,15 @@ Commands.addalt = function(Common, from, to, message) {
 
 Commands.editalt = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		var member = Common.utils.toLc(from);
-		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (memlist[member] != 5 || perms.key === undefined) {
-			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-		} else {
-		if (Common.utils.msg(message)) {
-			name = Common.utils.toDb(from);
-			var alt = message.match(/\S+/g);
-			Common.db.users.findOne({name: name}, function(err, user) {
+		var name = Common.utils.toDb(from);
+		var alt = message.match(/\S+/g);
+		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-			} else {
+			} else if (memlist[name] != 5 || user.key === undefined) {
+				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (Common.utils.msg(message)) {
 				var alt_msg = "2" + name + ", your alts have been changed to: " + Common.utils.toLc(alt[1]) + "";
 				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
@@ -548,12 +545,9 @@ Commands.editalt = function(Common, from, to, message) {
 					alt_msg += " - 5You may only link your main RSN with a maximum of 10 alt RSNs.";	
 				}
 				Common.bot.say(to, alt_msg);
+			} else {
+				Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
 			}
-			});
-		} else {
-			Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
-		}
-		}
 		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
@@ -562,43 +556,39 @@ Commands.editalt = function(Common, from, to, message) {
 
 Commands.adddiscordid = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-	if (Common.utils.msg(message)) {
-		name = Common.utils.toDb(from);
-		var disc = message.match(/\S+/g);
-		var discname = '';
-		if (disc[1] !== undefined && disc[2] !== undefined) {
-			if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
-				if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
-				    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
-				    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
-				    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
-					disc1 = Common.utils.toLc(disc[1]);
-					disc1 = disc1.toString();
-					disc2 = disc[2].toString();
-					disc3 = disc[3].toString();
-					disc4 = disc[4].toString();
-					disc5 = disc[5].toString();
-					disc6 = disc[6].toString();
-					discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
-					Common.db.users.findOne({name: name}, function(err, user) {
-						if (err || !user) {
-							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-						} else if (user.discord === undefined || user.discord == 'unknown') {
-							Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
-								if (err || !updated) {
-									console.log('Error', err);
-								} 
-							});
-							Common.bot.say(to, "2" + name + ", your Discord ID has been set to: " + discname + "");
-						} else {
-							if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.");
-							} else {
-								Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
-							}
-						}
-					});
+	var name = Common.utils.toDb(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+		} else if (memlist[name] != 5 || user.key === undefined) {
+			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else if (user.discord === undefined || user.discord == 'unknown') {
+			var disc = message.match(/\S+/g);
+			var discname = '';
+			if (disc[1] !== undefined && disc[2] !== undefined) {
+				if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
+					if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				 	    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				  	    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+					    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+						disc1 = Common.utils.toLc(disc[1]);
+						disc1 = disc1.toString();
+						disc2 = disc[2].toString();
+						disc3 = disc[3].toString();
+						disc4 = disc[4].toString();
+						disc5 = disc[5].toString();
+						disc6 = disc[6].toString();
+						discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+						Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+						Common.bot.say(to, "2" + name + ", your Discord ID has been set to: " + discname + "");
+					} else {
+						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+					}
 				} else {
 					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
 				}
@@ -606,11 +596,13 @@ Commands.adddiscordid = function(Common, from, to, message) {
 				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
 			}
 		} else {
-			Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+			if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+				Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.");
+			} else {
+				Common.bot.say(to, "5" + name + ", you already have a Discord ID registered! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
+			}
 		}
-	} else {
-		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
-	}
+	});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
@@ -622,55 +614,46 @@ Commands.adddid = function(Common, from, to, message) {
 
 Commands.editdiscordid = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-	var member = Common.utils.toLc(from);
-	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (memlist[member] != 5 || perms.key === undefined) {
-		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-	} else {
-	if (Common.utils.msg(message)) {
-		name = Common.utils.toDb(from);
-		var disc = message.match(/\S+/g);
-		var discname = '';
-		if (disc[1] !== undefined && disc[2] !== undefined) {
-			if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
-				if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
-				    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
-				    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
-				    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
-					disc1 = Common.utils.toLc(disc[1]);
-					disc1 = disc1.toString();
-					disc2 = disc[2].toString();
-					disc3 = disc[3].toString();
-					disc4 = disc[4].toString();
-					disc5 = disc[5].toString();
-					disc6 = disc[6].toString();
-					discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
-					Common.db.users.findOne({name: name}, function(err, user) {
-						if (err || !user) {
-							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-						} else {
-							Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
-								if (err || !updated) {
-									console.log('Error', err);
-								} 
-							});
-							Common.bot.say(to, "2" + name + ", your Discord ID has been changed to: " + discname + "");
-						}
-					});
+	var name = Common.utils.toDb(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+		} else if (memlist[name] != 5 || user.key === undefined) {
+			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else {
+			var disc = message.match(/\S+/g);
+			var discname = '';
+			if (disc[1] !== undefined && disc[2] !== undefined) {
+				if (disc[2] == '#' && disc[3] !== undefined && disc[4] !== undefined && disc[5] !== undefined && disc[6] !== undefined) {
+					if ((disc[3] == '0' || disc[3] == '1' || disc[3] == '2' || disc[3] == '3' || disc[3] == '4' || disc[3] == '5' || disc[3] == '6' || disc[3] == '7' || disc[3] == '8' || disc[3] == '9') && 
+				 	    (disc[4] == '0' || disc[4] == '1' || disc[4] == '2' || disc[4] == '3' || disc[4] == '4' || disc[4] == '5' || disc[4] == '6' || disc[4] == '7' || disc[4] == '8' || disc[4] == '9') && 
+				  	    (disc[5] == '0' || disc[5] == '1' || disc[5] == '2' || disc[5] == '3' || disc[5] == '4' || disc[5] == '5' || disc[5] == '6' || disc[5] == '7' || disc[5] == '8' || disc[5] == '9') && 
+					    (disc[6] == '0' || disc[6] == '1' || disc[6] == '2' || disc[6] == '3' || disc[6] == '4' || disc[6] == '5' || disc[6] == '6' || disc[6] == '7' || disc[6] == '8' || disc[6] == '9')) {
+						disc1 = Common.utils.toLc(disc[1]);
+						disc1 = disc1.toString();
+						disc2 = disc[2].toString();
+						disc3 = disc[3].toString();
+						disc4 = disc[4].toString();
+						disc5 = disc[5].toString();
+						disc6 = disc[6].toString();
+						discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
+						Common.db.users.update({name: name}, {$set: {discord: discname}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+						Common.bot.say(to, "2" + name + ", your Discord ID has been changed to: " + discname + "");
+					} else {
+						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+					}
 				} else {
 					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
 				}
 			} else {
 				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
 			}
-		} else {
-			Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
 		}
-	} else {
-		Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
-	}
-	}
 	});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
