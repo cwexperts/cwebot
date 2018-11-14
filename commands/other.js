@@ -1082,3 +1082,7 @@ Commands.derpyduck = function(Common, from, to, message) {
 Commands.polly = function(Common, from, to, message) {
 	Common.bot.say(to, "More then once a day I see a post of someone saying they want to die, please grow up and appreciate what you got, I assure you life is worth more than you believe.");
 };
+
+Commands.cnn = function(Common, from, to, message) {
+	Common.bot.say(to, "Jim’s gonna have to do all his reporting from Acosta street");
+};
