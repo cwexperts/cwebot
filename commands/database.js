@@ -4,7 +4,10 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the member status of a member.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -246,7 +249,10 @@ Commands.retire = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add Retired member status to a member.");
+		} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -305,7 +311,10 @@ Commands.unretire = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to remove Retired member status from a member.");
+		} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -1182,7 +1191,10 @@ Commands.setleavedate = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to set the leave date for a member.");
+		} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -1244,7 +1256,10 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the join date for a member.");
+		} else if (perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -1333,7 +1348,10 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Owner member status to force set the leave date for a member.");
+		} else if (perms.status == 'Owner') {
 			if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -1426,7 +1444,10 @@ Commands.penreminder = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch between the voluntary pen reminder and the pen reminder for idiots.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1467,7 +1488,10 @@ Commands.rolereminder = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role reminder on and off.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1539,7 +1563,10 @@ Commands.pentoggle = function(Common, from, to, message) {
 			} else {
 				var member = Common.utils.toLc(from);
 				Common.db.users.findOne({name: member}, function(err, perms) {
-				if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+				if (err || !perms) {
+					console.log(err);
+					Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the voluntary pen reminder on and off for a member.");
+				} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 					if (memlist[member] != 5 || perms.key === undefined) {
 						Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 					} else {
@@ -1615,7 +1642,10 @@ Commands.idiot = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the idiot list.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -1660,7 +1690,10 @@ Commands.genius = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
      var member = Common.utils.toLc(from);
      Common.db.users.findOne({name: member}, function(err, perms) {
-     if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+     if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a member from the idiot list.");
+     } else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (memlist[member] != 5 || perms.key === undefined) {
 		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 	} else {
@@ -1724,7 +1757,10 @@ Commands.warn = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -1919,7 +1955,10 @@ Commands.rolelock = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the role lock on and off.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -1960,7 +1999,10 @@ Commands.gamelock = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to switch the game lock on and off.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		Common.db.channels.findOne({channel: to}, function(err, channel) {
 			if (err || !channel) {
 			   	console.log("Channel not found.");    
@@ -2376,7 +2418,10 @@ Commands.addcrasher = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a crasher to the crasher list.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (memlist[member] != 5 || perms.key === undefined) {
 		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 	} else {
@@ -2433,7 +2478,10 @@ Commands.delcrasher = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to delete a crasher from the crasher list.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 	if (memlist[member] != 5 || perms.key === undefined) {
 		Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 	} else {
