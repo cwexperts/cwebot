@@ -172,6 +172,14 @@ Common.bot.addListener('join', function(channel, nick, message) {
           }
       }, 2000);
     }
+    nick = Common.utils.toLc(nick);
+    Common.db.users.findOne({name: nick}, function(err, user) {
+		  if (err || !user) {
+		  	console.log(err);
+      } else if (user.key === undefined) {
+          Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
+      }
+    });
   } else if (channel == '#cwexperts.staff') {
 //     4red 7orange 8yellow 9lightgreen 10cyan 11lightcyan 12lightblue 2blue 6purple 13pink 3green
   } else if (channel == '#key') {
