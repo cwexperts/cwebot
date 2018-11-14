@@ -1,25 +1,32 @@
+function register(Common, from, to, message) {
+	if (Common.utils.msg(message)) {
+		Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !register to display the instructions for registering a SwiftIRC nickname, or use /join #cwexperts1 to join the #CwExperts games channel.");
+	} else {
+		Common.bot.say(to, "Hello " + from + ", we're glad you want to join #CwExperts! Once you're ready, follow the steps below and enter all information into SwiftIRC to register your nickname. Use !faq, !resources, !rules, or !guides for more information.");
+		Common.bot.say(to, "1. Check that you meet our requirements and read our rules");
+		Common.bot.say(to, "Go to: http://cwexperts.org/how-to-join/ and http://cwexperts.org/rules/");
+		Common.bot.say(to, "2. Change your nickname to your main RSN or something similar");
+		Common.bot.say(to, "Type: /nick NEW_NICKNAME");
+		Common.bot.say(to, "3. Register your current nickname; choose a secure password and use an email with 2-step authentication");
+		Common.bot.say(to, "Type: /ns register PASSWORD PASSWORD EMAIL EMAIL");
+		Common.bot.say(to, "4. You will receive an email with a confirmation code; enter this code");
+		Common.bot.say(to, "Type: /ns confirm CODE");
+		Common.bot.say(to, "5. You must now identify yourself whenever you connect to SwiftIRC; use the same password you used to register");
+		Common.bot.say(to, "Type: /ns id PASSWORD");
+		Common.bot.say(to, "6. Now that you're registered and identified, ask for an add to #CwExperts");
+		Common.bot.say(to, "Type: !joinNow");
+	}
+};
+
 Commands.register = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status === undefined || perms.status == 'Owner') {
-		if (Common.utils.msg(message)) {
-			Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !register to display the instructions for registering a SwiftIRC nickname, or use /join #cwexperts1 to join the #CwExperts games channel.");
-		} else {
-			Common.bot.say(to, "Hello " + from + ", we're glad you want to join #CwExperts! Once you're ready, follow the steps below and enter all information into SwiftIRC to register your nickname. Use !faq, !resources, !rules, or !guides for more information.");
-			Common.bot.say(to, "1. Check that you meet our requirements and read our rules");
-			Common.bot.say(to, "Go to: http://cwexperts.org/how-to-join/ and http://cwexperts.org/rules/");
-			Common.bot.say(to, "2. Change your nickname to your main RSN or something similar");
-			Common.bot.say(to, "Type: /nick NEW_NICKNAME");
-			Common.bot.say(to, "3. Register your current nickname; choose a secure password and use an email with 2-step authentication");
-			Common.bot.say(to, "Type: /ns register PASSWORD PASSWORD EMAIL EMAIL");
-			Common.bot.say(to, "4. You will receive an email with a confirmation code; enter this code");
-			Common.bot.say(to, "Type: /ns confirm CODE");
-			Common.bot.say(to, "5. You must now identify yourself whenever you connect to SwiftIRC; use the same password you used to register");
-			Common.bot.say(to, "Type: /ns id PASSWORD");
-			Common.bot.say(to, "6. Now that you're registered and identified, ask for an add to #CwExperts");
-			Common.bot.say(to, "Type: !joinNow");
-		}
+		if (err || !perms) {
+			console.log(err);
+			register(Common, from, to, message);
+		} else if (perms.status == 'Owner') {
+			register(Common, from, to, message);
 		} else {
 			Common.bot.say(to, "5This command may only be used by non-members to display the instructions for registering a SwiftIRC nickname.");
 		}
@@ -29,22 +36,29 @@ Commands.register = function(Common, from, to, message) {
 	}
 };
 
-Commands.joinnow = function(Common, from, to, message) {
+function joinnow(Common, from, to, message) {
 	var filtered_ops = Common.utils.removeByValue(ops[to], 'Abdel')
 	var filtered_hops = Common.utils.removeByValue(halfops[to], 'Abdel')
 	var hl_list = filtered_ops.join(' ') + ' ' + filtered_hops.join(' ')
+	if (Common.utils.msg(message)) {
+		Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !joinNow to ask for an add to #CwExperts, or use /join #cwexperts1 to join the #CwExperts games channel.");
+	} else {
+		Common.bot.say(to, "" + from + " has registered their SwiftIRC nickname and is ready to join #CwExperts! Please wait patiently - a staff member will add you momentarily.");
+		if (hl_list != ' ') {
+			Common.bot.say(to, hl_list);
+		}
+	}
+};
+
+Commands.joinnow = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status === undefined || perms.status == 'Owner') {
-		if (Common.utils.msg(message)) {
-			Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !joinNow to ask for an add to #CwExperts, or use /join #cwexperts1 to join the #CwExperts games channel.");
-		} else {
-			Common.bot.say(to, "" + from + " has registered their SwiftIRC nickname and is ready to join #CwExperts! Please wait patiently - a staff member will add you momentarily.");
-			if (hl_list != ' ') {
-				Common.bot.say(to, hl_list);
-			}
-		}
+		if (err || !perms) {
+			console.log(err);
+			joinnow(Common, from, to, message);
+		} else if (perms.status == 'Owner') {
+			joinnow(Common, from, to, message);
 		} else {
 			Common.bot.say(to, "5This command may only be used by non-members to ask for an add to #CwExperts.");
 		}
@@ -60,7 +74,10 @@ Commands.add = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (Common.utils.msg(message))  {
 			if (Common.utils.toLc(access[1]) == 'abdel' || Common.utils.toLc(access[1]) == 'dxnxex7' || Common.utils.toLc(access[1]) == 'hanna') {
 				Common.bot.say(to, "5Permission denied - you may not change " + access[1] + "'s access level for official #CwExperts SwiftIRC channels.");
@@ -184,7 +201,10 @@ Commands.del = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Owner member status to delete a member from the #CwExperts SwiftIRC access list.");
+	} else if (perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -307,7 +327,12 @@ Commands.basics = function(Common, from, to, message) {
 Commands.pick = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		if (to == '#cwexperts.staff') {
+			Common.bot.say(to, "5This command may only be used by God.");
+		}
+	} else if (perms.status == 'Owner') {
 		var channel = message.match(/\S+/g);
 		if (typeof channel[1] != 'undefined' && typeof channel[2] != 'undefined' && typeof channel[3] != 'undefined') {
 			if (channel[2] == channel[3] && typeof channel[4] == 'undefined' && to == '#cwexperts.staff') {
@@ -347,7 +372,12 @@ Commands.pick = function(Common, from, to, message) {
 Commands.psa = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		if (to == '#cwexperts.staff') {
+			Common.bot.say(to, "5This command may only be used by God.");
+		}
+	} else if (perms.status == 'Owner') {
 		var channel = message.match(/\S+/g);
 		if (typeof channel[1] != 'undefined' && typeof channel[2] != 'undefined') {
 			if (channel[1] == channel[2] && typeof channel[3] == 'undefined' && to == '#cwexperts.staff') {
@@ -388,7 +418,12 @@ Commands.psa = function(Common, from, to, message) {
 Commands.msg = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		if (to == '#cwexperts.staff') {
+			Common.bot.say(to, "5This command may only be used by God.");
+		}
+	} else if (perms.status == 'Owner') {
 		var channel = message.match(/\S+/g);
 		if (typeof channel[1] != 'undefined' && typeof channel[2] != 'undefined') {
 			if (channel[1] == channel[2] && typeof channel[3] == 'undefined' && to == '#cwexperts.staff') {

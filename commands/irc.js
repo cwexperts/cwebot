@@ -1,7 +1,9 @@
 Commands.plusops = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+	} else if (perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			if (to == '#cwexperts.staff') {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
@@ -28,7 +30,9 @@ Commands.plusops = function(Common, from, to, message) {
 Commands.minusops = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+	} else if (perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			if (to == '#cwexperts.staff') {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
@@ -167,7 +171,10 @@ Commands.d = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {	 
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (opsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1 || halfopsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1 || voicesLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -341,7 +348,10 @@ Commands.v = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {	 
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (voicesLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -577,7 +587,10 @@ Commands.h = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {	 
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (halfopsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -779,7 +792,10 @@ Commands.o = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {	 
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to change the SwiftIRC ranks for a member.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (everyoneLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 				if (opsLc[to].indexOf(Common.utils.toLc(nick[1])) > -1) {
 					if (Common.utils.toLc(nick[1]) == "anna") {
@@ -842,7 +858,10 @@ Commands.i = function(Common, from, to, message) {
 	var nick = message.match(/\S+/g);
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to invite a user to this channel. 4DO NOT SEND INVALID INVITATIONS!");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (typeof nick[1] != 'undefined') {
 				if (Common.utils.toLc(nick[1]) == 'rs') {
 					Common.bot.say(to, "3Attempting to send an invitation for " + to + " to RuneScript...");
