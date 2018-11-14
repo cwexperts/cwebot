@@ -3,7 +3,14 @@ Commands.masshl = function(Common, from, to, message) {
 	Common.db.channels.findOne({channel: to}, function(err, channel) {
 		var member = Common.utils.toLc(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
-		if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+		if (err || !perms) {
+			console.log(err);
+			if (channel.games === 1) {
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active players in this channel.");
+			} else {
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all active members in this channel.");
+			}
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (msg[1] !== undefined || users[to] != '') {
 				if (Common.utils.msg(message)) {
 					Common.bot.say(to, " 14*** ( 4@!@!@!@ " + from + " HAS AN IMPORANT MESSAGE FOR EVERYONE! PLEASE READ! @!@!@!@ 14) ***");
@@ -38,7 +45,10 @@ Commands.masshleveryone = function(Common, from, to, message) {
 	var msg = message.match(/\S+/g);
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to highlight all users in this channel.");
+	} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 		if (msg[1] !== undefined || everyoneLc[to] != '') {
 			var everyone = everyoneLc[to];
 			everyone = everyone.toString()
@@ -72,7 +82,10 @@ Commands.masshlstaff = function(Common, from, to, message) {
 	var hl_list = filtered_ops.join(' ') + ' ' + filtered_hops.join(' ')
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+	if (err || !perms) {
+		console.log(err);
+		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to highlight all staff members in this channel.");
+	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (msg[1] !== undefined || hl_list != ' ') {
 			if (Common.utils.msg(message)) {
 				Common.bot.say(to, " 14*** ( 4@!@!@!@ ATTENTION ALL STAFF MEMBERS! PLEASE READ! @!@!@!@ 14) ***");
@@ -142,7 +155,11 @@ Commands.anticrash = function(Common, from, to, message) {
 			} else if (channel.game_lock == 1) {
 				var member = Common.utils.toLc(from);
 				Common.db.users.findOne({name: member}, function(err, perms) {
-				if (perms.status == 'Admin' || perms.status == 'Owner') {
+				if ((err || !perms) && channel.lead != Common.utils.toLc(from) && channel.coor != Common.utils.toLc(from)) {
+					console.log(err);
+					Common.bot.say(to, "5The game lock is enabled - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may use game commands.");
+					Common.bot.say(to, "5not in db, not lead or coor");
+				} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 					anticrash(Common, from, to, message);
 				} else if (channel.lead !== 0) {
 					if (Common.utils.toLc(channel.lead) == Common.utils.toLc(from)) {
