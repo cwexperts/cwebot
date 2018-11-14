@@ -169,6 +169,14 @@ Common.bot.addListener('join', function(channel, nick, message) {
                 Common.bot.say(channel, greetmsg);
               }
             });
+	nick = Common.utils.toLc(nick);
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+		} else if (user.key === undefined) {
+			Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
+		}
+	});
           }
       }, 2000);
     }
