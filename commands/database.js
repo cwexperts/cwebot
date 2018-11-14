@@ -1974,7 +1974,7 @@ Commands.rolelock = function(Common, from, to, message) {
 						console.log("Channel not updated!");
 					} else {
 						if (isRoleLockToggled == 1) {
-					  		Common.bot.say(to, "2" + from+" has enabled the role lock - only staff members may now edit roles.");
+					  		Common.bot.say(to, "2" + from+" has enabled the role lock - only members with Staff, Admin, or Owner member status may now edit roles.");
 						} else {
 					  		Common.bot.say(to, "2" + from+" has disabled the role lock - all members may now edit roles.");
 						}
@@ -2018,7 +2018,7 @@ Commands.gamelock = function(Common, from, to, message) {
 						console.log("Channel not updated!");
 					} else {
 						if (isGameLockToggled == 1) {
-					  		Common.bot.say(to, "2" + from+" has enabled the game lock - only the lead, the coordinator, and staff members may now use game commands.");
+					  		Common.bot.say(to, "2" + from+" has enabled the game lock - only the lead, the coordinator, and members with Staff, Admin, or Owner member status may now use game commands.");
 						} else {
 					  		Common.bot.say(to, "2" + from+" has disabled the game lock - all members may now use game commands.");
 						}
