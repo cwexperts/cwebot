@@ -154,7 +154,7 @@ Commands.add = function(Common, from, to, message) {
         Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
 	Common.bot.say(to, "3. Link your main RSN with your Discord ID - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
         Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
-	Common.bot.say(to, "4. Link your main RSN with the member who recruited you - If no one recruited you, choose the member who helped you the most to join");
+	Common.bot.say(to, "4. Link your main RSN with the member who recruited you - If no one recruited you, add the member who helped you the most to join");
         Common.bot.say(to, "Type: !addRecruiter MEMBER_HERE");
         Common.bot.say(to, "5. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
         Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
