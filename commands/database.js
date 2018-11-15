@@ -2734,7 +2734,7 @@ Commands.recruiter = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
-			} else if (name == 'dxnxex7' || name == 'fable') {
+			} else if (user.recruiter == 'n/a') {
 				Common.bot.say(to, "2" + name + " is one of the five founding members of the superboosting Castle Wars method!");
 			} else if (user.recruiter === undefined || user.recruiter === 0) {
 				Common.bot.say(to, "2" + name + " was recruited by: unknown.");
