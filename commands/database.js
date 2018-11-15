@@ -1230,7 +1230,11 @@ Commands.setleavedate = function(Common, from, to, message) {
 								leaved = leaved.toString();
 								leaved = leaved.substr(0, leaved.length-14);
 								leaved = leaved + "UTC";
-								Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - you may not change this date.");
+								if (perms.status == 'Owner') {
+									Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - use !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS to force set the leave date for a member.");
+								} else if (perms.status == 'Admin') {
+									Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - you may not change this date.");
+								}
 							}
 						}
 					}
