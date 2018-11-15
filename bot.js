@@ -183,13 +183,13 @@ Common.bot.addListener('join', function(channel, nick, message) {
 				Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
 			}
 			if (user.discord === undefined || user.discord == 'unknown') {
-				Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to finish setting up your profile.");
+				Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to complete your profile.");
 			}
 			if (user.recruiter === undefined || user.recruiter === 0) {
-				Common.bot.say(channel, "2" + nick + ", please use !addRecruiter MEMBER_HERE to finish setting up your profile.");
+				Common.bot.say(channel, "2" + nick + ", please use !addRecruiter MEMBER_HERE to complete your profile.");
 			}
 			if (user.joinDate === undefined || user.joinDate == 'unknown') {
-				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status which day you joined to finish setting up your profile.");
+				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
 			}
 		});
 		}
