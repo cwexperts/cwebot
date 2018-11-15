@@ -2181,6 +2181,7 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		}
+		member_msg += ", Total warns: " + user.warns + "";
 		if (user.pen == 1) {
 			member_msg += ", Voluntary pen: On";
 		} else if (user.pen == 0) {
@@ -2225,7 +2226,6 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		} 
-		member_msg += ", Total warns: " + user.warns + "";
 		if (user.joinDate === undefined) {
 			member_msg += ", Join date: unknown";
 			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {joinDate: 'unknown'}}, function(err, updated) {
