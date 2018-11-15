@@ -11,7 +11,7 @@ var config = {
 };
 
 module.exports = {
-  db: mongojs(process.env.MONGO_URL, ['users', 'channels', 'crashers']),
+  db: mongojs(process.env.MONGO_URL, ['users', 'channels', 'crashers', 'complaints']),
   bot: new irc.Client(config.server, config.botName, {
     userName: config.botName,
     realName: config.botName,
