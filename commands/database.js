@@ -2688,6 +2688,6 @@ Commands.addrecruiter = function(Common, from, to, message) {
 	}
 };
 
-Commands.mr = function(Common, from, to, message) {
+Commands.addr = function(Common, from, to, message) {
 	Commands.addrecruiter(Common, from, to, message);
 };
