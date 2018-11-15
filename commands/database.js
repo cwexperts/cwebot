@@ -2629,7 +2629,7 @@ Commands.data = function(Common, from, to, message) {
 	}
 };
 
-Commands.myrecruiter = function(Common, from, to, message) {
+Commands.addrecruiter = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
@@ -2644,7 +2644,7 @@ Commands.myrecruiter = function(Common, from, to, message) {
 				var name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1]);
 				if (name == member) {
-					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !myRecruiter MEMBER_HERE to set your recruiter.");
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter MEMBER_HERE to set your recruiter.");
 				} else {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
@@ -2680,7 +2680,7 @@ Commands.myrecruiter = function(Common, from, to, message) {
 				});
 				}
 			} else {
-				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !myRecruiter MEMBER_HERE to set your recruiter.");
+				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter MEMBER_HERE to set your recruiter.");
 			}
 		});
 	} else {
@@ -2689,5 +2689,5 @@ Commands.myrecruiter = function(Common, from, to, message) {
 };
 
 Commands.mr = function(Common, from, to, message) {
-	Commands.myrecruiter(Common, from, to, message);
+	Commands.addrecruiter(Common, from, to, message);
 };
