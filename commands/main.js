@@ -147,16 +147,18 @@ Commands.add = function(Common, from, to, message) {
         Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
 	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], level);
-        Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". You're almost done, just a few steps left!");
+        Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". You're almost done, you just have to set up your profile now!");
         Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
         Common.bot.say(to, "Type: /join #cwexperts1");
         Common.bot.say(to, "2. Link your main RSN with the RSN of your level 90+ combat alt, and then you will be added to the CwExperts Friends Chat");
         Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
 	Common.bot.say(to, "3. Link your main RSN with your Discord ID - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
         Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
-        Common.bot.say(to, "4. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
+	Common.bot.say(to, "4. Link your main RSN with the member who recruited you - If no one recruited you, choose the member who helped you the most to join");
+        Common.bot.say(to, "Type: !addRecruiter MEMBER_HERE");
+        Common.bot.say(to, "5. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
         Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
-        Common.bot.say(to, "5. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
+        Common.bot.say(to, "6. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
         Common.bot.say(to, "Type: !guides or !basics");
 /*	if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 		Common.bot.send('MODE', '#cwexperts', '-o', access[1]);
