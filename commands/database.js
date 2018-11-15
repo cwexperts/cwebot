@@ -2745,9 +2745,9 @@ Commands.recruiter = function(Common, from, to, message) {
 			} else if (user.recruiter == 'n/a') {
 				Common.bot.say(to, "2" + name + " is one of the five founding members of the superboosting Castle Wars method!");
 			} else if (user.recruiter === undefined || user.recruiter === 0) {
-				Common.bot.say(to, "2" + name + " was recruited by: unknown.");
+				Common.bot.say(to, "2" + name + " was recruited by: unknown");
 			} else {
-				Common.bot.say(to, "2" + name + " was recruited by: " + user.recruiter + ".");
+				Common.bot.say(to, "2" + name + " was recruited by: " + user.recruiter + "");
 			}
 		});
 	} else {
@@ -2773,9 +2773,9 @@ Commands.recruits = function(Common, from, to, message) {
 					if (recruits_list != '') {
 						var newrecruits_list = recruits_list.substr(0, recruits_list.length-2);
 						if (recruits_count == 1) {
-							Common.bot.say(to, "2" + name + " has recruited " + recruits_count + " member: " + newrecruits_list + ".");
+							Common.bot.say(to, "2" + name + " has recruited a total of " + recruits_count + " member: " + newrecruits_list);
 						} else {
-							Common.bot.say(to, "2" + name + " has recruited " + recruits_count + " members: " + newrecruits_list + ".");
+							Common.bot.say(to, "2" + name + " has recruited a total of " + recruits_count + " members: " + newrecruits_list);
 						}
 					} else {
 						Common.bot.say(to, "2" + name + " has not recruited any members. SAD!");
