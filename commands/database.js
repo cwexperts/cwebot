@@ -2628,3 +2628,66 @@ Commands.data = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
+
+Commands.myrecruiter = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toDb(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			} else if (perms.recruiter !== undefined && perms.recruiter !== 0) {
+				Common.bot.say(to, "5" + member + ", you have already set your recruiter to: " + perms.recruiter + " - you may not change your recruiter.");
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (Common.utils.msg(message)) {
+				var name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1]);
+				if (name == member) {
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !myRecruiter MEMBER_HERE to set your recruiter.");
+				} else {
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					} else {
+						Common.db.users.update({name: member}, {$set: {recruiter: name}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.db.users.update({name: name}, {$inc: { "recruits": 1 }}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										Common.db.users.findOne({name: member}, function(err, user1) {
+											if (err || !user1) {
+												console.log(err);
+											} else {
+												Common.db.users.findOne({name: name}, function(err, user2) {
+													if (err || !user2) {
+														console.log(err);
+													} else {
+														Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + " - " + name + " has now recruited a total of " + user2.recruits + " members.");
+													}
+												});
+											}
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+				}
+			} else {
+				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !myRecruiter MEMBER_HERE to set your recruiter.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+
+Commands.mr = function(Common, from, to, message) {
+	Commands.myrecruiter(Common, from, to, message);
+};
