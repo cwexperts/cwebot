@@ -2667,7 +2667,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 													if (err || !user2) {
 														console.log(err);
 													} else {
-														Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + " - " + name + " has now recruited a total of " + user2.recruits + " members.");
+														Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + ", who has now recruited a total of " + user2.recruits + " members.");
 													}
 												});
 											}
