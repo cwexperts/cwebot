@@ -1230,7 +1230,11 @@ Commands.setleavedate = function(Common, from, to, message) {
 								leaved = leaved.toString();
 								leaved = leaved.substr(0, leaved.length-14);
 								leaved = leaved + "UTC";
-								Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - you may not change this date.");
+								if (perms.status == 'Owner') {
+									Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - use !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS to force set the leave date for a member.");
+								} else if (perms.status == 'Admin') {
+									Common.bot.say(to, "5The leave date for " + name + " has already been set to: " + leaved + " - you may not change this date.");
+								}
 							}
 						}
 					}
@@ -2702,7 +2706,11 @@ Commands.addrecruiter = function(Common, from, to, message) {
 													if (err || !user2) {
 														console.log(err);
 													} else {
-														Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + ", who has now recruited a total of " + user2.recruits + " members.");
+														if (user2.recruits == 1) {
+															Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + ", who has now recruited a total of " + user2.recruits + " member.");
+														} else {
+															Common.bot.say(to, "2" + member + ", your recruiter has been set to: " + user1.recruiter + ", who has now recruited a total of " + user2.recruits + " members.");
+														}
 													}
 												});
 											}
@@ -2734,12 +2742,45 @@ Commands.recruiter = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
-			} else if (name == 'dxnxex7' || name == 'fable') {
+			} else if (user.recruiter == 'n/a') {
 				Common.bot.say(to, "2" + name + " is one of the five founding members of the superboosting Castle Wars method!");
 			} else if (user.recruiter === undefined || user.recruiter === 0) {
 				Common.bot.say(to, "2" + name + " was recruited by: unknown.");
 			} else {
 				Common.bot.say(to, "2" + name + " was recruited by: " + user.recruiter + ".");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.recruits = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			} else {
+				Common.db.users.find({recruiter: name}, function(err, users) {
+					var recruits_count = 0;
+					var recruits_list = '';
+					users.forEach(function(recruiter) {
+						recruits_count++;
+						recruits_list += '' + recruiter.name + ', ';
+					});
+					if (recruits_list != '') {
+						var newrecruits_list = recruits_list.substr(0, recruits_list.length-2);
+						if (recruits_count == 1) {
+							Common.bot.say(to, "2" + name + " has recruited " + recruits_count + " member: " + newrecruits_list + ".");
+						} else {
+							Common.bot.say(to, "2" + name + " has recruited " + recruits_count + " members: " + newrecruits_list + ".");
+						}
+					} else {
+						Common.bot.say(to, "2" + name + " has not recruited any members. SAD!");
+					}
+				});
 			}
 		});
 	} else {
