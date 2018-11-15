@@ -247,7 +247,31 @@ Commands.ms = function(Common, from, to, message) {
 Commands.retire = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
+		var who = message.match(/\S+/g);
+		who = Common.utils.toLc(who[1]);
 		var member = Common.utils.toLc(from);
+		if (who == member) {
+			var name = Common.utils.toLc(from);
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user) {
+					Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				} else if (memlist[name] != 5 || user.key === undefined) {
+					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else {
+					if (user.retired === undefined || user.retired === 0) {
+						Common.db.users.update({name: name}, {$set: {retired: 1}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + ", you have been given Retired member status.");
+							}
+						});
+					} else if (user.retired === 1) {
+						Common.bot.say(to, "5" + name + ", you are already retired! Use !unretire to remove your Retired member status.");
+					}
+				}
+			});
+		} else {
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (err || !perms) {
 			console.log(err);
@@ -278,6 +302,7 @@ Commands.retire = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add Retired member status to a member.");
 		}
 		});
+		}
 	} else {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
@@ -309,7 +334,38 @@ Commands.retire = function(Common, from, to, message) {
 Commands.unretire = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
+		var who = message.match(/\S+/g);
+		who = Common.utils.toLc(who[1]);
 		var member = Common.utils.toLc(from);
+		if (who == member) {
+			var name = Common.utils.toLc(from);
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user) {
+					Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				} else if (memlist[name] != 5 || user.key === undefined) {
+					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else {
+					if (user.retired === 1) {
+						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								Common.bot.say(to, "2" + name + ", your Retired member status has been removed.");
+							}
+						});
+					} else if (user.retired === undefined || user.retired === 0) {
+						if (user.retired === undefined) {
+							Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
+								if (err || !updated) {
+									console.log('Error', err);
+								}
+							});
+						}
+						Common.bot.say(to, "5" + name + ", you are already unretired! Use !retire to give yourself Retired member status.");
+					}
+				}
+			});
+		} else {
 		Common.db.users.findOne({name: member}, function(err, perms) {
 		if (err || !perms) {
 			console.log(err);
@@ -347,6 +403,7 @@ Commands.unretire = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to remove Retired member status from a member.");
 		}
 		});
+		}
 	} else {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
