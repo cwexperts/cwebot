@@ -169,17 +169,31 @@ Common.bot.addListener('join', function(channel, nick, message) {
                 Common.bot.say(channel, greetmsg);
               }
             });
-	nick = Common.utils.toLc(nick);
-	Common.db.users.findOne({name: nick}, function(err, user) {
-		if (err || !user) {
-			console.log(err);
-		} else if (user.key === undefined) {
-			Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
-		}
-	});
           }
       }, 2000);
     }
+	setTimeout(function() {
+		if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
+		nick = Common.utils.toLc(nick);
+		Common.db.users.findOne({name: nick}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+			}
+			if (user.key === undefined) {
+				Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
+			}
+			if (user.discord === undefined || user.discord == 'unknown') {
+				Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to finish setting up your profile.");
+			}
+			if (user.recruiter === undefined || user.recruiter === 0) {
+				Common.bot.say(channel, "2" + nick + ", please use !addRecruiter MEMBER_HERE to finish setting up your profile.");
+			}
+			if (user.joinDate === undefined || user.joinDate == 'unknown') {
+				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status which day you joined to finish setting up your profile.");
+			}
+		});
+		}
+	}, 2000);
   } else if (channel == '#cwexperts.staff') {
 //     4red 7orange 8yellow 9lightgreen 10cyan 11lightcyan 12lightblue 2blue 6purple 13pink 3green
   } else if (channel == '#key') {
