@@ -2726,3 +2726,23 @@ Commands.addrecruiter = function(Common, from, to, message) {
 Commands.addr = function(Common, from, to, message) {
 	Commands.addrecruiter(Common, from, to, message);
 };
+
+Commands.recruiter = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			} else if (name == 'dxnxex7' || name == 'fable') {
+				Common.bot.say(to, "2" + name + " is one of the five founding members of the superboosting Castle Wars method!");
+			} else if (user.recruiter === undefined || user.recruiter === 0) {
+				Common.bot.say(to, "2" + name + " was recruited by: unknown.");
+			} else {
+				Common.bot.say(to, "2" + name + " was recruited by: " + user.recruiter + ".");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
