@@ -390,7 +390,7 @@ Commands.addalt = function(Common, from, to, message) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
 			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, key: key, recruiter: 0, recruits: 0, pen: 1, idiot: 1, cache: 0, warns: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, key: key, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
