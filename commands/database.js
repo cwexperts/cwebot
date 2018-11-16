@@ -2253,26 +2253,6 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		}
-		if (user.smemreports !== undefined) {
-			member_msg += ", Total member reports sent: " + user.smemreports + "";
-		} else if (user.smemreports === undefined) {
-			member_msg += ", Total member reports sent: 0";
-			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-				console.log('Error', err);
-				}
-			});
-		}
-		if (user.sbugreports !== undefined) {
-			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
-		} else if (user.sbugreports === undefined) {
-			member_msg += ", Total bug reports sent: 0";
-			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-				console.log('Error', err);
-				}
-			});
-		}
 		if (user.pen == 1) {
 			member_msg += ", Voluntary pen: On";
 		} else if (user.pen == 0) {
@@ -2316,7 +2296,27 @@ Commands.member = function(Common, from, to, message) {
 				console.log("User not updated!");
 				}
 			});
-		} 
+		}
+		if (user.smemreports !== undefined) {
+			member_msg += ", Total member reports sent: " + user.smemreports + "";
+		} else if (user.smemreports === undefined) {
+			member_msg += ", Total member reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.sbugreports !== undefined) {
+			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
+		} else if (user.sbugreports === undefined) {
+			member_msg += ", Total bug reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		if (user.joinDate === undefined) {
 			member_msg += ", Join date: unknown";
 			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {joinDate: 'unknown'}}, function(err, updated) {
