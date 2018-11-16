@@ -534,6 +534,26 @@ module.exports = {
 		}
 		setTimeout(Common.utils.memReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
 	},
+	bugReportTimer: function(Common, channel, minutesTo, from, SecondsTo, member) {
+		if (from != 'stop') {
+			if (from == 'rb') {
+				from = 'self';
+				bugreportmins[member] = 30;
+				bugreportsecs[member] = 0;
+			} else if (bugreportsecs[member] == 0) {
+				bugreportmins[member] = bugreportmins[member] - 1;
+				bugreportsecs[member] = 59;
+			} else {
+				bugreportsecs[member] = bugreportsecs[member] - 1;
+			}
+		}
+		if (bugreportmins[member] == 0 && bugreportsecs[member] == 0 && from != 'stop') {
+			from = 'stop';
+			bugreportmins[member] = 0;
+			bugreportsecs[member] = 0;
+		}
+		setTimeout(Common.utils.bugReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
+	},
 	goingAfk: function(Common, channel, minutesTo, user, from) {
 		if (minutesTo != 0 && from != 'stop') {
 	        if (from == 'afk') {

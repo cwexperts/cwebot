@@ -2253,26 +2253,6 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		}
-		if (user.smemreports !== undefined) {
-			member_msg += ", Total member reports sent: " + user.smemreports + "";
-		} else if (user.smemreports === undefined) {
-			member_msg += ", Total member reports sent: 0";
-			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-				console.log('Error', err);
-				}
-			});
-		}
-		if (user.sbugreports !== undefined) {
-			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
-		} else if (user.sbugreports === undefined) {
-			member_msg += ", Total bug reports sent: 0";
-			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-				console.log('Error', err);
-				}
-			});
-		}
 		if (user.pen == 1) {
 			member_msg += ", Voluntary pen: On";
 		} else if (user.pen == 0) {
@@ -2316,7 +2296,27 @@ Commands.member = function(Common, from, to, message) {
 				console.log("User not updated!");
 				}
 			});
-		} 
+		}
+		if (user.smemreports !== undefined) {
+			member_msg += ", Total member reports sent: " + user.smemreports + "";
+		} else if (user.smemreports === undefined) {
+			member_msg += ", Total member reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.sbugreports !== undefined) {
+			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
+		} else if (user.sbugreports === undefined) {
+			member_msg += ", Total bug reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		if (user.joinDate === undefined) {
 			member_msg += ", Join date: unknown";
 			Common.db.users.update({name: Common.utils.toDb(name)}, {$set: {joinDate: 'unknown'}}, function(err, updated) {
@@ -2968,88 +2968,73 @@ Commands.reportmember = function(Common, from, to, message) {
 Commands.rm = function(Common, from, to, message) {
 	Commands.reportmember(Common, from, to, message);
 };
-/*
+
 Commands.reportbug = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toDb(from);
-		Common.db.users.findOne({name: member}, function(err, perms) {
-			if (err || !perms) {
-				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-			} else if (memlist[member] != 5 || perms.key === undefined) {
-				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-			} else if ((memreportmins[member] === undefined && memreportsecs[member] === undefined) || (memreportmins[member] === 0 && memreportsecs[member] === 0)) {  
-				if (Common.utils.msg(message)) {
-					var reportmsg = message.match(/\S+/g);
-					var report_name = Common.utils.toLc(reportmsg[1]);
-					var report_detail = Common.utils.msg(Common.utils.msg(message));
-					if (member != report_name) {
-					Common.db.users.findOne({name: report_name}, function(err, user) {
-						if (err || !user) {
-							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-						} else if (reportmsg[2] !== undefined) {
-							Common.utils.memReportTimer(Common, to, 30, 'rm', 0, member);
-							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
-								var reportnum = 0;
-								reports.forEach(function(search) {
-									reportnum++;
-								});
-								reportnum = reportnum + 1;
-								Common.db.reportmembers.save({reportnumber: reportnum, reporter: member, member: report_name, report: report_detail}, function(err, saved) {
-									if (err || !saved) {
-										console.log('Error', err)
+		if ((bugreportmins[member] === undefined && bugreportsecs[member] === undefined) || (bugreportmins[member] === 0 && bugreportsecs[member] === 0)) {  
+			var reportmsg = message.match(/\S+/g);
+			var report_detail = Common.utils.msg(message);
+			if (Common.utils.msg(message)) {
+				if (reportmsg[1].length < 5 && reportmsg[2] === undefined) {
+					Common.bot.say(to, "5You must provide a detailed report about a CWEBot bug when using this command. Use the format !reportBug REPORT HERE to submit a bug report.");
+				} else {
+					Common.utils.bugReportTimer(Common, to, 30, 'rb', 0, member);
+					Common.db.reportbugs.find({search: undefined}, function(err, reports) {
+						var reportnum = 0;
+						reports.forEach(function(search) {
+							reportnum++;
+						});
+						reportnum = reportnum + 1;
+						Common.db.reportbugs.save({reportnumber: reportnum, reviewed: "no", reporter: member, report: report_detail}, function(err, saved) {
+							if (err || !saved) {
+								console.log('Error', err)
+							} else {
+								Common.db.users.findOne({name: member}, function(err, user1) {
+									if (err || !user1) {
+										console.log(err);
+										Common.bot.say(to, "3" + member + ", your bug report has been submitted for review.");
 									} else {
-										Common.db.users.update({name: member}, {$inc: { "smemreports": 1 }}, {upsert: false}, function(err, updated) {
+										Common.db.users.update({name: member}, {$inc: { "sbugreports": 1 }}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.db.users.update({name: report_name}, {$inc: { "rmemreports": 1 }}, {upsert: false}, function(err, updated) {
-													if (err || !updated) {
-														console.log('Error', err);
+												Common.db.users.findOne({name: member}, function(err, user2) {
+													if (err || !user2) {
+														console.log(err);
 													} else {
-														Common.db.users.findOne({name: member}, function(err, user1) {
-															if (err || !user1) {
-																console.log(err);
-															} else {
-																if (user1.smemreports === 1) {
-																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member report.");
-																} else {
-																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member reports.");
-																}
-															}
-														});
+														if (user2.sbugreports === 1) {
+															Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug report.");
+														} else {
+															Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug reports.");
+														}
 													}
 												});
 											}
 										});
 									}
 								});
-							});
-						} else {
-							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
-						}
+							}
+						});
 					});
-					} else {
-						Common.bot.say(to, "5" + member + ", you may not report yourself! A chair and some rope may solve your problem, though.");
-					}
-				} else {
-					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 				}
 			} else {
-				var timeleftmins = '';
-				var timeleftsecs = '';
-				if (memreportmins[member] === 1) {
-					timeleftmins = " minute ";
-				} else {
-					timeleftmins = " minutes ";
-				} if (memreportsecs[member] === 1) {
-					timeleftsecs = " second";
-				} else {
-					timeleftsecs = " seconds";
-				}
-				Common.bot.say(to, "5" + member + ", you may only submit one member report every 30 minutes - you must wait " + memreportmins[member] + timeleftmins + memreportsecs[member] + timeleftsecs + " before submitting another member report.");
+				Common.bot.say(to, "5You must provide a detailed report about a CWEBot bug when using this command. Use the format !reportBug REPORT HERE to submit a bug report.");
 			}
-		});
+		} else {
+			var timeleftmins = '';
+			var timeleftsecs = '';
+			if (bugreportmins[member] === 1) {
+				timeleftmins = " minute ";
+			} else {
+				timeleftmins = " minutes ";
+			} if (bugreportsecs[member] === 1) {
+				timeleftsecs = " second";
+			} else {
+				timeleftsecs = " seconds";
+			}
+			Common.bot.say(to, "5" + member + ", you may only submit one bug report every 30 minutes - you must wait " + bugreportmins[member] + timeleftmins + bugreportsecs[member] + timeleftsecs + " before submitting another bug report.");
+		}
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
@@ -3057,4 +3042,4 @@ Commands.reportbug = function(Common, from, to, message) {
 				
 Commands.rb = function(Common, from, to, message) {
 	Commands.reportbug(Common, from, to, message);
-};*/
+};
