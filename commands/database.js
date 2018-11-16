@@ -2254,9 +2254,9 @@ Commands.member = function(Common, from, to, message) {
 			});
 		}
 		if (user.smemreports !== undefined) {
-			member_msg += ", Total reports sent: " + user.smemreports + " member";
+			member_msg += ", Total member reports sent: " + user.smemreports + "";
 		} else if (user.smemreports === undefined) {
-			member_msg += ", Total reports sent: 0 member";
+			member_msg += ", Total member reports sent: 0";
 			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
@@ -2264,9 +2264,9 @@ Commands.member = function(Common, from, to, message) {
 			});
 		}
 		if (user.sbugreports !== undefined) {
-			member_msg += " & " + user.sbugreports + " bug";
+			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
 		} else if (user.sbugreports === undefined) {
-			member_msg += " & 0 bug";
+			member_msg += ", Total bug reports sent: 0";
 			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
@@ -2894,6 +2894,9 @@ Commands.reportmember = function(Common, from, to, message) {
 							console.log(err);
 							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 						} else if (reportmsg[2] !== undefined) {
+							if (reportmsg[2].length < 5 && reportmsg[3] === undefined) {
+								Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
+							} else {
 							Common.utils.memReportTimer(Common, to, 30, 'rm', 0, member);
 							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
 								var reportnum = 0;
@@ -2931,8 +2934,9 @@ Commands.reportmember = function(Common, from, to, message) {
 									}
 								});
 							});
+							}
 						} else {
-							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
+							Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 						}
 					});
 					} else {
