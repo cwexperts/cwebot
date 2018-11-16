@@ -2880,12 +2880,7 @@ Commands.reportmember = function(Common, from, to, message) {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
-				console.log(err);
-				if (Common.utils.msg(message)) {
-				
-				} else {
-					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
-				}
+				Common.bot.say(to, "5This command may only be used by members with Angry Gamer, Normal, Veteran, Staff, Admin, or Owner member status to submit a member report.");
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -2937,17 +2932,17 @@ Commands.reportmember = function(Common, from, to, message) {
 								});
 							});
 						} else {
-							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
+							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 						}
 					});
 					} else {
 						Common.bot.say(to, "5" + member + ", you may not report yourself! A chair and some rope may solve your problem, though.");
 					}
 				} else {
-					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
+					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 				}
 //			} else {
-//				Common.bot.say(to, "5" + member + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
+//				Common.bot.say(to, "5" + member + ", you may only submit one member report every 30 minutes - you must wait " + memissue[name] + " minutes before submitting another member report.");
 			}
 		});
 	} else {
