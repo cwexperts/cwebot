@@ -3045,17 +3045,27 @@ Commands.rb = function(Common, from, to, message) {
 };
 
 Commands.viewreports = function(Common, from, to, message) {
-	if (to == '#cwexperts.staff') {
-		Common.db.reportmembers.find({reviewed: "no"}, function(err, reports) {
+//	if (to == '#cwexperts.staff') {
+		Common.db.reportbugs.find({reviewed: "no"}, function(err, reports) {
 			var reportnum = 0;
 			reports.forEach(function(reviewed) {
 				reportnum++;
-				Common.bot.say(to, "2Member Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.member + "; " + reviewed.report);
+				Common.bot.say(to, "2Bug Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.report);
 			});
+			Common.db.reportmembers.find({reviewed: "no"}, function(err, reports2) {
+				var reportnumm = 0;
+				reports2.forEach(function(reviewed) {
+					reportnumm++;
+					Common.bot.say(to, "2Member Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.member + "; " + reviewed.report);
+				});
+			});
+			if (reportnum == 0 && reportnumm == 0) {
+				Common.bot.say(to, "5There are no unreviewed bug reports or member reports.");
+			}
 		});
-	} else {
-		Common.bot.say(to, "5This command may only be used in the staff channel to display staff-only information.");
-	}
+//	} else {
+//		Common.bot.say(to, "5This command may only be used in the staff channel to display staff-only information.");
+//	}
 };
 
 Commands.viewr = function(Common, from, to, message) {
