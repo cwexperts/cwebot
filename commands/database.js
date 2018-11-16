@@ -447,7 +447,7 @@ Commands.addalt = function(Common, from, to, message) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
 			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, key: key, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: time, leaveDate: 0}, function(err, saved) {
+			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: time, leaveDate: 0, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
 				if (err || !saved) {
 					console.log('Error', err)
 				} else {
@@ -2320,6 +2320,36 @@ Commands.member = function(Common, from, to, message) {
 			leaved = leaved + "UTC";
 			member_msg += ", Leave date: " + leaved + "";
 		}
+		if (user.smemreports !== undefined) {
+			member_msg += ", Total member reports sent: " + user.smemreports + "";
+		} else if (user.smemreports === undefined) {
+			member_msg += ", Total member reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.rmemreports !== undefined) {
+			member_msg += ", Total times reported: " + user.rmemreports + "";
+		} else if (user.rmemreports === undefined) {
+			member_msg += ", Total times reported: 0";
+			Common.db.users.update({name: name}, {$set: {rmemreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.sbugreports !== undefined) {
+			member_msg += ", Total bug reports sent: " + user.sbugreports + "";
+		} else if (user.sbugreports === undefined) {
+			member_msg += ", Total bug reports sent: 0";
+			Common.db.users.update({name: name}, {$set: {sbugreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		Common.bot.say(to, member_msg);
 	}
 	});
@@ -2879,11 +2909,27 @@ Commands.reportmember = function(Common, from, to, message) {
 									if (err || !saved) {
 										console.log('Error', err)
 									} else {
-										Common.db.users.findOne({name: member}, function(err, user) {
-											if (err || !user) {
-												console.log(err);
+										Common.db.users.update({name: member}, {$inc: { "smemreports": 1 }}, {upsert: false}, function(err, updated) {
+											if (err || !updated) {
+												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user.memreports + " member reports.");
+												Common.db.users.update({name: report_name}, {$inc: { "rmemreports": 1 }}, {upsert: false}, function(err, updated) {
+													if (err || !updated) {
+														console.log('Error', err);
+													} else {
+														Common.db.users.findOne({name: member}, function(err, user1) {
+															if (err || !user1) {
+																console.log(err);
+															} else {
+																if (user1.smemreports === 1) {
+																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member report.");
+																} else {
+																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member reports.");
+																}
+															}
+														});
+													}
+												});
 											}
 										});
 									}
