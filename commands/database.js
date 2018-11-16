@@ -2964,8 +2964,8 @@ Commands.reportmember = function(Common, from, to, message) {
 Commands.rm = function(Common, from, to, message) {
 	Commands.reportmember(Common, from, to, message);
 };
-
-/*Commands.reportbug = function(Common, from, to, message) {
+/*
+Commands.reportbug = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
@@ -3053,4 +3053,4 @@ Commands.rm = function(Common, from, to, message) {
 				
 Commands.rb = function(Common, from, to, message) {
 	Commands.reportbug(Common, from, to, message);
-};
+};*/
