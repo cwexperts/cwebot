@@ -2869,9 +2869,9 @@ Commands.reportmember = function(Common, from, to, message) {
 							console.log(err);
 							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
 						} else if (reportmsg[2] !== undefined) {
-							Common.db.reportmembers.find({reportnumber: undefined}, function(err, reports) {
+							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
 								var reportnum = 0;
-								reports.forEach(function(reportnumber) {
+								reports.forEach(function(search) {
 									reportnum++;
 								});
 								reportnum = reportnum + 1;
