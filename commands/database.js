@@ -2904,7 +2904,8 @@ Commands.reportmember = function(Common, from, to, message) {
 									reportnum++;
 								});
 								reportnum = reportnum + 1;
-								Common.db.reportmembers.save({reportnumber: reportnum, reviewed: "no", reporter: member, member: report_name, report: report_detail}, function(err, saved) {
+								var time = new Date();
+								Common.db.reportmembers.save({reportnumber: reportnum, date: time, reviewed: "no", reporter: member, member: report_name, report: report_detail}, function(err, saved) {
 									if (err || !saved) {
 										console.log('Error', err)
 									} else {
@@ -2986,7 +2987,8 @@ Commands.reportbug = function(Common, from, to, message) {
 							reportnum++;
 						});
 						reportnum = reportnum + 1;
-						Common.db.reportbugs.save({reportnumber: reportnum, reviewed: "no", reporter: member, report: report_detail}, function(err, saved) {
+						var time = new Date();
+						Common.db.reportbugs.save({reportnumber: reportnum, date: time, reviewed: "no", reporter: member, report: report_detail}, function(err, saved) {
 							if (err || !saved) {
 								console.log('Error', err)
 							} else {
@@ -3059,13 +3061,21 @@ Commands.viewreports = function(Common, from, to, message) {
 						var reportnum = 0;
 						reports.forEach(function(reviewed) {
 							reportnum++;
-							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.report);
+							var timemsg = reviewed.date
+							timemsg = timemsg.toString();
+							timemsg = timemsg.substr(0, timemsg.length-14);
+							timemsg = timemsg + "UTC";
+							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Details: " + reviewed.report);
 						});
 						Common.db.reportmembers.find({reviewed: "no"}, function(err, reports2) {
 							var reportnumm = 0;
 							reports2.forEach(function(reviewed) {
 								reportnumm++;
-								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Report: " + reviewed.report);
+								var timemsg = reviewed.date
+								timemsg = timemsg.toString();
+								timemsg = timemsg.substr(0, timemsg.length-14);
+								timemsg = timemsg + "UTC";
+								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
 							});
 						});
 						if (reportnum == 0 && reportnumm == 0) {
