@@ -2859,20 +2859,22 @@ Commands.complaint = function(Common, from, to, message) {
 				}
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-			} else if (memissue[name] === undefined || memissue[name] === 0) {  
+			} else {
+//			} else if (memissue[name] === undefined || memissue[name] === 0) {  
 				if (Common.utils.msg(message)) {
 					var complaint = message.match(/\S+/g);
 					Common.db.complaints.save({complaint}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
-							
+							Common.bot.say(to, "complaint filed.");
 						}
+					});
 				} else {
 					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
 				}
-			} else {
-				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
+//			} else {
+//				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
 			}
 		});
 	} else {
