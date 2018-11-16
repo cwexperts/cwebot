@@ -2243,6 +2243,16 @@ Commands.member = function(Common, from, to, message) {
 			});
 		}
 		member_msg += ", Total warns: " + user.warns + "";
+		if (user.rmemreports !== undefined) {
+			member_msg += ", Total times reported: " + user.rmemreports + "";
+		} else if (user.rmemreports === undefined) {
+			member_msg += ", Total times reported: 0";
+			Common.db.users.update({name: name}, {$set: {rmemreports: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		if (user.pen == 1) {
 			member_msg += ", Voluntary pen: On";
 		} else if (user.pen == 0) {
@@ -2325,16 +2335,6 @@ Commands.member = function(Common, from, to, message) {
 		} else if (user.smemreports === undefined) {
 			member_msg += ", Total member reports sent: 0";
 			Common.db.users.update({name: name}, {$set: {smemreports: 0}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-				console.log('Error', err);
-				}
-			});
-		}
-		if (user.rmemreports !== undefined) {
-			member_msg += ", Total times reported: " + user.rmemreports + "";
-		} else if (user.rmemreports === undefined) {
-			member_msg += ", Total times reported: 0";
-			Common.db.users.update({name: name}, {$set: {rmemreports: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
 				}
