@@ -7,8 +7,8 @@ hopm = [];
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
 memlist = [], tempkey = [];
 
-//TEMP VARIABLE FOR MEMBER COMPLAINTS
-memissue = [];
+//TEMP VARIABLE FOR MEMBER & BUG REPORTS
+memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 
 var Common = require('./common.js');
 
