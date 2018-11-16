@@ -8,7 +8,7 @@ hopm = [];
 memlist = [], tempkey = [];
 
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
-memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
+memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [], viewreports = [];
 
 var Common = require('./common.js');
 
