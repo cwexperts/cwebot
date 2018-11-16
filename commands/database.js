@@ -2880,7 +2880,7 @@ Commands.reportmember = function(Common, from, to, message) {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
-				Common.bot.say(to, "5This command may only be used by members with Angry Gamer, Normal, Veteran, Staff, Admin, or Owner member status to submit a member report.");
+				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
@@ -2893,7 +2893,7 @@ Commands.reportmember = function(Common, from, to, message) {
 					Common.db.users.findOne({name: report_name}, function(err, user) {
 						if (err || !user) {
 							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 						} else if (reportmsg[2] !== undefined) {
 							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
 								var reportnum = 0;
