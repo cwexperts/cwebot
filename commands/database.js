@@ -3050,7 +3050,7 @@ Commands.viewreports = function(Common, from, to, message) {
 			var reportnum = 0;
 			reports.forEach(function(reviewed) {
 				reportnum++;
-				Common.bot.say(to, "2Member Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.member + "; " + reviewed.report;
+				Common.bot.say(to, "2Member Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.member + "; " + reviewed.report);
 			});
 		});
 	} else {
