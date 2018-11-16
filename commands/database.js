@@ -2845,33 +2845,56 @@ Commands.recruits = function(Common, from, to, message) {
 	}
 };
 
-Commands.complaint = function(Common, from, to, message) {
+Commands.reportmember = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		var name = Common.utils.toDb(from);
-		var alt = message.match(/\S+/g);
-		Common.db.users.findOne({name: name}, function(err, user) {
-			if (err || !user) {
+		var member = Common.utils.toDb(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
 				console.log(err);
 				if (Common.utils.msg(message)) {
 				
 				} else {
 					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
 				}
-			} else if (memlist[name] != 5 || user.key === undefined) {
-				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else {
-//			} else if (memissue[name] === undefined || memissue[name] === 0) {  
+//			} else if (memissue[member] === undefined || memissue[member] === 0) {  
 				if (Common.utils.msg(message)) {
-					var complaint = message.match(/\S+/g);
-					Common.db.complaints.save({complaint}, function(err, saved) {
-						if (err || !saved) {
-							console.log('Error', err)
+					var reportmsg = message.match(/\S+/g);
+					var report_name = Common.utils.toLc(reportmsg[1]);
+					var report_detail = Common.utils.msg(Common.utils.msg(message));
+					Common.db.users.findOne({name: report_name}, function(err, user) {
+						if (err || !user) {
+							console.log(err);
+							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+						} else if (reportmsg[2] !== undefined) {
+							Common.db.reportmembers.find({reportnumber: 0}, function(err, reports) {
+								var reportnum = 0;
+								reports.forEach(function(reportnumber) {
+									reportnum++;
+								});
+								reportnum = reportnum + 1;
+								Common.db.reportmembers.save({reportnumber: reportnum, reporter: member, member: report_name, report: report_detail}, function(err, saved) {
+									if (err || !saved) {
+										console.log('Error', err)
+									} else {
+										Common.db.users.findOne({name: member}, function(err, user) {
+											if (err || !user) {
+												console.log(err);
+											} else {
+												Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user.memreports + " member reports.");
+											}
+										});
+									}
+								});
+							});
 						} else {
-							Common.bot.say(to, "complaint filed.");
+							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
 						}
 					});
 				} else {
-					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
+					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
 				}
 //			} else {
 //				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
@@ -2882,14 +2905,6 @@ Commands.complaint = function(Common, from, to, message) {
 	}
 };
 				
-Commands.complain = function(Common, from, to, message) {
-	Commands.complaint(Common, from, to, message);
-};
-				
-Commands.issue = function(Common, from, to, message) {
-	Commands.complaint(Common, from, to, message);
-};
-
-Commands.incident = function(Common, from, to, message) {
-	Commands.complaint(Common, from, to, message);
+Commands.rm = function(Common, from, to, message) {
+	Commands.reportmember(Common, from, to, message);
 };
