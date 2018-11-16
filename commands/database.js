@@ -3043,3 +3043,22 @@ Commands.reportbug = function(Common, from, to, message) {
 Commands.rb = function(Common, from, to, message) {
 	Commands.reportbug(Common, from, to, message);
 };
+
+Commands.viewreports = function(Common, from, to, message) {
+	if (to == '#cwexperts.staff') {
+		Common.db.reportmembers.find({reviewed: "no"}, function(err, reports) {
+			var reportnum = 0;
+			reports.forEach(function(reviewed) {
+				reportnum++;
+				viewreports[reportnum] = "2Member Report #" + reviewed.reportnumber + ", sent by " + reviewed.reporter + ", about " + reviewed.member + ", Report: " + reviewed.report;
+			});
+			Common.bot.say(to, viewreports);
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the staff channel to display staff-only information.");
+	}
+};
+
+Commands.viewr = function(Common, from, to, message) {
+	Commands.viewreports(Common, from, to, message);
+};
