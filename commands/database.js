@@ -2904,7 +2904,7 @@ Commands.reportmember = function(Common, from, to, message) {
 									reportnum++;
 								});
 								reportnum = reportnum + 1;
-								Common.db.reportmembers.save({reportnumber: reportnum, reporter: member, member: report_name, report: report_detail}, function(err, saved) {
+								Common.db.reportmembers.save({reportnumber: reportnum, reviewed: "no", reporter: member, member: report_name, report: report_detail}, function(err, saved) {
 									if (err || !saved) {
 										console.log('Error', err)
 									} else {
