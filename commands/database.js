@@ -2844,3 +2844,52 @@ Commands.recruits = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
 };
+
+Commands.complaint = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var name = Common.utils.toDb(from);
+		var alt = message.match(/\S+/g);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				if (Common.utils.msg(message)) {
+				
+				} else {
+					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
+				}
+			} else if (memlist[name] != 5 || user.key === undefined) {
+				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
+//			} else if (memissue[name] === undefined || memissue[name] === 0) {  
+				if (Common.utils.msg(message)) {
+					var complaint = message.match(/\S+/g);
+					Common.db.complaints.save({complaint}, function(err, saved) {
+						if (err || !saved) {
+							console.log('Error', err)
+						} else {
+							Common.bot.say(to, "complaint filed.");
+						}
+					});
+				} else {
+					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
+				}
+//			} else {
+//				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+				
+Commands.complain = function(Common, from, to, message) {
+	Commands.complaint(Common, from, to, message);
+};
+				
+Commands.issue = function(Common, from, to, message) {
+	Commands.complaint(Common, from, to, message);
+};
+
+Commands.incident = function(Common, from, to, message) {
+	Commands.complaint(Common, from, to, message);
+};
