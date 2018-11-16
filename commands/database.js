@@ -3050,9 +3050,8 @@ Commands.viewreports = function(Common, from, to, message) {
 			var reportnum = 0;
 			reports.forEach(function(reviewed) {
 				reportnum++;
-				viewreports[reportnum] = "2Member Report #" + reviewed.reportnumber + ", sent by " + reviewed.reporter + ", about " + reviewed.member + ", Report: " + reviewed.report;
+				Common.bot.say(to, "2Member Report #" + reviewed.reportnumber + " - Reporter: " + reviewed.reporter + " - Report: " + reviewed.member + "; " + reviewed.report;
 			});
-			Common.bot.say(to, viewreports);
 		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the staff channel to display staff-only information.");
