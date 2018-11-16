@@ -2894,6 +2894,7 @@ Commands.reportmember = function(Common, from, to, message) {
 					var reportmsg = message.match(/\S+/g);
 					var report_name = Common.utils.toLc(reportmsg[1]);
 					var report_detail = Common.utils.msg(Common.utils.msg(message));
+					if (member != report_name) {
 					Common.db.users.findOne({name: report_name}, function(err, user) {
 						if (err || !user) {
 							console.log(err);
@@ -2939,11 +2940,14 @@ Commands.reportmember = function(Common, from, to, message) {
 							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
 						}
 					});
+					} else {
+						Common.bot.say(to, "5" + member + ", you may not report yourself! A chair and some rope may solve your problem, though.");
+					}
 				} else {
 					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
 				}
 //			} else {
-//				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
+//				Common.bot.say(to, "5" + member + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
 			}
 		});
 	} else {
