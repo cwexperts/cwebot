@@ -2880,25 +2880,21 @@ Commands.reportmember = function(Common, from, to, message) {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
-				console.log(err);
-				if (Common.utils.msg(message)) {
-				
-				} else {
-					Common.bot.say(to, "5You must describe an issue or an incident that occured relating to #CwExperts when using this command.");
-				}
+				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-			} else {
-//			} else if (memissue[member] === undefined || memissue[member] === 0) {  
+			} else if ((memreportmins[member] === undefined && memreportsecs[member] === undefined) || (memreportmins[member] === 0 && memreportsecs[member] === 0)) {  
 				if (Common.utils.msg(message)) {
 					var reportmsg = message.match(/\S+/g);
 					var report_name = Common.utils.toLc(reportmsg[1]);
 					var report_detail = Common.utils.msg(Common.utils.msg(message));
+					if (member != report_name) {
 					Common.db.users.findOne({name: report_name}, function(err, user) {
 						if (err || !user) {
 							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 						} else if (reportmsg[2] !== undefined) {
+							Common.utils.memReportTimer(Common, to, 30, 'rm', 0, member);
 							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
 								var reportnum = 0;
 								reports.forEach(function(search) {
@@ -2936,14 +2932,28 @@ Commands.reportmember = function(Common, from, to, message) {
 								});
 							});
 						} else {
-							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
+							Common.bot.say(to, "5You must detail a report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 						}
 					});
+					} else {
+						Common.bot.say(to, "5" + member + ", you may not report yourself! A chair and some rope may solve your problem, though.");
+					}
 				} else {
-					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to report a member.");
+					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 				}
-//			} else {
-//				Common.bot.say(to, "5" + name + ", you may only file one complaint every 30 minutes - you must wait " + memissue[name] + " minutes before filing another complaint.");
+			} else {
+				var timeleftmins = '';
+				var timeleftsecs = '';
+				if (memreportmins[member] === 1) {
+					timeleftmins = " minute ";
+				} else {
+					timeleftmins = " minutes ";
+				} if (memreportsecs[member] === 1) {
+					timeleftsecs = " second";
+				} else {
+					timeleftsecs = " seconds";
+				}
+				Common.bot.say(to, "5" + member + ", you may only submit one member report every 30 minutes - you must wait " + memreportmins[member] + timeleftmins + memreportsecs[member] + timeleftsecs + " before submitting another member report.");
 			}
 		});
 	} else {
