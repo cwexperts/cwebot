@@ -3061,20 +3061,24 @@ Commands.viewreports = function(Common, from, to, message) {
 						var reportnum = 0;
 						reports.forEach(function(reviewed) {
 							reportnum++;
-							var timemsg = reviewed.date
-							timemsg = timemsg.toString();
-							timemsg = timemsg.substr(0, timemsg.length-14);
-							timemsg = timemsg + "UTC";
+							if (reviewed.date !== undefined) {
+								var timemsg = reviewed.date
+								timemsg = timemsg.toString();
+								timemsg = timemsg.substr(0, timemsg.length-14);
+								timemsg = timemsg + "UTC";
+							}
 							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Details: " + reviewed.report);
 						});
 						Common.db.reportmembers.find({reviewed: "no"}, function(err, reports2) {
 							var reportnumm = 0;
 							reports2.forEach(function(reviewed) {
 								reportnumm++;
-								var timemsg = reviewed.date
-								timemsg = timemsg.toString();
-								timemsg = timemsg.substr(0, timemsg.length-14);
-								timemsg = timemsg + "UTC";
+								if (reviewed.date !== undefined) {
+									var timemsg = reviewed.date
+									timemsg = timemsg.toString();
+									timemsg = timemsg.substr(0, timemsg.length-14);
+									timemsg = timemsg + "UTC";
+								}
 								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
 							});
 						});
