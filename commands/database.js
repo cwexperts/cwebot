@@ -3067,7 +3067,7 @@ Commands.viewreports = function(Common, from, to, message) {
 								timemsg = timemsg.substr(0, timemsg.length-14);
 								timemsg = timemsg + "UTC";
 							}
-							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Details: " + reviewed.report);
+							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Submitted by: " + reviewed.reporter + " - Details: " + reviewed.report);
 						});
 						Common.db.reportmembers.find({reviewed: "no"}, function(err, reports2) {
 							var reportnumm = 0;
@@ -3079,7 +3079,7 @@ Commands.viewreports = function(Common, from, to, message) {
 									timemsg = timemsg.substr(0, timemsg.length-14);
 									timemsg = timemsg + "UTC";
 								}
-								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
+								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Submitted by: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
 							});
 							if (reportnum == 0 && reportnumm == 0) {
 								Common.bot.say(to, "5Surprisingly, there are not any unreviewed bug reports or member reports.");
