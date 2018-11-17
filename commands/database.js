@@ -3127,50 +3127,29 @@ Commands.viewreports = function(Common, from, to, message) {
 Commands.viewr = function(Common, from, to, message) {
 	Commands.viewreports(Common, from, to, message);
 };
-/*
+
 Commands.reviewreport = function(Common, from, to, message) {
 	if (to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
+		var reportmsg = message.match(/\S+/g);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
 				console.log(err);
-				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to view all unreviewed bug reports and member reports.");
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to review bug reports and member reports.");
 			} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 				if (memlist[member] != 5 || perms.key === undefined) {
 					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else if (Common.utils.msg(message) && reportmsg[2] !== undefined) {
+					if (Common.utils.toLc(reportmsg[1]) == 'bug' || Common.utils.toLc(reportmsg[1]) == 'mem' || Common.utils.toLc(reportmsg[1]) == 'member') {
+						Common.bot.say(to, "working haha");
+					} else {
+						Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+					}
 				} else {
-					Common.db.reportbugs.find({reviewed: "no"}, function(err, reports) {
-						var reportnum = 0;
-						reports.forEach(function(reviewed) {
-							reportnum++;
-							if (reviewed.date !== undefined) {
-								var timemsg = reviewed.date
-								timemsg = timemsg.toString();
-								timemsg = timemsg.substr(0, timemsg.length-14);
-								timemsg = timemsg + "UTC";
-							}
-							Common.bot.say(to, "2Bug report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Submitted by: " + reviewed.reporter + " - Details: " + reviewed.report);
-						});
-						Common.db.reportmembers.find({reviewed: "no"}, function(err, reports2) {
-							var reportnumm = 0;
-							reports2.forEach(function(reviewed) {
-								reportnumm++;
-								if (reviewed.date !== undefined) {
-									var timemsg = reviewed.date
-									timemsg = timemsg.toString();
-									timemsg = timemsg.substr(0, timemsg.length-14);
-									timemsg = timemsg + "UTC";
-								}
-								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Submitted by: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
-							});
-							if (reportnum == 0 && reportnumm == 0) {
-								Common.bot.say(to, "5Surprisingly, there are not any unreviewed bug reports or member reports.");
-							}
-						});
-					});
+					Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
 				}
 			} else {
-				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to view all unreviewed bug reports and member reports.");
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to review bug reports and member reports.");
 			}
 		});
 	} else {
@@ -3180,4 +3159,4 @@ Commands.reviewreport = function(Common, from, to, message) {
 
 Commands.reviewr = function(Common, from, to, message) {
 	Commands.reviewreport(Common, from, to, message);
-};*/
+};
