@@ -2980,6 +2980,10 @@ Commands.reportbug = function(Common, from, to, message) {
 				if (reportmsg[1].length < 5 && reportmsg[2] === undefined) {
 					Common.bot.say(to, "5You must provide a detailed report about a CWEBot bug when using this command. Use the format !reportBug REPORT HERE to submit a bug report.");
 				} else {
+					var overflow = 0;
+					if (report_detail.length > 400) {
+						overflow = 1;
+					}
 					Common.utils.bugReportTimer(Common, to, 30, 'rb', 0, member);
 					Common.db.reportbugs.find({search: undefined}, function(err, reports) {
 						var reportnum = 0;
@@ -2995,7 +2999,11 @@ Commands.reportbug = function(Common, from, to, message) {
 								Common.db.users.findOne({name: member}, function(err, user1) {
 									if (err || !user1) {
 										console.log(err);
-										Common.bot.say(to, "3" + member + ", your bug report has been submitted for review.");
+										if (overflow == 1) {
+											Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted.");
+										} else {
+											Common.bot.say(to, "3" + member + ", your bug report has been submitted for review.");
+										}
 									} else {
 										Common.db.users.update({name: member}, {$inc: { "sbugreports": 1 }}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
@@ -3006,9 +3014,17 @@ Commands.reportbug = function(Common, from, to, message) {
 														console.log(err);
 													} else {
 														if (user2.sbugreports === 1) {
-															Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug report.");
+															if (overflow == 1) {
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug report.");
+															} else {
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug report.");
+															}
 														} else {
-															Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug reports.");
+															if (overflow == 1) {
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug reports.");
+															} else {
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug reports.");
+															}
 														}
 													}
 												});
