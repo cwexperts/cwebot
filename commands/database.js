@@ -2928,13 +2928,13 @@ Commands.reportmember = function(Common, from, to, message) {
 															} else {
 																if (user1.smemreports === 1) {
 																	if (overflow == 1) {
-																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user1.smemreports + " member report.");
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing the overflow from being submitted. 3You have now submitted a total of " + user1.smemreports + " member report.");
 																	} else {
 																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member report.");
 																	}
 																} else {
 																	if (overflow == 1) {
-																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user1.smemreports + " member reports.");
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing the overflow from being submitted. 3You have now submitted a total of " + user1.smemreports + " member reports.");
 																	} else {
 																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member reports.");
 																	}
@@ -3014,7 +3014,7 @@ Commands.reportbug = function(Common, from, to, message) {
 									if (err || !user1) {
 										console.log(err);
 										if (overflow == 1) {
-											Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted.");
+											Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing the overflow from being submitted.");
 										} else {
 											Common.bot.say(to, "3" + member + ", your bug report has been submitted for review.");
 										}
@@ -3029,13 +3029,13 @@ Commands.reportbug = function(Common, from, to, message) {
 													} else {
 														if (user2.sbugreports === 1) {
 															if (overflow == 1) {
-																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug report.");
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing the overflow from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug report.");
 															} else {
 																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug report.");
 															}
 														} else {
 															if (overflow == 1) {
-																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug reports.");
+																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review 4- the maximum character limit may have been exceeded, preventing the overflow from being submitted. 3You have now submitted a total of " + user2.sbugreports + " bug reports.");
 															} else {
 																Common.bot.say(to, "3" + member + ", your bug report has been submitted for review. You have now submitted a total of " + user2.sbugreports + " bug reports.");
 															}
