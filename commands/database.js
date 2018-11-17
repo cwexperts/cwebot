@@ -3145,7 +3145,13 @@ Commands.reviewreport = function(Common, from, to, message) {
 						if (perms.status == 'Owner') {
 							if (reportmsg[2] !== undefined) {
 								var reportnum = Common.utils.toLc(reportmsg[2]);
-								
+								Common.db.reportbugs.findOne({reportnumber: reportnum}, function(err, report) {
+									if (err || !report) {
+										Common.bot.say(to, "bug report not found...");
+									} else {
+										Common.bot.say(to, "bug report found!");
+									}
+								});
 							} else {
 								Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
 							}
