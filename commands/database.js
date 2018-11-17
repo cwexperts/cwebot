@@ -3081,10 +3081,10 @@ Commands.viewreports = function(Common, from, to, message) {
 								}
 								Common.bot.say(to, "2Member report: #" + reviewed.reportnumber + " - Time stamp: " + timemsg + " - Reporter: " + reviewed.reporter + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
 							});
+							if (reportnum == 0 && reportnumm == 0) {
+								Common.bot.say(to, "5Surprisingly, there are not any unreviewed bug reports or member reports.");
+							}
 						});
-						if (reportnum == 0 && reportnumm == 0) {
-							Common.bot.say(to, "5Surprisingly, there are not any unreviewed bug reports or member reports.");
-						}
 					});
 				}
 			} else {
