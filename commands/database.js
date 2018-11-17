@@ -2897,6 +2897,10 @@ Commands.reportmember = function(Common, from, to, message) {
 							if (reportmsg[2].length < 5 && reportmsg[3] === undefined) {
 								Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
 							} else {
+								var overflow = 0;
+								if (report_detail.length > 400) {
+									overflow = 1;
+								}
 							Common.utils.memReportTimer(Common, to, 30, 'rm', 0, member);
 							Common.db.reportmembers.find({search: undefined}, function(err, reports) {
 								var reportnum = 0;
@@ -2922,9 +2926,17 @@ Commands.reportmember = function(Common, from, to, message) {
 																console.log(err);
 															} else {
 																if (user1.smemreports === 1) {
-																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member report.");
+																	if (overflow == 1) {
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user1.smemreports + " member report.");
+																	} else {
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member report.");
+																	}
 																} else {
-																	Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member reports.");
+																	if (overflow == 1) {
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review 4- the maximum character limit may have been exceeded, preventing your entire report from being submitted. 3You have now submitted a total of " + user1.smemreports + " member reports.");
+																	} else {
+																		Common.bot.say(to, "3" + member + ", your member report has been submitted for review. You have now submitted a total of " + user1.smemreports + " member reports.");
+																	}
 																}
 															}
 														});
