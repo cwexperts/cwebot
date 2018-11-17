@@ -3157,7 +3157,7 @@ Commands.reviewreport = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "3" + "Bug report # " + reportnum + " has been marked as reviewed, thanks for your help " + member + "!");
+												Common.bot.say(to, "3" + "Bug report # " + reportnum + " has been marked as reviewed - thanks for your help " + member + "!");
 											}
 										});
 									}
@@ -3181,7 +3181,7 @@ Commands.reviewreport = function(Common, from, to, message) {
 										if (err || !updated) {
 											console.log('Error', err);
 										} else {
-											Common.bot.say(to, "3" + "Member report # " + reportnum + " has been marked as reviewed, thanks for your help " + member + "!");
+											Common.bot.say(to, "3" + "Member report # " + reportnum + " has been marked as reviewed - thanks for your help " + member + "!");
 										}
 									});
 								}
