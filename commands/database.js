@@ -3139,14 +3139,43 @@ Commands.reviewreport = function(Common, from, to, message) {
 			} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 				if (memlist[member] != 5 || perms.key === undefined) {
 					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-				} else if (Common.utils.msg(message) && reportmsg[2] !== undefined) {
-					if (Common.utils.toLc(reportmsg[1]) == 'bug' || Common.utils.toLc(reportmsg[1]) == 'mem' || Common.utils.toLc(reportmsg[1]) == 'member') {
-						Common.bot.say(to, "working haha");
+				} else if (Common.utils.msg(message)) {
+					var reportkind = Common.utils.toLc(reportmsg[1]);
+					if (reportkind == 'bug') {
+						if (perms.status == 'Owner') {
+							if (reportmsg[2] !== undefined) {
+								var reportnum = Common.utils.toLc(reportmsg[2]);
+								
+							} else {
+								Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+							}
+						} else {
+							Common.bot.say(to, "5This command may only be used by members with Owner member status to review bug reports.");
+						}
+					} else if (reportkind == 'mem' || reportkind == 'member') {
+						if (reportmsg[2] !== undefined) {
+							var reportnum = Common.utils.toLc(reportmsg[2]);
+							
+						} else {
+							if (perms.status == 'Owner') {
+								Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+							} else {
+								Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport member REPORT_NUMBER to review a report.");
+							}	
+						}
 					} else {
-						Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+						if (perms.status == 'Owner') {
+							Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+						} else {
+							Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport member REPORT_NUMBER to review a report.");
+						}
 					}
 				} else {
-					Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+					if (perms.status == 'Owner') {
+						Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
+					} else {
+						Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport member REPORT_NUMBER to review a report.");
+					}
 				}
 			} else {
 				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to review bug reports and member reports.");
