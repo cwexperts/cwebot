@@ -3149,9 +3149,17 @@ Commands.reviewreport = function(Common, from, to, message) {
 								var reportnum = Common.utils.toLc(reportmsg[2]);
 								Common.db.reportbugs.findOne({reportnumber: reportnum}, function(err, report) {
 									if (err || !report) {
-										Common.bot.say(to, "bug report not found...");
+										Common.bot.say(to, "5" + "Bug report #" + reportnum + " not found. Use !viewReports to view all unreviewed bug reports and member reports.");
+									} else if (report.reviewed == 'yes') {
+										Common.bot.say(to, "5" + "Bug report #" + reportnum + " has already been marked as reviewed. Use !viewReports to view all unreviewed bug reports and member reports.");
 									} else {
-										Common.bot.say(to, "bug report found!");
+										Common.db.reportbugs.update({reportnumber: reportnum}, {$set: {reviewed: "yes"}}, {upsert: false}, function(err, updated) {
+											if (err || !updated) {
+												console.log('Error', err);
+											} else {
+												Common.bot.say(to, "3" + "Bug report #" + reportnum + " has been marked as reviewed, thanks to your help " + member + "!");
+											}
+										});
 									}
 								});
 							} else {
@@ -3163,7 +3171,21 @@ Commands.reviewreport = function(Common, from, to, message) {
 					} else if (reportkind == 'mem' || reportkind == 'member') {
 						if (reportmsg[2] !== undefined) {
 							var reportnum = Common.utils.toLc(reportmsg[2]);
-							
+							Common.db.reportmembers.findOne({reportnumber: reportnum}, function(err, report) {
+								if (err || !report) {
+									Common.bot.say(to, "5" + "Member report #" + reportnum + " not found. Use !viewReports to view all unreviewed bug reports and member reports.");
+								} else if (report.reviewed == 'yes') {
+									Common.bot.say(to, "5" + "Member report #" + reportnum + " has already been marked as reviewed. Use !viewReports to view all unreviewed bug reports and member reports.");
+								} else {
+									Common.db.reportmembers.update({reportnumber: reportnum}, {$set: {reviewed: "yes"}}, {upsert: false}, function(err, updated) {
+										if (err || !updated) {
+											console.log('Error', err);
+										} else {
+											Common.bot.say(to, "3" + "Member report #" + reportnum + " has been marked as reviewed, thanks to your help " + member + "!");
+										}
+									});
+								}
+							});
 						} else {
 							if (perms.status == 'Owner') {
 								Common.bot.say(to, "5You must specify a report to review when using this command. Use the format !reviewReport bug REPORT_NUMBER or !reviewReport member REPORT_NUMBER to review a report.");
