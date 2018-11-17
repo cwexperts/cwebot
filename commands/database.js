@@ -3099,7 +3099,7 @@ Commands.viewreports = function(Common, from, to, message) {
 Commands.viewr = function(Common, from, to, message) {
 	Commands.viewreports(Common, from, to, message);
 };
-
+/*
 Commands.reviewreport = function(Common, from, to, message) {
 	if (to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
@@ -3152,4 +3152,4 @@ Commands.reviewreport = function(Common, from, to, message) {
 
 Commands.reviewr = function(Common, from, to, message) {
 	Commands.reviewreport(Common, from, to, message);
-};
+};*/
