@@ -1,8 +1,3 @@
-Commands.setentry = function(Common, from, to, message) {
-	Common.bot.send('CS', 'SET', '#cwexperts', 'ENTRYMSG', 'We are recruiting - type !register to apply to #CwExperts!');
-	Common.bot.send('CS', 'SET', '#cwexperts', 'FOUNDER', 'Dxnxex7');
-};
-
 Commands.plusops = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
