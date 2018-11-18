@@ -181,7 +181,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		Common.db.users.findOne({name: nick}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-			}
+			} else {
 			if (user.key === undefined) {
 				Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
 			}
@@ -193,6 +193,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 			if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
+			}
 			}
 		});
 		}
