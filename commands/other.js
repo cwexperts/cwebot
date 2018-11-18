@@ -1075,7 +1075,7 @@ Commands.mary = function(Common, from, to, message) {
 	Common.bot.say(to, "FWB called me and asked me why i was taking so long and i told him i had to do my makeup so he wouldn’t look down and see a boiled egg during sex. halfway thru sex i start talking dirty like oh yeah u like fucking humpty dumpty huh??? he got soft and got off me LMFAOOO");
 };
 
-Commands.derpyduck = function(Common, from, to, message) {
+Commands.megaduck = function(Common, from, to, message) {
 	Common.bot.say(to, "first of all, you have almost half of my exp and probably don't even have trim yet, so your acc must be twice as shit haha. Secondly, your posts further prove how pathetic and child like you are, bravo for letting this person promote your fc.. loll");
 };
 
@@ -1085,4 +1085,8 @@ Commands.polly = function(Common, from, to, message) {
 
 Commands.cnn = function(Common, from, to, message) {
 	Common.bot.say(to, "Jim’s gonna have to do all his reporting from Acosta street");
+};
+
+Commands.fribib = function(Common, from, to, message) {
+	Common.bot.say(to, "But i dont wanna break rules and cwe is a hella lot of effort I tried it and its intense Like srsly intense. (dont join cwe)");
 };
