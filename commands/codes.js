@@ -1,6 +1,6 @@
 Commands.activepromocodes = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		Common.bot.say(to, "6Active promotional codes:13 nov2018");
+		Common.bot.say(to, "6Active promotional codes:13 nov2018, dec2018, dec1st2018sl");
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
