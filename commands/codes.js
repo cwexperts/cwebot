@@ -78,7 +78,7 @@ Commands.claimcode = function(Common, from, to, message) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars Spotlight: Sat Dec 1st-Tue Dec 4th 2018 00:00 GT");
+								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Sat Dec 1st-Tue Dec 4th 2018 00:00 GT");
 							}
 						});
 //					}
@@ -122,6 +122,22 @@ Commands.nov2018 = function(Common, from, to, message) {
 				Common.bot.say(to, "working!!");
 			} else {
 				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for November 2018.");
+			}
+		}
+	});
+};
+
+Commands.dec2018 = function(Common, from, to, message) {
+	name = Common.utils.toDb(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for December 2018.");
+		} else {
+			if (user.dec2018 == 'dec2018') {
+				Common.bot.say(to, "working!!");
+			} else {
+				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for December 2018.");
 			}
 		}
 	});
