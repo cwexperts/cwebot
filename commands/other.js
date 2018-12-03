@@ -1090,3 +1090,7 @@ Commands.cnn = function(Common, from, to, message) {
 Commands.fribib = function(Common, from, to, message) {
 	Common.bot.say(to, "But i dont wanna break rules and cwe is a hella lot of effort I tried it and its intense Like srsly intense. (dont join cwe)");
 };
+
+Commands.pewdiepie = function(Common, from, to, message) {
+	Common.bot.say(to, "4SUBSCRIBE TO PEWDIEPIE! UNSUBSCRIBE FROM TSERIES! TSERIES HAS BIG GAY! - https://www.youtube.com/user/PewDiePie");
+};
