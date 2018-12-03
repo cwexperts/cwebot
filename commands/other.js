@@ -1092,5 +1092,5 @@ Commands.fribib = function(Common, from, to, message) {
 };
 
 Commands.pewdiepie = function(Common, from, to, message) {
-	Common.bot.say(to, "4SUBSCRIBE TO PEWDIEPIE! UNSUBSCRIBE FROM TSERIES! TSERIES HAS BIG GAY! - https://www.youtube.com/user/PewDiePie");
+	Common.bot.say(to, "4SUBSCRIBE TO PEWDIEPIE!!! UNSUBSCRIBE FROM TSERIES! TSERIES HAS BIG GAY! >>> https://www.youtube.com/user/PewDiePie <<<");
 };
