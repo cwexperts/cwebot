@@ -1,6 +1,6 @@
 Commands.activepromocodes = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		Common.bot.say(to, "6Active promotional codes:13 nov2018, dec2018, dec1st2018sl");
+		Common.bot.say(to, "6Active promotional codes:13 dec2018, dec1st2018sl");
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
@@ -30,23 +30,7 @@ Commands.claimcode = function(Common, from, to, message) {
 			} else if (code[1] == 'nov1st2018sl') {
 				Common.bot.say(to, "5Sorry " + from + ", this code expired on Sun Nov 04 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'nov2018') {
-//				Common.db.users.find({nov2018: code[1]}, function(err, users) {
-//					var codes = 0;
-//					users.forEach(function(nov2018) {
-//						codes++;
-//					});
-//					if (codes == 1) {
-//						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
-//					} else {
-						Common.db.users.update({name: name}, {$set: {nov2018: code[1]}}, {upsert: false}, function(err, updated) {
-							if (err || !updated) {
-								console.log('Error', err);
-							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the November 2018 command: tba");
-							}
-						});
-//					}
-//				});
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Sat Dec 01 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'dec2018') {
 //				Common.db.users.find({dec2018: code[1]}, function(err, users) {
 //					var codes = 0;
