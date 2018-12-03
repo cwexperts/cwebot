@@ -1094,3 +1094,7 @@ Commands.fribib = function(Common, from, to, message) {
 Commands.pewdiepie = function(Common, from, to, message) {
 	Common.bot.say(to, "4SUBSCRIBE TO PEWDIEPIE!!! UNSUBSCRIBE FROM TSERIES! TSERIES HAS BIG GAY! >>> https://www.youtube.com/user/PewDiePie <<<");
 };
+
+Commands.agriculture = function(Common, from, to, message) {
+	Common.bot.say(to, "I hope you die. Welcome to my ignore list. - https://gyazo.com/21add0b1c15180857090bf0eb4207adb");
+};
