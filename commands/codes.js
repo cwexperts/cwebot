@@ -65,7 +65,7 @@ Commands.claimcode = function(Common, from, to, message) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: tba");
+								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Fri Dec 28th-Mon Dec 31st 2018 00:00 GT");
 							}
 						});
 //					}
