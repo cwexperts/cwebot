@@ -65,11 +65,11 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + "");
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Owner member status to change the member status of a member to Admin.");
@@ -90,7 +90,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 													if (err || !updated) {
 														console.log('Error', err);
 													} else {
-														Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+														Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 													}
 												});
 											} else if (perms.status == 'Admin') {
@@ -101,11 +101,11 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
-											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+											Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + "");
 										}
 									} else {
 										Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to change the member status of a member to Staff.");
@@ -127,7 +127,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Admin') {
@@ -141,7 +141,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Staff') {
@@ -152,11 +152,11 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
 											}
 										});
 									} else {
-										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + ".");
+										Common.bot.say(to, "5The member status of " + name + " is already set to: " + stat + "");
 									}
 								}
 							}
