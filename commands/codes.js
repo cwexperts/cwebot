@@ -1,6 +1,6 @@
 Commands.activepromocodes = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		Common.bot.say(to, "6Active promotional codes:13 nov2018, dec2018, dec1st2018sl");
+		Common.bot.say(to, "6Active promotional codes:13 dec2018, dec28th2018sl");
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
@@ -23,30 +23,17 @@ Commands.claimcode = function(Common, from, to, message) {
 			if (err || !user) {
 				console.log(err);
 				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
-			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1] || user.dec2018 == code[1] || user.dec1st2018sl == code[1]) {
+			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1] || user.dec2018 == code[1] || user.dec1st2018sl == code[1] || user.dec28th2018sl == code[1]) {
 				Common.bot.say(to, "5" + from + ", you have already claimed this code: " + code[1] + ".");
 			} else if (code[1] == 'oct2018') {
 				Common.bot.say(to, "5Sorry " + from + ", this code expired on Thu Nov 01 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'nov1st2018sl') {
 				Common.bot.say(to, "5Sorry " + from + ", this code expired on Sun Nov 04 2018 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'nov2018') {
-//				Common.db.users.find({nov2018: code[1]}, function(err, users) {
-//					var codes = 0;
-//					users.forEach(function(nov2018) {
-//						codes++;
-//					});
-//					if (codes == 1) {
-//						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
-//					} else {
-						Common.db.users.update({name: name}, {$set: {nov2018: code[1]}}, {upsert: false}, function(err, updated) {
-							if (err || !updated) {
-								console.log('Error', err);
-							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the November 2018 command: tba");
-							}
-						});
-//					}
-//				});
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Sat Dec 01 2018 00:00:00 UTC: " + code[1] + ".");
+			} else if (code[1] == 'dec1st2018sl') {
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Tue Dec 04 2018 00:00:00 UTC: " + code[1] + ".");
+//				Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Sat Dec 1st-Tue Dec 4th 2018 00:00 GT");
 			} else if (code[1] == 'dec2018') {
 //				Common.db.users.find({dec2018: code[1]}, function(err, users) {
 //					var codes = 0;
@@ -65,20 +52,20 @@ Commands.claimcode = function(Common, from, to, message) {
 						});
 //					}
 //				});
-			} else if (code[1] == 'dec1st2018sl') {
-//				Common.db.users.find({dec1st2018sl: code[1]}, function(err, users) {
+			} else if (code[1] == 'dec28th2018sl') {
+//				Common.db.users.find({dec28th2018sl: code[1]}, function(err, users) {
 //					var codes = 0;
-//					users.forEach(function(dec1st2018sl) {
+//					users.forEach(function(dec28th2018sl) {
 //						codes++;
 //					});
 //					if (codes == 1) {
 //						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
 //					} else {
-						Common.db.users.update({name: name}, {$set: {dec1st2018sl: code[1]}}, {upsert: false}, function(err, updated) {
+						Common.db.users.update({name: name}, {$set: {dec28th2018sl: code[1]}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Sat Dec 1st-Tue Dec 4th 2018 00:00 GT");
+								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Fri Dec 28th-Mon Dec 31st 2018 00:00 GT");
 							}
 						});
 //					}
