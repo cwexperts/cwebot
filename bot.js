@@ -5,7 +5,7 @@ lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [];
+memlist = [], tempkey = [], justadded = [];
 
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
