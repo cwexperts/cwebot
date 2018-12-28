@@ -452,6 +452,7 @@ Commands.addalt = function(Common, from, to, message) {
 					console.log('Error', err)
 				} else {
 					memlist[name] = 5;
+					justadded[name] = 1;
 					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
 					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
 					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
