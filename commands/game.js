@@ -603,7 +603,7 @@ Commands.stl = function(Common, from, to, message) {
 
 Commands.count = function(Common, from, to, message) {
 	var players = [];
-	if (everyoneLc[to] != '' && to == "#cwexperts") {
+	if (everyoneLc[to] != '' && (to != "#cwexperts1" || to != "#cwexperts2" || to != "#cwexperts.staff")) {
 		players = everyoneLc[to];
 	} else if (users[to] != '') {
 		players = users[to].match(/\S+/g);
@@ -612,13 +612,16 @@ Commands.count = function(Common, from, to, message) {
 			if (err || !channel) {
 				console.log("Error: Unable to fetch world for " + channel);
 				console.log(err);
+				Common.bot.say(to, "2Active user count: " + players.length + "");
 			} else {
-				if (to == "#cwexperts") {
-					Common.bot.say(to, "2Active user count: " + players.length + "");
-				} else if (channel.games === 1) {
-					Common.bot.say(to, "2Active player count: " + players.length + "");
+				if (to == "#cwexperts1" || to == "#cwexperts2" || to == "#cwexperts.staff") {
+					if (channel.games === 1) {
+						Common.bot.say(to, "2Active player count: " + players.length + "");
+					} else {
+						Common.bot.say(to, "2Active member count: " + players.length + "; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
+					}
 				} else {
-					Common.bot.say(to, "2" + "Active member count: " + players.length + "; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
+					Common.bot.say(to, "2Active user count: " + players.length + "");
 				}
 			}
 		});
