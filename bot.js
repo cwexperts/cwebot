@@ -315,5 +315,6 @@ Common.bot.addListener('error', function(message) {
     Common.bot.say('#cwexperts1', error_msg);
     Common.bot.say('#cwexperts2', error_msg);
     Common.bot.say('#cwexperts.staff', error_msg);
+    Common.bot.say('#key', error_msg);
   }
 });
