@@ -579,7 +579,6 @@ module.exports = {
 						upmins[member] = 60;
 						if (hoursTo == 0) {
 							from = 'stop';
-							memlist[member] = 0;
 							upsecs[member] = 0;
 							upmins[member] = 0;
 							uphrs[member] = 0;
