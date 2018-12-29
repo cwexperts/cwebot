@@ -554,25 +554,43 @@ module.exports = {
 		}
 		setTimeout(Common.utils.bugReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
 	},
-	unlockProfileTimer: function(Common, channel, minutesTo, from, SecondsTo, member) {
+	unlockProfileTimer: function(Common, channel, from, secondsTo, minutesTo, hoursTo, member) {
 		if (from != 'stop') {
-			if (from == 'rb') {
+			if (from == 'up') {
 				from = 'self';
-				bugreportmins[member] = 30;
-				bugreportsecs[member] = 0;
-			} else if (bugreportsecs[member] == 0) {
-				bugreportmins[member] = bugreportmins[member] - 1;
-				bugreportsecs[member] = 59;
+				secondsTo = 0;
+				minutesTo = 60;
+				hoursTo = 24;
+				upsecs[member] = 0;
+				upmins[member] = 60;
+				uphrs[member] = 24;
+			} else if (secondsTo == upsecs[member] && minutesTo == upmins[member] && hoursTo == uphrs[member]) {
+				secondsTo = secondsTo + 1;
+				upsecs[member] = upsecs[member] + 1;
+				if (secondsTo == 60) {
+					minutesTo--;
+					upmins[member] = upmins[member] - 1;
+					secondsTo = 0;
+					upsecs[member] = 0;
+					if (minutesTo == 0) {
+						hoursTo--;
+						uphrs[member] = uphrs[member] - 1;
+						minutesTo = 60;
+						upmins[member] = 60;
+						if (hoursTo == 0) {
+							from = 'stop';
+							memlist[member] = 0;
+							upsecs[member] = 0;
+							upmins[member] = 0;
+							uphrs[member] = 0;
+						}
+					}
+				}			
 			} else {
-				bugreportsecs[member] = bugreportsecs[member] - 1;
+				from = 'stop';
 			}
 		}
-		if (bugreportmins[member] == 0 && bugreportsecs[member] == 0 && from != 'stop') {
-			from = 'stop';
-			bugreportmins[member] = 0;
-			bugreportsecs[member] = 0;
-		}
-		setTimeout(Common.utils.bugReportTimer, 60000, Common, channel, minutesTo, from, SecondsTo, member);
+		setTimeout(Common.utils.unlockProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, hoursTo, member);
 	},
 	goingAfk: function(Common, channel, minutesTo, user, from) {
 		if (minutesTo != 0 && from != 'stop') {
