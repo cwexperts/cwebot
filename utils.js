@@ -583,6 +583,9 @@ module.exports = {
 							upsecs[member] = 0;
 							upmins[member] = 0;
 							uphrs[member] = 0;
+							if (memlist[member] == 5) {
+								memlist[member] = 0;
+							}
 						}
 					}
 				}			
