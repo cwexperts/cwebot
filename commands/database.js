@@ -1259,8 +1259,8 @@ Commands.setleavedate = function(Common, from, to, message) {
 			if (Common.utils.msg(message)) {
 				name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1])
-				time = new Date();
-				timemsg = time.toString();
+				var timedate = new Date();
+				timemsg = timedate.toString();
 				timemsg = timemsg.substr(0, timemsg.length-14);
 				timemsg = timemsg + "UTC";
 				Common.db.users.findOne({name: name}, function(err, user) {
@@ -1269,7 +1269,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
 					} else {
 						if (user.joinDate === undefined) {
-							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: time, retired: 1}}, function(err, updated) {
+							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: timedate, retired: 1}}, function(err, updated) {
 								if (err || !updated) {
 									console.log("User not updated!");
 								}
@@ -1277,7 +1277,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 							Common.bot.say(to, "2" + from + " has set the leave date for " + name + " to: " + timemsg);
 						} else {
 							if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
-								Common.db.users.update({name: name}, {$set: {leaveDate: time, retired: 1}}, function(err, updated) {
+								Common.db.users.update({name: name}, {$set: {leaveDate: timedate, retired: 1}}, function(err, updated) {
 									if (err || !updated) {
 										console.log("User not updated!");
 									}
