@@ -2857,9 +2857,9 @@ Commands.recruits = function(Common, from, to, message) {
 					if (recruits_list != '') {
 						var newrecruits_list = recruits_list.substr(0, recruits_list.length-2);
 						if (recruits_count == 1) {
-							Common.bot.say(to, "2" + name + " has recruited a total of " + recruits_count + " member: " + newrecruits_list);
+							Common.bot.say(to, "2" + name + " has recruited a total of " + user.recruits + " member: " + newrecruits_list);
 						} else {
-							Common.bot.say(to, "2" + name + " has recruited a total of " + recruits_count + " members: " + newrecruits_list);
+							Common.bot.say(to, "2" + name + " has recruited a total of " + user.recruits + " members: " + newrecruits_list);
 						}
 					} else {
 						Common.bot.say(to, "2" + name + " has not recruited any members. SAD!");
