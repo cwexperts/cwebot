@@ -5,7 +5,7 @@ lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [];
+memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = [];
 
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
@@ -315,5 +315,6 @@ Common.bot.addListener('error', function(message) {
     Common.bot.say('#cwexperts1', error_msg);
     Common.bot.say('#cwexperts2', error_msg);
     Common.bot.say('#cwexperts.staff', error_msg);
+    Common.bot.say('#key', error_msg);
   }
 });

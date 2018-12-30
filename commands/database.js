@@ -452,6 +452,7 @@ Commands.addalt = function(Common, from, to, message) {
 					console.log('Error', err)
 				} else {
 					memlist[name] = 5;
+					justadded[name] = 1;
 					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
 					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
 					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
@@ -1599,8 +1600,6 @@ Commands.pentoggle = function(Common, from, to, message) {
 					if (err || !user) {
 						console.log("User not found.");
 						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
-					} else if (memlist[who] != 5 || user.key === undefined) {
-						Common.bot.say(to, "5" + who + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 					} else {
 						var isPenToggled = user.pen;
 						if (isPenToggled == 1) {
@@ -1667,8 +1666,6 @@ Commands.pentoggle = function(Common, from, to, message) {
 				if (err || !user) {
 					console.log("User not found.");
 					Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
-				} else if (memlist[member] != 5 || user.key === undefined) {
-					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
 					var isPenToggled = user.pen;
 					if (isPenToggled == 1) {

@@ -623,7 +623,8 @@ Commands.uwu = function(Common, from, to, message) {
  Commands.rumy = function(Common, from, to, message) {
      var list = [
           "im doing mine with cwars united",
-      "well i asked a friend who knows a jmod and it technically is against the rules and ive just been put off it since lol"
+          "well i asked a friend who knows a jmod and it technically is against the rules and ive just been put off it since lol",
+	  "its trim only 2.4k players have it???"
      ]
      var rand = list[Math.floor(Math.random() * list.length)];
      Common.bot.say(to, rand);

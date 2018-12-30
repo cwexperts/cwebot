@@ -554,6 +554,46 @@ module.exports = {
 		}
 		setTimeout(Common.utils.bugReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
 	},
+	unlockProfileTimer: function(Common, channel, from, secondsTo, minutesTo, hoursTo, member) {
+		if (from != 'stop') {
+			if (from == 'up') {
+				from = 'self';
+				secondsTo = 0;
+				minutesTo = 60;
+				hoursTo = 24;
+				upsecs[member] = 0;
+				upmins[member] = 60;
+				uphrs[member] = 24;
+			} else if (secondsTo == upsecs[member] && minutesTo == upmins[member] && hoursTo == uphrs[member]) {
+				secondsTo = secondsTo + 1;
+				upsecs[member] = upsecs[member] + 1;
+				if (secondsTo == 60) {
+					minutesTo--;
+					upmins[member] = upmins[member] - 1;
+					secondsTo = 0;
+					upsecs[member] = 0;
+					if (minutesTo == 0) {
+						hoursTo--;
+						uphrs[member] = uphrs[member] - 1;
+						minutesTo = 60;
+						upmins[member] = 60;
+						if (hoursTo == 0) {
+							from = 'stop';
+							upsecs[member] = 0;
+							upmins[member] = 0;
+							uphrs[member] = 0;
+							if (memlist[member] == 5) {
+								memlist[member] = 0;
+							}
+						}
+					}
+				}			
+			} else {
+				from = 'stop';
+			}
+		}
+		setTimeout(Common.utils.unlockProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, hoursTo, member);
+	},
 	goingAfk: function(Common, channel, minutesTo, user, from) {
 		if (minutesTo != 0 && from != 'stop') {
 	        if (from == 'afk') {

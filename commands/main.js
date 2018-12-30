@@ -8,6 +8,7 @@ function register(Common, from, to, message) {
 		Common.bot.say(to, "2. Change your nickname to your main RSN or something similar");
 		Common.bot.say(to, "Type: /nick NEW_NICKNAME");
 		Common.bot.say(to, "3. Register your current nickname; choose a secure password and use an email with 2-step authentication");
+		Common.bot.say(to, "4Microsoft is currently preventing all SwiftIRC emails from being received, so please use a different provider.");
 		Common.bot.say(to, "Type: /ns register PASSWORD PASSWORD EMAIL EMAIL");
 		Common.bot.say(to, "4. You will receive an email with a confirmation code; enter this code");
 		Common.bot.say(to, "Type: /ns confirm CODE");
@@ -34,6 +35,10 @@ Commands.register = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel to display the instructions for registering a SwiftIRC nickname.");
 	}
+};
+
+Commands.join = function(Common, from, to, message) {
+	Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !register in the lobby channel to display the instructions for registering a SwiftIRC nickname, or use /join CHANNEL_HERE to join another SwiftIRC channel.");
 };
 
 function joinnow(Common, from, to, message) {
