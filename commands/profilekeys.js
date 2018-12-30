@@ -213,6 +213,9 @@ Commands.lockprofile = function(Common, from, to, message) {
 			} else if (user.key !== undefined) {
 				if (memlist[name] === 5) {
 					memlist[name] = 0;
+					upsecs[name] = 0;
+					upmins[name] = 0;
+					uphrs[name] = 0;
 					Common.bot.say(to, "4" + name + ", your profile has been locked. Use !unlockProfile to unlock your profile.");
 				} else {
 					Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile to unlock your profile.");
