@@ -37,6 +37,10 @@ Commands.register = function(Common, from, to, message) {
 	}
 };
 
+Commands.join = function(Common, from, to, message) {
+	Common.bot.say(to, "4Are you sure you want to do that, " + from + "? Use !register in the lobby channel to display the instructions for registering a SwiftIRC nickname, or use /join CHANNEL_HERE to join another SwiftIRC channel.");
+};
+
 function joinnow(Common, from, to, message) {
 	var filtered_ops = Common.utils.removeByValue(ops[to], 'Abdel')
 	var filtered_hops = Common.utils.removeByValue(halfops[to], 'Abdel')
