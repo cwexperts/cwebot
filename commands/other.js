@@ -1099,3 +1099,11 @@ Commands.pewdiepie = function(Common, from, to, message) {
 Commands.agriculture = function(Common, from, to, message) {
 	Common.bot.say(to, "I hope you die. Welcome to my ignore list. - https://gyazo.com/21add0b1c15180857090bf0eb4207adb");
 };
+
+Commands.ed = function(Common, from, to, message) {
+	Common.bot.say(to, "when will rs3 devs realize that elite dungeons are fucking garbage and that they should stop making them!!!!!!!!!!!lol");
+};
+
+Commands.neet = function(Common, from, to, message) {
+	Common.bot.say(to, "just realized not a single sexy egirl on this app cares about me. not a  single egirl. i just wanna talk about my day and see their pussy, but no  one care enough, no one.");
+};
