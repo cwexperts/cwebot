@@ -559,10 +559,10 @@ module.exports = {
 			if (from == 'up') {
 				from = 'self';
 				secondsTo = 0;
-				minutesTo = 60;
-				hoursTo = 24;
+				minutesTo = 2;
+				hoursTo = 1;
 				upsecs[member] = 0;
-				upmins[member] = 5;
+				upmins[member] = 2;
 				uphrs[member] = 1;
 			} else if (secondsTo == upsecs[member] && minutesTo == upmins[member] && hoursTo == uphrs[member]) {
 				secondsTo = secondsTo + 1;
