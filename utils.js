@@ -562,8 +562,8 @@ module.exports = {
 				minutesTo = 60;
 				hoursTo = 24;
 				upsecs[member] = 0;
-				upmins[member] = 60;
-				uphrs[member] = 24;
+				upmins[member] = 5;
+				uphrs[member] = 1;
 			} else if (secondsTo == upsecs[member] && minutesTo == upmins[member] && hoursTo == uphrs[member]) {
 				secondsTo = secondsTo + 1;
 				upsecs[member] = upsecs[member] + 1;
