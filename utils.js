@@ -26,7 +26,7 @@ module.exports = {
 								if (ch.pen == 0) {
 									var penlist = users[channel].toLowerCase();
 									Common.bot.say(channel, penlist);
-									var penlist = penlist.split(/\s+/);
+									var penlist = penlist.split();
 									Common.bot.say(channel, penlist);
 									penlist.forEach(function(user1) {
 										Common.db.user.find({name: user1}, function(err, penuser) {
