@@ -41,7 +41,7 @@ module.exports = {
 									}
 								} else if (ch.pen == 1) {
 									var idiotlist = users[channel].toLowerCase();
-									idiotlist = penlist.split();
+									idiotlist = idiotlist.split();
 									idiotlist.forEach(function(user2) {
 										Common.db.users.findOne({name: user2}, function(err, idiotuser) {
 											if (err || !idiotuser) {
