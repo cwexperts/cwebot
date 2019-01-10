@@ -30,6 +30,7 @@ module.exports = {
 										Common.db.users.findOne({name: user1}, function(err, penuser) {
 											if (err || !penuser) {
 												console.log(err);
+												Common.bot.say(channel, user1 + " not found");
 											} else if (penuser.pen == 1) {
 												remindpen += Common.utils.toView(user1) + ' ';
 											}
@@ -48,6 +49,7 @@ module.exports = {
 										Common.db.users.findOne({name: user2}, function(err, idiotuser) {
 											if (err || !idiotuser) {
 												console.log(err);
+												Common.bot.say(channel, user2 + " not found");
 											} else if (idiotuser.pen == 1) {
 												remindidiots += Common.utils.toView(user2) + ' ';
 											}
