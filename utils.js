@@ -31,13 +31,15 @@ module.exports = {
 											if (err || !penuser) {
 												console.log(err);
 											} else if (penuser.pen == 1) {
-												remindpen += Common.utils.toView(penuser.name) + ' ';
+												remindpen += Common.utils.toView(user1) + ' ';
 											}
 										});
 									});
 									if (remindpen != '' && ch.pen != 1 && ch.world !== 0) {
 										Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
 										Common.bot.say(channel, remindpen);
+									} else if (remindpen == '') {
+										Common.bot.say(channel, "oopsie1");
 									}
 								} else if (ch.pen == 1) {
 									var idiotlist = users[channel].toLowerCase();
@@ -47,13 +49,15 @@ module.exports = {
 											if (err || !idiotuser) {
 												console.log(err);
 											} else if (idiotuser.pen == 1) {
-												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
+												remindidiots += Common.utils.toView(user2) + ' ';
 											}
 										});
 									});
 									if (remindidiots != '' && ch.world !== 0) {
 										Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
 										Common.bot.say(channel, remindidiots);
+									} else if (remindidiots == '') {
+										Common.bot.say(channel, "oopsie2");
 									}
 								}
 							}
