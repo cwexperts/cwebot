@@ -20,44 +20,41 @@ module.exports = {
 						pentime[channel] = minutesTo;
 						if (minutesTo == 0 && from != 'stop') {
 							from = 'stop';
-							Common.db.users.find({pen: 1}, function(err, dusers) {
-								if (err || !dusers) {
-									console.log("User not found.");
-								} else {
-									var remind = '';
-									if (users[channel] != '') {
-										var lnames = users[channel].toLowerCase();
-										dusers.forEach(function(user) {
-											if (lnames.indexOf(user.name) != -1) {
-												remind += Common.utils.toView(user.name) + ' ';
+							var remindpen = '';
+							var remindidiots = '';
+							if (users[channel] != '') {
+								if (ch.pen == 0) {
+									var penlist = users[channel].toLowerCase();
+									penlist.forEach(function(user1) {
+										Common.db.user.find({name: user1}, function(err, penuser) {
+											if (err || !penuser) {
+												console.log(err);
+											} else if (penuser.pen == 1) {
+												remindpen += Common.utils.toView(penuser.name) + ' ';
 											}
 										});
-										if (remind != '' && ch.pen != 1 && ch.world !== 0) {
-											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remind);
-										} else if (ch.pen == 1) {
-											Common.db.users.find({idiot: 1}, function(err, idiots) {
-												if (err || !idiots) {
-													console.log("Idiots not found.");
-												} else {
-													var idiots_list = '';
-													var lnames = users[channel].toLowerCase();
-													idiots.forEach(function(idiot) {
-														if (lnames.indexOf(idiot.name) != -1) {
-															idiots_list += Common.utils.toView(idiot.name) + ' ';
-														}
-													});
-													if (idiots_list != '' && ch.world !== 0) {
-														Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
-														Common.bot.say(channel, idiots_list);
-													}
-												}
-											});
-
-										}
+									});
+									if (remindpen != '' && ch.pen != 1 && ch.world !== 0) {
+										Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
+										Common.bot.say(channel, remindpen);
+									}
+								} else if (ch.pen == 1) {
+									var idiotlist = users[channel].toLowerCase();
+									idiotlist.forEach(function(user2) {
+										Common.db.user.find({name: user2}, function(err, idiotuser) {
+											if (err || !idiotuser) {
+												console.log(err);
+											} else if (idiotuser.pen == 1) {
+												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
+											}
+										});
+									});
+									if (remindidiots != '' && ch.world !== 0) {
+										Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
+										Common.bot.say(channel, remindidiots);
 									}
 								}
-							});
+							}
 						}
 					}
 				} else {
