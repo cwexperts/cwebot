@@ -25,9 +25,9 @@ module.exports = {
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
 									var penlist = users[channel].toLowerCase();
-									penlist = penlist.split();
+									penlist = penlist.split(' ').join(',');
 									penlist = [penlist];
-									//penlist = penlist.split(' ').join(',');
+									penlist = penlist.split();
 									penlist.forEach(function(user1) {
 										Common.db.users.findOne({name: user1}, function(err, penuser) {
 											if (err || !penuser) {
@@ -46,9 +46,9 @@ module.exports = {
 									}
 								} else if (ch.pen == 1) {
 									var idiotlist = users[channel].toLowerCase();
-									idiotlist = idiotlist.split();
+									idiotlist = idiotlist.split(' ').join(',');
 									idiotlist = [idiotlist];
-									//idiotlist = idiotlist.split(' ').join(',');
+									idiotlist = idiotlist.split();
 									idiotlist.forEach(function(user2) {
 										Common.db.users.findOne({name: user2}, function(err, idiotuser) {
 											if (err || !idiotuser) {
