@@ -13,7 +13,7 @@ module.exports = {
 				} else if (pentime[channel] == minutesTo && pensecs[channel] == SecondsTo && ch.world !== 0) {
 					pensecs[channel] = pensecs[channel] + 1;
 					SecondsTo = SecondsTo + 1;
-					if (pensecs[channel] == 30) {
+					if (pensecs[channel] == 1) {
 						pensecs[channel] = 0;
 						SecondsTo = 0;
 						minutesTo--;
@@ -26,6 +26,7 @@ module.exports = {
 								if (ch.pen == 0) {
 									var penlist = users[channel].toLowerCase();
 									penlist = penlist.split(" ");
+									Common.bot.say(channel, penlist);
 									//penlist = penlist.split(' ').join(',');
 									//penlist = [penlist];
 									//penlist = penlist.split();
@@ -48,6 +49,7 @@ module.exports = {
 								} else if (ch.pen == 1) {
 									var idiotlist = users[channel].toLowerCase();
 									idiotlist = idiotlist.split(" ");
+									Common.bot.say(channel, idiotlist);
 									//idiotlist = idiotlist.split(' ').join(',');
 									//idiotlist = [idiotlist];
 									//idiotlist = idiotlist.split();
