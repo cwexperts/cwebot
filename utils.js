@@ -34,9 +34,9 @@ module.exports = {
 										Common.db.users.findOne({name: item}, function(err, penuser) {
 											if (err || !penuser) {
 												console.log(err);
-												Common.bot.say(channel, user1 + " not found");
+												Common.bot.say(channel, item + " not found");
 											} else if (penuser.pen == 1) {
-												remindpen += Common.utils.toView(user1) + ' ';
+												remindpen += Common.utils.toView(penuser.name) + ' ';
 											}
 										});
 									});
