@@ -24,13 +24,11 @@ module.exports = {
 							var remindidiots = '';
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
-									function findUser(item) {
+									function findPenUser(item) {
 										item = item.toString();
-										Common.bot.say(channel, item + " is item");
 										Common.db.users.findOne({name: item}, function(err, penuser) {
 											if (err || !penuser) {
 												console.log(err);
-												Common.bot.say(channel, item + ": item not found in user db");
 											} else if (penuser.pen == 1) {
 												remindpen += Common.utils.toView(penuser.name) + ' ';
 											}
@@ -38,39 +36,33 @@ module.exports = {
 									};
 									var penlist = users[channel].toLowerCase();
 									penlist = penlist.split(" ");
-									Common.bot.say(channel, penlist);
-									penlist.forEach(findUser);
+									penlist.forEach(findPenUser);
 									setTimeout(function() {
-										if (remindpen != '' && ch.pen != 1 && ch.world !== 0) {
+										if (remindpen != '' && ch.world !== 0) {
 											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
 											Common.bot.say(channel, remindpen);
-										} else if (remindpen == '') {
-											Common.bot.say(channel, "oopsie1");
 										}
 									}, 1000);
 								} else if (ch.pen == 1) {
-									var idiotlist = users[channel].toLowerCase();
-									idiotlist = idiotlist.split(" ");
-									Common.bot.say(channel, idiotlist);
-									//idiotlist = idiotlist.split(' ').join(',');
-									//idiotlist = [idiotlist];
-									//idiotlist = idiotlist.split();
-									idiotlist.forEach(function(user2) {
+									function findIdiotUser(item) {
+										item = item.toString();
 										Common.db.users.findOne({name: item}, function(err, idiotuser) {
 											if (err || !idiotuser) {
 												console.log(err);
-												Common.bot.say(channel, user2 + " not found");
 											} else if (idiotuser.pen == 1) {
-												remindidiots += Common.utils.toView(user2) + ' ';
+												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
 											}
 										});
-									});
-									if (remindidiots != '' && ch.world !== 0) {
-										Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
-										Common.bot.say(channel, remindidiots);
-									} else if (remindidiots == '') {
-										Common.bot.say(channel, "oopsie2");
-									}
+									};
+									var idiotlist = users[channel].toLowerCase();
+									idiotlist = idiotlist.split(" ");
+									idiotlist.forEach(findIdiotUser);
+									setTimeout(function() {
+										if (remindidiots != '' && ch.world !== 0) {
+											Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
+											Common.bot.say(channel, remindidiots);
+										}
+									}, 1000);
 								}
 							}
 						}
