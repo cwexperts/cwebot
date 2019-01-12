@@ -24,11 +24,13 @@ module.exports = {
 							var remindidiots = '';
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
-									function findUser(item, index) {
+									function findUser(item) {
+										item = item.toString();
+										Common.bot.say(channel, item + " is item");
 										Common.db.users.findOne({name: item}, function(err, penuser) {
 											if (err || !penuser) {
 												console.log(err);
-												Common.bot.say(channel, item + " not found in user db");
+												Common.bot.say(channel, item + ": item not found in user db");
 											} else if (penuser.pen == 1) {
 												remindpen += Common.utils.toView(penuser.name) + ' ';
 											}
@@ -38,12 +40,14 @@ module.exports = {
 									penlist = penlist.split(" ");
 									Common.bot.say(channel, penlist);
 									penlist.forEach(findUser);
-									if (remindpen != '' && ch.pen != 1 && ch.world !== 0) {
-										Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
-										Common.bot.say(channel, remindpen);
-									} else if (remindpen == '') {
-										Common.bot.say(channel, "oopsie1");
-									}
+									setTimeout(function() {
+										if (remindpen != '' && ch.pen != 1 && ch.world !== 0) {
+											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
+											Common.bot.say(channel, remindpen);
+										} else if (remindpen == '') {
+											Common.bot.say(channel, "oopsie1");
+										}
+									}, 1000);
 								} else if (ch.pen == 1) {
 									var idiotlist = users[channel].toLowerCase();
 									idiotlist = idiotlist.split(" ");
