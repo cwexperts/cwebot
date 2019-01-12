@@ -31,12 +31,12 @@ module.exports = {
 									//penlist = [penlist];
 									//penlist = penlist.split();
 									penlist.forEach(function(user1) {
-										Common.db.users.findOne({name: user1}, function(err, penuser) {
+										Common.db.users.findOne({name: item}, function(err, penuser) {
 											if (err || !penuser) {
 												console.log(err);
-												Common.bot.say(channel, user1 + " not found");
+												Common.bot.say(channel, item + " not found");
 											} else if (penuser.pen == 1) {
-												remindpen += Common.utils.toView(user1) + ' ';
+												remindpen += Common.utils.toView(penuser.name) + ' ';
 											}
 										});
 									});
@@ -54,7 +54,7 @@ module.exports = {
 									//idiotlist = [idiotlist];
 									//idiotlist = idiotlist.split();
 									idiotlist.forEach(function(user2) {
-										Common.db.users.findOne({name: user2}, function(err, idiotuser) {
+										Common.db.users.findOne({name: item}, function(err, idiotuser) {
 											if (err || !idiotuser) {
 												console.log(err);
 												Common.bot.say(channel, user2 + " not found");
