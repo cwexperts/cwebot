@@ -53,12 +53,10 @@ module.exports = {
 										if (remindpen != '' && ch.world !== 0) {
 											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
 											Common.bot.say(channel, remindpen);
-										}
-									}, 1000);
-										if (remindidiots != '' && ch.world !== 0) {
 											Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
 											Common.bot.say(channel, remindidiots);
 										}
+									}, 1000);
 								}
 							}
 						}
