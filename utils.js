@@ -21,6 +21,8 @@ module.exports = {
 						if (minutesTo == 0 && from != 'stop') {
 							from = 'stop';
 							var remindpen = '';
+							var remindidiots = '';
+							var remindfinal = '';
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
 									function findPenUser(item) {
@@ -39,22 +41,28 @@ module.exports = {
 											if (err || !idiotuser) {
 												console.log(err);
 											} else if (idiotuser.idiot == 1) {
-												remindpen += Common.utils.toView(idiotuser.name) + ' ';
+												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
 											}
 										});
 									};
-									var penlist = users[channel].toLowerCase();
-									penlist = penlist.split(" ");
-									penlist.forEach(findPenUser);
-									penlist.forEach(findIdiotUser);
+									function uniqueNames(namesArray) {
+										return namesArray.sort().filter(function(item, pos, ary) { return !pos || item != ary[pos - 1]; });
+									};
+									var chanlist = users[channel].toLowerCase();
+									chanlist = chanlist.split(" ");
+									chanlist.forEach(findPenUser);
+									chanlist.forEach(findIdiotUser);
 									setTimeout(function() {
-										remindpen = remindpen.split(" ");
-										
-										if (remindpen != '' && ch.world !== 0) {
-											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindpen);
-											Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindidiots);
+										if (remindpen != '' && remindidiots != '' && ch.world !== 0) {
+											remindfinal = remindpen + remindidiots;
+											Common.bot.say(channel, remindfinal + " #1");
+											remindpen = remindfinal.split(" ");
+											Common.bot.say(channel, remindfinal + " #2");
+											uniqueNames(remindfinal);
+											Common.bot.say(channel, remindfinal + " #3");
+											
+											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
+											Common.bot.say(channel, remindfinal);
 										}
 									}, 1000);
 								}
