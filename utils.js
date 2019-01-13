@@ -21,7 +21,6 @@ module.exports = {
 						if (minutesTo == 0 && from != 'stop') {
 							from = 'stop';
 							var remindpen = '';
-							var remindidiots = '';
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
 									function findPenUser(item) {
@@ -34,35 +33,32 @@ module.exports = {
 											}
 										});
 									};
-									var penlist = users[channel].toLowerCase();
-									penlist = penlist.split(" ");
-									penlist.forEach(findPenUser);
-									setTimeout(function() {
-										if (remindpen != '' && ch.world !== 0) {
-											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindpen);
-										}
-									}, 1000);
-								} else if (ch.pen == 1) {
 									function findIdiotUser(item) {
 										item = item.toString();
 										Common.db.users.findOne({name: item}, function(err, idiotuser) {
 											if (err || !idiotuser) {
 												console.log(err);
-											} else if (idiotuser.pen == 1) {
-												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
+											} else if (idiotuser.idiot == 1) {
+												remindpen += Common.utils.toView(idiotuser.name) + ' ';
 											}
 										});
 									};
-									var idiotlist = users[channel].toLowerCase();
-									idiotlist = idiotlist.split(" ");
-									idiotlist.forEach(findIdiotUser);
+									var penlist = users[channel].toLowerCase();
+									penlist = penlist.split(" ");
+									penlist.forEach(findPenUser);
+									penlist.forEach(findIdiotUser);
 									setTimeout(function() {
+										remindpen = remindpen.split(" ");
+										
+										if (remindpen != '' && ch.world !== 0) {
+											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
+											Common.bot.say(channel, remindpen);
+										}
+									}, 1000);
 										if (remindidiots != '' && ch.world !== 0) {
 											Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
 											Common.bot.say(channel, remindidiots);
 										}
-									}, 1000);
 								}
 							}
 						}
