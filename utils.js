@@ -53,16 +53,23 @@ module.exports = {
 									chanlist.forEach(findPenUser);
 									chanlist.forEach(findIdiotUser);
 									setTimeout(function() {
-										if (remindpen != '' && remindidiots != '' && ch.world !== 0) {
-											remindfinal = remindpen + remindidiots;
+										if ((remindpen != '' || remindidiots != '') && ch.world !== 0) {
+											if (remindpen != '' && remindidiots != '') {
+												remindfinal = remindpen + remindidiots;
+											} else if (remindpen != '') {
+												remindfinal = remindpen;
+											} else if (remindidiots != '') {
+												remindfinal = remindidiots;
+											}
+												
 											Common.bot.say(channel, remindfinal + " #1");
-											remindpen = remindfinal.split(" ");
+											remindfinal = remindfinal.split(" ");
 											Common.bot.say(channel, remindfinal + " #2");
 											uniqueNames(remindfinal);
 											Common.bot.say(channel, remindfinal + " #3");
 											
 											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindfinal);
+											//Common.bot.say(channel, remindfinal);
 										}
 									}, 1000);
 								}
