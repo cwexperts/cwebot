@@ -1612,7 +1612,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 							console.log("User not updated!");
 						} else {
 							if (isPenToggled == 1) {
-							Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+							Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 						} else {
 							Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you have been removed from the voluntary pen reminder.");
 						}
@@ -1646,7 +1646,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 							console.log("User not updated!");
 						} else {
 							if (isPenToggled == 1) {
-							Common.bot.say(to, "6" + Common.utils.toLc(who[1]) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+							Common.bot.say(to, "6" + Common.utils.toLc(who[1]) + ", you will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 						} else {
 							Common.bot.say(to, "6" + Common.utils.toLc(who[1]) + ", you have been removed from the voluntary pen reminder.");
 						}
@@ -1678,7 +1678,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 						console.log("User not updated!");
 					} else {
 						if (isPenToggled == 1) {
-						Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+						Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 					} else {
 						Common.bot.say(to, "6" + Common.utils.toLc(from) + ", you have been removed from the voluntary pen reminder.");
 					}
@@ -1724,7 +1724,7 @@ Commands.idiot = function(Common, from, to, message) {
 						if (err || !updated) {
 							console.log("User not updated");
 						} else {
-							Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+							Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 						}
 						});
 					}
@@ -1772,7 +1772,7 @@ Commands.genius = function(Common, from, to, message) {
 					if (err || !updated) {
 						console.log("User not updated");
 					} else {
-						Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're not an idiot! You have been removed from the pen reminder for idiots.");
+						Common.bot.say(to, "6Congratulations " + Common.utils.toLc(name[1]) + ", you're not an idiot! You have been removed from the idiot pen reminder.");
 					}
 					});
 				}
