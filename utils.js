@@ -13,7 +13,7 @@ module.exports = {
 				} else if (pentime[channel] == minutesTo && pensecs[channel] == SecondsTo && ch.world !== 0) {
 					pensecs[channel] = pensecs[channel] + 1;
 					SecondsTo = SecondsTo + 1;
-					if (pensecs[channel] == 30) {
+					if (pensecs[channel] == 1) {
 						pensecs[channel] = 0;
 						SecondsTo = 0;
 						minutesTo--;
