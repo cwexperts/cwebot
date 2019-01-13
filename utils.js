@@ -22,6 +22,7 @@ module.exports = {
 							from = 'stop';
 							var remindpen = '';
 							var remindidiots = '';
+							var remindfinal = '';
 							if (users[channel] != '') {
 								if (ch.pen == 0) {
 									function findPenUser(item) {
@@ -34,33 +35,41 @@ module.exports = {
 											}
 										});
 									};
-									var penlist = users[channel].toLowerCase();
-									penlist = penlist.split(" ");
-									penlist.forEach(findPenUser);
-									setTimeout(function() {
-										if (remindpen != '' && ch.world !== 0) {
-											Common.bot.say(channel, "14*** ( 6ALTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindpen);
-										}
-									}, 1000);
-								} else if (ch.pen == 1) {
 									function findIdiotUser(item) {
 										item = item.toString();
 										Common.db.users.findOne({name: item}, function(err, idiotuser) {
 											if (err || !idiotuser) {
 												console.log(err);
-											} else if (idiotuser.pen == 1) {
+											} else if (idiotuser.idiot == 1) {
 												remindidiots += Common.utils.toView(idiotuser.name) + ' ';
 											}
 										});
 									};
-									var idiotlist = users[channel].toLowerCase();
-									idiotlist = idiotlist.split(" ");
-									idiotlist.forEach(findIdiotUser);
+									function uniqueNames(namesArray) {
+										return namesArray.sort().filter(function(item, pos, ary) { return !pos || item != ary[pos - 1]; });
+									};
+									var chanlist = users[channel].toLowerCase();
+									chanlist = chanlist.split(" ");
+									chanlist.forEach(findPenUser);
+									chanlist.forEach(findIdiotUser);
 									setTimeout(function() {
-										if (remindidiots != '' && ch.world !== 0) {
-											Common.bot.say(channel, "14*** ( 6IDIOTS LEAVE PEN! 14) ***");
-											Common.bot.say(channel, remindidiots);
+										if ((remindpen != '' || remindidiots != '') && ch.world !== 0) {
+											if (remindpen != '' && remindidiots != '') {
+												remindfinal = remindpen + remindidiots;
+											} else if (remindpen != '') {
+												remindfinal = remindpen;
+											} else if (remindidiots != '') {
+												remindfinal = remindidiots;
+											}
+												
+											Common.bot.say(channel, remindfinal + " #1");
+											remindfinal = remindfinal.split(" ");
+											Common.bot.say(channel, remindfinal + " #2");
+											uniqueNames(remindfinal);
+											Common.bot.say(channel, remindfinal + " #3");
+											
+											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
+											//Common.bot.say(channel, remindfinal);
 										}
 									}, 1000);
 								}
