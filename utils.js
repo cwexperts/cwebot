@@ -79,7 +79,7 @@ module.exports = {
 											testarray = testarray.sort();
 											Common.bot.say(channel, "sort = " + testarray);
 											setTimeout(function() {
-												uniqueNames(testarray);
+												testarray = uniqueNames(testarray);
 												setTimeout(function() {
 												Common.bot.say(channel, "dupes = " + testarray);
 												Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
