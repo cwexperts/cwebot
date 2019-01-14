@@ -48,7 +48,6 @@ module.exports = {
 									function uniqueNames(namesArray) {
 										return namesArray.sort().filter(function(item, pos, ary) {
 											return !pos || item != ary[pos - 1]; 
-											Common.bot.say(channel,(namesArray, pos, !pos, item, ary[pos - 1], (item != ary[pos - 1]));
 											Common.bot.say(channel, "namesArray = " + namesArray);
 											Common.bot.say(channel, "pos = " + pos);
 											Common.bot.say(channel, "!pos = " + !pos);
