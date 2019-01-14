@@ -62,12 +62,14 @@ module.exports = {
 												remindfinal = remindidiots;
 											}
 												
-											Common.bot.say(channel, remindfinal + " #1");
-											remindfinal = remindfinal.split(" ");
-											Common.bot.say(channel, remindfinal + " #2");
-											uniqueNames(remindfinal);
-											Common.bot.say(channel, remindfinal + " #3");
-											
+											//Common.bot.say(channel, remindfinal + " #1");
+											//remindfinal = remindfinal.split(" ");
+											//Common.bot.say(channel, remindfinal + " #2");
+											//uniqueNames(remindfinal);
+											//Common.bot.say(channel, remindfinal + " #3");
+											var testarray = ["Dxnxex7", "Kingnuggets", "FenwayOreo", "Dxnxex7"];
+											uniqueNames(testarray);
+											Common.bot.say(channel, testarray);
 											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
 											//Common.bot.say(channel, remindfinal);
 										}
