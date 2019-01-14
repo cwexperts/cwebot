@@ -46,8 +46,9 @@ module.exports = {
 										});
 									};
 									function uniqueNames(namesArray) {
-										return namesArray.sort().filter(function(item, pos, ary) {
+										return namesArray.filter(function(item, pos, ary) {
 											Common.bot.say(channel, "namesArray = " + namesArray);
+											Common.bot.say(channel, "item = " + item);
 											Common.bot.say(channel, "pos = " + pos);
 											Common.bot.say(channel, "!pos = " + !pos);
 											Common.bot.say(channel, "ary[pos - 1] = " + (ary[pos - 1]));
@@ -75,11 +76,15 @@ module.exports = {
 											//uniqueNames(remindfinal);
 											//Common.bot.say(channel, remindfinal + " #3");
 											var testarray = ["Dxnxex7", "Kingnuggets", "FenwayOreo", "Dxnxex7"];
-											uniqueNames(testarray);
+											testarray = testarray.sort();
+											Common.bot.say(channel, "sort = " + testarray);
 											setTimeout(function() {
-											Common.bot.say(channel, testarray);
-											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
-											//Common.bot.say(channel, remindfinal);
+												uniqueNames(testarray);
+												setTimeout(function() {
+												Common.bot.say(channel, "dupes = " + testarray);
+												Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
+												//Common.bot.say(channel, remindfinal);
+												}, 5000);
 											}, 5000);
 										}
 									}, 1000);
