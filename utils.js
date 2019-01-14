@@ -46,7 +46,7 @@ module.exports = {
 										});
 									};
 									function uniqueNames(namesArray) {
-										return namesArray.sort().filter(function(item, pos, ary) {
+										return namesArray.filter(function(item, pos, ary) {
 											Common.bot.say(channel, "namesArray = " + namesArray);
 											Common.bot.say(channel, "item = " + item);
 											Common.bot.say(channel, "pos = " + pos);
