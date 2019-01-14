@@ -46,7 +46,14 @@ module.exports = {
 										});
 									};
 									function uniqueNames(namesArray) {
-										return namesArray.sort().filter(function(item, pos, ary) { return !pos || item != ary[pos - 1]; });
+										return namesArray.sort().filter(function(item, pos, ary) {
+											return !pos || item != ary[pos - 1]; 
+											Common.bot.say(channel, "namesArray = " + namesArray);
+											Common.bot.say(channel, "pos = " + pos);
+											Common.bot.say(channel, "!pos = " + !pos);
+											Common.bot.say(channel, "ary[pos - 1] = " + (ary[pos - 1]));
+											Common.bot.say(channel, "item != ary[pos - 1] = " + (item != ary[pos - 1]));
+										});
 									};
 									var chanlist = users[channel].toLowerCase();
 									chanlist = chanlist.split(" ");
