@@ -73,7 +73,7 @@ module.exports = {
 											Common.bot.say(channel, testarray);
 											Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
 											//Common.bot.say(channel, remindfinal);
-											}, 1000);
+											}, 5000);
 										}
 									}, 1000);
 								}
