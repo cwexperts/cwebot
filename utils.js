@@ -13,7 +13,7 @@ module.exports = {
 				} else if (pentime[channel] == minutesTo && pensecs[channel] == SecondsTo && ch.world !== 0) {
 					pensecs[channel] = pensecs[channel] + 1;
 					SecondsTo = SecondsTo + 1;
-					if (pensecs[channel] == 1) {
+					if (pensecs[channel] == 30) {
 						pensecs[channel] = 0;
 						SecondsTo = 0;
 						minutesTo--;
@@ -69,23 +69,13 @@ module.exports = {
 											} else if (remindidiots != '') {
 												remindfinal = remindidiots;
 											}
-												
-											//Common.bot.say(channel, remindfinal + " #1");
-											//remindfinal = remindfinal.split(" ");
-											//Common.bot.say(channel, remindfinal + " #2");
-											//uniqueNames(remindfinal);
-											//Common.bot.say(channel, remindfinal + " #3");
-											var testarray = ["Dxnxex7", "Kingnuggets", "FenwayOreo", "Dxnxex7"];
-											testarray = testarray.sort();
-											Common.bot.say(channel, "sort = " + testarray);
+											remindfinal = remindfinal.split(" ");
+											remindfinal = remindfinal.sort();
+											remindfinal = uniqueNames(remindfinal);
 											setTimeout(function() {
-												testarray = uniqueNames(testarray);
-												setTimeout(function() {
-												Common.bot.say(channel, "dupes = " + testarray);
 												Common.bot.say(channel, "14*** ( 6ALTS & IDIOTS LEAVE PEN! 14) ***");
-												//Common.bot.say(channel, remindfinal);
-												}, 5000);
-											}, 5000);
+												Common.bot.say(channel, remindfinal);
+											}, 1000);
 										}
 									}, 1000);
 								}
