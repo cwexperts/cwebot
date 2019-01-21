@@ -135,7 +135,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			timenow = timenow.getTime();
 			if (timenow > exp) {
 				reregister[name] = 1;
-				Common.bot.say(channel, "3Welcome back " + nick + "! You have been gone for more than 2 months which may have resulted in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for more than 2 months, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
 			}
 		}
 	});
