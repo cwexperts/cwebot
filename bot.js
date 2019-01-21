@@ -127,6 +127,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
+			Common.bot.say(channel, "user not found");
 		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
 			//var exp = user.lastSeen + 5184000000
 			var exp = user.lastSeen + 60000
