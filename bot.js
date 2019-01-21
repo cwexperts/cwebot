@@ -274,20 +274,6 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
-	Common.db.users.findOne({name: nick}, function(err, user) {
-		if (err || !user) {
-			console.log(err);
-			Common.bot.say('#cwexperts1', "this isnt fucking working 1");
-		} else {
-			var timedate = new Date();
-			Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-					console.log('Error', err);
-					Common.bot.say('#cwexperts1', "this isnt fucking working 2");
-				}
-			});
-		}
-	});
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
@@ -308,6 +294,19 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
                 }
               }
   });
+	nick = Common.utils.toLc(nick);
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+		} else {
+			var timedate = new Date();
+			Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				}
+			});
+		}
+	});
 });
 
 Common.bot.addListener('kill', function(nick, reason, channels, message) {
