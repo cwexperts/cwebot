@@ -126,7 +126,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	Common.db.users.findOne({name: nick}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-		} else {
+		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
 			//var exp = user.lastSeen + 5184000000
 			var exp = user.lastSeen + 60000
 			var timenow = new Date();
@@ -277,11 +277,13 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
 	Common.db.users.findOne({name: nick}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
+			Common.bot.say('#cwexperts1', "this isnt fucking working 1");
 		} else {
 			var timedate = new Date();
 			Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 					console.log('Error', err);
+					Common.bot.say('#cwexperts1', "this isnt fucking working 2");
 				}
 			});
 		}
