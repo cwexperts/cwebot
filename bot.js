@@ -127,7 +127,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		if (err || !user) {
 			console.log(err);
 		} else {
-			var exp = user.lastSeen + 5184000000
+			//var exp = user.lastSeen + 5184000000
+			var exp = user.lastSeen + 60000
 			var timenow = new Date();
 			if (timenow > exp) {
 				reregister[nick] = 1;
