@@ -127,7 +127,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
     if (Common.utils.toLc(nick) != 'abdel' && Common.utils.toLc(nick) != 'hanna' && Common.utils.toLc(nick) != 'alan_' 
         && Common.utils.toLc(nick) != 'alan__' && Common.utils.toLc(nick) != 'base_tank' 
         && Common.utils.toLc(nick) != 'fable' && Common.utils.toLc(nick) != 'ipso') {
-      var greetmsg = "4[GREET]: 2" + nick + " has joined! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
+      var greetmsg = "4[GREET]: 2" + nick + " has arrived! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
       var players = [];
       setTimeout(function() {
           if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
