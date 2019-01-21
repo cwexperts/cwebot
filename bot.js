@@ -10,6 +10,9 @@ memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = []
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 
+//TEMP VARIABLE FOR RE-REGISTER NICKNAME
+reregister = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
