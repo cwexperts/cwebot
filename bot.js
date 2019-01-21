@@ -10,6 +10,9 @@ memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = []
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 
+//TEMP VARIABLE FOR RE-REGISTER NICKNAME
+reregister = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
@@ -120,11 +123,24 @@ Common.bot.addListener('join', function(channel, nick, message) {
 //         Common.bot.say(channel, "12Hello " + nick + "! 4How To Join12: http://cwexperts.org/how-to-join/. 4Type 7!join 4for instructions12.");
 //       }
 //     }, 10000);
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+		} else {
+			//var exp = user.lastSeen + 5184000000
+			var exp = user.lastSeen + 60000
+			var timenow = new Date();
+			if (timenow > exp) {
+				reregister[nick] = 1;
+				Common.bot.say(channel, "3Welcome back " + nick + "! You have been gone for more than 2 months which has resulted in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+			}
+		}
+	});
   } else if (channel == '#cwexperts1' || channel == '#cwexperts2') {
     if (Common.utils.toLc(nick) != 'abdel' && Common.utils.toLc(nick) != 'hanna' && Common.utils.toLc(nick) != 'alan_' 
         && Common.utils.toLc(nick) != 'alan__' && Common.utils.toLc(nick) != 'base_tank' 
         && Common.utils.toLc(nick) != 'fable' && Common.utils.toLc(nick) != 'ipso') {
-      var greetmsg = "4[GREET]: 2" + nick + " has joined! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
+      var greetmsg = "4[GREET]: 2" + nick + " has arrived! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
       var players = [];
       setTimeout(function() {
           if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
@@ -258,6 +274,18 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+		} else {
+			var timedate = new Date();
+			Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				}
+			});
+		}
+	});
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
