@@ -26,10 +26,10 @@ Commands.register = function(Common, from, to, message) {
 		if (err || !perms) {
 			console.log(err);
 			register(Common, from, to, message);
-		} else if (perms.status == 'Owner') {
+		} else if (perms.status == 'Owner' || reregister[member] == 1) {
 			register(Common, from, to, message);
 		} else {
-			Common.bot.say(to, "5This command may only be used by non-members to display the instructions for registering a SwiftIRC nickname.");
+			Common.bot.say(to, "5This command may only be used by non-members and inactive SwiftIRC users to display the instructions for registering a SwiftIRC nickname.");
 		}
 		});
 	} else {
@@ -62,10 +62,10 @@ Commands.joinnow = function(Common, from, to, message) {
 		if (err || !perms) {
 			console.log(err);
 			joinnow(Common, from, to, message);
-		} else if (perms.status == 'Owner') {
+		} else if (perms.status == 'Owner' || reregister[member] == 1) {
 			joinnow(Common, from, to, message);
 		} else {
-			Common.bot.say(to, "5This command may only be used by non-members to ask for an add to #CwExperts.");
+			Common.bot.say(to, "5This command may only be used by non-members and inactive SwiftIRC users to ask for an add to #CwExperts.");
 		}
 		});
 	} else {
