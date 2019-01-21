@@ -261,6 +261,13 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+		} else {
+			
+		}
+	};
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
