@@ -294,19 +294,21 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
                 }
               }
   });
-	nick = Common.utils.toLc(nick);
-	Common.db.users.findOne({name: nick}, function(err, user) {
-		if (err || !user) {
-			console.log(err);
-		} else {
-			var timedate = new Date();
-			Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-					console.log('Error', err);
-				}
-			});
-		}
-	});
+	setTimeout(function() {
+		nick = Common.utils.toLc(nick);
+		Common.db.users.findOne({name: nick}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+			} else {
+				var timedate = new Date();
+				Common.db.users.update({name: nick}, {$set: {lastSeen: timedate}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					}
+				});
+			}
+		});
+	}, 1000);
 });
 
 Common.bot.addListener('kill', function(nick, reason, channels, message) {
