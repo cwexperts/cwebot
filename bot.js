@@ -131,6 +131,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
 			//var exp = user.lastSeen + 5184000000
 			var exp = user.lastSeen + 60000
+			Common.bot.say(channel, "lastSeen var: " + user.lastSeen);
+			Common.bot.say(channel, "exp var: " + exp);
 			var timenow = new Date();
 			if (timenow > exp) {
 				reregister[name] = 1;
