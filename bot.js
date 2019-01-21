@@ -123,7 +123,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
 //         Common.bot.say(channel, "12Hello " + nick + "! 4How To Join12: http://cwexperts.org/how-to-join/. 4Type 7!join 4for instructions12.");
 //       }
 //     }, 10000);
-	Common.db.users.findOne({name: nick}, function(err, user) {
+	var name = Common.utils.toLc(nick);
+	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
 		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
@@ -131,7 +132,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			var exp = user.lastSeen + 60000
 			var timenow = new Date();
 			if (timenow > exp) {
-				reregister[nick] = 1;
+				reregister[name] = 1;
 				Common.bot.say(channel, "3Welcome back " + nick + "! You have been gone for more than 2 months which has resulted in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
 			}
 		}
