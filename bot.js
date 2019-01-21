@@ -132,10 +132,11 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			//var exp = user.lastSeen + 5184000000
 			var lastSeenMs = user.lastSeen.getTime();
 			var exp = lastSeenMs + 60000
-			Common.bot.say(channel, "lastSeen var: " + user.lastSeen);
+			Common.bot.say(channel, "lastSeenMs var: " + lastSeenMs);
 			Common.bot.say(channel, "exp var: " + exp);
 			var timenow = new Date();
 			timenow = timenow.getTime();
+			Common.bot.say(channel, "timenow var: " + timenow);
 			if (timenow > exp) {
 				reregister[name] = 1;
 				Common.bot.say(channel, "3Welcome back " + nick + "! You have been gone for more than 2 months which has resulted in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
