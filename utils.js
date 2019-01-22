@@ -393,7 +393,7 @@ module.exports = {
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 												"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-												"14*** ( 6ACTIVE PROMO CODES:13 dec28th2018sl || jan2019 14) ***"
+												"14*** ( 6ACTIVE PROMO CODES:13 jan2019 || jan21st2019sl 14) ***"
 											]
 											var rand = list[Math.floor(Math.random() * list.length)];
 											Common.bot.say(channel, rand);
@@ -411,7 +411,7 @@ module.exports = {
 																	"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 																	"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 																	"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-																	"14*** ( 6ACTIVE PROMO CODES:13 dec28th2018sl || jan2019 14) ***"
+																	"14*** ( 6ACTIVE PROMO CODES:13 jan2019 || jan21st2019sl 14) ***"
 																]
 																var rand = list[Math.floor(Math.random() * list.length)];
 																Common.bot.say(channel, rand);
@@ -422,7 +422,7 @@ module.exports = {
 															"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 															"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 															"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-															"14*** ( 6ACTIVE PROMO CODES:13 dec28th2018sl || jan2019 14) ***"
+															"14*** ( 6ACTIVE PROMO CODES:13 jan2019 || jan21st2019sl 14) ***"
 														]
 														var rand = list[Math.floor(Math.random() * list.length)];
 														Common.bot.say(channel, rand);
@@ -624,31 +624,28 @@ module.exports = {
 								console.log(err);
 							} else if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 								if (everyoneLc['#cwexperts1'].indexOf(member) > -1 || everyoneLc['#cwexperts2'].indexOf(member) > -1) {
-									Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+									Common.bot.notice(member, "4" + member + ", you must complete your profile in order to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
-										Common.bot.say('#cwexperts1', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+										Common.bot.say('#cwexperts1', "4" + member + ", you must complete your profile in order to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 									if (everyoneLc['#cwexperts2'].indexOf(member) > -1) {
-										Common.bot.say('#cwexperts2', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+										Common.bot.say('#cwexperts2', "4" + member + ", you must complete your profile in order to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 								} else {
 									completesecs[member] = 0;
 									completemins[member] = 0;
 									from = 'stop';
-									Common.bot.say(channel, "stop because left channels");
 								}
 							} else {
 								completesecs[member] = 0;
 								completemins[member] = 0;
 								from = 'stop';
-								Common.bot.say(channel, "stop because profile complete");
 							}
 						});
 					}
 				}
 			} else {
 				from = 'stop';
-				Common.bot.say(channel, "stop because timers off");
 			}			
 		}
 		setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
