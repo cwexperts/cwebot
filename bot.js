@@ -218,6 +218,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
 			}
+			}
 		});
 		}
 	}, 2000);
