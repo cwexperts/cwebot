@@ -130,12 +130,17 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			Common.bot.say(channel, "user not found");
 		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
 			var lastSeenMs = user.lastSeen.getTime();
-			var exp = lastSeenMs + 5184000000
+			//var exp = lastSeenMs + 5184000000;
+			var exp = lastSeenMs + 60000;
 			var timenow = new Date();
 			timenow = timenow.getTime();
 			if (timenow > exp) {
 				reregister[name] = 1;
-				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for more than 2 months, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+				var diff = timenow - exp;
+				//var lastSeenDays = diff / 86400000;
+				var lastSeenDays = diff / 60000;
+				lastSeenDays = lastSeenDays.toFixed(0);
+				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for " + lastSeenDays + " days, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
 			}
 		}
 	});
