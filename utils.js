@@ -598,6 +598,57 @@ module.exports = {
 		}
 		setTimeout(Common.utils.unlockProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, hoursTo, member);
 	},
+	completeProfileTimer: function(Common, channel, from, secondsTo, minutesTo, member) {
+		if (from != 'stop') {
+			if (from == 'complete') {
+				from = 'self';
+				secondsTo = 60;
+				minutesTo = 5;
+				completesecs[member] = 60;
+				completemins[member] = 5;
+			} else if (secondsTo == completesecs[member] && minutesTo == completemins[member]) {
+				secondsTo--;
+				completesecs[member] = completesecs[member] - 1;
+				if (secondsTo == 0) {
+					minutesTo--;
+					completemins[member] = completemins[member] - 1;
+					secondsTo = 60;
+					completesecs[member] = 60;
+					if (minutesTo == 0) {
+						Common.db.users.findOne({name: member}, function(err, user) {
+							if (err || !user) {
+								console.log(err);
+							} else if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+								if (everyoneLc['#cwexperts1'].indexOf(member) > -1 || everyoneLc['#cwexperts2'].indexOf(member) > -1) {
+									secondsTo = 60;
+									minutesTo = 5;
+									completesecs[member] = 60;
+									completemins[member] = 5;
+									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
+										Common.bot.say('#cwexperts1', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+									}
+									if (everyoneLc['#cwexperts2'].indexOf(member) > -1) {
+										Common.bot.say('#cwexperts2', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+									}
+								} else {
+									completesecs[member] = 0;
+									completemins[member] = 0;
+									from = 'stop';
+								}
+							} else {
+								completesecs[member] = 0;
+								completemins[member] = 0;
+								from = 'stop';
+							}
+						});
+					}
+				}
+			} else {
+				from = 'stop';
+			}			
+		}
+		setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
+	},
 	goingAfk: function(Common, channel, minutesTo, user, from) {
 		if (minutesTo != 0 && from != 'stop') {
 	        if (from == 'afk') {
