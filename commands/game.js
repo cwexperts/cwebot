@@ -603,7 +603,7 @@ Commands.stl = function(Common, from, to, message) {
 
 Commands.count = function(Common, from, to, message) {
 	var players = [];
-	if (everyoneLc[to] != '' && (to != "#cwexperts1" || to != "#cwexperts2" || to != "#cwexperts.staff")) {
+	if (everyoneLc[to] != '' && (to != "#cwexperts1" && to != "#cwexperts2" && to != "#cwexperts.staff")) {
 		players = everyoneLc[to];
 	} else if (users[to] != '') {
 		players = users[to].match(/\S+/g);
@@ -978,16 +978,11 @@ function restartplaytime(Common, from, to, message) {
 									var gtallen = gtall * 2;
 									var thall = thdays + thhours + thminutes + thseconds;
 									var thallsl = thall * 5;
-									Common.bot.say(to, "2Ended session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
+									Common.bot.say(to, "2Current session playtime:10 " + channel.days + "d " + channel.hours + "h " + channel.minutes + "m " + channel.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
 								}
-								Common.db.channels.update({channel: to}, {$set: {days: 0, hours: 0, minutes: 0, seconds: 0}}, function(err, updated) {
-									if (err || !updated) {
-										console.log("Error: Playtime not updated!");
-									}
-									Common.utils.remindPlaytime(Common, to, 1, 'playtime');
-								});
+								Common.utils.remindPlaytime(Common, to, 1, 'playtime');
 							} else {
-								Common.bot.say(to, "2" + from + " has restarted the playtime counters for this channel.");
+								Common.bot.say(to, "2" + from + " has reset the playtime counters for this channel.");
 								if (channel.days !== 0 || channel.hours !== 0 || channel.minutes !== 0 || channel.seconds !== 0) {
 									var gtdays = 0;
 									var gthours = 0;
