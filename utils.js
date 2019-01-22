@@ -615,22 +615,21 @@ module.exports = {
 					secondsTo = 60;
 					completesecs[member] = 60;
 					if (minutesTo == 0) {
+						secondsTo = 60;
+						minutesTo = 5;
+						completesecs[member] = 60;
+						completemins[member] = 5;
 						Common.db.users.findOne({name: member}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
 							} else if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 								if (everyoneLc['#cwexperts1'].indexOf(member) > -1 || everyoneLc['#cwexperts2'].indexOf(member) > -1) {
-									secondsTo = 60;
-									minutesTo = 5;
-									completesecs[member] = 60;
-									completemins[member] = 5;
+									Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
 										Common.bot.say('#cwexperts1', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
-										Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 									if (everyoneLc['#cwexperts2'].indexOf(member) > -1) {
 										Common.bot.say('#cwexperts2', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
-										Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 								} else {
 									completesecs[member] = 0;
