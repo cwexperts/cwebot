@@ -626,25 +626,30 @@ module.exports = {
 									completemins[member] = 5;
 									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
 										Common.bot.say('#cwexperts1', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+										Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 									if (everyoneLc['#cwexperts2'].indexOf(member) > -1) {
 										Common.bot.say('#cwexperts2', "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
+										Common.bot.notice(member, "4" + member + ", you must complete your profile to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									}
 								} else {
 									completesecs[member] = 0;
 									completemins[member] = 0;
 									from = 'stop';
+									Common.bot.say(channel, "stop because left channels");
 								}
 							} else {
 								completesecs[member] = 0;
 								completemins[member] = 0;
 								from = 'stop';
+								Common.bot.say(channel, "stop because profile complete");
 							}
 						});
 					}
 				}
 			} else {
 				from = 'stop';
+				Common.bot.say(channel, "stop because timers off");
 			}			
 		}
 		setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
