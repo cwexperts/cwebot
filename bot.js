@@ -5,7 +5,7 @@ lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = [];
+memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
 
 //TEMP VARIABLE FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
@@ -214,6 +214,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 			if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
+			}
+			if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+				Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
 			}
 			}
 		});
