@@ -234,11 +234,9 @@ Commands.d = function(Common, from, to, message) {
 };
 
 Commands.devoice = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
 	if (data[0].charAt(0) == '.') {
-		Common.bot.say(to, "fuck you 1");
-		//Commands.d(Common, from, to, message);
-	} else {
-		Common.bot.say(to, "fuck you 2");
+		Commands.d(Common, from, to, message);
 	}
 };
 
@@ -420,6 +418,7 @@ Commands.v = function(Common, from, to, message) {
 };
 
 Commands.voice = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
 	if (data[0].charAt(0) == '.') {
 		Commands.v(Common, from, to, message);
 	}
@@ -665,6 +664,7 @@ Commands.h = function(Common, from, to, message) {
 };
 
 Commands.halfop = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
 	if (data[0].charAt(0) == '.') {
 		Commands.h(Common, from, to, message);
 	}
@@ -876,6 +876,7 @@ Commands.o = function(Common, from, to, message) {
 };
 
 Commands.op = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
 	if (data[0].charAt(0) == '.') {
 		Commands.o(Common, from, to, message);
 	}
