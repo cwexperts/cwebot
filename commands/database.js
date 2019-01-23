@@ -15,7 +15,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 				var status = message.match(/\S+/g);
 				var name = Common.utils.toLc(status[1]);
 				if (status[2] !== undefined) {
-					if (status[2] == '1' || status[2] == '2' || status[2] == '3' || status[2] == '4' || status[2] == '5' || status[2] == '6' || Common.utils.toLc(status[2]) == 'angry' || Common.utils.toLc(status[2]) == 'normal' || Common.utils.toLc(status[2]) == 'vet' || Common.utils.toLc(status[2]) == 'veteran' || Common.utils.toLc(status[2]) == 'staff' || Common.utils.toLc(status[2]) == 'admin' || Common.utils.toLc(status[2]) == 'owner') {
+					if (status[2] == '1' || status[2] == '2' || status[2] == '3' || status[2] == '4' || status[2] == '5' || status[2] == '6' || status[2] == '7' || status[2] == '8' ||Common.utils.toLc(status[2]) == 'angry' || Common.utils.toLc(status[2]) == 'normal' || Common.utils.toLc(status[2]) == 'vet' || Common.utils.toLc(status[2]) == 'veteran' || Common.utils.toLc(status[2]) == 'staff' || Common.utils.toLc(status[2]) == 'admin' || Common.utils.toLc(status[2]) == 'owner' || Common.utils.toLc(status[2]) == 'mediocre' || Common.utils.toLc(status[2]) == 'supreme') {
 						var stat = Common.utils.toLc(status[2]);
 						if (stat == '1' || stat == 'angry') {
 							stat = 'Angry Gamer';
@@ -29,6 +29,10 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 							stat = 'Admin';
 						} else if (stat == '6' || stat == 'owner') {
 							stat = 'Owner';
+						} else if (stat == '7' || stat == 'mediocre') {
+							stat = 'Mediocre Egirl';
+						} else if (stat == '8' || stat == 'supreme') {
+							stat = 'Supreme Egirl';
 						}
 						Common.db.users.findOne({name: name}, function(err, user) {
 							if (err || !user) {
@@ -162,18 +166,18 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 							}
 						});
 					} else if (perms.status == 'Owner') {
-						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), or 6 (owner). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), 6 (owner), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					} else if (perms.status == 'Admin') {
-						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), or 4 (staff). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					} else {
-						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), or 3 (veteran). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+						Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 					}
 				} else if (perms.status == 'Owner') {
-					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), or 6 (owner). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 5 (admin), 6 (owner), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				} else if (perms.status == 'Admin') {
-					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), or 4 (staff). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 4 (staff), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				} else {
-					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), or 3 (veteran). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				}
 			} else {
 				Common.bot.say(to, '5You must specify a member to change the member status of when using this command. Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
