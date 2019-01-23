@@ -171,7 +171,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
 								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked. Use !lockProfile to lock your profile.");
 							} else {
-								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked - please leave this channel. Use !lockProfile to lock your profile.");
+								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked - please leave this channel. Use !lockProfile to lock your profile when you are done playing games.");
 							}
 						} else {
 							Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");

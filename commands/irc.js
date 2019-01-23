@@ -233,6 +233,12 @@ Commands.d = function(Common, from, to, message) {
 	}	
 };
 
+Commands.devoice = function(Common, from, to, message) {
+	if (data[0].charAt(0) == '.') {
+		Commands.d(Common, from, to, message);
+	}
+};
+
 //REMOVE ALL RANKS AND GIVE VOICE
 
 function removeallplusvoicenonick(Common, from, to, message) {
@@ -408,6 +414,12 @@ Commands.v = function(Common, from, to, message) {
 			removeallplusvoicenonick(Common, from, to, message);
 		}
 	}	
+};
+
+Commands.voice = function(Common, from, to, message) {
+	if (data[0].charAt(0) == '.') {
+		Commands.v(Common, from, to, message);
+	}
 };
 
 //REMOVE ALL RANKS AND GIVE HALFOP
@@ -649,6 +661,12 @@ Commands.h = function(Common, from, to, message) {
 	}	
 };
 
+Commands.halfop = function(Common, from, to, message) {
+	if (data[0].charAt(0) == '.') {
+		Commands.h(Common, from, to, message);
+	}
+};
+
 //REMOVE ALL RANKS AND GIVE OP
 
 function removeallplusopnonick(Common, from, to, message) {
@@ -852,6 +870,12 @@ Commands.o = function(Common, from, to, message) {
 			removeallplusopnonick(Common, from, to, message);
 		}
 	}	
+};
+
+Commands.op = function(Common, from, to, message) {
+	if (data[0].charAt(0) == '.') {
+		Commands.o(Common, from, to, message);
+	}
 };
 
 Commands.i = function(Common, from, to, message) {

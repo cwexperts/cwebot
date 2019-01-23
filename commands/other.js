@@ -1107,3 +1107,7 @@ Commands.ed = function(Common, from, to, message) {
 Commands.neet = function(Common, from, to, message) {
 	Common.bot.say(to, "just realized not a single sexy egirl on this app cares about me. not a  single egirl. i just wanna talk about my day and see their pussy, but no  one care enough, no one.");
 };
+
+Commands.subway = function(Common, from, to, message) {
+	Common.bot.say(to, "five dollar footlong");
+}
