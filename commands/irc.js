@@ -236,7 +236,7 @@ Commands.d = function(Common, from, to, message) {
 Commands.devoice = function(Common, from, to, message) {
 	if (data[0].charAt(0) == '.') {
 		Common.bot.say(to, "fuck you 1");
-		Commands.d(Common, from, to, message);
+		//Commands.d(Common, from, to, message);
 	} else {
 		Common.bot.say(to, "fuck you 2");
 	}
