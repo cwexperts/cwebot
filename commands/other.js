@@ -1113,5 +1113,5 @@ Commands.subway = function(Common, from, to, message) {
 }
 
 Commands.crab = function(Common, from, to, message) {
-	Common.bot.say(to, "do the crab - https://www.youtube.com/watch?v=LDU_Txk06tM");
+	Common.bot.say(to, "i think mr krabs is feeling it now - https://www.youtube.com/watch?v=LDU_Txk06tM");
 }
