@@ -2107,9 +2107,10 @@ Commands.member = function(Common, from, to, message) {
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 	if (err || !user) {
-		Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+		Common.bot.say(to, "5" + "IRC Nickname " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
 	} else {
-		var member_msg = "2Main RSN: " + Common.utils.toLc(name) + "";
+		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
+		member_msg += ", Main RSNs: " + user.main + "";
 		member_msg += ", Alt RSNs: " + user.alt + "";
 		if (user.alt2 !== 0 && user.alt2 !== undefined) {
 			member_msg += ", " + user.alt2 + "";
@@ -3173,7 +3174,7 @@ Commands.reviewreport = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "3" + "Bug report # " + reportnum + " has been marked as reviewed - thanks for your help " + member + "!");
+												Common.bot.say(to, "3" + "Bug report # " + reportnum + " is now marked as reviewed - thanks for your help " + member + "!");
 											}
 										});
 									}
@@ -3197,7 +3198,7 @@ Commands.reviewreport = function(Common, from, to, message) {
 										if (err || !updated) {
 											console.log('Error', err);
 										} else {
-											Common.bot.say(to, "3" + "Member report # " + reportnum + " has been marked as reviewed - thanks for your help " + member + "!");
+											Common.bot.say(to, "3" + "Member report # " + reportnum + " is now marked as reviewed - thanks for your help " + member + "!");
 										}
 									});
 								}
