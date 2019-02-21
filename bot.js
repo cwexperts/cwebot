@@ -13,6 +13,9 @@ memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 //TEMP VARIABLE FOR RE-REGISTER NICKNAME
 reregister = [];
 
+//TEMP VARIABLE FOR USERS WITH NEW ACCESS
+newaccess = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
@@ -127,7 +130,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
+		} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
+			Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+		} else {
 			var lastSeenMs = user.lastSeen.getTime();
 			var exp = lastSeenMs + 5184000000;
 			var timenow = new Date();
@@ -202,7 +207,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		Common.db.users.findOne({name: nick}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				if (justadded[nick] != 1 && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
+				if (newaccess[nick] != 1 && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
 				   && nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
 				   && nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
 					Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");

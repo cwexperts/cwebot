@@ -75,6 +75,7 @@ Commands.joinnow = function(Common, from, to, message) {
 
 Commands.add = function(Common, from, to, message) {
 	var access = message.match(/\S+/g);
+	var name = access[1];
 	var level  = access[2];
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
@@ -148,6 +149,7 @@ Commands.add = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add a member to the #CwExperts SwiftIRC access list at level 4.");
 		}
     } else if (level == '3') {
+	newaccess[name] = 1;
 	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
