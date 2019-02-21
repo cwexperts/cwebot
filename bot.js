@@ -13,6 +13,9 @@ memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 //TEMP VARIABLE FOR RE-REGISTER NICKNAME
 reregister = [];
 
+//TEMP VARIABLE FOR USERS WITH NEW ACCESS
+newaccess = [];
+
 var Common = require('./common.js');
 
 console.log('Connecting to ' + Common.config.server + ' as '
