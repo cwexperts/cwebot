@@ -216,10 +216,10 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (user.key === undefined) {
 				Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
 			}
-			if (user.main === undefined) {
+			if (user.main === undefined || user.main === 0) {
 				Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE to complete your profile.");
 			}
-			if (user.alt === undefined) {
+			if (user.alt === undefined || user.alt === 0) {
 				Common.bot.say(channel, "2" + nick + ", please use !addAlt ALT_RSN_HERE to complete your profile.");
 			}
 			if (user.discord === undefined || user.discord == 'unknown') {
@@ -231,7 +231,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
 			}
-			if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+			if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
 			}
 			}
