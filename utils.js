@@ -622,7 +622,7 @@ module.exports = {
 						Common.db.users.findOne({name: member}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
-							} else if (user.key === undefined || user.main === undefined || user.alt === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+							} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 								if (everyoneLc['#cwexperts1'].indexOf(member) > -1 || everyoneLc['#cwexperts2'].indexOf(member) > -1) {
 									Common.bot.notice(member, "4" + member + ", you must complete your profile in order to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
