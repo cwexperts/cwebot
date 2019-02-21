@@ -442,42 +442,6 @@ Commands.unretire = function(Common, from, to, message) {
 	}
 };
 
-Commands.addalt = function(Common, from, to, message) {
-	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-        name = Common.utils.toDb(from);
-	alt = message.match(/\S+/g);
-	var timedate = new Date();
-	Common.db.users.findOne({name: name}, function(err, user) {
-		if (err || !user) {
-			if (Common.utils.msg(message)) {
-			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
-				if (err || !saved) {
-					console.log('Error', err)
-				} else {
-					memlist[name] = 5;
-					justadded[name] = 1;
-					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
-					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
-				}
-			});
-			} else {
-				Common.bot.say(to, '5You must specify the RSN of your level 90+ combat alt when using this command.')   
-			}
-		} else {
-			if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link your main RSN with the RSN of your new level 90+ combat alt.");
-			} else {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE in the games channels to link your main RSN with the RSN of your new level 90+ combat alt.");
-			}
-		}
-	});
-	} else {
-		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
-	}
-};
-
 Commands.addmain = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
         name = Common.utils.toDb(from);
@@ -531,6 +495,68 @@ Commands.addmain = function(Common, from, to, message) {
 					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editMain MAIN_RSN_HERE to link the new RSNs of your main accounts to your profile.");
 				} else {
 					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editMain MAIN_RSN_HERE in the games channels to link the new RSNs of your main accounts to your profile.");
+				}
+			}
+		}
+	});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+
+Commands.addalt = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+        name = Common.utils.toDb(from);
+	alt = message.match(/\S+/g);
+	var timedate = new Date();
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			if (Common.utils.msg(message)) {
+			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+			Common.db.users.save({name: name, main: 0, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
+				if (err || !saved) {
+					console.log('Error', err)
+				} else {
+					memlist[name] = 5;
+					justadded[name] = 1;
+					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
+					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+				}
+			});
+			} else {
+				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command.");
+			}
+		} else if (memlist[name] != 5 || user.key === undefined) {
+			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+		} else if (user.alt === undefined || user.alt === 0) {
+			if (Common.utils.msg(message)) {
+				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
+					if (err || !saved) {
+						console.log('Error', err)
+					} else {
+						Common.bot.say(to, "2" + name + ", your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
+					}
+				});
+			} else {
+				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command.");
+			}
+		} else {
+			if (user.key === undefined) {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !profileKey to set up your profile key and secure your profile.");
+			} else if (user.main === undefined || user.main === 0) {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
+			} else if (user.discord === undefined || user.discord == 'unknown') {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
+			} else if (user.recruiter === undefined|| user.recruiter === 0) {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
+			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
+			} else {
+				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link the new RSNs of your level 90+ combat alts to your profile.");
+				} else {
+					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE in the games channels to link the new RSNs of your level 90+ combat alts to your profile.");
 				}
 			}
 		}
