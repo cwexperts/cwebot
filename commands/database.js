@@ -468,15 +468,11 @@ Commands.addmain = function(Common, from, to, message) {
 //		} else if (memlist[name] != 5 || user.key === undefined) {
 //			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else if (user.main === undefined || user.main === 0) {
-			Common.bot.say(to, "test1");
 			if (Common.utils.msg(message)) {
-				Common.bot.say(to, "test2");
 				Common.db.users.update({name: name}, {$set: {main: Common.utils.toDb(main[1])}}, {upsert: false}, function(err, updated) {
-					if (err || !saved) {
+					if (err || !updated) {
 						console.log('Error', err)
-						Common.bot.say(to, "test3");
 					} else {
-						Common.bot.say(to, "test4");
 						Common.bot.say(to, "2" + name + ", your main has been set to: " + Common.utils.toLc(main[1]) + "");
 					}
 				});
@@ -536,7 +532,7 @@ Commands.addalt = function(Common, from, to, message) {
 		} else if (user.alt === undefined || user.alt === 0) {
 			if (Common.utils.msg(message)) {
 				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
-					if (err || !saved) {
+					if (err || !updated) {
 						console.log('Error', err)
 					} else {
 						Common.bot.say(to, "2" + name + ", your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
