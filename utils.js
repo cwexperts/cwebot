@@ -962,6 +962,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					lead_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					lead_msg += " [4profile incomplete7]";
 				} else {
 					lead_msg += " [2" + user.alt + "7]";
 				}
@@ -987,6 +989,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					salt_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					salt_msg += " [4profile incomplete7]";
 				} else {
 					salt_msg += " [2" + user.alt + "7]";
 				}
@@ -1000,6 +1004,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						salt_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						salt_msg += " [4profile incomplete7]";
 					} else {
 						salt_msg += " [2" + user.alt + "7]";
 					}
@@ -1017,6 +1023,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						salt_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						salt_msg += " [4profile incomplete7]";
 					} else {
 						salt_msg += " [2" + user.alt + "7]";
 					}
@@ -1039,6 +1047,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					et_msg += " [4user not found7], ";
+				} else if (user.alt === undefined || user.alt === 0) {
+					et_msg += " [4profile incomplete7]";
 				} else {
 					et_msg += " [2" + user.alt + "7], ";
 				}
@@ -1046,6 +1056,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += "(2) " + ch.et2 + " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += "(2) " + ch.et2 + " [4profile incomplete7]";
 					} else {
 						et_msg += "(2) " + ch.et2 + " [2" + user.alt + "7]";
 					}
@@ -1055,6 +1067,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += ", (3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += ", (3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += ", (3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1073,6 +1087,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7], ";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7], ";
 					} else {
 						et_msg += " [2" + user.alt + "7], ";
 					}
@@ -1080,6 +1096,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += "(3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += "(3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += "(3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1093,6 +1111,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1106,6 +1126,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7], ";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7], ";
 					} else {
 						et_msg += " [2" + user.alt + "7], ";
 					}
@@ -1113,6 +1135,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += "(3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += "(3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += "(3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1126,6 +1150,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1138,6 +1164,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1155,6 +1183,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					coor_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					coor_msg += " [4profile incomplete7]";
 				} else {
 					coor_msg += " [2" + user.alt + "7]";
 				}
