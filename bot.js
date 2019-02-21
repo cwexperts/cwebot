@@ -127,7 +127,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-		} else if (user.lastSeen !== 'unknown' && user.lastSeen !== undefined) {
+		} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
+			Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+		} else {
 			var lastSeenMs = user.lastSeen.getTime();
 			var exp = lastSeenMs + 5184000000;
 			var timenow = new Date();
