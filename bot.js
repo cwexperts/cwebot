@@ -210,16 +210,16 @@ Common.bot.addListener('join', function(channel, nick, message) {
 				if (newaccess[nick] != 1 && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
 				   && nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
 				   && nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
-					Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+					Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
 				}
 			} else if (justadded[nick] != 1) {
 			if (user.key === undefined) {
 				Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
 			}
-			if (user.main === undefined) {
+			if (user.main === undefined || user.main === 0) {
 				Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE to complete your profile.");
 			}
-			if (user.alt === undefined) {
+			if (user.alt === undefined || user.alt === 0) {
 				Common.bot.say(channel, "2" + nick + ", please use !addAlt ALT_RSN_HERE to complete your profile.");
 			}
 			if (user.discord === undefined || user.discord == 'unknown') {
@@ -231,7 +231,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
 			}
-			if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+			if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
 			}
 			}

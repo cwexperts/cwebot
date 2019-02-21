@@ -622,7 +622,7 @@ module.exports = {
 						Common.db.users.findOne({name: member}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
-							} else if (user.key === undefined || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+							} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 								if (everyoneLc['#cwexperts1'].indexOf(member) > -1 || everyoneLc['#cwexperts2'].indexOf(member) > -1) {
 									Common.bot.notice(member, "4" + member + ", you must complete your profile in order to be eligible to play games - ask a member with Staff, Admin, or Owner member status for guidance!");
 									if (everyoneLc['#cwexperts1'].indexOf(member) > -1) {
@@ -962,6 +962,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					lead_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					lead_msg += " [4profile incomplete7]";
 				} else {
 					lead_msg += " [2" + user.alt + "7]";
 				}
@@ -987,6 +989,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					salt_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					salt_msg += " [4profile incomplete7]";
 				} else {
 					salt_msg += " [2" + user.alt + "7]";
 				}
@@ -1000,6 +1004,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						salt_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						salt_msg += " [4profile incomplete7]";
 					} else {
 						salt_msg += " [2" + user.alt + "7]";
 					}
@@ -1017,6 +1023,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						salt_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						salt_msg += " [4profile incomplete7]";
 					} else {
 						salt_msg += " [2" + user.alt + "7]";
 					}
@@ -1039,6 +1047,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					et_msg += " [4user not found7], ";
+				} else if (user.alt === undefined || user.alt === 0) {
+					et_msg += " [4profile incomplete7]";
 				} else {
 					et_msg += " [2" + user.alt + "7], ";
 				}
@@ -1046,6 +1056,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += "(2) " + ch.et2 + " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += "(2) " + ch.et2 + " [4profile incomplete7]";
 					} else {
 						et_msg += "(2) " + ch.et2 + " [2" + user.alt + "7]";
 					}
@@ -1055,6 +1067,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += ", (3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += ", (3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += ", (3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1073,6 +1087,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7], ";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7], ";
 					} else {
 						et_msg += " [2" + user.alt + "7], ";
 					}
@@ -1080,6 +1096,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += "(3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += "(3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += "(3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1093,6 +1111,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1106,6 +1126,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7], ";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7], ";
 					} else {
 						et_msg += " [2" + user.alt + "7], ";
 					}
@@ -1113,6 +1135,8 @@ module.exports = {
 						if (err || !user) {
 							console.log(err);
 							et_msg += "(3) " + ch.et3 + " [4user not found7]";
+						} else if (user.alt === undefined || user.alt === 0) {
+							et_msg += "(3) " + ch.et3 + " [4profile incomplete7]";
 						} else {
 							et_msg += "(3) " + ch.et3 + " [2" + user.alt + "7]";
 						}
@@ -1126,6 +1150,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1138,6 +1164,8 @@ module.exports = {
 					if (err || !user) {
 						console.log(err);
 						et_msg += " [4user not found7]";
+					} else if (user.alt === undefined || user.alt === 0) {
+						et_msg += " [4profile incomplete7]";
 					} else {
 						et_msg += " [2" + user.alt + "7]";
 					}
@@ -1155,6 +1183,8 @@ module.exports = {
 				if (err || !user) {
 					console.log(err);
 					coor_msg += " [4user not found7]";
+				} else if (user.alt === undefined || user.alt === 0) {
+					coor_msg += " [4profile incomplete7]";
 				} else {
 					coor_msg += " [2" + user.alt + "7]";
 				}

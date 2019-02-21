@@ -157,11 +157,12 @@ Commands.add = function(Common, from, to, message) {
         Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". You're almost done, you just have to set up your profile now!");
         Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
         Common.bot.say(to, "Type: /join #cwexperts1");
-        Common.bot.say(to, "2. Link your main RSN with the RSN of your level 90+ combat alt, and then you will be added to the CwExperts Friends Chat");
-        Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
-	Common.bot.say(to, "3. Link your main RSN with your Discord ID - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
+	Common.bot.say(to, "2. Link the RSN of your main account and your level 90+ combat alt to your profile, and then you will be added to the CwExperts Friends Chat");
+        Common.bot.say(to, "Type: !addMain MAIN_RSN_HERE");
+	Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
+	Common.bot.say(to, "3. Link your Discord ID to your profile - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
         Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
-	Common.bot.say(to, "4. Link your main RSN with the member who recruited you - If no one recruited you, add the member who helped you the most to join");
+	Common.bot.say(to, "4. Link your recruiter to your profile - If no one recruited you, add the member who helped you the most to join");
         Common.bot.say(to, "Type: !addRecruiter MEMBER_HERE");
         Common.bot.say(to, "5. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
         Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
