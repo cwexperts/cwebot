@@ -2198,8 +2198,48 @@ Commands.member = function(Common, from, to, message) {
 		Common.bot.say(to, "5" + "IRC Nickname " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
 	} else {
 		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
-		member_msg += ", Main RSNs: " + user.main + "";
-		member_msg += ", Alt RSNs: " + user.alt + "";
+		if (user.main !== 0 && user.main !== undefined) {
+			member_msg += ", Main RSNs: " + user.main + "";
+		} else if (user.main === 0) {
+			member_msg += ", Main RSNs: unknown";
+		} else if (user.main === undefined) {
+			member_msg += ", Main RSNs: unknown";
+			Common.db.users.update({name: name}, {$set: {main: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.main2 !== 0 && user.main2 !== undefined) {
+			member_msg += ", " + user.main2 + "";
+		} else if (user.main2 === undefined) {
+			Common.db.users.update({name: name}, {$set: {main2: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.main3 !== 0 && user.main3 !== undefined) {
+			member_msg += ", " + user.main3 + "";
+		} else if (user.main3 === undefined) {
+			Common.db.users.update({name: name}, {$set: {main3: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.alt !== 0 && user.alt !== undefined) {
+			member_msg += ", Alt RSNs: " + user.alt + "";
+		} else if (user.alt === 0) {
+			member_msg += ", Alt RSNs: unknown";
+		} else if (user.alt === undefined) {
+			member_msg += ", Alt RSNs: unknown";
+			Common.db.users.update({name: name}, {$set: {alt: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		if (user.alt2 !== 0 && user.alt2 !== undefined) {
 			member_msg += ", " + user.alt2 + "";
 		} else if (user.alt2 === undefined) {
