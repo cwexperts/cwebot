@@ -2995,6 +2995,10 @@ Commands.reportmember = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
 };
+
+Commands.reportm = function(Common, from, to, message) {
+	Commands.reportmember(Common, from, to, message);
+};
 				
 Commands.rm = function(Common, from, to, message) {
 	Commands.reportmember(Common, from, to, message);
@@ -3087,6 +3091,10 @@ Commands.reportbug = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
+};
+
+Commands.reportb = function(Common, from, to, message) {
+	Commands.reportbug(Common, from, to, message);
 };
 				
 Commands.rb = function(Common, from, to, message) {
