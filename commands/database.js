@@ -501,8 +501,8 @@ Commands.addmain = function(Common, from, to, message) {
 			} else {
 				Common.bot.say(to, "5You must specify the RSN of your main account when using this command.");
 			}
-		} else if (memlist[name] != 5 || user.key === undefined) {
-			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+//		} else if (memlist[name] != 5 || user.key === undefined) {
+//			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else if (user.main === undefined || user.main === 0) {
 			if (Common.utils.msg(message)) {
 				Common.db.users.update({name: name}, {$set: {main: Common.utils.toDb(main[1])}}, {upsert: false}, function(err, updated) {
