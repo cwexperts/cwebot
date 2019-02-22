@@ -993,7 +993,7 @@ function main(Common, from, to, message) {
 														var newfinal_list = final_list.substr(0, final_list.length-2);
 														Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
 													} else {
-														Common.bot.say(to, "5" + "Alt RSN " + Common.utils.toLc(alt[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+														Common.bot.say(to, "5" + "Alt RSN '" + Common.utils.toLc(alt[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 													}
 												});
 											});
@@ -1038,7 +1038,7 @@ Commands.main = function(Common, from, to, message) {
 									disc_list = disc_list.substr(0, disc_list.length-2);
 									Common.bot.say(to, "2Discord ID: " + discname + ", Main RSNs: " + disc_list);
 								} else {
-									Common.bot.say(to, "5" + "Discord ID " + discname + " not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+									Common.bot.say(to, "5" + "Discord ID '" + discname + "' not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 								}
 							});
 						} else {
@@ -1066,7 +1066,7 @@ function altmsg(Common, from, to, message) {
 			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
 			if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "Main RSN '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 			var alt_msg = "2Main RSN: " + Common.utils.toLc(name[1]) + ", Alt RSNs: " + user.alt + "";
 			if (user.alt2 !== 0 && user.alt2 !== undefined) {
@@ -1157,7 +1157,7 @@ Commands.alt = function(Common, from, to, message) {
 									disc_list = disc_list.substr(0, disc_list.length-2);
 									Common.bot.say(to, "2Discord ID: " + discname + ", Alt RSNs: " + disc_list);
 								} else {
-									Common.bot.say(to, "5" + "Discord ID " + discname + " not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+									Common.bot.say(to, "5" + "Discord ID '" + discname + "' not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 								}
 							});
 						} else {
@@ -1177,9 +1177,9 @@ Commands.alt = function(Common, from, to, message) {
 			Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(from) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
-			var alt_msg = "2Main RSN: " + Common.utils.toLc(from) + ", Alt RSNs: " + user.alt + "";
+			var alt_msg = "2IRC Nickname: " + Common.utils.toLc(from) + ", Alt RSNs: " + user.alt + "";
 			if (user.alt2 !== 0 && user.alt2 !== undefined) {
 				alt_msg += ", " + user.alt2 + "";
 			}
@@ -1377,14 +1377,14 @@ Commands.discordid = function(Common, from, to, message) {
 														}
 													} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '') {
 														if (un_list11 == '') {
-															Common.bot.say(to, "5" + "Alt RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+															Common.bot.say(to, "5" + "Alt RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 														} else if (un_list1 == '' && un_list2 == '' && un_list3 == '' && un_list4 == '' && un_list5 == '' && un_list6 == '' && un_list7 == '' && un_list8 == '' && un_list9 == '' && un_list10 == '') {
-															Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+															Common.bot.say(to, "5" + "Main RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 														} else {
-															Common.bot.say(to, "5" + "Main/Alt RSN " + Common.utils.toLc(name[1]) + " does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+															Common.bot.say(to, "5" + "Main/Alt RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 														}
 													} else {
-														Common.bot.say(to, "5" + "Main/Alt RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+														Common.bot.say(to, "5" + "Main/Alt RSN '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 													}
 													});
 												});
@@ -1402,11 +1402,11 @@ Commands.discordid = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.discord == 'unknown' || user.discord === undefined) {
-				Common.bot.say(to, "5" + name + ", you do not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.");
+				Common.bot.say(to, "5" + name + ", you do not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else {
-				Common.bot.say(to, "2Main RSN: " + name + ", Discord ID: " + user.discord + "");
+				Common.bot.say(to, "2IRC Nickname: " + name + ", Discord ID: " + user.discord + "");
 			}
 		});
 	}
@@ -1440,7 +1440,7 @@ Commands.setleavedate = function(Common, from, to, message) {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
 						console.log(err);
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						if (user.joinDate === undefined) {
 							Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: timedate, retired: 1}}, function(err, updated) {
@@ -1518,7 +1518,7 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 					Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
 						console.log(err);
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						if (Common.utils.toLc(date[2]) != 'unknown') {
 							var timemsg = newdate.toString();
@@ -1612,7 +1612,7 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 					Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
 						console.log(err);
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						if (Common.utils.toLc(date[2]) != 'unknown' && date[2] != '0') {
 							var timemsg = newdate.toString();
@@ -1773,7 +1773,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 				Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
 					if (err || !user) {
 						console.log("User not found.");
-						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+						Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(from) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						var isPenToggled = user.pen;
 						if (isPenToggled == 1) {
@@ -1807,7 +1807,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 					Common.db.users.findOne({name: Common.utils.toDb(who[1])}, function(err, user) {
 					if (err || !user) {
 						console.log("User not found.");
-						Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(who[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+						Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(who[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						var isPenToggled = user.pen;
 						if (isPenToggled == 1) {
@@ -1839,7 +1839,7 @@ Commands.pentoggle = function(Common, from, to, message) {
 			Common.db.users.findOne({name: Common.utils.toDb(from)}, function(err, user) {
 				if (err || !user) {
 					console.log("User not found.");
-					Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(from) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+					Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(from) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 				} else {
 					var isPenToggled = user.pen;
 					if (isPenToggled == 1) {
@@ -1889,7 +1889,7 @@ Commands.idiot = function(Common, from, to, message) {
 			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
 				if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 				} else {
 					if (user.idiot == 1) {
 						Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already an idiot!");
@@ -1937,7 +1937,7 @@ Commands.genius = function(Common, from, to, message) {
 			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
 			if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 				if (user.idiot == 0) {
 					Common.bot.say(to, "5" + Common.utils.toLc(name[1]) + " is already not an idiot!");
@@ -2004,7 +2004,7 @@ Commands.warn = function(Common, from, to, message) {
 			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
 			if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 				Common.db.users.update({name: Common.utils.toDb(name[1])}, {$inc: { "warns": 1 }}, function(err, updated) {
 				if (err || !updated) {
@@ -2150,7 +2150,7 @@ Commands.warns = function(Common, from, to, message) {
 		} else {
 			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
 			if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name[1]) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 			if (user.warns == 1) {
 				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
@@ -2167,7 +2167,7 @@ Commands.warns = function(Common, from, to, message) {
 		} else {
 			Common.db.users.findOne({name: Common.utils.toDb(name)}, function(err, user) {
 			if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 			if (user.warns == 1) {
 				Common.bot.say(to, "4" + Common.utils.toLc(name) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
@@ -2639,7 +2639,7 @@ Commands.channel = function(Common, from, to, message) {
 			Common.db.channels.findOne({channel: chanl}, function(err, channel) {
 				if (err || !channel) {
 			   		console.log("Channel not found.");
-					Common.bot.say(to, "5Channel " + Common.utils.toLc(chanl) + " not found. You must specify an official #CwExperts SwiftIRC channel when using this command: #cwexperts, #cwexperts1, #cwexperts2, or #cwexperts.staff. Use the format !channel CHANNEL_HERE.");
+					Common.bot.say(to, "5Channel '" + Common.utils.toLc(chanl) + "' not found. You must specify an official #CwExperts SwiftIRC channel when using this command: #cwexperts, #cwexperts1, #cwexperts2, or #cwexperts.staff. Use the format !channel CHANNEL_HERE.");
 				} else {
 					var channel_msg = "2Channel: " + chanl + "";
 					if (channel.games !== 0) {
@@ -3006,7 +3006,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (perms.recruiter !== undefined && perms.recruiter !== 0) {
 				Common.bot.say(to, "5" + member + ", you have already set your recruiter to: " + perms.recruiter + " - you may not change your recruiter.");
 			} else if (memlist[member] != 5 || perms.key === undefined) {
@@ -3020,7 +3020,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
 						console.log(err);
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else {
 						Common.db.users.update({name: member}, {$set: {recruiter: name}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
@@ -3073,7 +3073,7 @@ Commands.recruiter = function(Common, from, to, message) {
 		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.recruiter == 'n/a') {
 				Common.bot.say(to, "2" + name + " is one of the five founding members of the superboosting Castle Wars method!");
 			} else if (user.recruiter === undefined || user.recruiter === 0) {
@@ -3093,7 +3093,7 @@ Commands.recruits = function(Common, from, to, message) {
 		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 				Common.db.users.find({recruiter: name}, function(err, users) {
 					var recruits_count = 0;
@@ -3125,7 +3125,7 @@ Commands.reportmember = function(Common, from, to, message) {
 		var member = Common.utils.toDb(from);
 		Common.db.users.findOne({name: member}, function(err, perms) {
 			if (err || !perms) {
-				Common.bot.say(to, "5" + "Main RSN " + member + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if ((memreportmins[member] === undefined && memreportsecs[member] === undefined) || (memreportmins[member] === 0 && memreportsecs[member] === 0)) {  
@@ -3137,7 +3137,7 @@ Commands.reportmember = function(Common, from, to, message) {
 					Common.db.users.findOne({name: report_name}, function(err, user) {
 						if (err || !user) {
 							console.log(err);
-							Common.bot.say(to, "5" + "Main RSN " + report_name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+							Common.bot.say(to, "5" + "IRC Nickname '" + report_name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 						} else if (reportmsg[2] !== undefined) {
 							if (reportmsg[2].length < 5 && reportmsg[3] === undefined) {
 								Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
