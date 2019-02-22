@@ -202,7 +202,7 @@ Commands.memberstatus = function(Common, from, to, message) {
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 		} else if (user.status === undefined) {
 			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
@@ -258,7 +258,7 @@ Commands.retire = function(Common, from, to, message) {
 			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
-					Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 				} else if (memlist[name] != 5 || user.key === undefined) {
 					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
@@ -288,7 +288,7 @@ Commands.retire = function(Common, from, to, message) {
 				name = Common.utils.toLc(name[1]);
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 					} else if (user.retired === undefined || user.retired === 0) {
 						Common.db.users.update({name: name}, {$set: {retired: 1}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
@@ -311,7 +311,7 @@ Commands.retire = function(Common, from, to, message) {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -345,7 +345,7 @@ Commands.unretire = function(Common, from, to, message) {
 			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
-					Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 				} else if (memlist[name] != 5 || user.key === undefined) {
 					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
@@ -382,7 +382,7 @@ Commands.unretire = function(Common, from, to, message) {
 				name = Common.utils.toLc(name[1]);
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
-						Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 					} else if (user.retired === 1) {
 						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
@@ -412,7 +412,7 @@ Commands.unretire = function(Common, from, to, message) {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -566,6 +566,88 @@ Commands.addalt = function(Common, from, to, message) {
 	}
 };
 
+Commands.editmain = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var name = Common.utils.toDb(from);
+		var main = message.match(/\S+/g);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+			} else if (memlist[name] != 5 || user.key === undefined) {
+				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (Common.utils.msg(message)) {
+				var main_msg = "2" + name + ", your mains have been changed to: " + Common.utils.toLc(main[1]) + "";
+				Common.db.users.update({name: name}, {$set: {main: Common.utils.toDb(main[1])}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+					console.log('Error', err);
+				}
+				});
+				if (main[2] !== undefined) {
+					main_msg += ", " + Common.utils.toLc(main[2]) + "";
+					Common.db.users.update({name: name}, {$set: {main2: Common.utils.toDb(main[2])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {main2: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (main[3] !== undefined) {
+					main_msg += ", " + Common.utils.toLc(main[3]) + "";
+					Common.db.users.update({name: name}, {$set: {main3: Common.utils.toDb(main[3])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {main3: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (main[4] !== undefined) {
+					main_msg += ", " + Common.utils.toLc(main[4]) + "";
+					Common.db.users.update({name: name}, {$set: {main4: Common.utils.toDb(main[4])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {main4: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (main[5] !== undefined) {
+					main_msg += ", " + Common.utils.toLc(main[5]) + "";
+					Common.db.users.update({name: name}, {$set: {main5: Common.utils.toDb(main[5])}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} else {
+					Common.db.users.update({name: name}, {$set: {main5: 0}}, {upsert: false}, function(err, updated) {
+					if (err || !updated) {
+						console.log('Error', err);
+					} 
+					});
+				} if (main[6] !== undefined) {
+					main_msg += " - 5You may only link a maximum of 5 main RSNs to your profile.";	
+				}
+				Common.bot.say(to, main_msg);
+			} else {
+				Common.bot.say(to, '5You must specify the RSNs of your main accounts (maximum of 5) when using this command.');
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
 Commands.editalt = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var name = Common.utils.toDb(from);
@@ -573,7 +655,7 @@ Commands.editalt = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
@@ -701,7 +783,7 @@ Commands.editalt = function(Common, from, to, message) {
 					} 
 					});
 				} if (alt[11] !== undefined) {
-					alt_msg += " - 5You may only link your main RSN with a maximum of 10 alt RSNs.";	
+					alt_msg += " - 5You may only link a maximum of 10 alt RSNs to your profile.";	
 				}
 				Common.bot.say(to, alt_msg);
 			} else {
@@ -2195,7 +2277,7 @@ Commands.member = function(Common, from, to, message) {
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 	if (err || !user) {
-		Common.bot.say(to, "5" + "IRC Nickname " + Common.utils.toLc(name) + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.")
+		Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 	} else {
 		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
 		if (user.main !== 0 && user.main !== undefined) {
@@ -2223,6 +2305,24 @@ Commands.member = function(Common, from, to, message) {
 			member_msg += ", " + user.main3 + "";
 		} else if (user.main3 === undefined) {
 			Common.db.users.update({name: name}, {$set: {main3: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.main4 !== 0 && user.main4 !== undefined) {
+			member_msg += ", " + user.main4 + "";
+		} else if (user.main4 === undefined) {
+			Common.db.users.update({name: name}, {$set: {main4: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.main5 !== 0 && user.main5 !== undefined) {
+			member_msg += ", " + user.main5 + "";
+		} else if (user.main5 === undefined) {
+			Common.db.users.update({name: name}, {$set: {main5: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 				console.log('Error', err);
 				}
