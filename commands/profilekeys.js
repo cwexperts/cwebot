@@ -4,7 +4,7 @@ Commands.profilekey = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.key === undefined) {
 				var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
 				Common.db.users.update({name: name}, {$set: {key: key}}, {upsert: false}, function(err, updated) {
@@ -43,7 +43,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
 				if (user.key !== undefined) {
 					if (memlist[name] === undefined || memlist[name] === 0 || memlist[name] === 5) {
@@ -152,7 +152,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.key !== undefined) {
 				if (prof[1] !== undefined) {
 					if (memlist[name] === 5) {
@@ -209,7 +209,7 @@ Commands.lockprofile = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.key !== undefined) {
 				if (memlist[name] === 5) {
 					memlist[name] = 0;
