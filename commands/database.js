@@ -37,7 +37,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 						Common.db.users.findOne({name: name}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
-								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 							} else {
 								if (stat == 'Owner') {
 									if (perms.status == 'Owner') {
@@ -202,7 +202,7 @@ Commands.memberstatus = function(Common, from, to, message) {
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (user.status === undefined) {
 			Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
@@ -258,7 +258,7 @@ Commands.retire = function(Common, from, to, message) {
 			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
-					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 				} else if (memlist[name] != 5 || user.key === undefined) {
 					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
@@ -288,7 +288,7 @@ Commands.retire = function(Common, from, to, message) {
 				name = Common.utils.toLc(name[1]);
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
-						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else if (user.retired === undefined || user.retired === 0) {
 						Common.db.users.update({name: name}, {$set: {retired: 1}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
@@ -311,7 +311,7 @@ Commands.retire = function(Common, from, to, message) {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -345,7 +345,7 @@ Commands.unretire = function(Common, from, to, message) {
 			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
-					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 				} else if (memlist[name] != 5 || user.key === undefined) {
 					Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 				} else {
@@ -382,7 +382,7 @@ Commands.unretire = function(Common, from, to, message) {
 				name = Common.utils.toLc(name[1]);
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
-						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 					} else if (user.retired === 1) {
 						Common.db.users.update({name: name}, {$set: {retired: 0}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
@@ -412,7 +412,7 @@ Commands.unretire = function(Common, from, to, message) {
 	var name = Common.utils.toLc(from);
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -573,7 +573,7 @@ Commands.editmain = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
@@ -655,7 +655,7 @@ Commands.editalt = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
@@ -2277,7 +2277,7 @@ Commands.member = function(Common, from, to, message) {
 	name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
 	Common.db.users.findOne({name: name}, function(err, user) {
 	if (err || !user) {
-		Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
+		Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 	} else {
 		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
 		if (user.main !== 0 && user.main !== undefined) {
