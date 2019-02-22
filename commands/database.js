@@ -37,7 +37,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 						Common.db.users.findOne({name: name}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
-								Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addAlt ALT_RSN_HERE or !addMain MAIN_RSN_HERE to create your profile.");
 							} else {
 								if (stat == 'Owner') {
 									if (perms.status == 'Owner') {
