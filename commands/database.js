@@ -180,7 +180,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 					Common.bot.say(to, '5You must specify a valid member status to change the member status of a member to when using this command: 1 (angry), 2 (normal), 3 (veteran), 7 (mediocre), or 8 (supreme). Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a member to change the member status of when using this command. Use the format !setMemberStatus MEMBER_HERE MEMBER_STATUS_HERE to change the member status of a member.');
+				Common.bot.say(to, '5You must specify a member to change the member status of when using this command. Use the format !setMemberStatus IRC_NICKNAME_HERE MEMBER_STATUS_HERE to change the member status of a member.');
 			}
 			}
 		} else {
@@ -1552,19 +1552,19 @@ Commands.forcesetjoindate = function(Common, from, to, message) {
 							}
 							Common.bot.say(to, "2" + from + " has force set the join date for " + name + " to: " + timemsg);
 						} else {
-							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetJoinDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 						}
 						}
 					}
 					});
 				} else {
-					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 				}
 				} else {
-					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+					Common.bot.say(to, '5You must specify a full date and time to force set the join date for a member to when using this command. Use the format !forceSetJoinDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a member to force set the join date for when using this command. Use the format !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				Common.bot.say(to, '5You must specify a member to force set the join date for when using this command. Use the format !forceSetJoinDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
 			}
 		} else {
@@ -1648,19 +1648,19 @@ Commands.forcesetleavedate = function(Common, from, to, message) {
 							}
 							Common.bot.say(to, "2" + from + " has force set the leave date for " + name + " to: " + timemsg);
 						} else {
-							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+							Common.bot.say(to, '5The date you entered is invalid. Use the format !forceSetLeaveDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 						}
 						}
 					}
 					});
 				} else {
-					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 				}
 				} else {
-					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+					Common.bot.say(to, '5You must specify a full date and time to force set the leave date for a member to when using this command. Use the format !forceSetLeaveDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a member to force set the leave date for when using this command. Use the format !forceSetLeaveDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
+				Common.bot.say(to, '5You must specify a member to force set the leave date for when using this command. Use the format !forceSetLeaveDate IRC_NICKNAME_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS - you must use numerical date and time values.');
 			}
 			}
 		} else {
@@ -3055,7 +3055,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				});
 				}
 			} else {
-				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter MEMBER_HERE to set your recruiter.");
+				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
 			}
 		});
 	} else {
@@ -3195,14 +3195,14 @@ Commands.reportmember = function(Common, from, to, message) {
 							});
 							}
 						} else {
-							Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
+							Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember IRC_NICKNAME_HERE REPORT HERE to submit a member report.");
 						}
 					});
 					} else {
 						Common.bot.say(to, "5" + member + ", you may not report yourself! A chair and some rope may solve your problem, though.");
 					}
 				} else {
-					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
+					Common.bot.say(to, "5You must specify a member to report when using this command. Use the format !reportMember IRC_NICKNAME_HERE REPORT HERE to submit a member report.");
 				}
 			} else {
 				var timeleftmins = '';
@@ -3365,7 +3365,7 @@ Commands.viewreports = function(Common, from, to, message) {
 								Common.bot.say(to, "2Member report #: " + reviewed.reportnumber + " - Submitted by: " + reviewed.reporter + " - Time stamp: " + timemsg + " - Reported member: " + reviewed.member + " - Details: " + reviewed.report);
 							});
 							if (reportnum == 0 && reportnumm == 0) {
-								Common.bot.say(to, "5Surprisingly, there are not any unreviewed bug reports or member reports.");
+								Common.bot.say(to, "5Surprisingly, there are no unreviewed bug reports or member reports.");
 							}
 						});
 					});
