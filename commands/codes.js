@@ -22,7 +22,7 @@ Commands.claimcode = function(Common, from, to, message) {
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1] || user.dec2018 == code[1] || user.dec1st2018sl == code[1] || user.dec28th2018sl == code[1] || user.jan2019 == code[1] || user.jan21st2019sl == code[1] || user.feb2019 == code[1] || user.feb20th2019sl == code[1]) {
 				Common.bot.say(to, "5" + from + ", you have already claimed this code: " + code[1] + ".");
 			} else if (code[1] == 'oct2018') {
