@@ -75,7 +75,7 @@ Commands.joinnow = function(Common, from, to, message) {
 
 Commands.add = function(Common, from, to, message) {
 	var access = message.match(/\S+/g);
-	var name = access[1];
+	var name = Common.utils.toLc(access[1]);
 	var level  = access[2];
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
