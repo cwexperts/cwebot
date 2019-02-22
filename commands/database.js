@@ -801,12 +801,12 @@ Commands.adddiscordid = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (user.discord != undefined && user.discord != 'unknown') {
 			if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.");
+				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.");
 			} else {
-				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your main RSN with your new Discord ID.");
+				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your new Discord ID to your profile.");
 			}
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
@@ -834,13 +834,13 @@ Commands.adddiscordid = function(Common, from, to, message) {
 						});
 						Common.bot.say(to, "2" + name + ", your Discord ID has been set to: " + discname + "");
 					} else {
-						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.');
 					}
 				} else {
-					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your Discord ID.');
+				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.');
 			}
 		}
 	});
@@ -859,7 +859,7 @@ Commands.editdiscordid = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN " + name + " not found. Use !addAlt ALT_RSN_HERE to link your main RSN with the RSN of your level 90+ combat alt.");
+			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
@@ -886,13 +886,13 @@ Commands.editdiscordid = function(Common, from, to, message) {
 						});
 						Common.bot.say(to, "2" + name + ", your Discord ID has been changed to: " + discname + "");
 					} else {
-						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+						Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.');
 					}
 				} else {
-					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+					Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.');
 				}
 			} else {
-				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your main RSN with your new Discord ID.');
+				Common.bot.say(to, '5You must specify a valid Discord ID when using this command. Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.');
 			}
 		}
 	});
