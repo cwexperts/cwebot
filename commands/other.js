@@ -1119,3 +1119,7 @@ Commands.crab = function(Common, from, to, message) {
 Commands.krab = function(Common, from, to, message) {
 	Commands.crab(Common, from, to, message);
 };
+
+Commands.crandog = function(Common, from, to, message) {
+	Common.bot.say(to, "i dont see how being self-proclaimed master of true trim is related to your botting ban, and if anything the fact you botted just devalues it instead lol");
+};
