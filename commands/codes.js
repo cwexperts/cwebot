@@ -61,7 +61,7 @@ Commands.claimcode = function(Common, from, to, message) {
 						});
 //					}
 //				});
-			} else if (code[1] == 'feb20th2019sl') {
+//			} else if (code[1] == 'feb20th2019sl') {
 //				Common.db.users.find({feb20th2019sl: code[1]}, function(err, users) {
 //					var codes = 0;
 //					users.forEach(function(feb20th2019sl) {
@@ -70,14 +70,14 @@ Commands.claimcode = function(Common, from, to, message) {
 //					if (codes == 1) {
 //						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
 //					} else {
-						Common.db.users.update({name: name}, {$set: {feb20th2019sl: code[1]}}, {upsert: false}, function(err, updated) {
+/*						Common.db.users.update({name: name}, {$set: {feb20th2019sl: code[1]}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
 								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT");
 							}
 						});
-//					}
+*/ //					}
 //				});
 			} else {
 				Common.bot.say(to, "5This is not a valid code: " + code[1] + ". Use the format !claimCode CODE_HERE to claim a code - codes are case-sensitive.");
