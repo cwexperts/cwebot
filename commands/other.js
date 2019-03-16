@@ -1123,3 +1123,7 @@ Commands.krab = function(Common, from, to, message) {
 Commands.crandog = function(Common, from, to, message) {
 	Common.bot.say(to, "i dont see how being self-proclaimed master of true trim is related to your botting ban, and if anything the fact you botted just devalues it instead lol");
 };
+
+Commands.kyle = function(Common, from, to, message) {
+	Common.bot.say(to, "I've played the game for years and have submitted many bug reports. I never felt the need to submit one like this.. Seriously it is not constructive. That person on the other end could be going through something and you could make it worse. Treat others how you want to be treated");
+};
