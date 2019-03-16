@@ -1,6 +1,6 @@
 Commands.activepromocodes = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		Common.bot.say(to, "6Active promotional codes:13 feb2019, feb20th2019sl");
+		Common.bot.say(to, "6Active promotional codes:13 march2019");
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
@@ -23,7 +23,7 @@ Commands.claimcode = function(Common, from, to, message) {
 			if (err || !user) {
 				console.log(err);
 				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1] || user.dec2018 == code[1] || user.dec1st2018sl == code[1] || user.dec28th2018sl == code[1] || user.jan2019 == code[1] || user.jan21st2019sl == code[1] || user.feb2019 == code[1] || user.feb20th2019sl == code[1]) {
+			} else if (user.claimCodeTest == code[1] || user.oct2018 == code[1] || user.nov2018 == code[1] || user.nov1st2018sl == code[1] || user.dec2018 == code[1] || user.dec1st2018sl == code[1] || user.dec28th2018sl == code[1] || user.jan2019 == code[1] || user.jan21st2019sl == code[1] || user.feb2019 == code[1] || user.feb20th2019sl == code[1] || user.march2019 == code[1]) {
 				Common.bot.say(to, "5" + from + ", you have already claimed this code: " + code[1] + ".");
 			} else if (code[1] == 'oct2018') {
 				Common.bot.say(to, "5Sorry " + from + ", this code expired on Thu Nov 01 2018 00:00:00 UTC: " + code[1] + ".");
@@ -42,24 +42,26 @@ Commands.claimcode = function(Common, from, to, message) {
 			} else if (code[1] == 'jan21st2019sl') {
 				Common.bot.say(to, "5Sorry " + from + ", this code expired on Thu Jan 24 2019 00:00:00 UTC: " + code[1] + ".");
 			} else if (code[1] == 'feb2019') {
-//				Common.db.users.find({feb2019: code[1]}, function(err, users) {
+				Common.bot.say(to, "5Sorry " + from + ", this code expired on Fri Mar 01 2019 00:00:00 UTC: " + code[1] + ".");
+			} else if (code[1] == 'march2019') {
+//				Common.db.users.find({march2019: code[1]}, function(err, users) {
 //					var codes = 0;
-//					users.forEach(function(feb2019) {
+//					users.forEach(function(march2019) {
 //						codes++;
 //					});
 //					if (codes == 1) {
 //						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
 //					} else {
-						Common.db.users.update({name: name}, {$set: {feb2019: code[1]}}, {upsert: false}, function(err, updated) {
+						Common.db.users.update({name: name}, {$set: {march2019: code[1]}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
-								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the February 2019 command: tba");
+								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have unlocked the March 2019 command: tba");
 							}
 						});
 //					}
 //				});
-			} else if (code[1] == 'feb20th2019sl') {
+//			} else if (code[1] == 'feb20th2019sl') {
 //				Common.db.users.find({feb20th2019sl: code[1]}, function(err, users) {
 //					var codes = 0;
 //					users.forEach(function(feb20th2019sl) {
@@ -68,14 +70,14 @@ Commands.claimcode = function(Common, from, to, message) {
 //					if (codes == 1) {
 //						Common.bot.say(to, "5Sorry " + from + ", this code has been claimed the maximum number of times: " + code[1] + ".");
 //					} else {
-						Common.db.users.update({name: name}, {$set: {feb20th2019sl: code[1]}}, {upsert: false}, function(err, updated) {
+/*						Common.db.users.update({name: name}, {$set: {feb20th2019sl: code[1]}}, {upsert: false}, function(err, updated) {
 							if (err || !updated) {
 								console.log('Error', err);
 							} else {
 								Common.bot.say(to, "3" + from + ", you have successfully claimed this code: " + code[1] + ". You have been marked as participating in this Castle Wars spotlight: Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT");
 							}
 						});
-//					}
+*/ //					}
 //				});
 			} else {
 				Common.bot.say(to, "5This is not a valid code: " + code[1] + ". Use the format !claimCode CODE_HERE to claim a code - codes are case-sensitive.");
@@ -164,6 +166,22 @@ Commands.feb2019 = function(Common, from, to, message) {
 				Common.bot.say(to, "working!!");
 			} else {
 				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for February 2019.");
+			}
+		}
+	});
+};
+
+Commands.march2019 = function(Common, from, to, message) {
+	name = Common.utils.toDb(from);
+	Common.db.users.findOne({name: name}, function(err, user) {
+		if (err || !user) {
+			console.log(err);
+			Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for March 2019.");
+		} else {
+			if (user.march2019 == 'march2019') {
+				Common.bot.say(to, "working!!");
+			} else {
+				Common.bot.say(to, "5This command may be unlocked by claiming the promotion code for March 2019.");
 			}
 		}
 	});
