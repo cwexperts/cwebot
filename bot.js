@@ -149,7 +149,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	});
   } else if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 	var nickver = Common.utils.toLc(nick);
-	if (nickver != 'abdel' && nickver != 'hanna' && nickver != 'alan_' && nickver != 'alan__' && nickver != 'base_tank' && nickver != 'fable' && nickver != 'ipso' && nickver != 'anna' && nickver != 'runescript' && nickver != 'chanstat-01' && nickver != 'chanstat-02' && nickver != 'chanstat-03' && nickver != 'chanstat-04' && nickver != 'chanstat-05' && nickver != 'chanstat-06' && nickver != 'chanstat-07' && nickver != 'chanstat-08' && nickver != 'chanstat-09' && nickver != 'chanstat-10' 
+	if (nickver != 'dxnxex7' && nickver != 'hanna' && nickver != 'alan_' && nickver != 'alan__' && nickver != 'base_tank' && nickver != 'fable' && nickver != 'ipso' && nickver != 'anna' && nickver != 'runescript' && nickver != 'chanstat-01' && nickver != 'chanstat-02' && nickver != 'chanstat-03' && nickver != 'chanstat-04' && nickver != 'chanstat-05' && nickver != 'chanstat-06' && nickver != 'chanstat-07' && nickver != 'chanstat-08' && nickver != 'chanstat-09' && nickver != 'chanstat-10' 
 		&& nickver != 'chanstat-11' && nickver != 'chanstat-12' && nickver != 'chanstat-13' && nickver != 'chanstat-14' && nickver != 'chanstat-15' && nickver != 'chanstat-16' && nickver != 'chanstat-17' && nickver != 'chanstat-18' && nickver != 'chanstat-19' && nickver != 'chanstat-20' 
 		&& nickver != 'chanstat-21' && nickver != 'chanstat-22' && nickver != 'chanstat-23' && nickver != 'chanstat-24' && nickver != 'chanstat-25' && nickver != 'chanstat-26' && nickver != 'chanstat-27' && nickver != 'chanstat-28' && nickver != 'chanstat-29' && nickver != 'chanstat-30') {
       var greetmsg = "4[GREET]: 2" + nick + " has arrived! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
@@ -202,6 +202,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
             });
           }
       }, 2000);
+    } else {
+	    Common.bot.say(channel, "testttt");
     }
 	setTimeout(function() {
 		if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
