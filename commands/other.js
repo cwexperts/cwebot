@@ -1127,3 +1127,7 @@ Commands.crandog = function(Common, from, to, message) {
 Commands.kyle = function(Common, from, to, message) {
 	Common.bot.say(to, "I've played the game for years and have submitted many bug reports. I never felt the need to submit one like this.. Seriously it is not constructive. That person on the other end could be going through something and you could make it worse. Treat others how you want to be treated");
 };
+
+Commands.afghann = function(Common, from, to, message) {
+	Common.bot.say(to, "my laptop is a potato i cant turn irc on i have 3 mb of ram and cant run text based software created in 1988");
+};
