@@ -271,7 +271,7 @@ module.exports = {
 				} else {
 					var today = new Date();
 					var slStart = new Date("2019-03-19T00:00:00Z");
-					var slEnd = new Date("2019-03-23T00:00:00Z");
+					var slEnd = new Date("2019-03-22T00:00:00Z");
 					var slStart2 = new Date("2019-04-12T00:00:00Z");
 					var slDays = '';
 					var slHours = '';
@@ -373,8 +373,8 @@ module.exports = {
 					}
 					var slStartNotif1 = new Date("2019-03-19T00:00:00Z");
 					var slStartNotif2 = new Date("2019-03-19T00:00:01Z");
-					var slEndNotif1 = new Date("2019-03-23T00:00:00Z");
-					var slEndNotif2 = new Date("2019-03-23T00:00:01Z");
+					var slEndNotif1 = new Date("2019-03-22T00:00:00Z");
+					var slEndNotif2 = new Date("2019-03-22T00:00:01Z");
 					if (today>slStartNotif1 && today<slStartNotif2) {
 						Common.bot.say(channel, "14*** ( 2THE CASTLE WARS SPOTLIGHT HAS JUST STARTED! 14) ***");
 					} if (today>slEndNotif1 && today<slEndNotif2) {
