@@ -1171,10 +1171,10 @@ Commands.ptt = function(Common, from, to, message) {
 
 Commands.spotlight = function(Common, from, to, message) {
 	var today = new Date();
-	var slEndPrev = new Date("2018-12-31T00:00:00Z");
-	var slStart = new Date("2019-01-21T00:00:00Z");
-	var slEnd = new Date("2019-01-24T00:00:00Z");
-	var slStart2 = new Date("2019-02-20T00:00:00Z");
+	var slEndPrev = new Date("2019-02-23T00:00:00Z");
+	var slStart = new Date("2019-03-19T00:00:00Z");
+	var slEnd = new Date("2019-03-22T00:00:00Z");
+	var slStart2 = new Date("2019-04-12T00:00:00Z");
 	var slDays = '';
 	var slHours = '';
 	var slMinutes = '';
@@ -1348,11 +1348,11 @@ Commands.spotlight = function(Common, from, to, message) {
 	var sldate = '';
 	var prevsldate = '';
 	if ((today>slStart && today<slEnd) || today<slStart) {
-		sldate = "Mon Jan 21st-Thu Jan 24th 2019 00:00 GT";
-		prevsldate = "Fri Dec 28th-Mon Dec 31st 2018 00:00 GT";
+		sldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
+		prevsldate = "Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT";
 	} else if (today>slEnd) {
-		sldate = "Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT";
-		prevsldate = "Mon Jan 21st-Thu Jan 24th 2019 00:00 GT";
+		sldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
+		prevsldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
 	}
 	Common.bot.say(to, "2Next CW SL:10 " + sldate + "2, countdown: 10" + slCountdown + "2 - Previous CW SL:10 " + prevsldate + "2, ended: 10" + slEndedAgo);
 };
