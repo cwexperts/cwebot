@@ -94,6 +94,7 @@ Commands.add = function(Common, from, to, message) {
                 Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
                 Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
 		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
+		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
 		Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to the highest staff member status!");
 		Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
 /*		if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
@@ -122,6 +123,7 @@ Commands.add = function(Common, from, to, message) {
         Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
         Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
+	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
         Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to staff member status!");
         Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
         Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
