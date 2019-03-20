@@ -3015,7 +3015,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				var name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1]);
 				if (name == member) {
-					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter MEMBER_HERE to set your recruiter.");
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
 				} else {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
