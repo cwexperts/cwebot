@@ -971,12 +971,16 @@ Commands.kanye = function(Common, from, to, message) {
 Commands.marv = function(Common, from, to, message) {
     Common.bot.say(to, "probably grave-traded his profound so he could go stake it");
 };
+
+Commands.marvela = function(Common, from, to, message) {
+    Commands.marv(Common, from, to, message);
+};
  
 Commands.travmerch = function(Common, from, to, message) {
     Common.bot.say(to, "cheat your way to the cw req here - https://runescape.wiki/w/Travelling_Merchant%27s_Shop/Future");
 };
  
- Commands.tm = function(Common, from, to, message) {
+Commands.tm = function(Common, from, to, message) {
     Commands.travmerch(Common, from, to, message);
 };
  
