@@ -82,7 +82,7 @@ Commands.claimcode = function(Common, from, to, message) {
 //							}
 //						});
 //					}
-				});
+//				});
 			} else {
 				Common.bot.say(to, "5This is not a valid code: " + code[1] + ". Use the format !claimCode CODE_HERE to claim a code - codes are case-sensitive.");
 			}
