@@ -1131,3 +1131,7 @@ Commands.kyle = function(Common, from, to, message) {
 Commands.afghann = function(Common, from, to, message) {
 	Common.bot.say(to, "my laptop is a potato i cant turn irc on i have 3 mb of ram and cant run text based software created in 1988");
 };
+
+Commands.sleep = function(Common, from, to, message) {
+	Common.bot.say(to, "What with everyone tweeting about sleeping problems and wondering why they can't sleep. Turn your electronics off and make a sleeping pattern and stick to it as simple as that!");
+};
