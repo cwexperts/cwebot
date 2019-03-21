@@ -168,7 +168,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 						if (pk == user.key) {
 							memlist[name] = 5;
 							Common.utils.unlockProfileTimer(Common, to, 'up', 0, 60, 24, name);
-							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
+							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna' || name == 'alexis') {
 								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked. Use !lockProfile to lock your profile.");
 							} else {
 								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked - please leave this channel. Use !lockProfile to lock your profile when you are done playing games.");
