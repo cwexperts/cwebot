@@ -1139,3 +1139,21 @@ Commands.afghann = function(Common, from, to, message) {
 Commands.sleep = function(Common, from, to, message) {
 	Common.bot.say(to, "What with everyone tweeting about sleeping problems and wondering why they can't sleep. Turn your electronics off and make a sleeping pattern and stick to it as simple as that!");
 };
+
+Commands.imabot = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
+	if (data[0].charAt(0) == '~') {
+		Common.bot.say(to, 'im a bot');
+	} else {
+		Common.bot.say(to, 'error');
+	}
+};
+
+Commands.imabot2 = function(Common, from, to, message) {
+	var data = message.match(/\S+/g);
+	if (data[0].charAt(0) == '$') {
+		Common.bot.say(to, 'im a bot 2');
+	} else {
+		Common.bot.say(to, 'error');
+	}
+};
