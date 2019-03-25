@@ -85,7 +85,7 @@ Commands.add = function(Common, from, to, message) {
 		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
 	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 		if (Common.utils.msg(message))  {
-			if (Common.utils.toLc(access[1]) == 'abdel' || Common.utils.toLc(access[1]) == 'dxnxex7' || Common.utils.toLc(access[1]) == 'hanna') {
+			if (Common.utils.toLc(access[1]) == 'abdel' || Common.utils.toLc(access[1]) == 'dxnxex7' || Common.utils.toLc(access[1]) == 'hanna' || Common.utils.toLc(access[1]) == 'alexis') {
 				Common.bot.say(to, "5Permission denied - you may not change " + access[1] + "'s access level for official #CwExperts SwiftIRC channels.");
 			} else {
       if (level == '5') {
