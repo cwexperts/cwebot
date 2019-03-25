@@ -27,11 +27,11 @@ Common.bot.addListener('registered', function(message) {
   console.log('Identifying...');
   Common.bot.send('NS', 'identify', process.env.IRC_PASSWORD);
   setTimeout(function() {
-    Common.bot.join('#key');
-    Common.bot.join('#cwexperts.staff');
-    Common.bot.join('#cwexperts2');
-    Common.bot.join('#cwexperts1');
     Common.bot.join('#cwexperts');
+    Common.bot.join('#cwexperts1');
+    Common.bot.join('#cwexperts2');
+    Common.bot.join('#cwexperts.staff');
+    Common.bot.join('#key');
     Common.bot.send('MODE', Common.config.botName, '+B');
     console.log('Identified successfully and connected.');
   }, 5000);
