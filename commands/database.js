@@ -930,7 +930,21 @@ function main(Common, from, to, message) {
 				Common.db.users.find({alt2: Common.utils.toDb(alt[1])}, function(err, users) {
 				var main_list2 = '';
 				users.forEach(function(alt2) {
-					main_list2 += '' + alt2.name + ', ';
+					if (alt2.main !== 0 && alt2.main !== undefined) {
+						main_list2 += '' + alt2.main + ', ';
+					}
+					if (alt2.main2 !== 0 && alt2.main2 !== undefined) {
+						main_list2 += '' + alt2.main2 + ', ';
+					}
+					if (alt2.main3 !== 0 && alt2.main3 !== undefined) {
+						main_list2 += '' + alt2.main3 + ', ';
+					}
+					if (alt2.main4 !== 0 && alt2.main4 !== undefined) {
+						main_list2 += '' + alt2.main4 + ', ';
+					}
+					if (alt2.main5 !== 0 && alt2.main5 !== undefined) {
+						main_list2 += '' + alt2.main5 + ', ';
+					}
 				});
 					Common.db.users.find({alt3: Common.utils.toDb(alt[1])}, function(err, users) {
 					var main_list3 = '';
