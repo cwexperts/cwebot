@@ -911,7 +911,21 @@ function main(Common, from, to, message) {
 			Common.db.users.find({alt: Common.utils.toDb(alt[1])}, function(err, users) {
 			var main_list1 = '';
 			users.forEach(function(alt) {
-				main_list1 += '' + alt.name + ', ';
+				if (alt.main !== 0 && alt.main !== undefined) {
+					main_list1 += '' + alt.main + ', ';
+				}
+				if (alt.main2 !== 0 && alt.main2 !== undefined) {
+					main_list1 += '' + alt.main2 + ', ';
+				}
+				if (alt.main3 !== 0 && alt.main3 !== undefined) {
+					main_list1 += '' + alt.main3 + ', ';
+				}
+				if (alt.main4 !== 0 && alt.main4 !== undefined) {
+					main_list1 += '' + alt.main4 + ', ';
+				}
+				if (alt.main5 !== 0 && alt.main5 !== undefined) {
+					main_list1 += '' + alt.main5 + ', ';
+				}
 			});
 				Common.db.users.find({alt2: Common.utils.toDb(alt[1])}, function(err, users) {
 				var main_list2 = '';
