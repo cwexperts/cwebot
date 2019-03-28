@@ -949,12 +949,40 @@ function main(Common, from, to, message) {
 					Common.db.users.find({alt3: Common.utils.toDb(alt[1])}, function(err, users) {
 					var main_list3 = '';
 					users.forEach(function(alt3) {
-						main_list3 += '' + alt3.name + ', ';
+						if (alt3.main !== 0 && alt3.main !== undefined) {
+							main_list3 += '' + alt3.main + ', ';
+						}
+						if (alt3.main2 !== 0 && alt3.main2 !== undefined) {
+							main_list3 += '' + alt3.main2 + ', ';
+						}
+						if (alt3.main3 !== 0 && alt3.main3 !== undefined) {
+							main_list3 += '' + alt3.main3 + ', ';
+						}
+						if (alt3.main4 !== 0 && alt3.main4 !== undefined) {
+							main_list3 += '' + alt3.main4 + ', ';
+						}
+						if (alt3.main5 !== 0 && alt3.main5 !== undefined) {
+							main_list3 += '' + alt3.main5 + ', ';
+						}
 					});
 						Common.db.users.find({alt4: Common.utils.toDb(alt[1])}, function(err, users) {
 						var main_list4 = '';
 						users.forEach(function(alt4) {
-							main_list4 += '' + alt4.name + ', ';
+							if (alt4.main !== 0 && alt4.main !== undefined) {
+								main_list4 += '' + alt4.main + ', ';
+							}
+							if (alt4.main2 !== 0 && alt4.main2 !== undefined) {
+								main_list4 += '' + alt4.main2 + ', ';
+							}
+							if (alt4.main3 !== 0 && alt4.main3 !== undefined) {
+								main_list4 += '' + alt4.main3 + ', ';
+							}
+							if (alt4.main4 !== 0 && alt4.main4 !== undefined) {
+								main_list4 += '' + alt4.main4 + ', ';
+							}
+							if (alt4.main5 !== 0 && alt4.main5 !== undefined) {
+								main_list4 += '' + alt4.main5 + ', ';
+							}
 						});
 							Common.db.users.find({alt5: Common.utils.toDb(alt[1])}, function(err, users) {
 							var main_list5 = '';
