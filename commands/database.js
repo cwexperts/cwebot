@@ -987,32 +987,118 @@ function main(Common, from, to, message) {
 							Common.db.users.find({alt5: Common.utils.toDb(alt[1])}, function(err, users) {
 							var main_list5 = '';
 							users.forEach(function(alt5) {
-								main_list5 += '' + alt5.name + ', ';
+								if (alt5.main !== 0 && alt5.main !== undefined) {
+									main_list5 += '' + alt5.main + ', ';
+								}
+								if (alt5.main2 !== 0 && alt5.main2 !== undefined) {
+									main_list5 += '' + alt5.main2 + ', ';
+								}
+								if (alt5.main3 !== 0 && alt5.main3 !== undefined) {
+									main_list5 += '' + alt5.main3 + ', ';
+								}
+								if (alt5.main4 !== 0 && alt5.main4 !== undefined) {
+									main_list5 += '' + alt5.main4 + ', ';
+								}
+								if (alt5.main5 !== 0 && alt5.main5 !== undefined) {
+									main_list5 += '' + alt5.main5 + ', ';
+								}
 							});
 								Common.db.users.find({alt6: Common.utils.toDb(alt[1])}, function(err, users) {
 								var main_list6 = '';
 								users.forEach(function(alt6) {
-									main_list6 += '' + alt6.name + ', ';
+									if (alt6.main !== 0 && alt6.main !== undefined) {
+										main_list6 += '' + alt6.main + ', ';
+									}
+									if (alt6.main2 !== 0 && alt6.main2 !== undefined) {
+										main_list6 += '' + alt6.main2 + ', ';
+									}
+									if (alt6.main3 !== 0 && alt6.main3 !== undefined) {
+										main_list6 += '' + alt6.main3 + ', ';
+									}
+									if (alt6.main4 !== 0 && alt6.main4 !== undefined) {
+										main_list6 += '' + alt6.main4 + ', ';
+									}
+									if (alt6.main5 !== 0 && alt6.main5 !== undefined) {
+										main_list6 += '' + alt6.main5 + ', ';
+									}
 								});
 									Common.db.users.find({alt7: Common.utils.toDb(alt[1])}, function(err, users) {
 									var main_list7 = '';
 									users.forEach(function(alt7) {
-										main_list7 += '' + alt7.name + ', ';
+										if (alt7.main !== 0 && alt7.main !== undefined) {
+											main_list7 += '' + alt7.main + ', ';
+										}
+										if (alt7.main2 !== 0 && alt7.main2 !== undefined) {
+											main_list7 += '' + alt7.main2 + ', ';
+										}
+										if (alt7.main3 !== 0 && alt7.main3 !== undefined) {
+											main_list7 += '' + alt7.main3 + ', ';
+										}
+										if (alt7.main4 !== 0 && alt7.main4 !== undefined) {
+											main_list7 += '' + alt7.main4 + ', ';
+										}
+										if (alt7.main5 !== 0 && alt7.main5 !== undefined) {
+											main_list7 += '' + alt7.main5 + ', ';
+										}
 									});
 										Common.db.users.find({alt8: Common.utils.toDb(alt[1])}, function(err, users) {
 										var main_list8 = '';
 										users.forEach(function(alt8) {
-											main_list8 += '' + alt8.name + ', ';
+											if (alt8.main !== 0 && alt8.main !== undefined) {
+												main_list8 += '' + alt8.main + ', ';
+											}
+											if (alt8.main2 !== 0 && alt8.main2 !== undefined) {
+												main_list8 += '' + alt8.main2 + ', ';
+											}
+											if (alt8.main3 !== 0 && alt8.main3 !== undefined) {
+												main_list8 += '' + alt8.main3 + ', ';
+											}
+											if (alt8.main4 !== 0 && alt8.main4 !== undefined) {
+												main_list8 += '' + alt8.main4 + ', ';
+											}
+											if (alt8.main5 !== 0 && alt8.main5 !== undefined) {
+												main_list8 += '' + alt8.main5 + ', ';
+											}
 										});
 											Common.db.users.find({alt9: Common.utils.toDb(alt[1])}, function(err, users) {
 											var main_list9 = '';
 											users.forEach(function(alt9) {
 												main_list9 += '' + alt9.name + ', ';
+												if (alt9.main !== 0 && alt9.main !== undefined) {
+													main_list9 += '' + alt9.main + ', ';
+												}
+												if (alt9.main2 !== 0 && alt9.main2 !== undefined) {
+													main_list9 += '' + alt9.main2 + ', ';
+												}
+												if (alt9.main3 !== 0 && alt9.main3 !== undefined) {
+													main_list9 += '' + alt9.main3 + ', ';
+												}
+												if (alt9.main4 !== 0 && alt9.main4 !== undefined) {
+													main_list9 += '' + alt9.main4 + ', ';
+												}
+												if (alt9.main5 !== 0 && alt9.main5 !== undefined) {
+													main_list9 += '' + alt9.main5 + ', ';
+												}
 											});
 												Common.db.users.find({alt10: Common.utils.toDb(alt[1])}, function(err, users) {
 												var main_list10 = '';
 												users.forEach(function(alt10) {
 													main_list10 += '' + alt10.name + ', ';
+													if (alt10.main !== 0 && alt10.main !== undefined) {
+														main_list10 += '' + alt10.main + ', ';
+													}
+													if (alt10.main2 !== 0 && alt10.main2 !== undefined) {
+														main_list10 += '' + alt10.main2 + ', ';
+													}
+													if (alt10.main3 !== 0 && alt10.main3 !== undefined) {
+														main_list10 += '' + alt10.main3 + ', ';
+													}
+													if (alt10.main4 !== 0 && alt10.main4 !== undefined) {
+														main_list10 += '' + alt10.main4 + ', ';
+													}
+													if (alt10.main5 !== 0 && alt10.main5 !== undefined) {
+														main_list10 += '' + alt10.main5 + ', ';
+													}
 												});
 													var final_list = '';
 													if (main_list1 != '') {
