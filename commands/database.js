@@ -1288,11 +1288,8 @@ Commands.main = function(Common, from, to, message) {
 					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 				} else {
 					var main_list = '';
-					var un_list = '';
 					if (user.main !== 0 && user.main !== undefined) {
 						main_list += '' + user.main + ', ';
-					} else {
-						un_list += '1, ';
 					}
 					if (user.main2 !== 0 && user.main2 !== undefined) {
 						main_list += '' + user.main2 + ', ';
@@ -1309,11 +1306,12 @@ Commands.main = function(Common, from, to, message) {
 					if (main_list != '') {
 						main_list = main_list.substr(0, main_list.length-2);
 						Common.bot.say(to, "2IRC Nickname: " + name + ", Main RSNs: " + main_list);
-					} else if (un_list != '') {
+					} else {
 						Common.bot.say(to, "5" + name + ", you do not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 					}
 				}
 			});
+		}
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
