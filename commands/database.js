@@ -1063,7 +1063,6 @@ function main(Common, from, to, message) {
 											Common.db.users.find({alt9: Common.utils.toDb(alt[1])}, function(err, users) {
 											var main_list9 = '';
 											users.forEach(function(alt9) {
-												main_list9 += '' + alt9.name + ', ';
 												if (alt9.main !== 0 && alt9.main !== undefined) {
 													main_list9 += '' + alt9.main + ', ';
 												}
@@ -1083,7 +1082,6 @@ function main(Common, from, to, message) {
 												Common.db.users.find({alt10: Common.utils.toDb(alt[1])}, function(err, users) {
 												var main_list10 = '';
 												users.forEach(function(alt10) {
-													main_list10 += '' + alt10.name + ', ';
 													if (alt10.main !== 0 && alt10.main !== undefined) {
 														main_list10 += '' + alt10.main + ', ';
 													}
@@ -1100,7 +1098,29 @@ function main(Common, from, to, message) {
 														main_list10 += '' + alt10.main5 + ', ';
 													}
 												});
+													Common.db.users.find({name: Common.utils.toDb(alt[1])}, function(err, users) {
+													var irc_list = '';
+													users.forEach(function(name) {
+														if (name.main !== 0 && name.main !== undefined) {
+															irc_list += '' + name.main + ', ';
+														}
+														if (name.main2 !== 0 && name.main2 !== undefined) {
+															irc_list += '' + name.main2 + ', ';
+														}
+														if (name.main3 !== 0 && name.main3 !== undefined) {
+															irc_list += '' + name.main3 + ', ';
+														}
+														if (name.main4 !== 0 && name.main4 !== undefined) {
+															irc_list += '' + name.main4 + ', ';
+														}
+														if (name.main5 !== 0 && name.main5 !== undefined) {
+															irc_list += '' + name.main5 + ', ';
+														}
+													});
 													var final_list = '';
+													if (irc_list != '') {
+														final_list += irc_list;
+													}
 													if (main_list1 != '') {
 														final_list += main_list1;
 													}
@@ -1131,11 +1151,17 @@ function main(Common, from, to, message) {
 													if (main_list10 != '') {
 														final_list += main_list10;
 													}
-													if (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
+													if (irc_list != '' && (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '')) {
+														var newfinal_list = final_list.substr(0, final_list.length-2);
+														Common.bot.say(to, "2IRC Nickname/Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
+													} else if (irc_list != '') {
+														var newfinal_list = final_list.substr(0, final_list.length-2);
+														Common.bot.say(to, "2IRC Nickname: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
+													} else if (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
 														var newfinal_list = final_list.substr(0, final_list.length-2);
 														Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
 													} else {
-														Common.bot.say(to, "5" + "Alt RSN '" + Common.utils.toLc(alt[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+														Common.bot.say(to, "5" + "IRC Nickname/Alt RSN '" + Common.utils.toLc(alt[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 													}
 												});
 											});
@@ -1174,7 +1200,21 @@ Commands.main = function(Common, from, to, message) {
 							Common.db.users.find({discord: discname}, function(err, users) {
 								var disc_list = '';
 								users.forEach(function(discord) {
-									disc_list += '' + discord.name + ', ';
+									if (discord.main !== 0 && discord.main !== undefined) {
+										disc_list += '' + discord.main + ', ';
+									}
+									if (discord.main2 !== 0 && discord.main2 !== undefined) {
+										disc_list += '' + discord.main2 + ', ';
+									}
+									if (discord.main3 !== 0 && discord.main3 !== undefined) {
+										disc_list += '' + discord.main3 + ', ';
+									}
+									if (discord.main4 !== 0 && discord.main4 !== undefined) {
+										disc_list += '' + discord.main4 + ', ';
+									}
+									if (discord.main5 !== 0 && discord.main5 !== undefined) {
+										disc_list += '' + discord.main5 + ', ';
+									}
 								});
 								if (disc_list != '') {
 									disc_list = disc_list.substr(0, disc_list.length-2);
