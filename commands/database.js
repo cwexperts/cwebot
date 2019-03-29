@@ -1184,21 +1184,27 @@ function main(Common, from, to, message) {
 													if (main_list10 != '') {
 														final_list += main_list10;
 													}
-													if (irc_list != '' && (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '')) {
+													if (irc_list != '' || main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
+														var nametype = '';
 														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2IRC Nickname/Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (irc_list != '') {
-														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2IRC Nickname: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
-														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (un_list11 != '' && (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '')) {
-														Common.bot.say(to, "5IRC Nickname/Alt RSN '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
-													} else if (un_list11 != '') {
-														Common.bot.say(to, "5IRC Nickname '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
-													} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '') {
-														Common.bot.say(to, "5Alt RSN '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
+														if (irc_list != '' && (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '')) {
+															nametype = 'IRC Nickname/Alt RSN';
+														} else if (irc_list != '') {
+															nametype = 'IRC Nickname';
+														} else {
+															nametype = 'Alt RSN';
+														}
+														Common.bot.say(to, "2" + nametype + ": " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
+													} else if (un_list11 != '' || un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '') {
+														var nametype = '';
+														if (un_list11 != '' && (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '')) {
+															nametype = 'IRC Nickname/Alt RSN';
+														} else if (un_list11 != '') {
+															nametype = 'IRC Nickname';
+														} else {
+															nametype = 'Alt RSN';
+														}
+														Common.bot.say(to, "5" + nametype + " '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 													} else {
 														Common.bot.say(to, "5" + "IRC Nickname/Alt RSN '" + Common.utils.toLc(alt[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 													}
