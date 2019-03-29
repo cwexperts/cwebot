@@ -1385,10 +1385,13 @@ Commands.alt = function(Common, from, to, message) {
 							discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
 							Common.db.users.find({discord: discname}, function(err, users) {
 								var disc_list = '';
+								var un_list = '';
 								users.forEach(function(discord) {
 									disc_list += '' + discord.alt + ', ';
 									if (discord.alt2 !== 0 && discord.alt2 !== undefined) {
 										disc_list += '' + discord.alt2 + ', ';
+									} else {
+										un_list += '1, ';
 									}
 									if (discord.alt3 !== 0 && discord.alt3 !== undefined) {
 										disc_list += '' + discord.alt3 + ', ';
@@ -1418,15 +1421,17 @@ Commands.alt = function(Common, from, to, message) {
 								if (disc_list != '') {
 									disc_list = disc_list.substr(0, disc_list.length-2);
 									Common.bot.say(to, "2Discord ID: " + discname + ", Alt RSNs: " + disc_list);
+								} else if (un_list != '') {
+									Common.bot.say(to, "5Discord ID '" + discname + "' does not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
 								} else {
 									Common.bot.say(to, "5" + "Discord ID '" + discname + "' not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 								}
 							});
 						} else {
-							Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+							Common.bot.say(to, '5You must specify an IRC nickname, a main RSN, or a valid Discord ID when using this command. Use !alt IRC_NICKNAME_HERE, !alt MAIN_RSN_HERE, or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
 						}
 					} else {
-						Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+						Common.bot.say(to, '5You must specify an IRC nickname, a main RSN, or a valid Discord ID when using this command. Use !alt IRC_NICKNAME_HERE, !alt MAIN_RSN_HERE, or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
 					}
 				} else {
 					altmsg(Common, from, to, message);
@@ -1435,42 +1440,50 @@ Commands.alt = function(Common, from, to, message) {
 				altmsg(Common, from, to, message);
 			}
 		} else {
-			name = Common.utils.toDb(from);
+			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(from) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else {
-			var alt_msg = "2IRC Nickname: " + Common.utils.toLc(from) + ", Alt RSNs: " + user.alt + "";
-			if (user.alt2 !== 0 && user.alt2 !== undefined) {
-				alt_msg += ", " + user.alt2 + "";
-			}
-			if (user.alt3 !== 0 && user.alt3 !== undefined) {
-				alt_msg += ", " + user.alt3 + "";
-			}
-			if (user.alt4 !== 0 && user.alt4 !== undefined) {
-				alt_msg += ", " + user.alt4 + "";
-			}
-			if (user.alt5 !== 0 && user.alt5 !== undefined) {
-				alt_msg += ", " + user.alt5 + "";
-			}
-			if (user.alt6 !== 0 && user.alt6 !== undefined) {
-				alt_msg += ", " + user.alt6 + "";
-			}
-			if (user.alt7 !== 0 && user.alt7 !== undefined) {
-				alt_msg += ", " + user.alt7 + "";
-			}
-			if (user.alt8 !== 0 && user.alt8 !== undefined) {
-				alt_msg += ", " + user.alt8 + "";
-			}
-			if (user.alt9 !== 0 && user.alt9 !== undefined) {
-				alt_msg += ", " + user.alt9 + "";
-			}
-			if (user.alt10 !== 0 && user.alt10 !== undefined) {
-				alt_msg += ", " + user.alt10 + "";
-			}
-			Common.bot.say(to, alt_msg);
-			}
+				if (err || !user) {
+					console.log(err);
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+				} else {
+					var alt_list = '';
+					if (user.alt !== 0 && user.alt !== undefined) {
+						alt_list += "" + user.alt + ", ";
+					}
+					if (user.alt2 !== 0 && user.alt2 !== undefined) {
+						alt_list += "" + user.alt2 + ", ";
+					}
+					if (user.alt3 !== 0 && user.alt3 !== undefined) {
+						alt_list += "" + user.alt3 + ", ";
+					}
+					if (user.alt4 !== 0 && user.alt4 !== undefined) {
+						alt_list += "" + user.alt4 + ", ";
+					}
+					if (user.alt5 !== 0 && user.alt5 !== undefined) {
+						alt_list += "" + user.alt5 + ", ";
+					}
+					if (user.alt6 !== 0 && user.alt6 !== undefined) {
+						alt_list += "" + user.alt6 + ", ";
+					}
+					if (user.alt7 !== 0 && user.alt7 !== undefined) {
+						alt_list += "" + user.alt7 + ", ";
+					}
+					if (user.alt8 !== 0 && user.alt8 !== undefined) {
+						alt_list += "" + user.alt8 + ", ";
+					}
+					if (user.alt9 !== 0 && user.alt9 !== undefined) {
+						alt_list += "" + user.alt9 + ", ";
+					}
+					if (user.alt10 !== 0 && user.alt10 !== undefined) {
+						alt_list += "" + user.alt10 + ", ";
+					}
+					if (alt_list != '') {
+						alt_list = alt_list.substr(0, alt_list.length-2);
+						Common.bot.say(to, "2IRC Nickname: " + name + ", Alt RSNs: " + alt_list);
+					} else {
+						Common.bot.say(to, "5" + name + ", you do not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+					}
+				}
 			});
 		}
 	} else {
