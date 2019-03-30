@@ -2125,10 +2125,10 @@ Commands.ircnickname = function(Common, from, to, message) {
 						Common.bot.say(to, '5You must specify a main RSN, an alt RSN, or a valid Discord ID when using this command. Use !ircnickname MAIN_RSN_HERE, !ircnickname ALT_RSN_HERE, or !ircnickname EXAMPLE_NAME # 0 0 0 0 to search for an IRC nickname.');
 					}
 				} else {
-					//ircmsg(Common, from, to, message);
+					ircmsg(Common, from, to, message);
 				}
 			} else {
-				//ircmsg(Common, from, to, message);
+				ircmsg(Common, from, to, message);
 			}
 		} else {
 			Common.bot.say(to, '5You must specify a main RSN, an alt RSN, or a valid Discord ID when using this command. Use !ircnickname MAIN_RSN_HERE, !ircnickname ALT_RSN_HERE, or !ircnickname EXAMPLE_NAME # 0 0 0 0 to search for an IRC nickname.');
