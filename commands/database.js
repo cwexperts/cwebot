@@ -1475,13 +1475,129 @@ function altmsg(Common, from, to, message) {
 						alt_list3 += "" + main3.alt10 + ", ";
 					}
 				});
-			
-			Common.bot.say(to, "5" + "Main/irc RSN '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-		} else {
-			var alt_msg = "2Main RSN: " + Common.utils.toLc(name[1]) + ", Alt RSNs: " + user.alt + "";
-			
-			}
+					Common.db.users.find({main4: name}, function(err, users) {
+					var alt_list4 = '';
+					var un_list5 = '';
+					users.forEach(function(main4) {
+						if (main4.alt !== 0 && main4.alt !== undefined) {
+							alt_list4 += "" + main4.alt + ", ";
+						} else {
+							un_list5 += '1, ';
+						}
+						if (main4.alt2 !== 0 && main4.alt2 !== undefined) {
+							alt_list4 += "" + main4.alt2 + ", ";
+						}
+						if (main4.alt3 !== 0 && main4.alt3 !== undefined) {
+							alt_list4 += "" + main4.alt3 + ", ";
+						}
+						if (main4.alt4 !== 0 && main4.alt4 !== undefined) {
+							alt_list4 += "" + main4.alt4 + ", ";
+						}
+						if (main4.alt5 !== 0 && main4.alt5 !== undefined) {
+							alt_list4 += "" + main4.alt5 + ", ";
+						}
+						if (main4.alt6 !== 0 && main4.alt6 !== undefined) {
+							alt_list4 += "" + main4.alt6 + ", ";
+						}
+						if (main4.alt7 !== 0 && main4.alt7 !== undefined) {
+							alt_list4 += "" + main4.alt7 + ", ";
+						}
+						if (main4.alt8 !== 0 && main4.alt8 !== undefined) {
+							alt_list4 += "" + main4.alt8 + ", ";
+						}
+						if (main4.alt9 !== 0 && main4.alt9 !== undefined) {
+							alt_list4 += "" + main4.alt9 + ", ";
+						}
+						if (main4.alt10 !== 0 && main4.alt10 !== undefined) {
+							alt_list4 += "" + main4.alt10 + ", ";
+						}
+					});
+						Common.db.users.find({main5: name}, function(err, users) {
+						var alt_list5 = '';
+						var un_list6 = '';
+						users.forEach(function(main5) {
+							if (main5.alt !== 0 && main5.alt !== undefined) {
+								alt_list5 += "" + main5.alt + ", ";
+							} else {
+								un_list6 += '1, ';
+							}
+							if (main5.alt2 !== 0 && main5.alt2 !== undefined) {
+								alt_list5 += "" + main5.alt2 + ", ";
+							}
+							if (main5.alt3 !== 0 && main5.alt3 !== undefined) {
+								alt_list5 += "" + main5.alt3 + ", ";
+							}
+							if (main5.alt4 !== 0 && main5.alt4 !== undefined) {
+								alt_list5 += "" + main5.alt4 + ", ";
+							}
+							if (main5.alt5 !== 0 && main5.alt5 !== undefined) {
+								alt_list5 += "" + main5.alt5 + ", ";
+							}
+							if (main5.alt6 !== 0 && main5.alt6 !== undefined) {
+								alt_list5 += "" + main5.alt6 + ", ";
+							}
+							if (main5.alt7 !== 0 && main5.alt7 !== undefined) {
+								alt_list5 += "" + main5.alt7 + ", ";
+							}
+							if (main5.alt8 !== 0 && main5.alt8 !== undefined) {
+								alt_list5 += "" + main5.alt8 + ", ";
+							}
+							if (main5.alt9 !== 0 && main5.alt9 !== undefined) {
+								alt_list5 += "" + main5.alt9 + ", ";
+							}
+							if (main5.alt10 !== 0 && main5.alt10 !== undefined) {
+								alt_list5 += "" + main5.alt10 + ", ";
+							}
+						});
+						var final_list = '';
+						if (irc_list != '') {
+							final_list += irc_list;
+						}
+						if (alt_list1 != '') {
+							final_list += alt_list1;
+						}
+						if (alt_list2 != '') {
+							final_list += alt_list2;
+						}
+						if (alt_list3 != '') {
+							final_list += alt_list3;
+						}
+						if (alt_list4 != '') {
+							final_list += alt_list4;
+						}
+						if (alt_list5 != '') {
+							final_list += alt_list5;
+						}
+						if (irc_list != '' || alt_list1 != '' || alt_list2 != '' || alt_list3 != '' || alt_list4 != '' || alt_list5 != '') {
+							var nametype = '';
+							var newfinal_list = final_list.substr(0, final_list.length-2);
+							if (irc_list != '' && (alt_list1 != '' || alt_list2 != '' || alt_list3 != '' || alt_list4 != '' || alt_list5 != '')) {
+								nametype = 'IRC Nickname/Main RSN';
+							} else if (irc_list != '') {
+								nametype = 'IRC Nickname';
+							} else {
+								nametype = 'Main RSN';
+							}
+							Common.bot.say(to, "2" + nametype + ": " + name + ", Alt RSNs: " + newfinal_list);
+						} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '') {
+							var nametype = '';
+							if (un_list1 != '' && (un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '')) {
+								nametype = 'IRC Nickname/Main RSN';
+							} else if (un_list1 != '') {
+								nametype = 'IRC Nickname';
+							} else {
+								nametype = 'Main RSN';
+							}
+							Common.bot.say(to, "5" + nametype + " '" + name + "' does not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+						} else {
+							Common.bot.say(to, "5" + "IRC Nickname/Main RSN '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+						}
+						});
+					});
+				});
 			});
+		});
+	});
 };
 Commands.alt = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
