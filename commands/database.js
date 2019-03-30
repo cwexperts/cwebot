@@ -804,9 +804,9 @@ Commands.adddiscordid = function(Common, from, to, message) {
 			Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 		} else if (user.discord != undefined && user.discord != 'unknown') {
 			if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already linked a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 to link your new Discord ID to your profile.");
 			} else {
-				Common.bot.say(to, "5" + name + ", you have already registered a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your new Discord ID to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already linked a Discord ID! Use the format !editDiscordID EXAMPLE_NAME # 0 0 0 0 in the games channels to link your new Discord ID to your profile.");
 			}
 		} else if (memlist[name] != 5 || user.key === undefined) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
@@ -1912,30 +1912,32 @@ Commands.discordid = function(Common, from, to, message) {
 																		} else if (disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '') {
 																			nametype = 'Alt RSN';
 																		}
-																	} else if () {
-																		   
-																			
-																		if (disc_list11 == '') {
-																			var newfinal_list = final_list.substr(0, final_list.length-2);
-																			Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord ID: " + newfinal_list);
-																		} else if (disc_list1 == '' && disc_list2 == '' && disc_list3 == '' && disc_list4 == '' && disc_list5 == '' && disc_list6 == '' && disc_list7 == '' && disc_list8 == '' && disc_list9 == '' && disc_list10 == '') {
-																			var newfinal_list = final_list.substr(0, final_list.length-2);
-																			Common.bot.say(to, "2Main RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
-																		} else {
-																			var newfinal_list = final_list.substr(0, final_list.length-2);
-																			Common.bot.say(to, "2Main RSN/Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+																		Common.bot.say(to, "2" + nametype + ": " + name + ", Discord IDs: " + newfinal_list);
+																	} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '' || un_list12 != '' || un_list13 != '' || un_list14 != '' || un_list15 != '' || un_list16 != '') {
+																		var nametype = '';
+																		if (un_list1 != '' && (un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '') && (un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '' || un_list12 != '' || un_list13 != '' || un_list14 != '' || un_list15 != '' || un_list16 != '')) {
+																			nametype = 'IRC Nickname/Main RSN/Alt RSN';
+																		} else if (un_list1 != '' && (un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '')) {
+																			nametype = 'IRC Nickname/Main RSN';
+																		} else if (un_list1 != '' && (un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '' || un_list12 != '' || un_list13 != '' || un_list14 != '' || un_list15 != '' || un_list16 != '')) {
+																			nametype = 'IRC Nickname/Alt RSN';
+																		} else if ((un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '') && (un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '' || un_list12 != '' || un_list13 != '' || un_list14 != '' || un_list15 != '' || un_list16 != '')) {
+																			nametype = 'Main RSN/Alt RSN';
+																		} else if (un_list1 != '') {
+																			nametype = 'IRC Nickname';
+																		} else if (un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '') {
+																			nametype = 'Main RSN';
+																		} else if (un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '' || un_list12 != '' || un_list13 != '' || un_list14 != '' || un_list15 != '' || un_list16 != '') {
+																			nametype = 'Alt RSN';
 																		}
-																	} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '') {
-														if (un_list11 == '') {
-															Common.bot.say(to, "5" + "Alt RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
-														} else if (un_list1 == '' && un_list2 == '' && un_list3 == '' && un_list4 == '' && un_list5 == '' && un_list6 == '' && un_list7 == '' && un_list8 == '' && un_list9 == '' && un_list10 == '') {
-															Common.bot.say(to, "5" + "Main RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
-														} else {
-															Common.bot.say(to, "5" + "Main RSN/Alt RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
-														}
-													} else {
-														Common.bot.say(to, "5" + "Main RSN/Alt RSN '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-													}
+																		Common.bot.say(to, "5" + nametype + " '" + name + "' does not have a linked Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
+																	} else {
+																		Common.bot.say(to, "5" + "IRC Nickname/Main RSN/Alt RSN '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+																	}
+																	});
+																});
+															});
+														});
 													});
 												});
 											});
@@ -1947,6 +1949,7 @@ Commands.discordid = function(Common, from, to, message) {
 					});
 				});
 			});
+		});
 	} else {
 		var name = Common.utils.toDb(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
@@ -1954,7 +1957,7 @@ Commands.discordid = function(Common, from, to, message) {
 				console.log(err);
 				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (user.discord == 'unknown' || user.discord === undefined) {
-				Common.bot.say(to, "5" + name + ", you do not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
+				Common.bot.say(to, "5" + name + ", you do not have a linked Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else {
 				Common.bot.say(to, "2IRC Nickname: " + name + ", Discord ID: " + user.discord + "");
 			}
