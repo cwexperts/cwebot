@@ -1324,41 +1324,162 @@ Commands.main = function(Common, from, to, message) {
 };
 
 function altmsg(Common, from, to, message) {
-			name = message.match(/\S+/g);
-			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+	var name = message.match(/\S+/g);
+	name = Common.utils.toLc(name[1]);
+	var final_list = '';
+	Common.db.users.find({name: name}, function(err, users) {
+	var irc_list = '';
+	var un_list1 = '';
+	users.forEach(function(name) {
+		if (name.alt !== 0 && name.alt !== undefined) {
+			irc_list += "" + name.alt + ", ";
+		} else {
+			un_list1 += '1, ';
+		}
+		if (name.alt2 !== 0 && name.alt2 !== undefined) {
+			irc_list += "" + name.alt2 + ", ";
+		}
+		if (name.alt3 !== 0 && name.alt3 !== undefined) {
+			irc_list += "" + name.alt3 + ", ";
+		}
+		if (name.alt4 !== 0 && name.alt4 !== undefined) {
+			irc_list += "" + name.alt4 + ", ";
+		}
+		if (name.alt5 !== 0 && name.alt5 !== undefined) {
+			irc_list += "" + name.alt5 + ", ";
+		}
+		if (name.alt6 !== 0 && name.alt6 !== undefined) {
+			irc_list += "" + name.alt6 + ", ";
+		}
+		if (name.alt7 !== 0 && name.alt7 !== undefined) {
+			irc_list += "" + name.alt7 + ", ";
+		}
+		if (name.alt8 !== 0 && name.alt8 !== undefined) {
+			irc_list += "" + name.alt8 + ", ";
+		}
+		if (name.alt9 !== 0 && name.alt9 !== undefined) {
+			irc_list += "" + name.alt9 + ", ";
+		}
+		if (name.alt10 !== 0 && name.alt10 !== undefined) {
+			irc_list += "" + name.alt10 + ", ";
+		}
+	});
+		Common.db.users.find({main: name}, function(err, users) {
+		var alt_list1 = '';
+		var un_list2 = '';
+		users.forEach(function(main) {
+			if (main.alt !== 0 && main.alt !== undefined) {
+				alt_list1 += "" + main.alt + ", ";
 			} else {
+				un_list2 += '1, ';
+			}
+			if (main.alt2 !== 0 && main.alt2 !== undefined) {
+				alt_list1 += "" + main.alt2 + ", ";
+			}
+			if (main.alt3 !== 0 && main.alt3 !== undefined) {
+				alt_list1 += "" + main.alt3 + ", ";
+			}
+			if (main.alt4 !== 0 && main.alt4 !== undefined) {
+				alt_list1 += "" + main.alt4 + ", ";
+			}
+			if (main.alt5 !== 0 && main.alt5 !== undefined) {
+				alt_list1 += "" + main.alt5 + ", ";
+			}
+			if (main.alt6 !== 0 && main.alt6 !== undefined) {
+				alt_list1 += "" + main.alt6 + ", ";
+			}
+			if (main.alt7 !== 0 && main.alt7 !== undefined) {
+				alt_list1 += "" + main.alt7 + ", ";
+			}
+			if (main.alt8 !== 0 && main.alt8 !== undefined) {
+				alt_list1 += "" + main.alt8 + ", ";
+			}
+			if (main.alt9 !== 0 && main.alt9 !== undefined) {
+				alt_list1 += "" + main.alt9 + ", ";
+			}
+			if (main.alt10 !== 0 && main.alt10 !== undefined) {
+				alt_list1 += "" + main.alt10 + ", ";
+			}
+		});
+			Common.db.users.find({main2: name}, function(err, users) {
+			var alt_list2 = '';
+			var un_list3 = '';
+			users.forEach(function(main2) {
+				if (main2.alt !== 0 && main2.alt !== undefined) {
+					alt_list2 += "" + main2.alt + ", ";
+				} else {
+					un_list3 += '1, ';
+				}
+				if (main2.alt2 !== 0 && main2.alt2 !== undefined) {
+					alt_list2 += "" + main2.alt2 + ", ";
+				}
+				if (main2.alt3 !== 0 && main2.alt3 !== undefined) {
+					alt_list2 += "" + main2.alt3 + ", ";
+				}
+				if (main2.alt4 !== 0 && main2.alt4 !== undefined) {
+					alt_list2 += "" + main2.alt4 + ", ";
+				}
+				if (main2.alt5 !== 0 && main2.alt5 !== undefined) {
+					alt_list2 += "" + main2.alt5 + ", ";
+				}
+				if (main2.alt6 !== 0 && main2.alt6 !== undefined) {
+					alt_list2 += "" + main2.alt6 + ", ";
+				}
+				if (main2.alt7 !== 0 && main2.alt7 !== undefined) {
+					alt_list2 += "" + main2.alt7 + ", ";
+				}
+				if (main2.alt8 !== 0 && main2.alt8 !== undefined) {
+					alt_list2 += "" + main2.alt8 + ", ";
+				}
+				if (main2.alt9 !== 0 && main2.alt9 !== undefined) {
+					alt_list2 += "" + main2.alt9 + ", ";
+				}
+				if (main2.alt10 !== 0 && main2.alt10 !== undefined) {
+					alt_list2 += "" + main2.alt10 + ", ";
+				}
+			});
+				Common.db.users.find({main3: name}, function(err, users) {
+				var alt_list3 = '';
+				var un_list4 = '';
+				users.forEach(function(main3) {
+					if (main3.alt !== 0 && main3.alt !== undefined) {
+						alt_list3 += "" + main3.alt + ", ";
+					} else {
+						un_list4 += '1, ';
+					}
+					if (main3.alt2 !== 0 && main3.alt2 !== undefined) {
+						alt_list3 += "" + main3.alt2 + ", ";
+					}
+					if (main3.alt3 !== 0 && main3.alt3 !== undefined) {
+						alt_list3 += "" + main3.alt3 + ", ";
+					}
+					if (main3.alt4 !== 0 && main3.alt4 !== undefined) {
+						alt_list3 += "" + main3.alt4 + ", ";
+					}
+					if (main3.alt5 !== 0 && main3.alt5 !== undefined) {
+						alt_list3 += "" + main3.alt5 + ", ";
+					}
+					if (main3.alt6 !== 0 && main3.alt6 !== undefined) {
+						alt_list3 += "" + main3.alt6 + ", ";
+					}
+					if (main3.alt7 !== 0 && main3.alt7 !== undefined) {
+						alt_list3 += "" + main3.alt7 + ", ";
+					}
+					if (main3.alt8 !== 0 && main3.alt8 !== undefined) {
+						alt_list3 += "" + main3.alt8 + ", ";
+					}
+					if (main3.alt9 !== 0 && main3.alt9 !== undefined) {
+						alt_list3 += "" + main3.alt9 + ", ";
+					}
+					if (main3.alt10 !== 0 && main3.alt10 !== undefined) {
+						alt_list3 += "" + main3.alt10 + ", ";
+					}
+				});
+			
+			Common.bot.say(to, "5" + "Main/irc RSN '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+		} else {
 			var alt_msg = "2Main RSN: " + Common.utils.toLc(name[1]) + ", Alt RSNs: " + user.alt + "";
-			if (user.alt2 !== 0 && user.alt2 !== undefined) {
-				alt_msg += ", " + user.alt2 + "";
-			}
-			if (user.alt3 !== 0 && user.alt3 !== undefined) {
-				alt_msg += ", " + user.alt3 + "";
-			}
-			if (user.alt4 !== 0 && user.alt4 !== undefined) {
-				alt_msg += ", " + user.alt4 + "";
-			}
-			if (user.alt5 !== 0 && user.alt5 !== undefined) {
-				alt_msg += ", " + user.alt5 + "";
-			}
-			if (user.alt6 !== 0 && user.alt6 !== undefined) {
-				alt_msg += ", " + user.alt6 + "";
-			}
-			if (user.alt7 !== 0 && user.alt7 !== undefined) {
-				alt_msg += ", " + user.alt7 + "";
-			}
-			if (user.alt8 !== 0 && user.alt8 !== undefined) {
-				alt_msg += ", " + user.alt8 + "";
-			}
-			if (user.alt9 !== 0 && user.alt9 !== undefined) {
-				alt_msg += ", " + user.alt9 + "";
-			}
-			if (user.alt10 !== 0 && user.alt10 !== undefined) {
-				alt_msg += ", " + user.alt10 + "";
-			}
-			Common.bot.say(to, alt_msg);
+			
 			}
 			});
 };
