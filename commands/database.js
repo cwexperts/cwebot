@@ -1184,21 +1184,27 @@ function main(Common, from, to, message) {
 													if (main_list10 != '') {
 														final_list += main_list10;
 													}
-													if (irc_list != '' && (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '')) {
+													if (irc_list != '' || main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
+														var nametype = '';
 														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2IRC Nickname/Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (irc_list != '') {
-														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2IRC Nickname: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '') {
-														var newfinal_list = final_list.substr(0, final_list.length-2);
-														Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
-													} else if (un_list11 != '' && (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '')) {
-														Common.bot.say(to, "5IRC Nickname/Alt RSN '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
-													} else if (un_list11 != '') {
-														Common.bot.say(to, "5IRC Nickname '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
-													} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '') {
-														Common.bot.say(to, "5Alt RSN '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
+														if (irc_list != '' && (main_list1 != '' || main_list2 != '' || main_list3 != '' || main_list4 != '' || main_list5 != '' || main_list6 != '' || main_list7 != '' || main_list8 != '' || main_list9 != '' || main_list10 != '')) {
+															nametype = 'IRC Nickname/Alt RSN';
+														} else if (irc_list != '') {
+															nametype = 'IRC Nickname';
+														} else {
+															nametype = 'Alt RSN';
+														}
+														Common.bot.say(to, "2" + nametype + ": " + Common.utils.toLc(alt[1]) + ", Main RSNs: " + newfinal_list);
+													} else if (un_list11 != '' || un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '') {
+														var nametype = '';
+														if (un_list11 != '' && (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '')) {
+															nametype = 'IRC Nickname/Alt RSN';
+														} else if (un_list11 != '') {
+															nametype = 'IRC Nickname';
+														} else {
+															nametype = 'Alt RSN';
+														}
+														Common.bot.say(to, "5" + nametype + " '" + Common.utils.toLc(alt[1]) + "' does not have a linked main RSN. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 													} else {
 														Common.bot.say(to, "5" + "IRC Nickname/Alt RSN '" + Common.utils.toLc(alt[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 													}
@@ -1318,43 +1324,280 @@ Commands.main = function(Common, from, to, message) {
 };
 
 function altmsg(Common, from, to, message) {
-			name = message.match(/\S+/g);
-			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "Main RSN '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+	var name = message.match(/\S+/g);
+	name = Common.utils.toLc(name[1]);
+	var final_list = '';
+	Common.db.users.find({name: name}, function(err, users) {
+	var irc_list = '';
+	var un_list1 = '';
+	users.forEach(function(name) {
+		if (name.alt !== 0 && name.alt !== undefined) {
+			irc_list += "" + name.alt + ", ";
+		} else {
+			un_list1 += '1, ';
+		}
+		if (name.alt2 !== 0 && name.alt2 !== undefined) {
+			irc_list += "" + name.alt2 + ", ";
+		}
+		if (name.alt3 !== 0 && name.alt3 !== undefined) {
+			irc_list += "" + name.alt3 + ", ";
+		}
+		if (name.alt4 !== 0 && name.alt4 !== undefined) {
+			irc_list += "" + name.alt4 + ", ";
+		}
+		if (name.alt5 !== 0 && name.alt5 !== undefined) {
+			irc_list += "" + name.alt5 + ", ";
+		}
+		if (name.alt6 !== 0 && name.alt6 !== undefined) {
+			irc_list += "" + name.alt6 + ", ";
+		}
+		if (name.alt7 !== 0 && name.alt7 !== undefined) {
+			irc_list += "" + name.alt7 + ", ";
+		}
+		if (name.alt8 !== 0 && name.alt8 !== undefined) {
+			irc_list += "" + name.alt8 + ", ";
+		}
+		if (name.alt9 !== 0 && name.alt9 !== undefined) {
+			irc_list += "" + name.alt9 + ", ";
+		}
+		if (name.alt10 !== 0 && name.alt10 !== undefined) {
+			irc_list += "" + name.alt10 + ", ";
+		}
+	});
+		Common.db.users.find({main: name}, function(err, users) {
+		var alt_list1 = '';
+		var un_list2 = '';
+		users.forEach(function(main) {
+			if (main.alt !== 0 && main.alt !== undefined) {
+				alt_list1 += "" + main.alt + ", ";
 			} else {
-			var alt_msg = "2Main RSN: " + Common.utils.toLc(name[1]) + ", Alt RSNs: " + user.alt + "";
-			if (user.alt2 !== 0 && user.alt2 !== undefined) {
-				alt_msg += ", " + user.alt2 + "";
+				un_list2 += '1, ';
 			}
-			if (user.alt3 !== 0 && user.alt3 !== undefined) {
-				alt_msg += ", " + user.alt3 + "";
+			if (main.alt2 !== 0 && main.alt2 !== undefined) {
+				alt_list1 += "" + main.alt2 + ", ";
 			}
-			if (user.alt4 !== 0 && user.alt4 !== undefined) {
-				alt_msg += ", " + user.alt4 + "";
+			if (main.alt3 !== 0 && main.alt3 !== undefined) {
+				alt_list1 += "" + main.alt3 + ", ";
 			}
-			if (user.alt5 !== 0 && user.alt5 !== undefined) {
-				alt_msg += ", " + user.alt5 + "";
+			if (main.alt4 !== 0 && main.alt4 !== undefined) {
+				alt_list1 += "" + main.alt4 + ", ";
 			}
-			if (user.alt6 !== 0 && user.alt6 !== undefined) {
-				alt_msg += ", " + user.alt6 + "";
+			if (main.alt5 !== 0 && main.alt5 !== undefined) {
+				alt_list1 += "" + main.alt5 + ", ";
 			}
-			if (user.alt7 !== 0 && user.alt7 !== undefined) {
-				alt_msg += ", " + user.alt7 + "";
+			if (main.alt6 !== 0 && main.alt6 !== undefined) {
+				alt_list1 += "" + main.alt6 + ", ";
 			}
-			if (user.alt8 !== 0 && user.alt8 !== undefined) {
-				alt_msg += ", " + user.alt8 + "";
+			if (main.alt7 !== 0 && main.alt7 !== undefined) {
+				alt_list1 += "" + main.alt7 + ", ";
 			}
-			if (user.alt9 !== 0 && user.alt9 !== undefined) {
-				alt_msg += ", " + user.alt9 + "";
+			if (main.alt8 !== 0 && main.alt8 !== undefined) {
+				alt_list1 += "" + main.alt8 + ", ";
 			}
-			if (user.alt10 !== 0 && user.alt10 !== undefined) {
-				alt_msg += ", " + user.alt10 + "";
+			if (main.alt9 !== 0 && main.alt9 !== undefined) {
+				alt_list1 += "" + main.alt9 + ", ";
 			}
-			Common.bot.say(to, alt_msg);
+			if (main.alt10 !== 0 && main.alt10 !== undefined) {
+				alt_list1 += "" + main.alt10 + ", ";
 			}
+		});
+			Common.db.users.find({main2: name}, function(err, users) {
+			var alt_list2 = '';
+			var un_list3 = '';
+			users.forEach(function(main2) {
+				if (main2.alt !== 0 && main2.alt !== undefined) {
+					alt_list2 += "" + main2.alt + ", ";
+				} else {
+					un_list3 += '1, ';
+				}
+				if (main2.alt2 !== 0 && main2.alt2 !== undefined) {
+					alt_list2 += "" + main2.alt2 + ", ";
+				}
+				if (main2.alt3 !== 0 && main2.alt3 !== undefined) {
+					alt_list2 += "" + main2.alt3 + ", ";
+				}
+				if (main2.alt4 !== 0 && main2.alt4 !== undefined) {
+					alt_list2 += "" + main2.alt4 + ", ";
+				}
+				if (main2.alt5 !== 0 && main2.alt5 !== undefined) {
+					alt_list2 += "" + main2.alt5 + ", ";
+				}
+				if (main2.alt6 !== 0 && main2.alt6 !== undefined) {
+					alt_list2 += "" + main2.alt6 + ", ";
+				}
+				if (main2.alt7 !== 0 && main2.alt7 !== undefined) {
+					alt_list2 += "" + main2.alt7 + ", ";
+				}
+				if (main2.alt8 !== 0 && main2.alt8 !== undefined) {
+					alt_list2 += "" + main2.alt8 + ", ";
+				}
+				if (main2.alt9 !== 0 && main2.alt9 !== undefined) {
+					alt_list2 += "" + main2.alt9 + ", ";
+				}
+				if (main2.alt10 !== 0 && main2.alt10 !== undefined) {
+					alt_list2 += "" + main2.alt10 + ", ";
+				}
 			});
+				Common.db.users.find({main3: name}, function(err, users) {
+				var alt_list3 = '';
+				var un_list4 = '';
+				users.forEach(function(main3) {
+					if (main3.alt !== 0 && main3.alt !== undefined) {
+						alt_list3 += "" + main3.alt + ", ";
+					} else {
+						un_list4 += '1, ';
+					}
+					if (main3.alt2 !== 0 && main3.alt2 !== undefined) {
+						alt_list3 += "" + main3.alt2 + ", ";
+					}
+					if (main3.alt3 !== 0 && main3.alt3 !== undefined) {
+						alt_list3 += "" + main3.alt3 + ", ";
+					}
+					if (main3.alt4 !== 0 && main3.alt4 !== undefined) {
+						alt_list3 += "" + main3.alt4 + ", ";
+					}
+					if (main3.alt5 !== 0 && main3.alt5 !== undefined) {
+						alt_list3 += "" + main3.alt5 + ", ";
+					}
+					if (main3.alt6 !== 0 && main3.alt6 !== undefined) {
+						alt_list3 += "" + main3.alt6 + ", ";
+					}
+					if (main3.alt7 !== 0 && main3.alt7 !== undefined) {
+						alt_list3 += "" + main3.alt7 + ", ";
+					}
+					if (main3.alt8 !== 0 && main3.alt8 !== undefined) {
+						alt_list3 += "" + main3.alt8 + ", ";
+					}
+					if (main3.alt9 !== 0 && main3.alt9 !== undefined) {
+						alt_list3 += "" + main3.alt9 + ", ";
+					}
+					if (main3.alt10 !== 0 && main3.alt10 !== undefined) {
+						alt_list3 += "" + main3.alt10 + ", ";
+					}
+				});
+					Common.db.users.find({main4: name}, function(err, users) {
+					var alt_list4 = '';
+					var un_list5 = '';
+					users.forEach(function(main4) {
+						if (main4.alt !== 0 && main4.alt !== undefined) {
+							alt_list4 += "" + main4.alt + ", ";
+						} else {
+							un_list5 += '1, ';
+						}
+						if (main4.alt2 !== 0 && main4.alt2 !== undefined) {
+							alt_list4 += "" + main4.alt2 + ", ";
+						}
+						if (main4.alt3 !== 0 && main4.alt3 !== undefined) {
+							alt_list4 += "" + main4.alt3 + ", ";
+						}
+						if (main4.alt4 !== 0 && main4.alt4 !== undefined) {
+							alt_list4 += "" + main4.alt4 + ", ";
+						}
+						if (main4.alt5 !== 0 && main4.alt5 !== undefined) {
+							alt_list4 += "" + main4.alt5 + ", ";
+						}
+						if (main4.alt6 !== 0 && main4.alt6 !== undefined) {
+							alt_list4 += "" + main4.alt6 + ", ";
+						}
+						if (main4.alt7 !== 0 && main4.alt7 !== undefined) {
+							alt_list4 += "" + main4.alt7 + ", ";
+						}
+						if (main4.alt8 !== 0 && main4.alt8 !== undefined) {
+							alt_list4 += "" + main4.alt8 + ", ";
+						}
+						if (main4.alt9 !== 0 && main4.alt9 !== undefined) {
+							alt_list4 += "" + main4.alt9 + ", ";
+						}
+						if (main4.alt10 !== 0 && main4.alt10 !== undefined) {
+							alt_list4 += "" + main4.alt10 + ", ";
+						}
+					});
+						Common.db.users.find({main5: name}, function(err, users) {
+						var alt_list5 = '';
+						var un_list6 = '';
+						users.forEach(function(main5) {
+							if (main5.alt !== 0 && main5.alt !== undefined) {
+								alt_list5 += "" + main5.alt + ", ";
+							} else {
+								un_list6 += '1, ';
+							}
+							if (main5.alt2 !== 0 && main5.alt2 !== undefined) {
+								alt_list5 += "" + main5.alt2 + ", ";
+							}
+							if (main5.alt3 !== 0 && main5.alt3 !== undefined) {
+								alt_list5 += "" + main5.alt3 + ", ";
+							}
+							if (main5.alt4 !== 0 && main5.alt4 !== undefined) {
+								alt_list5 += "" + main5.alt4 + ", ";
+							}
+							if (main5.alt5 !== 0 && main5.alt5 !== undefined) {
+								alt_list5 += "" + main5.alt5 + ", ";
+							}
+							if (main5.alt6 !== 0 && main5.alt6 !== undefined) {
+								alt_list5 += "" + main5.alt6 + ", ";
+							}
+							if (main5.alt7 !== 0 && main5.alt7 !== undefined) {
+								alt_list5 += "" + main5.alt7 + ", ";
+							}
+							if (main5.alt8 !== 0 && main5.alt8 !== undefined) {
+								alt_list5 += "" + main5.alt8 + ", ";
+							}
+							if (main5.alt9 !== 0 && main5.alt9 !== undefined) {
+								alt_list5 += "" + main5.alt9 + ", ";
+							}
+							if (main5.alt10 !== 0 && main5.alt10 !== undefined) {
+								alt_list5 += "" + main5.alt10 + ", ";
+							}
+						});
+						var final_list = '';
+						if (irc_list != '') {
+							final_list += irc_list;
+						}
+						if (alt_list1 != '') {
+							final_list += alt_list1;
+						}
+						if (alt_list2 != '') {
+							final_list += alt_list2;
+						}
+						if (alt_list3 != '') {
+							final_list += alt_list3;
+						}
+						if (alt_list4 != '') {
+							final_list += alt_list4;
+						}
+						if (alt_list5 != '') {
+							final_list += alt_list5;
+						}
+						if (irc_list != '' || alt_list1 != '' || alt_list2 != '' || alt_list3 != '' || alt_list4 != '' || alt_list5 != '') {
+							var nametype = '';
+							var newfinal_list = final_list.substr(0, final_list.length-2);
+							if (irc_list != '' && (alt_list1 != '' || alt_list2 != '' || alt_list3 != '' || alt_list4 != '' || alt_list5 != '')) {
+								nametype = 'IRC Nickname/Main RSN';
+							} else if (irc_list != '') {
+								nametype = 'IRC Nickname';
+							} else {
+								nametype = 'Main RSN';
+							}
+							Common.bot.say(to, "2" + nametype + ": " + name + ", Alt RSNs: " + newfinal_list);
+						} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '') {
+							var nametype = '';
+							if (un_list1 != '' && (un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '')) {
+								nametype = 'IRC Nickname/Main RSN';
+							} else if (un_list1 != '') {
+								nametype = 'IRC Nickname';
+							} else {
+								nametype = 'Main RSN';
+							}
+							Common.bot.say(to, "5" + nametype + " '" + name + "' does not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+						} else {
+							Common.bot.say(to, "5" + "IRC Nickname/Main RSN '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+						}
+						});
+					});
+				});
+			});
+		});
+	});
 };
 Commands.alt = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
@@ -1379,10 +1622,13 @@ Commands.alt = function(Common, from, to, message) {
 							discname = disc1 + disc2 + disc3 + disc4 + disc5 + disc6;
 							Common.db.users.find({discord: discname}, function(err, users) {
 								var disc_list = '';
+								var un_list = '';
 								users.forEach(function(discord) {
 									disc_list += '' + discord.alt + ', ';
 									if (discord.alt2 !== 0 && discord.alt2 !== undefined) {
 										disc_list += '' + discord.alt2 + ', ';
+									} else {
+										un_list += '1, ';
 									}
 									if (discord.alt3 !== 0 && discord.alt3 !== undefined) {
 										disc_list += '' + discord.alt3 + ', ';
@@ -1412,15 +1658,17 @@ Commands.alt = function(Common, from, to, message) {
 								if (disc_list != '') {
 									disc_list = disc_list.substr(0, disc_list.length-2);
 									Common.bot.say(to, "2Discord ID: " + discname + ", Alt RSNs: " + disc_list);
+								} else if (un_list != '') {
+									Common.bot.say(to, "5Discord ID '" + discname + "' does not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
 								} else {
 									Common.bot.say(to, "5" + "Discord ID '" + discname + "' not found. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 								}
 							});
 						} else {
-							Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+							Common.bot.say(to, '5You must specify an IRC nickname, a main RSN, or a valid Discord ID when using this command. Use !alt IRC_NICKNAME_HERE, !alt MAIN_RSN_HERE, or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
 						}
 					} else {
-						Common.bot.say(to, '5You must specify a main RSN or a valid Discord ID when using this command. Use !alt MAIN_RSN_HERE or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
+						Common.bot.say(to, '5You must specify an IRC nickname, a main RSN, or a valid Discord ID when using this command. Use !alt IRC_NICKNAME_HERE, !alt MAIN_RSN_HERE, or !alt EXAMPLE_NAME # 0 0 0 0 to search for an alt RSN.');
 					}
 				} else {
 					altmsg(Common, from, to, message);
@@ -1429,42 +1677,50 @@ Commands.alt = function(Common, from, to, message) {
 				altmsg(Common, from, to, message);
 			}
 		} else {
-			name = Common.utils.toDb(from);
+			var name = Common.utils.toLc(from);
 			Common.db.users.findOne({name: name}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(from) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else {
-			var alt_msg = "2IRC Nickname: " + Common.utils.toLc(from) + ", Alt RSNs: " + user.alt + "";
-			if (user.alt2 !== 0 && user.alt2 !== undefined) {
-				alt_msg += ", " + user.alt2 + "";
-			}
-			if (user.alt3 !== 0 && user.alt3 !== undefined) {
-				alt_msg += ", " + user.alt3 + "";
-			}
-			if (user.alt4 !== 0 && user.alt4 !== undefined) {
-				alt_msg += ", " + user.alt4 + "";
-			}
-			if (user.alt5 !== 0 && user.alt5 !== undefined) {
-				alt_msg += ", " + user.alt5 + "";
-			}
-			if (user.alt6 !== 0 && user.alt6 !== undefined) {
-				alt_msg += ", " + user.alt6 + "";
-			}
-			if (user.alt7 !== 0 && user.alt7 !== undefined) {
-				alt_msg += ", " + user.alt7 + "";
-			}
-			if (user.alt8 !== 0 && user.alt8 !== undefined) {
-				alt_msg += ", " + user.alt8 + "";
-			}
-			if (user.alt9 !== 0 && user.alt9 !== undefined) {
-				alt_msg += ", " + user.alt9 + "";
-			}
-			if (user.alt10 !== 0 && user.alt10 !== undefined) {
-				alt_msg += ", " + user.alt10 + "";
-			}
-			Common.bot.say(to, alt_msg);
-			}
+				if (err || !user) {
+					console.log(err);
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+				} else {
+					var alt_list = '';
+					if (user.alt !== 0 && user.alt !== undefined) {
+						alt_list += "" + user.alt + ", ";
+					}
+					if (user.alt2 !== 0 && user.alt2 !== undefined) {
+						alt_list += "" + user.alt2 + ", ";
+					}
+					if (user.alt3 !== 0 && user.alt3 !== undefined) {
+						alt_list += "" + user.alt3 + ", ";
+					}
+					if (user.alt4 !== 0 && user.alt4 !== undefined) {
+						alt_list += "" + user.alt4 + ", ";
+					}
+					if (user.alt5 !== 0 && user.alt5 !== undefined) {
+						alt_list += "" + user.alt5 + ", ";
+					}
+					if (user.alt6 !== 0 && user.alt6 !== undefined) {
+						alt_list += "" + user.alt6 + ", ";
+					}
+					if (user.alt7 !== 0 && user.alt7 !== undefined) {
+						alt_list += "" + user.alt7 + ", ";
+					}
+					if (user.alt8 !== 0 && user.alt8 !== undefined) {
+						alt_list += "" + user.alt8 + ", ";
+					}
+					if (user.alt9 !== 0 && user.alt9 !== undefined) {
+						alt_list += "" + user.alt9 + ", ";
+					}
+					if (user.alt10 !== 0 && user.alt10 !== undefined) {
+						alt_list += "" + user.alt10 + ", ";
+					}
+					if (alt_list != '') {
+						alt_list = alt_list.substr(0, alt_list.length-2);
+						Common.bot.say(to, "2IRC Nickname: " + name + ", Alt RSNs: " + alt_list);
+					} else {
+						Common.bot.say(to, "5" + name + ", you do not have a linked alt RSN. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+					}
+				}
 			});
 		}
 	} else {
