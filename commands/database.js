@@ -1732,162 +1732,200 @@ Commands.discordid = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	if (Common.utils.msg(message)) {
 		var name = message.match(/\S+/g);
-			Common.db.users.find({alt: Common.utils.toDb(name[1])}, function(err, users) {
-			var disc_list1 = '';
-			var un_list1 = '';
-			users.forEach(function(alt) {
-				if (alt.discord != 'unknown' && alt.discord !== undefined) {
-					disc_list1 += '' + alt.discord + ', ';
+		name = Common.utils.toLc(name[1]);
+		Common.db.users.find({name: name}, function(err, users) {
+		var disc_list1 = '';
+		var un_list1 = '';
+		users.forEach(function(name) {
+			if (name.discord != 'unknown' && name.discord !== undefined) {
+				disc_list1 += '' + name.discord + ', ';
+			} else {
+				un_list1 += '1, ';
+			}
+		});
+			Common.db.users.find({main: name}, function(err, users) {
+			var disc_list2 = '';
+			var un_list2 = '';
+			users.forEach(function(main) {
+				if (main.discord != 'unknown' && main.discord !== undefined) {
+					disc_list2 += '' + main.discord + ', ';
 				} else {
-					un_list1 += '1, ';
+					un_list2 += '1, ';
 				}
 			});
-				Common.db.users.find({alt2: Common.utils.toDb(name[1])}, function(err, users) {
-				var disc_list2 = '';
-				var un_list2 = '';
-				users.forEach(function(alt2) {
-					if (alt2.discord != 'unknown' && alt2.discord !== undefined) {
-						disc_list2 += '' + alt2.discord + ', ';
+				Common.db.users.find({main2: name}, function(err, users) {
+				var disc_list3 = '';
+				var un_list3 = '';
+				users.forEach(function(main2) {
+					if (main2.discord != 'unknown' && main2.discord !== undefined) {
+						disc_list3 += '' + main2.discord + ', ';
 					} else {
-						un_list2 += '1, ';
+						un_list3 += '1, ';
 					}
 				});
-					Common.db.users.find({alt3: Common.utils.toDb(name[1])}, function(err, users) {
-					var disc_list3 = '';
-					var un_list3 = '';
-					users.forEach(function(alt3) {
-						if (alt3.discord != 'unknown' && alt3.discord !== undefined) {
-							disc_list3 += '' + alt3.discord + ', ';
+					Common.db.users.find({main3: name}, function(err, users) {
+					var disc_list4 = '';
+					var un_list4 = '';
+					users.forEach(function(main3) {
+						if (main3.discord != 'unknown' && main3.discord !== undefined) {
+							disc_list4 += '' + main3.discord + ', ';
 						} else {
-							un_list3 += '1, ';
+							un_list4 += '1, ';
 						}
 					});
-						Common.db.users.find({alt4: Common.utils.toDb(name[1])}, function(err, users) {
-						var disc_list4 = '';
-						var un_list4 = '';
-						users.forEach(function(alt4) {
-							if (alt4.discord != 'unknown' && alt4.discord !== undefined) {
-								disc_list4 += '' + alt4.discord + ', ';
+						Common.db.users.find({main4: name}, function(err, users) {
+						var disc_list5 = '';
+						var un_list5 = '';
+						users.forEach(function(main4) {
+							if (main4.discord != 'unknown' && main4.discord !== undefined) {
+								disc_list5 += '' + main4.discord + ', ';
 							} else {
-								un_list4 += '1, ';
+								un_list5 += '1, ';
 							}
 						});
-							Common.db.users.find({alt5: Common.utils.toDb(name[1])}, function(err, users) {
-							var disc_list5 = '';
-							var un_list5 = '';
-							users.forEach(function(alt5) {
-								if (alt5.discord != 'unknown' && alt5.discord !== undefined) {
-									disc_list5 += '' + alt5.discord + ', ';
+							Common.db.users.find({main5: name}, function(err, users) {
+							var disc_list6 = '';
+							var un_list6 = '';
+							users.forEach(function(main5) {
+								if (main5.discord != 'unknown' && main5.discord !== undefined) {
+									disc_list6 += '' + main5.discord + ', ';
 								} else {
-									un_list5 += '1, ';
+									un_list6 += '1, ';
 								}
 							});
-								Common.db.users.find({alt6: Common.utils.toDb(name[1])}, function(err, users) {
-								var disc_list6 = '';
-								var un_list6 = '';
-								users.forEach(function(alt6) {
-									if (alt6.discord != 'unknown' && alt6.discord !== undefined) {
-										disc_list6 += '' + alt6.discord + ', ';
+								Common.db.users.find({alt: name}, function(err, users) {
+								var disc_list7 = '';
+								var un_list7 = '';
+								users.forEach(function(alt) {
+									if (alt.discord != 'unknown' && alt.discord !== undefined) {
+										disc_list7 += '' + alt.discord + ', ';
 									} else {
-										un_list6 += '1, ';
+										un_list7 += '1, ';
 									}
 								});
-									Common.db.users.find({alt7: Common.utils.toDb(name[1])}, function(err, users) {
-									var disc_list7 = '';
-									var un_list7 = '';
-									users.forEach(function(alt7) {
-										if (alt7.discord != 'unknown' && alt7.discord !== undefined) {
-											disc_list7 += '' + alt7.discord + ', ';
+									Common.db.users.find({alt2: name}, function(err, users) {
+									var disc_list8 = '';
+									var un_list8 = '';
+									users.forEach(function(alt2) {
+										if (alt2.discord != 'unknown' && alt2.discord !== undefined) {
+											disc_list8 += '' + alt2.discord + ', ';
 										} else {
-											un_list7 += '1, ';
+											un_list8 += '1, ';
 										}
 									});
-										Common.db.users.find({alt8: Common.utils.toDb(name[1])}, function(err, users) {
-										var disc_list8 = '';
-										var un_list8 = '';
-										users.forEach(function(alt8) {
-											if (alt8.discord != 'unknown' && alt8.discord !== undefined) {
-												disc_list8 += '' + alt8.discord + ', ';
+										Common.db.users.find({alt3: name}, function(err, users) {
+										var disc_list9 = '';
+										var un_list9 = '';
+										users.forEach(function(alt3) {
+											if (alt3.discord != 'unknown' && alt3.discord !== undefined) {
+												disc_list9 += '' + alt3.discord + ', ';
 											} else {
-												un_list8 += '1, ';
+												un_list9+= '1, ';
 											}
 										});
-											Common.db.users.find({alt9: Common.utils.toDb(name[1])}, function(err, users) {
-											var disc_list9 = '';
-											var un_list9 = '';
-											users.forEach(function(alt9) {
-												if (alt9.discord != 'unknown' && alt9.discord !== undefined) {
-													disc_list9 += '' + alt9.discord + ', ';
+											Common.db.users.find({alt4: name}, function(err, users) {
+											var disc_list10 = '';
+											var un_list10 = '';
+											users.forEach(function(alt4) {
+												if (alt4.discord != 'unknown' && alt4.discord !== undefined) {
+													disc_list10 += '' + alt4.discord + ', ';
 												} else {
-													un_list9 += '1, ';
+													un_list10 += '1, ';
 												}
 											});
-												Common.db.users.find({alt10: Common.utils.toDb(name[1])}, function(err, users) {
-												var disc_list10 = '';
-												var un_list10 = '';
-												users.forEach(function(alt10) {
-													if (alt10.discord != 'unknown' && alt10.discord !== undefined) {
-														disc_list10 += '' + alt10.discord + ', ';
+												Common.db.users.find({alt5: name}, function(err, users) {
+												var disc_list11 = '';
+												var un_list11 = '';
+												users.forEach(function(alt5) {
+													if (alt5.discord != 'unknown' && alt5.discord !== undefined) {
+														disc_list11 += '' + alt5.discord + ', ';
 													} else {
-														un_list10 += '1, ';
+														un_list11 += '1, ';
 													}
 												});
-													Common.db.users.find({name: Common.utils.toDb(name[1])}, function(err, users) {
-													var disc_list11 = '';
-													var un_list11 = '';
-													users.forEach(function(name) {
-														if (name.discord != 'unknown' && name.discord !== undefined) {
-															disc_list11 += '' + name.discord + ', ';
+													Common.db.users.find({alt6: name}, function(err, users) {
+													var disc_list12 = '';
+													var un_list12 = '';
+													users.forEach(function(alt6) {
+														if (alt6.discord != 'unknown' && alt6.discord !== undefined) {
+															disc_list12 += '' + alt6.discord + ', ';
 														} else {
-															un_list11 += '1, ';
+															un_list12 += '1, ';
 														}
 													});
-													var final_list = '';
-													if (disc_list11 != '') {
-														final_list += disc_list11;
-													} 
-													if (disc_list1 != '') {
-														final_list += disc_list1;
-													}
-													if (disc_list2 != '') {
-														final_list += disc_list2;
-													}
-													if (disc_list3 != '') {
-														final_list += disc_list3;
-													}
-													if (disc_list4 != '') {
-														final_list += disc_list4;
-													}
-													if (disc_list5 != '') {
-														final_list += disc_list5;
-													}
-													if (disc_list6 != '') {
-														final_list += disc_list6;
-													}
-													if (disc_list7 != '') {
-														final_list += disc_list7;
-													}
-													if (disc_list8 != '') {
-														final_list += disc_list8;
-													}
-													if (disc_list9 != '') {
-														final_list += disc_list9;
-													}
-													if (disc_list10 != '') {
-														final_list += disc_list10;
-													}
-													if (disc_list1 != '' || disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '' || disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '') {
-														if (disc_list11 == '') {
-															var newfinal_list = final_list.substr(0, final_list.length-2);
-															Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
-														} else if (disc_list1 == '' && disc_list2 == '' && disc_list3 == '' && disc_list4 == '' && disc_list5 == '' && disc_list6 == '' && disc_list7 == '' && disc_list8 == '' && disc_list9 == '' && disc_list10 == '') {
-															var newfinal_list = final_list.substr(0, final_list.length-2);
-															Common.bot.say(to, "2Main RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
-														} else {
-															var newfinal_list = final_list.substr(0, final_list.length-2);
-															Common.bot.say(to, "2Main RSN/Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
-														}
-													} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '') {
+														Common.db.users.find({alt7: name}, function(err, users) {
+														var disc_list13 = '';
+														var un_list13 = '';
+														users.forEach(function(alt7) {
+															if (alt7.discord != 'unknown' && alt7.discord !== undefined) {
+																disc_list13 += '' + alt7.discord + ', ';
+															} else {
+																un_list13 += '1, ';
+															}
+														});
+															Common.db.users.find({alt8: name}, function(err, users) {
+															var disc_list14 = '';
+															var un_list14 = '';
+															users.forEach(function(alt8) {
+																if (alt8.discord != 'unknown' && alt8.discord !== undefined) {
+																	disc_list14 += '' + alt8.discord + ', ';
+																} else {
+																	un_list14 += '1, ';
+																}
+															});
+																Common.db.users.find({alt9: name}, function(err, users) {
+																var disc_list15 = '';
+																var un_list15 = '';
+																users.forEach(function(alt9) {
+																	if (alt9.discord != 'unknown' && alt9.discord !== undefined) {
+																		disc_list15 += '' + alt9.discord + ', ';
+																	} else {
+																		un_list15 += '1, ';
+																	}
+																});
+																	Common.db.users.find({alt10: name}, function(err, users) {
+																	var disc_list16 = '';
+																	var un_list16 = '';
+																	users.forEach(function(alt10) {
+																		if (alt10.discord != 'unknown' && alt10.discord !== undefined) {
+																			disc_list16 += '' + alt10.discord + ', ';
+																		} else {
+																			un_list16 += '1, ';
+																		}
+																	});
+																	var final_list = disc_list1 + disc_list2 + disc_list3 + disc_list4 + disc_list5 + disc_list6 + disc_list7 + disc_list8 + disc_list9 + disc_list10 + disc_list11 + disc_list12 + disc_list13 + disc_list14 + disc_list15 + disc_list16;
+																	if (disc_list1 != '' || disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '' || disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '') {
+																		var nametype = '';
+																		var newfinal_list = final_list.substr(0, final_list.length-2);
+																		if (disc_list1 != '' && (disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '') && (disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '')) {
+																			nametype = 'IRC Nickname/Main RSN/Alt RSN';
+																		} else if (disc_list1 != '' && (disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '')) {
+																			nametype = 'IRC Nickname/Main RSN';
+																		} else if (disc_list1 != '' && (disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '')) {
+																			nametype = 'IRC Nickname/Alt RSN';
+																		} else if ((disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '') && (disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '')) {
+																			nametype = 'Main RSN/Alt RSN';
+																		} else if (disc_list1 != '') {
+																			nametype = 'IRC Nickname';
+																		} else if (disc_list2 != '' || disc_list3 != '' || disc_list4 != '' || disc_list5 != '' || disc_list6 != '') {
+																			nametype = 'Main RSN';
+																		} else if (disc_list7 != '' || disc_list8 != '' || disc_list9 != '' || disc_list10 != '' || disc_list11 != '' || disc_list12 != '' || disc_list13 != '' || disc_list14 != '' || disc_list15 != '' || disc_list16 != '') {
+																			nametype = 'Alt RSN';
+																		}
+																	} else if () {
+																		   
+																			
+																		if (disc_list11 == '') {
+																			var newfinal_list = final_list.substr(0, final_list.length-2);
+																			Common.bot.say(to, "2Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord ID: " + newfinal_list);
+																		} else if (disc_list1 == '' && disc_list2 == '' && disc_list3 == '' && disc_list4 == '' && disc_list5 == '' && disc_list6 == '' && disc_list7 == '' && disc_list8 == '' && disc_list9 == '' && disc_list10 == '') {
+																			var newfinal_list = final_list.substr(0, final_list.length-2);
+																			Common.bot.say(to, "2Main RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+																		} else {
+																			var newfinal_list = final_list.substr(0, final_list.length-2);
+																			Common.bot.say(to, "2Main RSN/Alt RSN: " + Common.utils.toLc(name[1]) + ", Discord IDs: " + newfinal_list);
+																		}
+																	} else if (un_list1 != '' || un_list2 != '' || un_list3 != '' || un_list4 != '' || un_list5 != '' || un_list6 != '' || un_list7 != '' || un_list8 != '' || un_list9 != '' || un_list10 != '' || un_list11 != '') {
 														if (un_list11 == '') {
 															Common.bot.say(to, "5" + "Alt RSN '" + Common.utils.toLc(name[1]) + "' does not have a registered Discord ID. Use the format !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 														} else if (un_list1 == '' && un_list2 == '' && un_list3 == '' && un_list4 == '' && un_list5 == '' && un_list6 == '' && un_list7 == '' && un_list8 == '' && un_list9 == '' && un_list10 == '') {
