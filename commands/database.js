@@ -450,20 +450,25 @@ Commands.addmain = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
-			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, main: Common.utils.toDb(main[1]), main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
-				if (err || !saved) {
-					console.log('Error', err)
+				var main_1 = Common.utils.toLc(main[1]);
+				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
+					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
-					memlist[name] = 5;
-					justadded[name] = 1;
-					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your main has been set to: " + Common.utils.toLc(main[1]) + "");
-					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
+						if (err || !saved) {
+							console.log('Error', err)
+						} else {
+							memlist[name] = 5;
+							justadded[name] = 1;
+							Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your main has been set to: " + main_1 + "");
+							Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+							Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+						}
+					});
 				}
-			});
 			} else {
-				Common.bot.say(to, "5You must specify the RSN of your main account when using this command.");
+				Common.bot.say(to, "5You must specify the RSN of your main account when using this command. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 			}
 		} else if (user.main != undefined && user.main != 0) {
 			if (user.key === undefined) {
@@ -487,15 +492,20 @@ Commands.addmain = function(Common, from, to, message) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
 			if (Common.utils.msg(message)) {
-				Common.db.users.update({name: name}, {$set: {main: Common.utils.toDb(main[1])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err)
-					} else {
-						Common.bot.say(to, "2" + name + ", your main has been set to: " + Common.utils.toLc(main[1]) + "");
-					}
-				});
+				var main_1 = Common.utils.toLc(main[1]);
+				if (main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
+					Common.bot.say(to, '5You may not link the following invalid names to your profile: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.');
+				} else {
+					Common.db.users.update({name: name}, {$set: {main: main_1}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err)
+						} else {
+							Common.bot.say(to, "2" + name + ", your main has been set to: " + main_1 + "");
+						}
+					});
+				}
 			} else {
-				Common.bot.say(to, "5You must specify the RSN of your main account when using this command.");
+				Common.bot.say(to, "5You must specify the RSN of your main account when using this command. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 			}
 		}
 	});
@@ -512,20 +522,26 @@ Commands.addalt = function(Common, from, to, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
-			var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-			Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: Common.utils.toDb(alt[1]), alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
-				if (err || !saved) {
-					console.log('Error', err)
+				var alt_1 = Common.utils.toLc(alt[1]);
+				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
+					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
-					memlist[name] = 5;
-					justadded[name] = 1;
-					Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
-					Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-					Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
+						if (err || !saved) {
+							console.log('Error', err)
+						} else {
+							memlist[name] = 5;
+							justadded[name] = 1;
+							Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + alt_1 + "");
+							Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+							Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+						}
+					});
 				}
-			});
 			} else {
-				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command.");
+				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+
 			}
 		} else if (user.alt != undefined && user.alt != 0) {
 			if (user.key === undefined) {
@@ -549,15 +565,20 @@ Commands.addalt = function(Common, from, to, message) {
 			Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 		} else {
 			if (Common.utils.msg(message)) {
-				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err)
-					} else {
-						Common.bot.say(to, "2" + name + ", your alt has been set to: " + Common.utils.toLc(alt[1]) + "");
-					}
-				});
+				var alt_1 = Common.utils.toLc(alt[1]);
+				if (alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
+					Common.bot.say(to, '5You may not link the following invalid names to your profile: n/a, undefined, unknown. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.');
+				} else {
+					Common.db.users.update({name: name}, {$set: {alt: alt_1}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err)
+						} else {
+							Common.bot.say(to, "2" + name + ", your alt has been set to: " + alt_1 + "");
+						}
+					});
+				}
 			} else {
-				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command.");
+				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
 			}
 		}
 	});
