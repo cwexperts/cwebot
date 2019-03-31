@@ -451,7 +451,7 @@ Commands.addmain = function(Common, from, to, message) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
 				var main_1 = Common.utils.toLc(main[1]);
-				if (main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
+				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
@@ -523,7 +523,7 @@ Commands.addalt = function(Common, from, to, message) {
 		if (err || !user) {
 			if (Common.utils.msg(message)) {
 				var alt_1 = Common.utils.toLc(alt[1]);
-				if (alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
+				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
