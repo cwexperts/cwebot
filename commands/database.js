@@ -577,70 +577,107 @@ Commands.editmain = function(Common, from, to, message) {
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
-				var main_msg = "2" + name + ", your mains have been changed to: " + Common.utils.toLc(main[1]) + "";
-				Common.db.users.update({name: name}, {$set: {main: Common.utils.toDb(main[1])}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-					console.log('Error', err);
+				var invalidname = '';
+				var main_1 = Common.utils.toLc(main[1]);
+				if (main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
+					invalidname = invalidname + 1;
 				}
-				});
 				if (main[2] !== undefined) {
-					main_msg += ", " + Common.utils.toLc(main[2]) + "";
-					Common.db.users.update({name: name}, {$set: {main2: Common.utils.toDb(main[2])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {main2: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (main[3] !== undefined) {
-					main_msg += ", " + Common.utils.toLc(main[3]) + "";
-					Common.db.users.update({name: name}, {$set: {main3: Common.utils.toDb(main[3])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {main3: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (main[4] !== undefined) {
-					main_msg += ", " + Common.utils.toLc(main[4]) + "";
-					Common.db.users.update({name: name}, {$set: {main4: Common.utils.toDb(main[4])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {main4: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (main[5] !== undefined) {
-					main_msg += ", " + Common.utils.toLc(main[5]) + "";
-					Common.db.users.update({name: name}, {$set: {main5: Common.utils.toDb(main[5])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {main5: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (main[6] !== undefined) {
-					main_msg += " - 5You may only link a maximum of 5 main RSNs to your profile.";	
+					var main_2 = Common.utils.toLc(main[2]);
+					if (main_2 == 'unknown' || main_2 == 'undefined' || main_2 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
 				}
-				Common.bot.say(to, main_msg);
+				if (main[3] !== undefined) {
+					var main_3 = Common.utils.toLc(main[3]);
+					if (main_3 == 'unknown' || main_3 == 'undefined' || main_3 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (main[4] !== undefined) {
+					var main_4 = Common.utils.toLc(main[4]);
+					if (main_4 == 'unknown' || main_4 == 'undefined' || main_4 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (main[5] !== undefined) {
+					var main_5 = Common.utils.toLc(main[5]);
+					if (main_5 == 'unknown' || main_5 == 'undefined' || main_5 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (invalidname == '') {
+					var main_msg = "2" + name + ", your mains have been changed to: " + main_1 + "";
+					Common.db.users.update({name: name}, {$set: {main: main_1}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err);
+						}
+					});
+					if (main[2] !== undefined) {
+						main_msg += ", " + main_2 + "";
+						Common.db.users.update({name: name}, {$set: {main2: main_2}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {main2: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (main[3] !== undefined) {
+						main_msg += ", " + main_3 + "";
+						Common.db.users.update({name: name}, {$set: {main3: main_3}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {main3: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (main[4] !== undefined) {
+						main_msg += ", " + main_4 + "";
+						Common.db.users.update({name: name}, {$set: {main4: main_4}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {main4: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (main[5] !== undefined) {
+						main_msg += ", " + main_5 + "";
+						Common.db.users.update({name: name}, {$set: {main5: main_5}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {main5: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (main[6] !== undefined) {
+						main_msg += " 5- You may only link a maximum of 5 main RSNs to your profile.";
+					}
+					Common.bot.say(to, main_msg);
+				} else {
+					Common.bot.say(to, '5You may not link the following invalid names to your profile: n/a, undefined, unknown. Use !editMain MAIN_RSN_HERE to link the new RSNs of your main accounts to your profile.');
+				}
 			} else {
-				Common.bot.say(to, '5You must specify the RSNs of your main accounts (maximum of 5) when using this command.');
+				Common.bot.say(to, '5You must specify the RSNs of your main accounts (maximum of 5) when using this command. Use !editMain MAIN_RSN_HERE to link the new RSNs of your main accounts to your profile.');
 			}
 		});
 	} else {
