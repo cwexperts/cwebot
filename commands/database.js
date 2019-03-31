@@ -696,135 +696,207 @@ Commands.editalt = function(Common, from, to, message) {
 			} else if (memlist[name] != 5 || user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
-				var alt_msg = "2" + name + ", your alts have been changed to: " + Common.utils.toLc(alt[1]) + "";
-				Common.db.users.update({name: name}, {$set: {alt: Common.utils.toDb(alt[1])}}, {upsert: false}, function(err, updated) {
-				if (err || !updated) {
-					console.log('Error', err);
+				var invalidname = '';
+				var alt_1 = Common.utils.toLc(alt[1]);
+				if (alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
+					invalidname = invalidname + 1;
 				}
-				});
 				if (alt[2] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[2]) + "";
-					Common.db.users.update({name: name}, {$set: {alt2: Common.utils.toDb(alt[2])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt2: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[3] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[3]) + "";
-					Common.db.users.update({name: name}, {$set: {alt3: Common.utils.toDb(alt[3])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt3: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[4] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[4]) + "";
-					Common.db.users.update({name: name}, {$set: {alt4: Common.utils.toDb(alt[4])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt4: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[5] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[5]) + "";
-					Common.db.users.update({name: name}, {$set: {alt5: Common.utils.toDb(alt[5])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt5: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[6] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[6]) + "";
-					Common.db.users.update({name: name}, {$set: {alt6: Common.utils.toDb(alt[6])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt6: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[7] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[7]) + "";
-					Common.db.users.update({name: name}, {$set: {alt7: Common.utils.toDb(alt[7])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt7: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[8] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[8]) + "";
-					Common.db.users.update({name: name}, {$set: {alt8: Common.utils.toDb(alt[8])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt8: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[9] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[9]) + "";
-					Common.db.users.update({name: name}, {$set: {alt9: Common.utils.toDb(alt[9])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt9: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[10] !== undefined) {
-					alt_msg += ", " + Common.utils.toLc(alt[10]) + "";
-					Common.db.users.update({name: name}, {$set: {alt10: Common.utils.toDb(alt[10])}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} else {
-					Common.db.users.update({name: name}, {$set: {alt10: 0}}, {upsert: false}, function(err, updated) {
-					if (err || !updated) {
-						console.log('Error', err);
-					} 
-					});
-				} if (alt[11] !== undefined) {
-					alt_msg += " - 5You may only link a maximum of 10 alt RSNs to your profile.";	
+					var alt_2 = Common.utils.toLc(alt[2]);
+					if (alt_2 == 'unknown' || alt_2 == 'undefined' || alt_2 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
 				}
-				Common.bot.say(to, alt_msg);
+				if (alt[3] !== undefined) {
+					var alt_3 = Common.utils.toLc(alt[3]);
+					if (alt_3 == 'unknown' || alt_3 == 'undefined' || alt_3 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[4] !== undefined) {
+					var alt_4 = Common.utils.toLc(alt[4]);
+					if (alt_4 == 'unknown' || alt_4 == 'undefined' || alt_4 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[5] !== undefined) {
+					var alt_5 = Common.utils.toLc(alt[5]);
+					if (alt_5 == 'unknown' || alt_5 == 'undefined' || alt_5 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[6] !== undefined) {
+					var alt_6 = Common.utils.toLc(alt[6]);
+					if (alt_6 == 'unknown' || alt_6 == 'undefined' || alt_6 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[7] !== undefined) {
+					var alt_7 = Common.utils.toLc(alt[7]);
+					if (alt_7 == 'unknown' || alt_7 == 'undefined' || alt_7 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[8] !== undefined) {
+					var alt_8 = Common.utils.toLc(alt[8]);
+					if (alt_8 == 'unknown' || alt_8 == 'undefined' || alt_8 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[9] !== undefined) {
+					var alt_9 = Common.utils.toLc(alt[9]);
+					if (alt_9 == 'unknown' || alt_9 == 'undefined' || alt_9 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (alt[10] !== undefined) {
+					var alt_10 = Common.utils.toLc(alt[10]);
+					if (alt_10 == 'unknown' || alt_10 == 'undefined' || alt_10 == 'n/a') {
+						invalidname = invalidname + 1;
+					}
+				}
+				if (invalidname == '') {
+					var alt_msg = "2" + name + ", your alts have been changed to: " + alt_1 + "";
+					Common.db.users.update({name: name}, {$set: {alt: alt_1}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err);
+						}
+					});
+					if (alt[2] !== undefined) {
+						alt_msg += ", " + alt_2 + "";
+						Common.db.users.update({name: name}, {$set: {alt2: alt_2}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt2: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[3] !== undefined) {
+						alt_msg += ", " + alt_3 + "";
+						Common.db.users.update({name: name}, {$set: {alt3: alt_3}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt3: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[4] !== undefined) {
+						alt_msg += ", " + alt_4 + "";
+						Common.db.users.update({name: name}, {$set: {alt4: alt_4}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt4: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[5] !== undefined) {
+						alt_msg += ", " + alt_5 + "";
+						Common.db.users.update({name: name}, {$set: {alt5: alt_5}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt5: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[6] !== undefined) {
+						alt_msg += ", " + alt_6 + "";
+						Common.db.users.update({name: name}, {$set: {alt6: alt_6}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt6: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[7] !== undefined) {
+						alt_msg += ", " + alt_7 + "";
+						Common.db.users.update({name: name}, {$set: {alt7: alt_7}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt7: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[8] !== undefined) {
+						alt_msg += ", " + alt_8 + "";
+						Common.db.users.update({name: name}, {$set: {alt8: alt_8}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt8: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[9] !== undefined) {
+						alt_msg += ", " + alt_9 + "";
+						Common.db.users.update({name: name}, {$set: {alt9: alt_9}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt9: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[10] !== undefined) {
+						alt_msg += ", " + alt_10 + "";
+						Common.db.users.update({name: name}, {$set: {alt10: alt_10}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					} else {
+						Common.db.users.update({name: name}, {$set: {alt10: 0}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} 
+						});
+					}
+					if (alt[11] !== undefined) {
+						alt_msg += " 5- You may only link a maximum of 10 alt RSNs to your profile.";
+					}
+					Common.bot.say(to, alt_msg);
+				} else {
+					Common.bot.say(to, '5You may not link the following invalid names to your profile: n/a, undefined, unknown. Use !editAlt ALT_RSN_HERE to link the new RSNs of your level 90+ combat alts to your profile.');
+				}
 			} else {
-				Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command.');
+				Common.bot.say(to, '5You must specify the RSNs of your level 90+ combat alts (maximum of 10) when using this command. Use !editAlt ALT_RSN_HERE to link the new RSNs of your level 90+ combat alts to your profile.');
 			}
 		});
 	} else {
