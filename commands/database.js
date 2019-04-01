@@ -555,7 +555,7 @@ Commands.addalt = function(Common, from, to, message) {
 			} else if (user.recruiter === undefined|| user.recruiter === 0) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
 			} else if (user.goal === undefined|| user.goal === 0) {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.")
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
 			} else {
