@@ -3,6 +3,7 @@ pentime = [], pensecs = [], role1time = [], role1secs = [], role2time = [], role
 everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
 lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
 hopm = [];
+totalshutdown = '';
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
 memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
@@ -96,7 +97,9 @@ Common.bot.addListener('message', function(from, to, message) {
     return
   }
 
-  if (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function') {
+  if (totalshutdown == 'true') {
+	Common.bot.say(to, "total shutdown = true");
+  } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function') {
     Common.commands[command](Common, from, to, message);
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) !== 'function') {
     //Common.bot.say(to, "Sorry, this command doesn't exist!");
