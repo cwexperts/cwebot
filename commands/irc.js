@@ -9,7 +9,7 @@ Commands.kill = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			}
 		} else {
-			if (totalshutdown === undefined || totalshutdown == 'false') {
+			if (totalshutdown == '' || totalshutdown == 'false') {
 				if (to == '#cwexperts.staff') {
 					Common.bot.say(to, "3Success. bot killed");
 				}
