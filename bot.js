@@ -98,11 +98,11 @@ Common.bot.addListener('message', function(from, to, message) {
   }
 
   if (totalshutdown == 'true' && command != 'kill') {
-	Common.bot.say(to, "total shutdown = true");
+	Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function') {
-    Common.commands[command](Common, from, to, message);
+	Common.commands[command](Common, from, to, message);
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) !== 'function') {
-    //Common.bot.say(to, "Sorry, this command doesn't exist!");
+	//Common.bot.say(to, "Sorry, this command doesn't exist!");
   }
 });
 
