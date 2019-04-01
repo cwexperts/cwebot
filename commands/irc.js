@@ -1,25 +1,18 @@
 Commands.kill = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
+	to == '#cwexperts.staff';
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (err || !perms) {
 		console.log(err);
 	} else if (perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
-			if (to == '#cwexperts.staff') {
-				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-			}
-		} else {
-			if (totalshutdown == '' || totalshutdown == 'false') {
-				if (to == '#cwexperts.staff') {
-					Common.bot.say(to, "3Success. bot killed");
-				}
-				totalshutdown = 'true';
-			} else if (totalshutdown == 'true') {
-				if (to == '#cwexperts.staff') {
-					Common.bot.say(to, "3Success. bot online");
-				}
-				totalshutdown = 'false';
-			}
+			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use the kill switch. Use !unlockProfile to unlock your profile.");
+		} else if (totalshutdown == '' || totalshutdown == 'false') {
+			Common.bot.say(to, "CWEBot is now 4offline. (Ordered by " + member + ")");
+			totalshutdown = 'true';
+		} else if (totalshutdown == 'true') {
+			Common.bot.say(to, "CWEBot is now 3online. (Ordered by " + member + ")");
+			totalshutdown = 'false';
 		}
 	}
 	});
