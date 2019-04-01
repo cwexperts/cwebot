@@ -1085,7 +1085,12 @@ Commands.megaduck = function(Common, from, to, message) {
 };
 
 Commands.polly = function(Common, from, to, message) {
-	Common.bot.say(to, "More then once a day I see a post of someone saying they want to die, please grow up and appreciate what you got, I assure you life is worth more than you believe.");
+	var msg = [
+	"More then once a day I see a post of someone saying they want to die, please grow up and appreciate what you got, I assure you life is worth more than you believe.",
+	"What with everyone tweeting about sleeping problems and wondering why they can't sleep. Turn your electronics off and make a sleeping pattern and stick to it as simple as that!"
+	]
+	var dumb = msg[Math.floor(Math.random() * msg.length)];
+	Common.bot.say(to, dumb);
 };
 
 Commands.cnn = function(Common, from, to, message) {
@@ -1136,6 +1141,6 @@ Commands.afghann = function(Common, from, to, message) {
 	Common.bot.say(to, "my laptop is a potato i cant turn irc on i have 3 mb of ram and cant run text based software created in 1988");
 };
 
-Commands.sleep = function(Common, from, to, message) {
-	Common.bot.say(to, "What with everyone tweeting about sleeping problems and wondering why they can't sleep. Turn your electronics off and make a sleeping pattern and stick to it as simple as that!");
+Commands.cpl = function(Common, from, to, message) {
+	Common.bot.say(to, "creepy porn lawyer 2020! ...oh wait hes going to jail for extortion and tax evasion... trump wins again");
 };
