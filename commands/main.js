@@ -166,9 +166,11 @@ Commands.add = function(Common, from, to, message) {
         Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
 	Common.bot.say(to, "4. Link your recruiter to your profile - If no one recruited you, add the member who helped you the most to join");
         Common.bot.say(to, "Type: !addRecruiter IRC_NICKNAME_HERE");
-        Common.bot.say(to, "5. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
+	Common.bot.say(to, "5. Link your primary Castle Wars goal to your profile - Examples: halo, trim, 5k, rank");
+        Common.bot.say(to, "Type: !addGoal GOAL_HERE");
+        Common.bot.say(to, "6. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
         Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
-        Common.bot.say(to, "6. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
+        Common.bot.say(to, "7. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
         Common.bot.say(to, "Type: !guides or !basics");
 /*	if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 		Common.bot.send('MODE', '#cwexperts', '-o', access[1]);
