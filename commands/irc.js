@@ -4,7 +4,7 @@ Commands.kill = function(Common, from, to, message) {
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (err || !perms) {
 		console.log(err);
-	} else if (perms.status == 'Owner') {
+	} else if (perms.status == 'Admin' || perms.status == 'Owner') {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use the kill switch. Use !unlockProfile to unlock your profile.");
 		} else if (totalshutdown == '' || totalshutdown == 'false') {
