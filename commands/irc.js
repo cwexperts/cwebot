@@ -1,6 +1,6 @@
 Commands.kill = function(Common, from, to, message) {
 	var member = Common.utils.toLc(from);
-	to == '#cwexperts.staff';
+	to = '#cwexperts.staff';
 	Common.db.users.findOne({name: member}, function(err, perms) {
 	if (err || !perms) {
 		console.log(err);
