@@ -478,7 +478,7 @@ Commands.addmain = function(Common, from, to, message) {
 			} else if (user.discord === undefined || user.discord == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else if (user.recruiter === undefined|| user.recruiter === 0) {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 			} else if (user.goal === undefined|| user.goal === 0) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
@@ -553,7 +553,7 @@ Commands.addalt = function(Common, from, to, message) {
 			} else if (user.discord === undefined || user.discord == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else if (user.recruiter === undefined|| user.recruiter === 0) {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 			} else if (user.goal === undefined|| user.goal === 0) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
@@ -3686,7 +3686,7 @@ Commands.addcrasher = function(Common, from, to, message) {
 		}
 		});
 	} else {
-		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.')   
+		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.');
 	}
 	}
 	} else {
@@ -3740,7 +3740,7 @@ Commands.delcrasher = function(Common, from, to, message) {
 		}
 		});
         } else {
-		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.')   
+		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.');
 	}
 	}
 	} else {
@@ -3872,7 +3872,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				var name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1]);
 				if (name == member) {
-					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 				} else {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
@@ -3912,7 +3912,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				});
 				}
 			} else {
-				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
+				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 			}
 		});
 	} else {
@@ -4328,4 +4328,45 @@ Commands.reviewreport = function(Common, from, to, message) {
 
 Commands.reviewr = function(Common, from, to, message) {
 	Commands.reviewreport(Common, from, to, message);
+};
+
+Commands.addgoal = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toDb(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else if (perms.goal !== undefined && perms.goal !== 0) {
+				Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + ". Use ...");
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (Common.utils.msg(message)) {
+				var name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1]);
+				if (name == member) {
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
+				} else {
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+					} else {
+						Common.db.users.update({name: member}, {$set: {recruiter: name}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else {
+								
+							}
+						});
+					}
+				});
+				}
+			} else {
+				Common.bot.say(to, "5You must specify your primary Castle Wars goal when using this command. Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
 };
