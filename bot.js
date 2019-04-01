@@ -97,7 +97,7 @@ Common.bot.addListener('message', function(from, to, message) {
     return
   }
 
-  if (totalshutdown == 'true') {
+  if (totalshutdown == 'true' && command != 'kill') {
 	Common.bot.say(to, "total shutdown = true");
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function') {
     Common.commands[command](Common, from, to, message);
