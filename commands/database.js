@@ -3342,7 +3342,7 @@ Commands.member = function(Common, from, to, message) {
 			});
 		}
 		if (user.goal2 !== 0 && user.goal2 !== undefined) {
-			member_msg += ", " + user.goal2 + "";
+			member_msg += " & " + user.goal2 + "";
 		} else if (user.goal2 === undefined) {
 			Common.db.users.update({name: name}, {$set: {goal2: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
