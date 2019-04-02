@@ -4360,9 +4360,9 @@ Commands.addgoal = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (perms.goal !== undefined && perms.goal !== 0) {
 				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + ". Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
 				} else {
-					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + ". Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
 				}
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
