@@ -3329,6 +3329,27 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		}
+		if (user.goal === 0) {
+			member_msg += ", Goals: unknown";
+		} else if (user.goal !== undefined) {
+			member_msg += ", Goals: " + user.goal + "";
+		} else if (user.goal === undefined) {
+			member_msg += ", Goals: unknown";
+			Common.db.users.update({name: name}, {$set: {goal: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.goal2 !== 0 && user.goal2 !== undefined) {
+			member_msg += ", " + user.goal2 + "";
+		} else if (user.goal2 === undefined) {
+			Common.db.users.update({name: name}, {$set: {goal2: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		member_msg += ", Total warns: " + user.warns + "";
 		if (user.rmemreports !== undefined) {
 			member_msg += ", Total times reported: " + user.rmemreports + "";
