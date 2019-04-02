@@ -4360,9 +4360,9 @@ Commands.addgoal = function(Common, from, to, message) {
 				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else if (perms.goal !== undefined && perms.goal !== 0) {
 				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary Castle Wars goal. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
 				} else {
-					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary Castle Wars goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
 				}
 			} else if (memlist[member] != 5 || perms.key === undefined) {
 				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
@@ -4457,4 +4457,78 @@ Commands.editgoal = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
+};
+
+Commands.goal = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else if (user.goal === undefined || user.goal === 0) {
+				Common.bot.say(to, "2" + name + "'s Castle Wars goals are: unknown");
+			} else if (user.goal2 !== undefined && user.goal2 !== 0) {
+				Common.bot.say(to, "2" + name + "'s Castle Wars goals are: " + user.goal + " & " + user.goal2 + "");
+			} else {
+				Common.bot.say(to, "2" + name + "'s Castle Wars goal is: " + user.goal + "");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.goals = function(Common, from, to, message) {
+	Commands.goal(Common, from, to, message);
+};
+
+Commands.date = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else {
+				var date_msg = "IRC Nickname: " + name + "";
+				if (user.joinDate === undefined || user.joinDate == 'unknown') {
+					date_msg += ", Join date: unknown";
+				} else {
+					var joind = user.joinDate;
+					joind = joind.toString();
+					joind = joind.substr(0, joind.length-14);
+					joind = joind + "UTC";
+					date_msg += ", Join date: " + joind + "";
+				}
+				if (user.leaveDate === undefined || user.leaveDate == 'unknown') {
+					date_msg += ", Leave date: unknown";
+				} else if (user.leaveDate === 0) {
+					date_msg += ", Leave date: n/a";
+				} else {
+					var leaved = user.leaveDate;
+					leaved = leaved.toString();
+					leaved = leaved.substr(0, leaved.length-14);
+					leaved = leaved + "UTC";
+					date_msg += ", Leave date: " + leaved + "";
+				}
+				if (user.lastSeen === undefined || user.lastSeen == 'unknown') {
+					date_msg += ", Last seen date: unknown";
+				} else {
+					var lastseen = user.lastSeen;
+					lastseen = lastseen.toString();
+					lastseen = lastseen.substr(0, lastseen.length-14);
+					lastseen = lastseen + "UTC";
+					date_msg += ", Last seen date: " + lastseen + "";
+				}
+				Common.bot.say(to, date_msg);
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.dates = function(Common, from, to, message) {
+	Commands.date(Common, from, to, message);
 };
