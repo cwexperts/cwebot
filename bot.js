@@ -235,6 +235,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 						if (user.recruiter === undefined || user.recruiter === 0) {
 							Common.bot.say(channel, "2" + nick + ", please use !addRecruiter MEMBER_HERE to complete your profile.");
 						}
+						if (user.goal === undefined|| user.goal === 0) {
+							Common.bot.say(channel, "2" + nick + ", please use !addGoal GOAL_HERE to complete your profile.");
+						}
 						if (user.joinDate === undefined || user.joinDate == 'unknown') {
 							Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
 						}

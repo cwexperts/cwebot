@@ -455,7 +455,7 @@ Commands.addmain = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
+					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -478,7 +478,9 @@ Commands.addmain = function(Common, from, to, message) {
 			} else if (user.discord === undefined || user.discord == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else if (user.recruiter === undefined|| user.recruiter === 0) {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
+			} else if (user.goal === undefined|| user.goal === 0) {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
 			} else {
@@ -527,7 +529,7 @@ Commands.addalt = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
+					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -551,7 +553,9 @@ Commands.addalt = function(Common, from, to, message) {
 			} else if (user.discord === undefined || user.discord == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to link your Discord ID to your profile.");
 			} else if (user.recruiter === undefined|| user.recruiter === 0) {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter MEMBER_HERE to link your recruiter to your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
+			} else if (user.goal === undefined|| user.goal === 0) {
+				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
 			} else {
@@ -3325,6 +3329,27 @@ Commands.member = function(Common, from, to, message) {
 				}
 			});
 		}
+		if (user.goal === 0) {
+			member_msg += ", Goals: unknown";
+		} else if (user.goal !== undefined) {
+			member_msg += ", Goals: " + user.goal + "";
+		} else if (user.goal === undefined) {
+			member_msg += ", Goals: unknown";
+			Common.db.users.update({name: name}, {$set: {goal: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
+		if (user.goal2 !== 0 && user.goal2 !== undefined) {
+			member_msg += ", " + user.goal2 + "";
+		} else if (user.goal2 === undefined) {
+			Common.db.users.update({name: name}, {$set: {goal2: 0}}, {upsert: false}, function(err, updated) {
+				if (err || !updated) {
+				console.log('Error', err);
+				}
+			});
+		}
 		member_msg += ", Total warns: " + user.warns + "";
 		if (user.rmemreports !== undefined) {
 			member_msg += ", Total times reported: " + user.rmemreports + "";
@@ -3682,7 +3707,7 @@ Commands.addcrasher = function(Common, from, to, message) {
 		}
 		});
 	} else {
-		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.')   
+		Common.bot.say(to, '5You must specify the RSN of a crasher to add to the crasher list when using this command.');
 	}
 	}
 	} else {
@@ -3736,7 +3761,7 @@ Commands.delcrasher = function(Common, from, to, message) {
 		}
 		});
         } else {
-		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.')   
+		Common.bot.say(to, '5You must specify the RSN of a crasher to delete from the crasher list when using this command.');
 	}
 	}
 	} else {
@@ -3868,7 +3893,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				var name = message.match(/\S+/g);
 				name = Common.utils.toLc(name[1]);
 				if (name == member) {
-					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
+					Common.bot.say(to, "5" + member + ", you may not set yourself as your recruiter! Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 				} else {
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (err || !user) {
@@ -3908,7 +3933,7 @@ Commands.addrecruiter = function(Common, from, to, message) {
 				});
 				}
 			} else {
-				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter IRC_NICKNAME_HERE to set your recruiter.");
+				Common.bot.say(to, "5You must specify the member who recruited you when using this command. Use !addRecruiter IRC_NICKNAME_HERE to link your recruiter to your profile.");
 			}
 		});
 	} else {
@@ -4324,4 +4349,57 @@ Commands.reviewreport = function(Common, from, to, message) {
 
 Commands.reviewr = function(Common, from, to, message) {
 	Commands.reviewreport(Common, from, to, message);
+};
+
+Commands.addgoal = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toDb(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5" + "IRC Nickname '" + member + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else if (perms.goal !== undefined && perms.goal !== 0) {
+				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
+				} else {
+					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
+				}
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (Common.utils.msg(message)) {
+				var goal = message.match(/\S+/g);
+				goal = Common.utils.toLc(goal[1]);
+				if (goal == 'ardy' || goal == 'task' || goal == 'halo' || goal == 'trim' || goal == 'profound' || goal == '500cape' || goal == '1kcape' || goal == '5kcape' || goal == 'ranks' || goal == 'hiscores') {
+					if (goal == 'ardy' || goal == 'task') {
+						goal = 'Ardougne task';
+					} else if (goal == 'halo') {
+						goal = 'Halo';
+					} else if (goal == 'trim' || goal == 'profound') {
+						goal = 'Full Profound/Trim requirement';
+					} else if (goal == '500cape') {
+						goal = 'Hobbyist cape';
+					} else if (goal == '1kcape') {
+						goal = 'Enthusiast cape';
+					} else if (goal == '5kcape') {
+						goal = 'Professional cape';
+					} else if (goal == 'ranks' || goal == 'hiscores') {
+						goal = 'Hiscore ranks';
+					}
+					Common.db.users.update({name: member}, {$set: {goal: goal}}, {upsert: false}, function(err, updated) {
+						if (err || !updated) {
+							console.log('Error', err);
+						} else {
+							Common.bot.say(to, "2" + member + ", your primary Castle Wars goal has been set to: " + goal + "");
+						}
+					});
+				} else {
+					Common.bot.say(to, "5You must specify your primary Castle Wars goal when using this command: task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
+				}
+			} else {
+				Common.bot.say(to, "5You must specify your primary Castle Wars goal when using this command: task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
 };
