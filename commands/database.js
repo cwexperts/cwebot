@@ -4364,8 +4364,8 @@ Commands.addgoal = function(Common, from, to, message) {
 				} else {
 					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary Castle Wars goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
 				}
-			} else if (memlist[member] != 5 || perms.key === undefined) {
-				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			//} else if (memlist[member] != 5 || perms.key === undefined) {
+			//	Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
 				var goal = message.match(/\S+/g);
 				goal = Common.utils.toLc(goal[1]);
@@ -4419,8 +4419,10 @@ Commands.editgoal = function(Common, from, to, message) {
 				var goal = message.match(/\S+/g);
 				goal = Common.utils.toLc(goal[1]);
 				var state = '';
-				if (goal == 'ardy' || goal == 'task' || goal == 'halo' || goal == 'trim' || goal == 'profound' || goal == '500cape' || goal == '1kcape' || goal == '5kcape' || goal == 'ranks' || goal == 'hiscores') {
-					if (goal == 'ardy' || goal == 'task') {
+				if (goal == 'none' || goal == 'ardy' || goal == 'task' || goal == 'halo' || goal == 'trim' || goal == 'profound' || goal == '500cape' || goal == '1kcape' || goal == '5kcape' || goal == 'ranks' || goal == 'hiscores') {
+					if (goal == 'none') {
+						goal = 0;
+					} else if (goal == 'ardy' || goal == 'task') {
 						goal = 'Ardougne task';
 					} else if (goal == 'halo') {
 						goal = 'Halo';
@@ -4440,18 +4442,28 @@ Commands.editgoal = function(Common, from, to, message) {
 					} else {
 						state = 'changed';
 					}
-					Common.db.users.update({name: member}, {$set: {goal2: goal}}, {upsert: false}, function(err, updated) {
-						if (err || !updated) {
-							console.log('Error', err);
-						} else {
-							Common.bot.say(to, "2" + member + ", your new/secondary Castle Wars goal has been " + state + " to: " + goal + "");
-						}
-					});
+					if (perms.goal2 != goal) {
+						Common.db.users.update({name: member}, {$set: {goal2: goal}}, {upsert: false}, function(err, updated) {
+							if (err || !updated) {
+								console.log('Error', err);
+							} else if (goal == 0 && perms.goal2 === undefined) {
+								Common.bot.say(to, "5" + member + ", your new/secondary Castle Wars goal is already cleared.");
+							} else if (goal == 0) {
+								Common.bot.say(to, "2" + member + ", your new/secondary Castle Wars goal has been cleared.");
+							} else {
+								Common.bot.say(to, "2" + member + ", your new/secondary Castle Wars goal has been " + state + " to: " + goal + "");
+							}   
+						});
+					} else if (goal == 0) {
+						Common.bot.say(to, "5" + member + ", your new/secondary Castle Wars goal is already cleared.");
+					} else {
+						Common.bot.say(to, "5" + member + ", your new/secondary Castle Wars goal is already set to: " + goal + "");
+					}
 				} else {
-					Common.bot.say(to, "5You must specify your new/secondary Castle Wars goal when using this command: task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
+					Common.bot.say(to, "5You must specify your new/secondary Castle Wars goal when using this command: none, task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
 				}
 			} else {
-				Common.bot.say(to, "5You must specify your new/secondary Castle Wars goal when using this command: task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
+				Common.bot.say(to, "5You must specify your new/secondary Castle Wars goal when using this command: none, task, halo, trim, 500cape, 1kcape, 5kcape, or ranks. Use !editGoal GOAL_HERE to link your new/secondary Castle Wars goal to your profile.");
 			}
 		});
 	} else {
@@ -4491,7 +4503,7 @@ Commands.date = function(Common, from, to, message) {
 			if (err || !user) {
 				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
-				var date_msg = "IRC Nickname: " + name + "";
+				var date_msg = "2IRC Nickname: " + name + "";
 				if (user.joinDate === undefined || user.joinDate == 'unknown') {
 					date_msg += ", Join date: unknown";
 				} else {
