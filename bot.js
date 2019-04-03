@@ -233,7 +233,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 							Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to complete your profile.");
 						}
 						if (user.recruiter === undefined || user.recruiter === 0) {
-							Common.bot.say(channel, "2" + nick + ", please use !addRecruiter MEMBER_HERE to complete your profile.");
+							Common.bot.say(channel, "2" + nick + ", please use !addRecruiter IRC_NICKNAME_HERE to complete your profile.");
 						}
 						if (user.goal === undefined|| user.goal === 0) {
 							Common.bot.say(channel, "2" + nick + ", please use !addGoal GOAL_HERE to complete your profile.");
