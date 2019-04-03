@@ -115,7 +115,16 @@ Common.bot.addListener('invite', function(channel, from, message) {
 Common.bot.addListener('join', function(channel, nick, message) {
   Common.bot.send("NAMES", channel);
   if (Common.utils.toLc(nick) == 'cwebot') {
-	Common.bot.say(channel, "https://www.youtube.com/watch?v=F3jBxwHIk9k");
+	Common.db.channels.findOne({channel: channel}, function(err, ch) {
+		if (err || !ch) {
+			console.log("Error: Unable to fetch world for " + channel);
+			console.log(err);
+		} else {
+			if (ch.games !== 0) {
+				Common.bot.say(channel, "https://www.youtube.com/watch?v=F3jBxwHIk9k");
+			}
+		}
+	});
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
