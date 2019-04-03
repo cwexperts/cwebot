@@ -482,7 +482,7 @@ Commands.addmain = function(Common, from, to, message) {
 			} else if (user.goal === undefined|| user.goal === 0) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status of the date you joined to complete your profile.");
 			} else {
 				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editMain MAIN_RSN_HERE to link the new RSNs of your main accounts to your profile.");
@@ -557,7 +557,7 @@ Commands.addalt = function(Common, from, to, message) {
 			} else if (user.goal === undefined|| user.goal === 0) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !addGoal GOAL_HERE to link your primary Castle Wars goal to your profile.");
 			} else if (user.joinDate === undefined || user.joinDate == 'unknown') {
-				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status the date you joined to complete your profile.");
+				Common.bot.say(to, "5" + name + ", you have already created a profile! You must inform a member with Owner member status of the date you joined to complete your profile.");
 			} else {
 				if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 					Common.bot.say(to, "5" + name + ", you have already created a profile! Use !editAlt ALT_RSN_HERE to link the new RSNs of your level 90+ combat alts to your profile.");
@@ -4586,9 +4586,9 @@ Commands.checkprofile = function(Common, from, to, message) {
 				}
 				if (user.joinDate === undefined || user.joinDate == 'unknown') {
 					if (profile == '') {
-						profile += "inform a member with Owner member status the date you joined, ";
+						profile += "inform a member with Owner member status of the date you joined, ";
 					} else {
-						profile += "and inform a member with Owner member status the date you joined, ";
+						profile += "and inform a member with Owner member status of the date you joined, ";
 					}
 				}
 				profile = profile.substr(0, profile.length-2);

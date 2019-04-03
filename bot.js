@@ -239,7 +239,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 							Common.bot.say(channel, "2" + nick + ", please use !addGoal GOAL_HERE to complete your profile.");
 						}
 						if (user.joinDate === undefined || user.joinDate == 'unknown') {
-							Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status the date you joined to complete your profile.");
+							Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status of the date you joined to complete your profile.");
 						}
 						if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
 							Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
