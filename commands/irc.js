@@ -8,7 +8,7 @@ Commands.kill = function(Common, from, to, message) {
 		if (memlist[member] != 5 || perms.key === undefined) {
 			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use the kill switch. Use !unlockProfile to unlock your profile.");
 		} else if (totalshutdown == '' || totalshutdown == 'false') {
-			var alert = "4[ALERT]: CWEBot is now 4offline. (Ordered by " + member + ")";
+			var alert = "4[ALERT]: CWEBot is now 4offline. (Ordered by " + member + ")";
 			Common.bot.say('#cwexperts', alert);
 			Common.bot.say('#cwexperts1', alert);
 			Common.bot.say('#cwexperts2', alert);
@@ -16,7 +16,7 @@ Commands.kill = function(Common, from, to, message) {
 			Common.bot.say('#key', alert);
 			totalshutdown = 'true';
 		} else if (totalshutdown == 'true') {
-			var alert = "4[ALERT]: CWEBot is now 3online. (Ordered by " + member + ")";
+			var alert = "4[ALERT]: CWEBot is now 3online. (Ordered by " + member + ")";
 			Common.bot.say('#cwexperts', alert);
 			Common.bot.say('#cwexperts1', alert);
 			Common.bot.say('#cwexperts2', alert);
