@@ -4605,3 +4605,49 @@ Commands.checkprofile = function(Common, from, to, message) {
 Commands.cp = function(Common, from, to, message) {
 	Commands.checkprofile(Common, from, to, message);
 };
+
+Commands.addircnickname = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var name = Common.utils.toLc(from);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else {
+				Common.bot.say(to, "5" + name + ", you may not link additional IRC nicknames to your profile - if you wish to use a different IRC nickname you must create a new profile.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+
+Commands.addircn = function(Common, from, to, message) {
+	Commands.addircnickname(Common, from, to, message);
+};
+
+Commands.addirc = function(Common, from, to, message) {
+	Commands.addircnickname(Common, from, to, message);
+};
+
+Commands.editircnickname = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var name = Common.utils.toLc(from);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else {
+				Common.bot.say(to, "5" + name + ", you may not change the IRC nickname linked to your profile - if you wish to use a different IRC nickname you must create a new profile.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.editircn = function(Common, from, to, message) {
+	Commands.editircnickname(Common, from, to, message);
+};
+
+Commands.editirc = function(Common, from, to, message) {
+	Commands.editircnickname(Common, from, to, message);
+};
