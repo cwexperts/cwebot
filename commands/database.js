@@ -4613,7 +4613,7 @@ Commands.addircnickname = function(Common, from, to, message) {
 			if (err || !user) {
 				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
-				Common.bot.say(to, "5" + name + ", you may not link additional IRC nicknames to your profile - if you wish to use a different IRC nickname you must create a new profile.");
+				Common.bot.say(to, "5" + name + ", you may not link additional IRC nicknames to your profile - if you wish to use a different IRC nickname you must create a new profile.");
 			}
 		});
 	} else {
@@ -4636,7 +4636,7 @@ Commands.editircnickname = function(Common, from, to, message) {
 			if (err || !user) {
 				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 			} else {
-				Common.bot.say(to, "5" + name + ", you may not change the IRC nickname linked to your profile - if you wish to use a different IRC nickname you must create a new profile.");
+				Common.bot.say(to, "5" + name + ", you may not change the IRC nickname linked to your profile - if you wish to use a different IRC nickname you must create a new profile.");
 			}
 		});
 	} else {
