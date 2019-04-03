@@ -92,7 +92,7 @@ Common.bot.addListener('names', function(channel, nicks) {
 Common.bot.addListener('message', function(from, to, message) {
   var command = Common.utils.getCmd(message).toLowerCase();
 
-  if (from == "Dxnxex7" && Common.wdym[to]) {
+  if ((from == "Dxnxex7" && Common.wdym[to]) && totalshutdown != 'true') {
     Common.bot.say(to, "4What do you mean, Dxnxex7?")
     return
   }
@@ -113,9 +113,19 @@ Common.bot.addListener('invite', function(channel, from, message) {
 });
 
 Common.bot.addListener('join', function(channel, nick, message) {
+	if (totalshutdown != 'true') {
   Common.bot.send("NAMES", channel);
   if (Common.utils.toLc(nick) == 'cwebot') {
-	Common.bot.say(channel, "https://www.youtube.com/watch?v=F3jBxwHIk9k");
+	Common.db.channels.findOne({channel: channel}, function(err, ch) {
+		if (err || !ch) {
+			console.log("Error: Unable to fetch world for " + channel);
+			console.log(err);
+		} else {
+			if (ch.games !== 0) {
+				Common.bot.say(channel, "https://www.youtube.com/watch?v=F3jBxwHIk9k");
+			}
+		}
+	});
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
@@ -263,6 +273,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		}
 	}, 2000);
   }
+	}
 });
 
 Common.bot.addListener('+mode', function(channel, by, mode, argument, message) {
@@ -279,6 +290,7 @@ Common.bot.addListener('part', function(channel, by, mode, argument, message) {
 
 Common.bot.addListener('kick', function(channel, nick, by, reason, message) {
   Common.bot.send("NAMES", channel);
+	if (totalshutdown != 'true') {
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
@@ -299,23 +311,26 @@ Common.bot.addListener('kick', function(channel, nick, by, reason, message) {
                 }
               }
   });
+	}
 });
 
 Common.bot.addListener('nick', function(oldnick, newnick, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
-  
+	if (totalshutdown != 'true') {
   if (Common.utils.toLc(oldnick) != 'abdel' && Common.utils.toLc(oldnick) != 'dxnxex7' && Common.utils.toLc(oldnick) != 'hanna' && Common.utils.toLc(newnick) != 'abdel' && Common.utils.toLc(newnick) != 'dxnxex7' && Common.utils.toLc(newnick) != 'hanna') {
     Common.bot.notice(newnick, "4[WARNING]: 2You are receiving this message because you are present in an official #CwExperts SwiftIRC channel and you have just changed your nickname from " + oldnick + " to " + newnick + ". " + 
   "If " + newnick + " is not identical or similar to your main RSN, and/or if you do not have " + newnick + " grouped with your main nickname, then please use /ns group NICKNAME PASSWORD or change your nickname back to your main RSN immediately.");	
   }
+	}
 });
 
 Common.bot.addListener('quit', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
+	if (totalshutdown != 'true') {
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
@@ -351,12 +366,14 @@ Common.bot.addListener('quit', function(nick, reason, channels, message) {
 			}
 		});
 	}, 1000);
+	}
 });
 
 Common.bot.addListener('kill', function(nick, reason, channels, message) {
   for (var i = 0; i < channels.length; i++) {
     Common.bot.send("NAMES", channels[i]);
   }
+	if (totalshutdown != 'true') {
   Common.db.channels.findOne({channel: '#cwexperts1'}, function(err, ch) {
               if (err || !ch) {
                 console.log("Error: Unable to fetch world for #cwexperts1");
@@ -377,11 +394,12 @@ Common.bot.addListener('kill', function(nick, reason, channels, message) {
                 }
               }
   });
+	}
 });
 
 Common.bot.addListener('error', function(message) {
   console.log('[', new Date().toString(), ']', 'error: ', message);
-
+	if (totalshutdown != 'true') {
   if (message.args[2].indexOf('No external channel messages') === -1) {
     var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
     Common.bot.say('#cwexperts', error_msg);
@@ -390,4 +408,5 @@ Common.bot.addListener('error', function(message) {
     Common.bot.say('#cwexperts.staff', error_msg);
     Common.bot.say('#key', error_msg);
   }
+	}
 });
