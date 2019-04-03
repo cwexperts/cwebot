@@ -1,5 +1,8 @@
 module.exports = {
 	remindPen: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (ch.games === 0 && from != 'hopw' && from != 'stop') {
 				from = 'stop';
@@ -68,10 +71,15 @@ module.exports = {
 					from = 'stop';
 				}
 			}
-		setTimeout(Common.utils.remindPen, 1000, Common, channel, minutesTo, from, SecondsTo);
+			if (from != 'stop') {
+				setTimeout(Common.utils.remindPen, 1000, Common, channel, minutesTo, from, SecondsTo);
+			}
 		});
 	},
 	remindRole1: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (ch.games === 0 && from != 'hopw' && from != 'stop') {
 				from = 'stop';
@@ -119,10 +127,15 @@ module.exports = {
 					from = 'stop';
 				}
 			}
-		setTimeout(Common.utils.remindRole1, 1000, Common, channel, minutesTo, from, SecondsTo);	
+			if (from != 'stop') {
+				setTimeout(Common.utils.remindRole1, 1000, Common, channel, minutesTo, from, SecondsTo);
+			}
 		});		   
 	},
 	remindRole2: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (ch.games === 0 && from != 'hopw' && from != 'stop') {
 				from = 'stop';
@@ -170,10 +183,15 @@ module.exports = {
 					from = 'stop';
 				}
 			}
-		setTimeout(Common.utils.remindRole2, 1000, Common, channel, minutesTo, from, SecondsTo);	
+			if (from != 'stop') {
+				setTimeout(Common.utils.remindRole2, 1000, Common, channel, minutesTo, from, SecondsTo);
+			}
 		});
 	},
 	remindFlag: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (ch.games === 0 && from != 'hopw' && from != 'stop') {
 				from = 'stop';
@@ -209,10 +227,15 @@ module.exports = {
 					from = 'stop';
 				}
 			}
-		setTimeout(Common.utils.remindFlag, 1000, Common, channel, minutesTo, from, SecondsTo);
+			if (from != 'stop') {
+				setTimeout(Common.utils.remindFlag, 1000, Common, channel, minutesTo, from, SecondsTo);
+			}
 		});
 	},
 	remindAc: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (minutesTo != 0 && from != 'stop') {
 			if (from == 'ac') {
 				from = 'self';
@@ -255,9 +278,14 @@ module.exports = {
 				from = 'stop';
 			}
 		}
-	setTimeout(Common.utils.remindAc, 1000, Common, channel, minutesTo, from, SecondsTo);				   
+		if (from != 'stop') {
+			setTimeout(Common.utils.remindAc, 1000, Common, channel, minutesTo, from, SecondsTo);
+		}
 	},
 	remindPlaytime: function(Common, channel, minutesTo, from) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		Common.db.channels.findOne({channel: channel}, function(err, ch) {
 			if (err || !ch) {
 				console.log("Channel not found.");
@@ -465,11 +493,16 @@ module.exports = {
 						});
 					});
 				}
-			}	
-			setTimeout(Common.utils.remindPlaytime, 1000, Common, channel, minutesTo, from);
+			}
+			if (from != 'stop') {
+				setTimeout(Common.utils.remindPlaytime, 1000, Common, channel, minutesTo, from);
+			}
 		});
 	},
 	startGame: function(Common, channel, minutesTo, from, SecondsTo) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (minutesTo != 0 && from != 'stop') {
 			if (from == 'hopw') {
 				from = 'self';
@@ -516,9 +549,14 @@ module.exports = {
 			time[channel] = 0;
 			ticksecs[channel] = 0;
 		}
-		setTimeout(Common.utils.startGame, 1000, Common, channel, minutesTo, from, SecondsTo);
+		if (from != 'stop') {
+			setTimeout(Common.utils.startGame, 1000, Common, channel, minutesTo, from, SecondsTo);
+		}
 	},
 	memReportTimer: function(Common, channel, minutesTo, from, SecondsTo, member) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (from != 'stop') {
 			if (from == 'rm') {
 				from = 'self';
@@ -536,9 +574,14 @@ module.exports = {
 			memreportmins[member] = 0;
 			memreportsecs[member] = 0;
 		}
-		setTimeout(Common.utils.memReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
+		if (from != 'stop') {
+			setTimeout(Common.utils.memReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
+		}
 	},
 	bugReportTimer: function(Common, channel, minutesTo, from, SecondsTo, member) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (from != 'stop') {
 			if (from == 'rb') {
 				from = 'self';
@@ -556,9 +599,14 @@ module.exports = {
 			bugreportmins[member] = 0;
 			bugreportsecs[member] = 0;
 		}
-		setTimeout(Common.utils.bugReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
+		if (from != 'stop') {
+			setTimeout(Common.utils.bugReportTimer, 1000, Common, channel, minutesTo, from, SecondsTo, member);
+		}
 	},
 	unlockProfileTimer: function(Common, channel, from, secondsTo, minutesTo, hoursTo, member) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (from != 'stop') {
 			if (from == 'up') {
 				from = 'self';
@@ -596,9 +644,14 @@ module.exports = {
 				from = 'stop';
 			}
 		}
-		setTimeout(Common.utils.unlockProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, hoursTo, member);
+		if (from != 'stop') {
+			setTimeout(Common.utils.unlockProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, hoursTo, member);
+		}
 	},
 	completeProfileTimer: function(Common, channel, from, secondsTo, minutesTo, member) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (from != 'stop') {
 			if (from == 'complete') {
 				from = 'self';
@@ -648,9 +701,14 @@ module.exports = {
 				from = 'stop';
 			}			
 		}
-		setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
+		if (from != 'stop') {
+			setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
+		}
 	},
 	goingAfk: function(Common, channel, minutesTo, user, from) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
 		if (minutesTo != 0 && from != 'stop') {
 	        if (from == 'afk') {
 	            from = 'self';
@@ -664,8 +722,9 @@ module.exports = {
 	        afk[user] = 0;
 	        Common.bot.say(channel, '4'+user+', stop AFKing!');
 	    }
-	    setTimeout(Common.utils.goingAfk, 60000, Common, channel,
-				minutesTo, user, from);
+		if (from != 'stop') {
+			setTimeout(Common.utils.goingAfk, 60000, Common, channel, minutesTo, user, from);
+		}
 	},
   /*
   cacheReminder: function(Common, command, didNotify) {
