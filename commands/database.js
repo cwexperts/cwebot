@@ -4556,3 +4556,52 @@ Commands.date = function(Common, from, to, message) {
 Commands.dates = function(Common, from, to, message) {
 	Commands.date(Common, from, to, message);
 };
+
+Commands.checkprofile = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toDb(from) : Common.utils.toDb(name[1]);
+		Common.db.users.findOne({name: name}, function(err, user) {
+			if (err || !user) {
+				Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+			} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+				var profile = '';
+				if (user.key === undefined) {
+					profile += "!profileKey, ";
+				}
+				if (user.main === undefined || user.main === 0) {
+					profile += "!addMain MAIN_RSN_HERE, ";
+				}
+				if (user.alt === undefined || user.alt === 0) {
+					profile += "!addAlt ALT_RSN_HERE, ";
+				}
+				if (user.discord === undefined || user.discord == 'unknown') {
+					profile += "!addDiscordID EXAMPLE_NAME # 0 0 0 0, ";
+				}
+				if (user.recruiter === undefined || user.recruiter === 0) {
+					profile += "!addRecruiter IRC_NICKNAME_HERE, ";
+				}
+				if (user.goal === undefined|| user.goal === 0) {
+					profile += "!addGoal GOAL_HERE, ";
+				}
+				if (user.joinDate === undefined || user.joinDate == 'unknown') {
+					if (profile == '') {
+						profile += "inform a member with Owner member status the date you joined, ";
+					} else {
+						profile += "and inform a member with Owner member status the date you joined, ";
+					}
+				}
+				profile = profile.substr(0, profile.length-2);
+				Common.bot.say(to, "2Profile: " + name + ", Status: 4incomplete2, Required: " + profile);
+			} else {
+				Common.bot.say(to, "2Profile: " + name + ", Status: 3complete2!");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+
+Commands.cp = function(Common, from, to, message) {
+	Commands.checkprofile(Common, from, to, message);
+};
