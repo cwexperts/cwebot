@@ -80,56 +80,69 @@ Commands.add = function(Common, from, to, message) {
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
 	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (err || !perms) {
-		console.log(err);
-		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
-	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
-		if (Common.utils.msg(message))  {
-			if (Common.utils.toLc(access[1]) == 'abdel' || Common.utils.toLc(access[1]) == 'dxnxex7' || Common.utils.toLc(access[1]) == 'hanna' || Common.utils.toLc(access[1]) == 'alexis') {
-				Common.bot.say(to, "5Permission denied - you may not change " + access[1] + "'s access level for official #CwExperts SwiftIRC channels.");
-			} else {
-      if (level == '5') {
-	      if (perms.status == 'Owner') {
-		Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
-                Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
-                Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
-		Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
-		Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
-		Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to the highest staff member status!");
-		Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
-/*		if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
-			Common.bot.send('MODE', '#cwexperts', '+o', access[1]);
-			Common.bot.send('MODE', '#cwexperts', '-h', access[1]);
-			Common.bot.send('MODE', '#cwexperts', '-v', access[1]);
-		} if (everyoneLc['#cwexperts1'].indexOf(Common.utils.toLc(access[1])) > -1) {
-			Common.bot.send('MODE', '#cwexperts1', '+o', access[1]);
-			Common.bot.send('MODE', '#cwexperts1', '-h', access[1]);
-			Common.bot.send('MODE', '#cwexperts1', '-v', access[1]);
-		} if (everyoneLc['#cwexperts2'].indexOf(Common.utils.toLc(access[1])) > -1) {
-			Common.bot.send('MODE', '#cwexperts2', '+o', access[1]);
-			Common.bot.send('MODE', '#cwexperts2', '-h', access[1]);
-			Common.bot.send('MODE', '#cwexperts2', '-v', access[1]);
-		} if (everyoneLc['#cwexperts.staff'].indexOf(Common.utils.toLc(access[1])) > -1) {
-			Common.bot.send('MODE', '#cwexperts.staff', '+o', access[1]);
-			Common.bot.send('MODE', '#cwexperts.staff', '-h', access[1]);
-			Common.bot.send('MODE', '#cwexperts.staff', '-v', access[1]);
-		}
-*/	      } else {
-		Common.bot.say(to, "5This command may only be used by members with Owner member status to add a member to the #CwExperts SwiftIRC access list at level 5.");
-	      }
-      } else if (level == '4') {
-	      if (perms.status == 'Admin' || perms.status == 'Owner') {
-	Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
-        Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
-        Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
-        Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
-	Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
-        Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to staff member status!");
-        Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
-        Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
-        Common.bot.say(to, "Go to: http://cwexperts.org/management/");
-        Common.bot.say(to, "2. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
-        Common.bot.say(to, "Go to: http://cwexperts.org/bot-commands/");
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
+		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+			if (Common.utils.msg(message))  {
+				if (Common.utils.toLc(access[1]) == 'abdel' || Common.utils.toLc(access[1]) == 'dxnxex7' || Common.utils.toLc(access[1]) == 'hanna' || Common.utils.toLc(access[1]) == 'alexis') {
+					Common.bot.say(to, "5Permission denied - you may not change " + access[1] + "'s access level for official #CwExperts SwiftIRC channels.");
+				} else {
+   					if (level == '5') {
+						if (perms.status == 'Owner') {
+							Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
+		 					Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
+							Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to the highest staff member status!");
+							Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
+							Common.db.users.findOne({name: name}, function(err, user) {
+								if (err || !user) {
+									console.log(err);
+								} else if (user.status != 'Admin') {
+									Common.db.users.update({name: name}, {$set: {status: 'Admin'}}, {upsert: false}, function(err, updated) {
+										if (err || !updated) {
+											console.log('Error', err);
+										} else {
+											Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: Admin");
+										}
+									});
+								}
+							});
+/*							if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
+								Common.bot.send('MODE', '#cwexperts', '+o', access[1]);
+								Common.bot.send('MODE', '#cwexperts', '-h', access[1]);
+								Common.bot.send('MODE', '#cwexperts', '-v', access[1]);
+							} if (everyoneLc['#cwexperts1'].indexOf(Common.utils.toLc(access[1])) > -1) {
+								Common.bot.send('MODE', '#cwexperts1', '+o', access[1]);
+								Common.bot.send('MODE', '#cwexperts1', '-h', access[1]);
+								Common.bot.send('MODE', '#cwexperts1', '-v', access[1]);
+							} if (everyoneLc['#cwexperts2'].indexOf(Common.utils.toLc(access[1])) > -1) {
+								Common.bot.send('MODE', '#cwexperts2', '+o', access[1]);
+								Common.bot.send('MODE', '#cwexperts2', '-h', access[1]);
+								Common.bot.send('MODE', '#cwexperts2', '-v', access[1]);
+							} if (everyoneLc['#cwexperts.staff'].indexOf(Common.utils.toLc(access[1])) > -1) {
+								Common.bot.send('MODE', '#cwexperts.staff', '+o', access[1]);
+								Common.bot.send('MODE', '#cwexperts.staff', '-h', access[1]);
+								Common.bot.send('MODE', '#cwexperts.staff', '-v', access[1]);
+							}
+*/						} else {
+							Common.bot.say(to, "5This command may only be used by members with Owner member status to add a member to the #CwExperts SwiftIRC access list at level 5.");
+						}
+					} else if (level == '4') {
+						if (perms.status == 'Admin' || perms.status == 'Owner') {
+							Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
+							Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level " + level + ". Congratulations, you have been promoted to staff member status!");
+							Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
+							Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
+							Common.bot.say(to, "Go to: http://cwexperts.org/management/");
+							Common.bot.say(to, "2. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
+							Common.bot.say(to, "Go to: http://cwexperts.org/bot-commands/");
 /*	if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 		Common.bot.send('MODE', '#cwexperts', '-o', access[1]);
 		Common.bot.send('MODE', '#cwexperts', '+h', access[1]);
