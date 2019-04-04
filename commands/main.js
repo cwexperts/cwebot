@@ -474,12 +474,28 @@ Commands.msg = function(Common, from, to, message) {
 	});
 };
 
-
 Commands.criterror = function(Common, from, to, message) {
 	Common.bot.say(to, "4When a critical error occurs, CWEBot may be prevented from fully functioning as intended, and a notification will be sent to all official #CwExperts SwiftIRC channels. " +
 		"If you have reason to believe that your actions may have lead to a critical error, please contact a member with Owner member status and provide as much context as you can. Some critical errors can not be avoided.");
 	Common.bot.notice(from, "4When a critical error occurs, CWEBot may be prevented from fully functioning as intended, and a notification will be sent to all official #CwExperts SwiftIRC channels. " +
 		"If you have reason to believe that your actions may have lead to a critical error, please contact a member with Owner member status and provide as much context as you can. Some critical errors can not be avoided.");
+};
+
+Commands.criticalerror = function(Common, from, to, message) {
+	Commands.criterror(Common, from, to, message);
+};
+
+Commands.ce = function(Common, from, to, message) {
+	Commands.criterror(Common, from, to, message);
+};
+
+Commands.connectionlost = function(Common, from, to, message) {
+	Common.bot.say(to, "4When a c");
+	Common.bot.notice(from, "4When a");
+};
+
+Commands.cl = function(Common, from, to, message) {
+	Commands.connectionlost(Common, from, to, message);
 };
 
 Commands.afk = function(Common, from, to, message) {
