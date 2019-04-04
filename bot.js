@@ -124,6 +124,36 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (ch.games !== 0) {
 				Common.bot.say(channel, "https://www.youtube.com/watch?v=F3jBxwHIk9k");
 			}
+			if (ch.seconds !== 0 || ch.minutes !== 0 || ch.hours !== 0 || ch.days !== 0) {
+				Common.bot.say(channel, "2CWEBot has restarted the playtime counters for this channel.");
+				var gtdays = 0;
+				var gthours = 0;
+				var gtminutes = 0;
+				var gtseconds = 0;
+				var thdays = 0;
+				var thhours = 0;
+				var thminutes = 0;
+				var thseconds = 0;
+				if (ch.days != 0) {
+					gtdays = ch.days * 216;
+					thdays = ch.days * 244.8;
+				} if (ch.hours != 0) {
+					gthours = ch.hours * 9;
+					thhours = ch.hours * 10.2;
+				} if (ch.minutes != 0) {
+					gtminutes = ch.minutes * 0.15;
+					thminutes = ch.minutes * 0.17;
+				} if (ch.seconds != 0) {
+					gtseconds = ch.seconds * 0.0025;
+					thseconds = ch.seconds * 0.00283;
+				}
+				var gtall = gtdays + gthours + gtminutes + gtseconds;
+				var gtallen = gtall * 2;
+				var thall = thdays + thhours + thminutes + thseconds;
+				var thallsl = thall * 5;
+				Common.bot.say(channel, "2Current session playtime:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
+				Common.utils.remindPlaytime(Common, channel, 1, 'playtime');
+			}
 		}
 	});
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
