@@ -490,8 +490,8 @@ Commands.ce = function(Common, from, to, message) {
 };
 
 Commands.connectionlost = function(Common, from, to, message) {
-	Common.bot.say(to, "4When a c");
-	Common.bot.notice(from, "4When a");
+	Common.bot.say(to, "4When CWEBot disconnects, all temporary data is lost, including game reminders and unlocked profile variables. The disconnects are most likely either due to lag from the hosting provider, or a manual restart for maintenance to CWEBot. We apologize for any inconvenience this may cause.");
+	Common.bot.notice(from, "4When CWEBot disconnects, all temporary data is lost, including game reminders and unlocked profile variables. The disconnects are most likely either due to lag from the hosting provider, or a manual restart for maintenance to CWEBot. We apologize for any inconvenience this may cause.");
 };
 
 Commands.cl = function(Common, from, to, message) {
