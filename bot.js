@@ -122,7 +122,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			console.log(err);
 		} else {
 			if (ch.games !== 0) {
-				Common.bot.say(channel, "Connection lost. Please wait - attempting to reestablish. All temporary data has been lost - we apologize for any inconvenience.");
+				Common.bot.say(channel, "4Connection lost. Please wait - attempting to reestablish. All temporary data has been lost - we apologize for any inconvenience.");
 			}
 			if (ch.seconds !== 0 || ch.minutes !== 0 || ch.hours !== 0 || ch.days !== 0) {
 				Common.bot.say(channel, "2CWEBot has restarted the playtime counters for this channel.");
