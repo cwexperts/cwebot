@@ -431,7 +431,7 @@ Common.bot.addListener('error', function(message) {
   console.log('[', new Date().toString(), ']', 'error: ', message);
 	if (totalshutdown != 'true') {
   if (message.args[2].indexOf('No external channel messages') === -1) {
-    var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
+    var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !criticalError to learn more.';
     Common.bot.say('#cwexperts', error_msg);
     Common.bot.say('#cwexperts1', error_msg);
     Common.bot.say('#cwexperts2', error_msg);
