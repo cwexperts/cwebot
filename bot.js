@@ -122,7 +122,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			console.log(err);
 		} else {
 			if (ch.games !== 0) {
-				Common.bot.say(channel, "4Connection lost. Please wait - attempting to reestablish. All temporary data has been lost - we apologize for any inconvenience.");
+				Common.bot.say(channel, "0,1Connection lost. Please wait - attempting to reestablish. Use !connectionLost to learn more.");
 			}
 			if (ch.seconds !== 0 || ch.minutes !== 0 || ch.hours !== 0 || ch.days !== 0) {
 				Common.bot.say(channel, "2CWEBot has restarted the playtime counters for this channel.");
@@ -431,7 +431,7 @@ Common.bot.addListener('error', function(message) {
   console.log('[', new Date().toString(), ']', 'error: ', message);
 	if (totalshutdown != 'true') {
   if (message.args[2].indexOf('No external channel messages') === -1) {
-    var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !critError to learn more.';
+    var error_msg = '4[WARNING]: 8,1CWEBOT CRITICAL ERROR OCCURED - use !criticalError to learn more.';
     Common.bot.say('#cwexperts', error_msg);
     Common.bot.say('#cwexperts1', error_msg);
     Common.bot.say('#cwexperts2', error_msg);
