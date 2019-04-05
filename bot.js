@@ -123,6 +123,8 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		} else {
 			if (ch.games !== 0) {
 				Common.bot.say(channel, "0,1Connection lost. Please wait - attempting to reestablish. Use !connectionLost to learn more.");
+			} else {
+				
 			}
 			if (ch.seconds !== 0 || ch.minutes !== 0 || ch.hours !== 0 || ch.days !== 0) {
 				Common.bot.say(channel, "2CWEBot has restarted the playtime counters for this channel.");
