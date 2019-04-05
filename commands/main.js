@@ -235,10 +235,12 @@ Commands.add = function(Common, from, to, message) {
 							} else if (perms.status == 'Staff' && (user.status == 'Staff' || user.status == 'Admin')) {
 								Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status or access level for official #CwExperts SwiftIRC channels of a member with Staff, Admin, or Owner member status.");
 							} else {
-								Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
-      								Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
-    								Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
-								Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], level);
+								function acc3(Common, from, to, message) {
+									Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
+      									Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
+    									Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
+									Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
+								}
 								accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 3.";
 								function accmsg2(Common, from, to, message) {
 									Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
@@ -260,19 +262,30 @@ Commands.add = function(Common, from, to, message) {
 								if (user.status === undefined) {
 									Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
 										accmsg += " You're almost done, you just have to complete your profile now!";
+										acc3(Common, from, to, message);
 										Common.bot.say(to, accmsg);
 										accmsg2(Common, from, to, message);
 									});
 								} else if (user.status != 'Normal') {
 									if (user.status == 'Staff' || user.status == 'Admin') {
-										accmsg += " Unfortunately, your member status has been lowered to: Normal";
+										if (memlist[member] != 5 || perms.key === undefined) {
+											Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+										} else {
+											Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+												accmsg += " Unfortunately, your member status has been lowered to: Normal";
+												acc3(Common, from, to, message);
+												Common.bot.say(to, accmsg);
+											});
+										}
 									} else {
-										accmsg += " Congratulations, your member status has been changed to: Normal";
+										Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+											accmsg += " Congratulations, your member status has been changed to: Normal";
+											acc3(Common, from, to, message);
+											Common.bot.say(to, accmsg);
+										});
 									}
-									Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
-										Common.bot.say(to, accmsg);
-									});
 								} else {
+									acc3(Common, from, to, message);
 									Common.bot.say(to, accmsg);
 								}
 /*								if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
@@ -350,7 +363,7 @@ Commands.del = function(Common, from, to, message) {
 				Common.bot.send("CS", "KICK", "#key", access[1], kick_msg);
 				Common.bot.say(to, "4" + from + " has deleted " + access[1] + " from the #CwExperts SwiftIRC access list. Cya hick!");
 			} else {
-				Common.bot.say(to, "5You must specify a member to delete from the #CwExperts SwiftIRC access list when using this command. Use the format !del NICKNAME.");
+				Common.bot.say(to, "5You must specify a member to delete from the #CwExperts SwiftIRC access list when using this command. Use the format !del IRC_NICKNAME_HERE.");
 			}
 		}
 	} else {
