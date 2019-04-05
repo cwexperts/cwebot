@@ -88,7 +88,37 @@ Commands.add = function(Common, from, to, message) {
 				if (access[2] !== undefined) {
 				var level = Common.utils.toLc(access[2]);
 				Common.db.users.findOne({name: name}, function(err, user) {
-					if (name == member) {
+					if (err || !user) {
+						console.log(err);
+						if (level == '3' || level == 'three') {
+							if (level == 'three') {
+								level = '3';
+							}
+							newaccess[name] = 1;
+							Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
+      							Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
+    							Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
+							Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], level);
+							Common.bot.say(to, "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 3. You're almost done, you just have to set up your profile now!");
+							Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
+							Common.bot.say(to, "Type: /join #cwexperts1");
+							Common.bot.say(to, "2. Link the RSN of your main account and your level 90+ combat alt to your profile, and then you will be added to the CwExperts Friends Chat");
+							Common.bot.say(to, "Type: !addMain MAIN_RSN_HERE");
+							Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
+							Common.bot.say(to, "3. Link your Discord ID to your profile - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
+							Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
+							Common.bot.say(to, "4. Link your recruiter to your profile - If no one recruited you, add the member who helped you the most to join");
+							Common.bot.say(to, "Type: !addRecruiter IRC_NICKNAME_HERE");
+							Common.bot.say(to, "5. Link your primary Castle Wars goal to your profile - Examples: task, thaler, halo, hybrid, trim, 500cape, 1kcape, 5kcape, ranks");
+							Common.bot.say(to, "Type: !addGoal GOAL_HERE");
+							Common.bot.say(to, "6. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
+							Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
+							Common.bot.say(to, "7. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
+							Common.bot.say(to, "Type: !guides or !basics");
+						} else {
+							Common.bot.say(to, "5" + "IRC Nickname '" + name + "' does not have a #CwExperts profile and therefore may not be added at an access level higher than 3 for official #CwExperts SwiftIRC channels. Use the format !add IRC_NICKNAME_HERE 3 to add a new member to the #CwExperts SwiftIRC access list at level 3.");
+						}
+					} else if (name == member) {
 						Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status or access level for official #CwExperts SwiftIRC channels.");
 					} else if (user.status == 'Owner') {
 						Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status or access level for official #CwExperts SwiftIRC channels of a member with Owner member status.");
@@ -106,23 +136,16 @@ Commands.add = function(Common, from, to, message) {
 		 							Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
 									Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
 									Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
-									Common.db.users.findOne({name: name}, function(err, user1) {
-										accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 5.";
-										if (err || !user1) {
-											console.log(err);
+									accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 5.";
+									if (user.status != 'Admin') {
+										Common.db.users.update({name: name}, {$set: {status: 'Admin'}}, {upsert: false}, function(err, updated) {
+											accmsg += " Congratulations, your member status has been changed to: Admin";
 											Common.bot.say(to, accmsg);
 											Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
-										} else if (user1.status != 'Admin') {
-											Common.db.users.update({name: name}, {$set: {status: 'Admin'}}, {upsert: false}, function(err, updated) {
-												accmsg += " Congratulations, your member status has been changed to: Admin";
-												Common.bot.say(to, accmsg);
-												Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
-											});
-										} else {
-											Common.bot.say(to, accmsg);
-											Common.bot.say(to, "Just remember, Base_Tank is kick/ban on sight.");
-										}
-									});
+										});
+									} else {
+										Common.bot.say(to, accmsg);
+									}
 /*									if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 										Common.bot.send('MODE', '#cwexperts', '+o', access[1]);
 										Common.bot.send('MODE', '#cwexperts', '-h', access[1]);
@@ -160,30 +183,27 @@ Commands.add = function(Common, from, to, message) {
 										Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
 										Common.bot.send('CS', 'ACCESS', '#cwexperts.staff', 'ADD', access[1], level);
 										Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], '3');
-										Common.db.users.findOne({name: name}, function(err, user2) {
-											accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 4.";
-											function accmsg1(Common, from, to, message) {
-												Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
-												Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
-												Common.bot.say(to, "Go to: http://cwexperts.org/management/");
-												Common.bot.say(to, "2. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
-												Common.bot.say(to, "Go to: http://cwexperts.org/bot-commands/");
-											}
-											if (err || !user2) {
-												console.log(err);
-												Common.bot.say(to, accmsg);
-												accmsg1(Common, from, to, message);
-											} else if (user2.status != 'Staff') {
-												Common.db.users.update({name: name}, {$set: {status: 'Staff'}}, {upsert: false}, function(err, updated) {
-													accmsg += " Congratulations, your member status has been changed to: Staff";
-													Common.bot.say(to, accmsg);
-													accmsg1(Common, from, to, message);
-												});
+										accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 4.";
+										function accmsg1(Common, from, to, message) {
+											Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
+											Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
+											Common.bot.say(to, "Go to: http://cwexperts.org/management/");
+											Common.bot.say(to, "2. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
+											Common.bot.say(to, "Go to: http://cwexperts.org/bot-commands/");
+										}
+										if (user.status != 'Staff') {
+											if (user.status == 'Admin') {
+												accmsg += " Unfortunately, your member status has been lowered to: Staff";
 											} else {
+												accmsg += " Congratulations, your member status has been changed to: Staff";
+											}
+											Common.db.users.update({name: name}, {$set: {status: 'Staff'}}, {upsert: false}, function(err, updated) {
 												Common.bot.say(to, accmsg);
 												accmsg1(Common, from, to, message);
-											}
-										});	
+											});
+										} else {
+											Common.bot.say(to, accmsg);
+										}
 /*										if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 											Common.bot.send('MODE', '#cwexperts', '-o', access[1]);
 											Common.bot.send('MODE', '#cwexperts', '+h', access[1]);
@@ -215,44 +235,46 @@ Commands.add = function(Common, from, to, message) {
 							} else if (perms.status == 'Staff' && (user.status == 'Staff' || user.status == 'Admin')) {
 								Common.bot.say(to, "5Permission denied - " + member + ", you may not change the member status or access level for official #CwExperts SwiftIRC channels of a member with Staff, Admin, or Owner member status.");
 							} else {
-								newaccess[name] = 1;
 								Common.bot.send('CS', 'ACCESS', '#cwexperts', 'ADD', access[1], level);
       								Common.bot.send('CS', 'ACCESS', '#cwexperts1', 'ADD', access[1], level);
     								Common.bot.send('CS', 'ACCESS', '#cwexperts2', 'ADD', access[1], level);
 								Common.bot.send('CS', 'ACCESS', '#key', 'ADD', access[1], level);
-								Common.db.users.findOne({name: name}, function(err, user3) {
-									accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 3.";
-									function accmsg2(Common, from, to, message) {
-										Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
-										Common.bot.say(to, "Type: /join #cwexperts1");
-										Common.bot.say(to, "2. Link the RSN of your main account and your level 90+ combat alt to your profile, and then you will be added to the CwExperts Friends Chat");
-										Common.bot.say(to, "Type: !addMain MAIN_RSN_HERE");
-										Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
-										Common.bot.say(to, "3. Link your Discord ID to your profile - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
-										Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
-										Common.bot.say(to, "4. Link your recruiter to your profile - If no one recruited you, add the member who helped you the most to join");
-										Common.bot.say(to, "Type: !addRecruiter IRC_NICKNAME_HERE");
-										Common.bot.say(to, "5. Link your primary Castle Wars goal to your profile - Examples: task, halo, trim, 500cape, 1kcape, 5kcape, ranks");
-										Common.bot.say(to, "Type: !addGoal GOAL_HERE");
-										Common.bot.say(to, "6. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
-										Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
-										Common.bot.say(to, "7. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
-										Common.bot.say(to, "Type: !guides or !basics");		
-									}
-									if (err || !user3) {
-										console.log(err);
-										accmsg += " You're almost done, you just have to set up your profile now!";
+								accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 3.";
+								function accmsg2(Common, from, to, message) {
+									Common.bot.say(to, "1. Join the games channel - You should edit your IRC settings to auto perform these functions; learn more by reading our IRC guides found here: http://cwexperts.org/how-to-irc/");
+									Common.bot.say(to, "Type: /join #cwexperts1");
+									Common.bot.say(to, "2. Link the RSN of your main account and your level 90+ combat alt to your profile, and then you will be added to the CwExperts Friends Chat");
+									Common.bot.say(to, "Type: !addMain MAIN_RSN_HERE");
+									Common.bot.say(to, "Type: !addAlt ALT_RSN_HERE");
+									Common.bot.say(to, "3. Link your Discord ID to your profile - You should ensure that you can receive direct messages if you wish to be sent an invite to the Discord server");
+									Common.bot.say(to, "Type: !addDiscordID EXAMPLE_NAME # 0 0 0 0");
+									Common.bot.say(to, "4. Link your recruiter to your profile - If no one recruited you, add the member who helped you the most to join");
+									Common.bot.say(to, "Type: !addRecruiter IRC_NICKNAME_HERE");
+									Common.bot.say(to, "5. Link your primary Castle Wars goal to your profile - Examples: task, thaler, halo, hybrid, trim, 500cape, 1kcape, 5kcape, ranks");
+									Common.bot.say(to, "Type: !addGoal GOAL_HERE");
+									Common.bot.say(to, "6. Join the Discord server - You must set your Discord nickname to your main RSN, and then ask for an add in the #cwexperts_lobby channel");
+									Common.bot.say(to, "Go to: http://bit.ly/CWE-DISCORD");
+									Common.bot.say(to, "7. Learn how to play games and familiarize yourself with all of the content found on our website: http://cwexperts.org/how-to-play");
+									Common.bot.say(to, "Type: !guides or !basics");		
+								}
+								if (user.status === undefined) {
+									Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+										accmsg += " You're almost done, you just have to complete your profile now!";
 										Common.bot.say(to, accmsg);
 										accmsg2(Common, from, to, message);
-									} else if (user3.status != 'Normal') {
-										Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
-											accmsg += " Congratulations, your member status has been changed to: Normal";
-											Common.bot.say(to, accmsg);
-										});
+									});
+								} else if (user.status != 'Normal') {
+									if (user.status == 'Staff' || user.status == 'Admin') {
+										accmsg += " Unfortunately, your member status has been lowered to: Normal";
 									} else {
-										Common.bot.say(to, accmsg);
+										accmsg += " Congratulations, your member status has been changed to: Normal";
 									}
-								});
+									Common.db.users.update({name: name}, {$set: {status: 'Normal'}}, {upsert: false}, function(err, updated) {
+										Common.bot.say(to, accmsg);
+									});
+								} else {
+									Common.bot.say(to, accmsg);
+								}
 /*								if (everyoneLc['#cwexperts'].indexOf(Common.utils.toLc(access[1])) > -1) {
 									Common.bot.send('MODE', '#cwexperts', '-o', access[1]);
 									Common.bot.send('MODE', '#cwexperts', '-h', access[1]);
@@ -272,26 +294,26 @@ Commands.add = function(Common, from, to, message) {
 */							}
 						} else {
 							if (perms.status == 'Owner') {
-								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3, 4, or 5. Use the format !add NICKNAME LEVEL_HERE.");
+								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3, 4, or 5. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 							} else if (perms.status == 'Admin') {
-								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3 or 4. Use the format !add NICKNAME LEVEL_HERE.");
+								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3 or 4. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 							} else {
-								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3. Use the format !add NICKNAME LEVEL_HERE.");
+								Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 							}
 						}
 					}
 				});
 				} else {
 					if (perms.status == 'Owner') {
-						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3, 4, or 5. Use the format !add NICKNAME LEVEL_HERE.");
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3, 4, or 5. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 					} else if (perms.status == 'Admin') {
-						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3 or 4. Use the format !add NICKNAME LEVEL_HERE.");
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3 or 4. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 					} else {
-						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3. Use the format !add NICKNAME LEVEL_HERE.");
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 					}
 				}
 			} else {
-				Common.bot.say(to, "5You must specify a member to add to the #CwExperts SwiftIRC access list when using this command. Use the format !add NICKNAME LEVEL_HERE.");
+				Common.bot.say(to, "5You must specify a member to add to the #CwExperts SwiftIRC access list when using this command. Use the format !add IRC_NICKNAME_HERE LEVEL_HERE.");
 			}
 		} else {
 			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
