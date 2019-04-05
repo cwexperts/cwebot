@@ -941,7 +941,6 @@ function restartplaytime(Common, from, to, message) {
 					}
 				});
 			} else {
-				Common.bot.say(to, "2Checking playtime counters...");
 				var seconds1 = channel.seconds;
 				setTimeout(function() {
 					Common.db.channels.findOne({channel: to}, function(err, channel) {
