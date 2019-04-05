@@ -75,8 +75,6 @@ Commands.joinnow = function(Common, from, to, message) {
 
 Commands.add = function(Common, from, to, message) {
 	var access = message.match(/\S+/g);
-	var name = Common.utils.toLc(access[1]);
-	var level = Common.utils.toLc(access[2]);
 	var accmsg = '';
 	if (to == '#cwexperts') {
 	var member = Common.utils.toLc(from);
@@ -86,6 +84,9 @@ Commands.add = function(Common, from, to, message) {
 			Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to add a member to the #CwExperts SwiftIRC access list.");
 		} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
 			if (Common.utils.msg(message)) {
+				var name = Common.utils.toLc(access[1]);
+				if (access[2] !== undefined) {
+				var level = Common.utils.toLc(access[2]);
 				Common.db.users.findOne({name: name}, function(err, user) {
 					if (name == member) {
 						Common.bot.say(to, "5Permission denied - " + member + ", you may not change your own member status or access level for official #CwExperts SwiftIRC channels.");
@@ -280,6 +281,15 @@ Commands.add = function(Common, from, to, message) {
 						}
 					}
 				});
+				} else {
+					if (perms.status == 'Owner') {
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3, 4, or 5. Use the format !add NICKNAME LEVEL_HERE.");
+					} else if (perms.status == 'Admin') {
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3 or 4. Use the format !add NICKNAME LEVEL_HERE.");
+					} else {
+						Common.bot.say(to, "5You must specify an authorized level to add a member to the #CwExperts SwiftIRC access list when using this command: 3. Use the format !add NICKNAME LEVEL_HERE.");
+					}
+				}
 			} else {
 				Common.bot.say(to, "5You must specify a member to add to the #CwExperts SwiftIRC access list when using this command. Use the format !add NICKNAME LEVEL_HERE.");
 			}
