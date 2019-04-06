@@ -243,9 +243,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
                 Common.bot.say(channel, greetmsg);
 		if (ch.unlobCheck == 1 && ch.world !== 0 && time[channel] !== undefined && time[channel] != 0) {
 			if (time[channel] == 1) {
-				Common.bot.say(channel, "2Unlobby was called but there is still " + time[channel] + " tick left on world " + ch.world + " - you may use !lobby.");
+				Common.bot.say(channel, "2" + nick + ", unlobby has been called but there is still " + time[channel] + " tick left on world " + ch.world + " - you may use !lobby if you wish to join, but hurry!");
 			} else {
-				Common.bot.say(channel, "2Unlobby was called but there are still " + time[channel] + " ticks left on world " + ch.world + " - you may use !lobby.");
+				Common.bot.say(channel, "2" + nick + ", unlobby has been called but there are still " + time[channel] + " ticks left on world " + ch.world + " - you may use !lobby if you wish to join.");
 			}
 		}
               }
