@@ -252,9 +252,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 				tickcolor = "3" + time[channel] + "2";
 			}
 			if (time[channel] == 1) {
-				Common.bot.say(channel, "2" + nickcaps + ", unlobby has been called but there is still " + tickcolor + " tick left on world " + ch.world + " - you may use !lobby if you wish to join, but hurry!");
+				Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there is still " + tickcolor + " tick left on world " + ch.world + " - you may use !lobby if you wish to join, but hurry!");
 			} else {
-				Common.bot.say(channel, "2" + nickcaps + ", unlobby has been called but there are still " + tickcolor + " ticks left on world " + ch.world + " - you may use !lobby if you wish to join.");
+				Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there are still " + tickcolor + " ticks left on world " + ch.world + " - you may use !lobby if you wish to join.");
 			}
 		}
               }
