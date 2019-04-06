@@ -1832,6 +1832,17 @@ Commands.tie = function(Common, from, to, message) {
 };
 
 function lobby(Common, from, to, message) {
+	Common.db.channels.findOne({channel: to}, function(err, channel) {
+		if (err || !channel) {
+			console.log("Error: Unable to fetch world");
+		} else {
+			Common.db.channels.update({channel: to}, {$set: {unlobCheck: 0}}, function(err, updated) {
+			       	if (err || !updated) {
+					console.log("Channel not updated!");
+				}
+			});
+		}
+	});
 	Common.bot.say(to, " 14*** ( 4LOBBY MAIN ACCOUNTS! 14) ***");
 	Common.bot.say(to, " 14*** ( 4LOBBY MAIN ACCOUNTS! 14) ***");
 	Common.bot.say(to, users[to]);
@@ -2091,6 +2102,17 @@ Commands.lz = function(Common, from, to, message) {
 };
 
 function unlobby(Common, from, to, message) {
+	Common.db.channels.findOne({channel: to}, function(err, channel) {
+		if (err || !channel) {
+			console.log("Error: Unable to fetch world");
+		} else {
+			Common.db.channels.update({channel: to}, {$set: {unlobCheck: 1}}, function(err, updated) {
+			       	if (err || !updated) {
+					console.log("Channel not updated!");
+				}
+			});
+		}
+	});
 	Common.bot.say(to, " 14*** ( 3UNLOBBY ALL ACCOUNTS! 14) ***");
 	Common.bot.say(to, " 14*** ( 3UNLOBBY ALL ACCOUNTS! 14) ***");
 	Common.bot.say(to, users[to]);
@@ -2360,7 +2382,7 @@ function hopw(Common, from, to, message) {
 			});
 		}
 		if (channel.world === 0) {
-		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 			if (err || !updated) {
 				console.log("Error: World not updated!");
 			}
@@ -2383,7 +2405,7 @@ function hopw(Common, from, to, message) {
 			var wonechan = channel.world
 			wonechan =  wonechan.toString();
 			if (wone != wonechan) {
-				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -2474,7 +2496,7 @@ function lh(Common, from, to, message) {
 			});
 		}
 		if (channel.world === 0) {
-		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 			if (err || !updated) {
 				console.log("Error: World not updated!");
 			}
@@ -2497,7 +2519,7 @@ function lh(Common, from, to, message) {
 			var wonechan = channel.world
 			wonechan =  wonechan.toString();
 			if (wone != wonechan) {
-				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -2592,7 +2614,7 @@ function uh(Common, from, to, message) {
 			});
 		}
 		if (channel.world === 0) {
-		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+		Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 			if (err || !updated) {
 				console.log("Error: World not updated!");
 			}
@@ -2615,7 +2637,7 @@ function uh(Common, from, to, message) {
 			var wonechan = channel.world
 			wonechan =  wonechan.toString();
 			if (wone != wonechan) {
-				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: world[1], prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -2711,13 +2733,13 @@ function hopnextw(Common, from, to, message) {
 				});
 			}
 			if (channel.cycle === 2) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
 				});
 			} else if (channel.cycle === 3) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -2842,13 +2864,13 @@ function lhnw(Common, from, to, message) {
 				});
 			}
 			if (channel.cycle === 2) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
 				});
 			} else if (channel.cycle === 3) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -2975,13 +2997,13 @@ function uhnw(Common, from, to, message) {
 				});
 			}
 			if (channel.cycle === 2) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world, prev_world: channel.world, prev_world2: 0, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
 				});
 			} else if (channel.cycle === 3) {
-				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world}}, function(err, updated) {
+				Common.db.channels.update({channel: to}, {$set: {world: channel.prev_world2, prev_world: channel.world, prev_world2: channel.prev_world, unlobCheck: 0}}, function(err, updated) {
 					if (err || !updated) {
 						console.log("Error: World not updated!");
 					}
@@ -3872,7 +3894,7 @@ Commands.no = function(Common, from, to, message) {
 							ticksecs[to] = 0;
 							Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 						} else {
-							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 							if (err || !updated) {
 								console.log("Error: World not updated!");
 							} else {
@@ -3922,7 +3944,7 @@ Commands.no = function(Common, from, to, message) {
 								ticksecs[to] = 0;
 								Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 							} else {
-								Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+								Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 								if (err || !updated) {
 									console.log("Error: World not updated!");
 								} else {
@@ -3972,7 +3994,7 @@ Commands.no = function(Common, from, to, message) {
 									ticksecs[to] = 0;
 									Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 								} else {
-									Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+									Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 									if (err || !updated) {
 										console.log("Error: World not updated!");
 									} else {
@@ -4028,7 +4050,7 @@ Commands.no = function(Common, from, to, message) {
 								ticksecs[to] = 0;
 								Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 							} else {
-								Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+								Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 								if (err || !updated) {
 									console.log("Error: World not updated!");
 								} else {
@@ -4090,7 +4112,7 @@ Commands.no = function(Common, from, to, message) {
 							ticksecs[to] = 0;
 							Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 						} else {
-							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 							if (err || !updated) {
 								console.log("Error: World not updated!");
 							} else {
@@ -4149,7 +4171,7 @@ Commands.no = function(Common, from, to, message) {
 							ticksecs[to] = 0;
 							Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 						} else {
-							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+							Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 							if (err || !updated) {
 								console.log("Error: World not updated!");
 							} else {
@@ -4202,7 +4224,7 @@ Commands.no = function(Common, from, to, message) {
 						ticksecs[to] = 0;
 						Common.bot.say(to, "5Games are already ended - there is no game information for this channel.");
 					} else {
-						Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0}}, function(err, updated) {
+						Common.db.channels.update({channel: to}, {$set: {games: 0, world: 0, prev_world: 0, prev_world2: 0, lead: 0, salt: 0, flag: 0, et1: 0, et2: 0, et3: 0, coor: 0, unlobCheck: 0}}, function(err, updated) {
 						if (err || !updated) {
 							console.log("Error: World not updated!");
 						} else {
