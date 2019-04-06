@@ -240,8 +240,14 @@ Common.bot.addListener('join', function(channel, nick, message) {
                 } else {
                   greetmsg += " 2- Active member count: " + players.length;
                 }
-               
                 Common.bot.say(channel, greetmsg);
+		if (ch.unlobCheck == 1 && ch.world !== 0 && time[channel] !== undefined && time[channel] != 0) {
+			if (time[channel] == 1) {
+				Common.bot.say(channel, "2Unlobby was called but there is still " + time[channel] + " tick left on world " + ch.world + " - you may use !lobby.");
+			} else {
+				Common.bot.say(channel, "2Unlobby was called but there are still " + time[channel] + " ticks left on world " + ch.world + " - you may use !lobby.");
+			}
+		}
               }
             });
           }
