@@ -858,6 +858,7 @@ Commands.uwu = function(Common, from, to, message) {
 Commands.stake = function(Common, from, to, message) {
     var stake = message.match(/\S+/g);
     if (typeof stake[1] != 'undefined' && typeof stake[2] != 'undefined') {
+	if (Common.utils.toLc(stake[2]) != 'damp_cat') {
         Common.bot.say(to, "7[1/3]: Welcome to the Sand Casino! " + from + " is staking " + stake[1] + " against " + stake[2] + "! 3...2...1...Fight!...");
         var list1 = [
         "It's an even match! Both players have just enough LP to survive a critical hit! Anyone could win...",
@@ -894,6 +895,9 @@ Commands.stake = function(Common, from, to, message) {
         setTimeout(function() {
             Common.bot.say(to, "7[3/3]:" + rand2);
         }, 20000);
+	} else {
+		Common.bot.say(to, "5Error. Too much debt.");
+	}
     } else {
         Common.bot.say(to, "5That's not how you play the game! Use the format !stake AMOUNT_HERE OPPONENT_HERE to gamble at the Sand Casino.");
     }
