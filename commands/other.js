@@ -837,18 +837,30 @@ Commands.uwu = function(Common, from, to, message) {
                 kill
             ]
             var rand1 = list1[Math.floor(Math.random() * list1.length)];
-            var list2 = [
-                fuck,
-                marry,
-                kill
-            ]
+		if (rand1 == fuck) {
+			var list2 = [
+			marry,
+			kill
+			]
+		} else if (rand1 == marry) {
+			var list2 = [
+			fuck,
+			kill
+			]
+		} else if (rand1 == kill) {
+			var list2 = [
+			fuck,
+			marry
+			]
+		}
             var rand2 = list2[Math.floor(Math.random() * list2.length)];
-            var list3 = [
-                fuck,
-                marry,
-                kill
-            ]
-            var rand3 = list3[Math.floor(Math.random() * list3.length)];
+		if ((rand1 == fuck && rand2 == marry) || (rand1 == marry && rand2 == fuck)) {
+			var rand3 = kill;
+		} else if ((rand1 == marry && rand2 == kill) || (rand1 == kill && rand2 == marry)) {
+			var rand3 = fuck;
+		} else if ((rand1 == fuck && rand2 == kill) || (rand1 == kill && rand2 == fuck)) {
+			var rand3 = marry;
+		}
             Common.bot.say(to, "13FUCK1, 12MARRY1, 4KILL1! " + from + " 13fucks1 " + rand1 + ", 12marries1 " + rand2 + ", and 4kills1 " + rand3 + ".");
         } else {
             Common.bot.say(to, "5That's not how you play the game! Use the format !fmk NAME_1 NAME_2 NAME_3 to play Fuck, Marry, Kill.");
@@ -858,7 +870,7 @@ Commands.uwu = function(Common, from, to, message) {
 Commands.stake = function(Common, from, to, message) {
     var stake = message.match(/\S+/g);
     if (typeof stake[1] != 'undefined' && typeof stake[2] != 'undefined') {
-	if (Common.utils.toLc(stake[2]) != 'damp_cat') {
+	if (Common.utils.toLc(stake[2]) != 'damp_cat' && Common.utils.toLc(stake[2]) != 'damp') {
         Common.bot.say(to, "7[1/3]: Welcome to the Sand Casino! " + from + " is staking " + stake[1] + " against " + stake[2] + "! 3...2...1...Fight!...");
         var list1 = [
         "It's an even match! Both players have just enough LP to survive a critical hit! Anyone could win...",
