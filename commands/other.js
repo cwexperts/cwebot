@@ -1172,3 +1172,15 @@ Commands.julian = function(Common, from, to, message) {
 Commands.assange = function(Common, from, to, message) {
 	Commands.julian(Common, from, to, message);
 };
+
+Commands.onkel = function(Common, from, to, message) {
+	Common.bot.say(to, "Oh boy, you fucked up big time, just wait untill i have unlocked my profile so i can warn you buddy!");
+};
+
+Commands.onkelcookie = function(Common, from, to, message) {
+	Commands.onkel(Common, from, to, message);
+};
+
+Commands.kerrie = function(Common, from, to, message) {
+	Common.bot.say(to, "thinks marvel movies are good");
+};
