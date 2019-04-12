@@ -399,6 +399,8 @@ module.exports = {
 						daysRemain = daysRemain.substr(0, daysRemain.length-5);
 						slDays = daysRemain;
 						slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
+					} else {
+						slCountdown = "unknown";
 					}
 					var slStartNotif1 = new Date("2019-04-12T00:00:00Z");
 					var slStartNotif2 = new Date("2019-04-12T00:00:01Z");
