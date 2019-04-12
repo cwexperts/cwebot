@@ -1160,3 +1160,15 @@ Commands.afghann = function(Common, from, to, message) {
 Commands.cpl = function(Common, from, to, message) {
 	Common.bot.say(to, "creepy porn lawyer 2020! ...oh wait hes going to jail for extortion and tax evasion... trump wins again");
 };
+
+Commands.yeehaw = function(Common, from, to, message) {
+	Common.bot.say(to, "i got the horses in the back - https://www.youtube.com/watch?v=7ysFgElQtjI");
+};
+
+Commands.julian = function(Common, from, to, message) {
+	Common.bot.say(to, "#FreeAssange");
+};
+
+Commands.assange = function(Common, from, to, message) {
+	Commands.julian(Common, from, to, message);
+};
