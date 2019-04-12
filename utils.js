@@ -421,7 +421,7 @@ module.exports = {
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 												"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-												"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
+												"14*** ( 6ACTIVE PROMO CODES:13 apr2019 || apr12th2019sl 14) ***"
 											]
 											var rand = list[Math.floor(Math.random() * list.length)];
 											Common.bot.say(channel, rand);
@@ -439,7 +439,7 @@ module.exports = {
 																	"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 																	"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 																	"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-																	"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
+																	"14*** ( 6ACTIVE PROMO CODES:13 apr2019 || apr12th2019sl 14) ***"
 																]
 																var rand = list[Math.floor(Math.random() * list.length)];
 																Common.bot.say(channel, rand);
@@ -450,7 +450,7 @@ module.exports = {
 															"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 															"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
 															"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
-															"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
+															"14*** ( 6ACTIVE PROMO CODES:13 apr2019 || apr12th2019sl 14) ***"
 														]
 														var rand = list[Math.floor(Math.random() * list.length)];
 														Common.bot.say(channel, rand);
