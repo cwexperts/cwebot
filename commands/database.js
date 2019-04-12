@@ -3000,41 +3000,23 @@ Commands.warn = function(Common, from, to, message) {
 
 Commands.warns = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-	if (Common.utils.msg(message)) {
-		name = message.match(/\S+/g);
-		if (name.indexOf("abdel") > -1) {
+		var name = message.match(/\S+/g);
+		name = !Common.utils.msg(message) ? Common.utils.toLc(from) : Common.utils.toLc(name[1]);
+		if (name == "abdel") {
 			Common.bot.say(to, "4Abdel fucked up .. oh wait .. Abdel never fucks up. Nice try, " + from + "!");
 		} else {
-			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-			if (err || !user) {
-			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else {
-			if (user.warns == 1) {
-				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
-			} else {
-				Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + " has fucked up a total of "  + user.warns + " times! You can learn more about our warning system here: http://cwexperts.org/management/.");
-			}
-			}
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user) {
+					Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+				} else if (user.warns === undefined || user.warns == 0) {
+					Common.bot.say(to, "3Surprisingly, " + name + " has never fucked up.");
+				} else if (user.warns == 1) {
+					Common.bot.say(to, "4" + name + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
+				} else {
+					Common.bot.say(to, "4" + name + " has fucked up a total of "  + user.warns + " times! You can learn more about our warning system here: http://cwexperts.org/management/.");
+				}
 			});
 		}
-	} else {
-		name = from;
-		if (name.indexOf("abdel") > -1) {
-			Common.bot.say(to, "4Abdel fucked up .. oh wait .. Abdel never fucks up. Nice try, " + from + "!");
-		} else {
-			Common.db.users.findOne({name: Common.utils.toDb(name)}, function(err, user) {
-			if (err || !user) {
-			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else {
-			if (user.warns == 1) {
-				Common.bot.say(to, "4" + Common.utils.toLc(name) + " has fucked up a total of "  + user.warns + " time! You can learn more about our warning system here: http://cwexperts.org/management/.");
-			} else {
-				Common.bot.say(to, "4" + Common.utils.toLc(name) + " has fucked up a total of "  + user.warns + " times! You can learn more about our warning system here: http://cwexperts.org/management/.");
-			}
-			}
-			});
-		}
-	} 
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
