@@ -3372,7 +3372,7 @@ Commands.member = function(Common, from, to, message) {
 				console.log("User not updated!");
 			} else {
 				setTimeout(function() {
-					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6" + Common.utils.toLc(name) + ", you will now be highlighted 3.5 minutes after !hopw with the voluntary pen reminder enabled.");
+					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6" + Common.utils.toLc(name) + ", you will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 				}, 1000);
 			}
 			});
@@ -3388,7 +3388,7 @@ Commands.member = function(Common, from, to, message) {
 				console.log("User not updated!");
 			} else {
 				setTimeout(function() {
-					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6Congratulations " + Common.utils.toLc(name) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder for idiots enabled.");
+					Common.bot.say(to, "4[FORCE UPDATE " + Common.utils.toLc(name) + "]: 6Congratulations " + Common.utils.toLc(name) + ", you're an idiot! You will now be highlighted 3.5 minutes after !hopw with the pen reminder enabled.");
 				}, 1000);
 			}
 			});
