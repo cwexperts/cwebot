@@ -1174,6 +1174,7 @@ Commands.spotlight = function(Common, from, to, message) {
 	var slStart = new Date("2019-03-19T00:00:00Z");
 	var slEnd = new Date("2019-03-22T00:00:00Z");
 	var slStart2 = new Date("2019-04-12T00:00:00Z");
+	var slEnd2 = new Date("2019-04-15T00:00:00Z");
 	var slDays = '';
 	var slHours = '';
 	var slMinutes = '';
@@ -1200,7 +1201,7 @@ Commands.spotlight = function(Common, from, to, message) {
 	var daysLeft = 0;
 	var daysRound = 0;
 	var daysRemain = 0;
-	if (today>slStart && today<slEnd) {
+	if ((today>slStart && today<slEnd) || (today>slStart2 && today<slEnd2)) {
 		slCountdown = "CURRENTLY ACTIVE!";
 	} else if (today<slStart) {
 		millisecsLeft = (slStart - today) / secTics;
