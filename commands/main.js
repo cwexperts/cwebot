@@ -8,7 +8,7 @@ function register(Common, from, to, message) {
 		Common.bot.say(to, "2. Change your nickname to your main RSN or something similar");
 		Common.bot.say(to, "Type: /nick NEW_NICKNAME");
 		Common.bot.say(to, "3. Register your current nickname; choose a secure password and use an email with 2-step authentication");
-		Common.bot.say(to, "4Microsoft is currently preventing all SwiftIRC emails from being received, so please use a different provider.");
+		Common.bot.say(to, "4Note: Microsoft is currently preventing all SwiftIRC emails from being received, so please use a different provider.");
 		Common.bot.say(to, "Type: /ns register PASSWORD EMAIL");
 		Common.bot.say(to, "4. You will receive an email with a confirmation code; enter this code");
 		Common.bot.say(to, "Type: /ns confirm CODE");
