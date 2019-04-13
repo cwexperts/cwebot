@@ -1201,73 +1201,53 @@ Commands.spotlight = function(Common, from, to, message) {
 	var daysLeft = 0;
 	var daysRound = 0;
 	var daysRemain = 0;
+	var sldate = '';
+	var prevsldate = '';
+	var startmath1 = '';
+	var startmath2 = '';
+	var endmath1 = '';
+	var endmath2 = '';
+	if (today<slStart) {
+		startmath1 = slStart;
+		startmath2 = today;
+	} else if (today<slStart2) {
+		startmath1 = slStart2;
+		startmath2 = today;
+	}
 	if ((today>slStart && today<slEnd) || (today>slStart2 && today<slEnd2)) {
 		slCountdown = "CURRENTLY ACTIVE!";
-	} else if (today<slStart) {
-		millisecsLeft = (slStart - today) / secTics;
+	} else if (today>slEnd2) {
+		slCountdown = "unknown";
+	} else {
+		millisecsLeft = (startmath1 - startmath2) / secTics;
 		millisecsRound = Math.floor(millisecsLeft);
 		millisecsRemain = millisecsLeft - millisecsRound;
 		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
 		millisecsRemain = millisecsRemain.toFixed(12);
 		millisecsRemain = millisecsRemain.toString();
 		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
-		secsLeft = (slStart - today) / minTics;
+		secsLeft = (startmath1 - startmath2) / minTics;
 		secsRound = Math.floor(secsLeft);
 		secsRemain = secsLeft - secsRound;
 		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
 		secsRemain = secsRemain.toFixed(4);
 		secsRemain = secsRemain.toString();
 		slSeconds = secsRemain.substr(0, secsRemain.length-5);
-		minsLeft = (slStart - today) / hourTics;
+		minsLeft = (startmath1 - startmath2) / hourTics;
 		minsRound = Math.floor(minsLeft);
 		minsRemain = minsLeft - minsRound;
 		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
 		minsRemain = minsRemain.toFixed(4);
 		minsRemain = minsRemain.toString();
 		slMinutes = minsRemain.substr(0, minsRemain.length-5);
-		hoursLeft = (slStart - today) / dayTics;
+		hoursLeft = (startmath1 - startmath2) / dayTics;
 		hoursRound = Math.floor(hoursLeft);
 		hoursRemain = hoursLeft - hoursRound;
 		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
 		hoursRemain = hoursRemain.toFixed(4);
 		hoursRemain = hoursRemain.toString();
 		slHours = hoursRemain.substr(0, hoursRemain.length-5);
-		daysLeft = (slStart - today) / dayTics;
-		daysRound = daysLeft.toFixed(4);
-		daysRemain = daysRound.toString();
-		daysRemain = daysRemain.substr(0, daysRemain.length-5);
-		slDays = daysRemain;
-		slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
-	} else if (today<slStart2) {
-		millisecsLeft = (slStart2 - today) / secTics;
-		millisecsRound = Math.floor(millisecsLeft);
-		millisecsRemain = millisecsLeft - millisecsRound;
-		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
-		millisecsRemain = millisecsRemain.toFixed(12);
-		millisecsRemain = millisecsRemain.toString();
-		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
-		secsLeft = (slStart2 - today) / minTics;
-		secsRound = Math.floor(secsLeft);
-		secsRemain = secsLeft - secsRound;
-		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
-		secsRemain = secsRemain.toFixed(4);
-		secsRemain = secsRemain.toString();
-		slSeconds = secsRemain.substr(0, secsRemain.length-5);
-		minsLeft = (slStart2 - today) / hourTics;
-		minsRound = Math.floor(minsLeft);
-		minsRemain = minsLeft - minsRound;
-		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
-		minsRemain = minsRemain.toFixed(4);
-		minsRemain = minsRemain.toString();
-		slMinutes = minsRemain.substr(0, minsRemain.length-5);
-		hoursLeft = (slStart2 - today) / dayTics;
-		hoursRound = Math.floor(hoursLeft);
-		hoursRemain = hoursLeft - hoursRound;
-		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
-		hoursRemain = hoursRemain.toFixed(4);
-		hoursRemain = hoursRemain.toString();
-		slHours = hoursRemain.substr(0, hoursRemain.length-5);
-		daysLeft = (slStart2 - today) / dayTics;
+		daysLeft = (startmath1 - startmath2) / dayTics;
 		daysRound = daysLeft.toFixed(4);
 		daysRemain = daysRound.toString();
 		daysRemain = daysRemain.substr(0, daysRemain.length-5);
@@ -1275,85 +1255,55 @@ Commands.spotlight = function(Common, from, to, message) {
 		slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 	}
 	if (today<slEnd) {
-		millisecsLeft = (today - slEndPrev) / secTics;
-		millisecsRound = Math.floor(millisecsLeft);
-		millisecsRemain = millisecsLeft - millisecsRound;
-		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
-		millisecsRemain = millisecsRemain.toFixed(12);
-		millisecsRemain = millisecsRemain.toString();
-		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
-		secsLeft = (today - slEndPrev) / minTics;
-		secsRound = Math.floor(secsLeft);
-		secsRemain = secsLeft - secsRound;
-		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
-		secsRemain = secsRemain.toFixed(4);
-		secsRemain = secsRemain.toString();
-		slSeconds = secsRemain.substr(0, secsRemain.length-5);
-		minsLeft = (today - slEndPrev) / hourTics;
-		minsRound = Math.floor(minsLeft);
-		minsRemain = minsLeft - minsRound;
-		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
-		minsRemain = minsRemain.toFixed(4);
-		minsRemain = minsRemain.toString();
-		slMinutes = minsRemain.substr(0, minsRemain.length-5);
-		hoursLeft = (today - slEndPrev) / dayTics;
-		hoursRound = Math.floor(hoursLeft);
-		hoursRemain = hoursLeft - hoursRound;
-		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
-		hoursRemain = hoursRemain.toFixed(4);
-		hoursRemain = hoursRemain.toString();
-		slHours = hoursRemain.substr(0, hoursRemain.length-5);
-		daysLeft = (today - slEndPrev) / dayTics;
-		daysRound = daysLeft.toFixed(4);
-		daysRemain = daysRound.toString();
-		daysRemain = daysRemain.substr(0, daysRemain.length-5);
-		slDays = daysRemain;
-		slEndedAgo = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
-	} else if (today>slEnd) {
-		millisecsLeft = (today - slEnd) / secTics;
-		millisecsRound = Math.floor(millisecsLeft);
-		millisecsRemain = millisecsLeft - millisecsRound;
-		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
-		millisecsRemain = millisecsRemain.toFixed(12);
-		millisecsRemain = millisecsRemain.toString();
-		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
-		secsLeft = (today - slEnd) / minTics;
-		secsRound = Math.floor(secsLeft);
-		secsRemain = secsLeft - secsRound;
-		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
-		secsRemain = secsRemain.toFixed(4);
-		secsRemain = secsRemain.toString();
-		slSeconds = secsRemain.substr(0, secsRemain.length-5);
-		minsLeft = (today - slEnd) / hourTics;
-		minsRound = Math.floor(minsLeft);
-		minsRemain = minsLeft - minsRound;
-		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
-		minsRemain = minsRemain.toFixed(4);
-		minsRemain = minsRemain.toString();
-		slMinutes = minsRemain.substr(0, minsRemain.length-5);
-		hoursLeft = (today - slEnd) / dayTics;
-		hoursRound = Math.floor(hoursLeft);
-		hoursRemain = hoursLeft - hoursRound;
-		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
-		hoursRemain = hoursRemain.toFixed(4);
-		hoursRemain = hoursRemain.toString();
-		slHours = hoursRemain.substr(0, hoursRemain.length-5);
-		daysLeft = (today - slEnd) / dayTics;
-		daysRound = daysLeft.toFixed(4);
-		daysRemain = daysRound.toString();
-		daysRemain = daysRemain.substr(0, daysRemain.length-5);
-		slDays = daysRemain;
-		slEndedAgo = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
-	}		
-	var sldate = '';
-	var prevsldate = '';
-	if ((today>slStart && today<slEnd) || today<slStart) {
+		endmath1 = today
+		endmath2 = slEndPrev
 		sldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
 		prevsldate = "Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT";
-	} else if (today>slEnd) {
+	} else if (today<slEnd2) {
+		endmath1 = today
+		endmath2 = slEnd
 		sldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
 		prevsldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
+	} else if (today>slEnd2) {
+		endmath1 = today
+		endmath2 = slEnd2
+		sldate = "unknown";
+		prevsldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
 	}
+		millisecsLeft = (endmath1 - endmath2) / secTics;
+		millisecsRound = Math.floor(millisecsLeft);
+		millisecsRemain = millisecsLeft - millisecsRound;
+		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
+		millisecsRemain = millisecsRemain.toFixed(12);
+		millisecsRemain = millisecsRemain.toString();
+		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
+		secsLeft = (endmath1 - endmath2) / minTics;
+		secsRound = Math.floor(secsLeft);
+		secsRemain = secsLeft - secsRound;
+		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
+		secsRemain = secsRemain.toFixed(4);
+		secsRemain = secsRemain.toString();
+		slSeconds = secsRemain.substr(0, secsRemain.length-5);
+		minsLeft = (endmath1 - endmath2) / hourTics;
+		minsRound = Math.floor(minsLeft);
+		minsRemain = minsLeft - minsRound;
+		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
+		minsRemain = minsRemain.toFixed(4);
+		minsRemain = minsRemain.toString();
+		slMinutes = minsRemain.substr(0, minsRemain.length-5);
+		hoursLeft = (endmath1 - endmath2) / dayTics;
+		hoursRound = Math.floor(hoursLeft);
+		hoursRemain = hoursLeft - hoursRound;
+		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
+		hoursRemain = hoursRemain.toFixed(4);
+		hoursRemain = hoursRemain.toString();
+		slHours = hoursRemain.substr(0, hoursRemain.length-5);
+		daysLeft = (endmath1 - endmath2) / dayTics;
+		daysRound = daysLeft.toFixed(4);
+		daysRemain = daysRound.toString();
+		daysRemain = daysRemain.substr(0, daysRemain.length-5);
+		slDays = daysRemain;
+		slEndedAgo = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 	Common.bot.say(to, "2Next CW SL:10 " + sldate + "2, countdown: 10" + slCountdown + "2 - Previous CW SL:10 " + prevsldate + "2, ended: 10" + slEndedAgo);
 };
 
