@@ -1,21 +1,22 @@
-everyone = [], users = [], voices = [], halfops = [], ops = [], time = [], ticksecs = [], afk = []. uptime = "";
+everyone = [], users = [], voices = [], halfops = [], ops = [], everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
+time = [], ticksecs = [], afk = [], uptime = '', hopm = [], totalshutdown = '';
 pentime = [], pensecs = [], role1time = [], role1secs = [], role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [];
-everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
-lead = [], salt = [], et1 = [], et2 = [], et3 = [], coor = [], flag = [];
-hopm = [];
-totalshutdown = '';
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [], justadded = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
+memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
 
-//TEMP VARIABLE FOR MEMBER & BUG REPORTS
+//TEMP VARIABLES FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 
-//TEMP VARIABLE FOR RE-REGISTER NICKNAME
+//TEMP VARIABLE FOR CREATING CWE PROFILE
+justadded = [];
+
+//TEMP VARIABLE FOR USERS WITH NEW IRC ACCESS
+newaccess = [];
+
+//TEMP VARIABLE FOR RE-REGISTER IRC NICKNAME
 reregister = [];
 
-//TEMP VARIABLE FOR USERS WITH NEW ACCESS
-newaccess = [];
 
 var Common = require('./common.js');
 
@@ -174,7 +175,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
 			console.log(err);
-			Common.bot.say(channel, "3Welcome " + nick + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering your SwiftIRC nickname.");
+			Common.bot.say(channel, "3Welcome " + nick + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
 		} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
 			reregister[name] = 1;
 			Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
