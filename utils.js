@@ -687,18 +687,18 @@ module.exports = {
 			from = 'stop';
 		}
 		if (minutesTo != 0 && from != 'stop') {
-	        if (from == 'afk') {
-	            from = 'self';
-	        } else {
-	            minutesTo--;
-	            afk[user] = minutesTo;
-	        }
-	    }
-	    if (minutesTo == 0 && from != 'stop') {
-	        from = 'stop';
-	        afk[user] = 0;
-	        Common.bot.say(channel, '4'+user+', stop AFKing!');
-	    }
+			if (from == 'afk') {
+				from = 'self';
+			} else {
+				minutesTo--;
+				afk[user] = minutesTo;
+			}
+		}
+		if (minutesTo == 0 && from != 'stop') {
+			from = 'stop';
+			afk[user] = 0;
+			Common.bot.say(channel, "4" + user + ", stop AFKing!");
+		}
 		if (from != 'stop') {
 			setTimeout(Common.utils.goingAfk, 60000, Common, channel, minutesTo, user, from);
 		}
