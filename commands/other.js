@@ -1184,3 +1184,11 @@ Commands.onkelcookie = function(Common, from, to, message) {
 Commands.kerrie = function(Common, from, to, message) {
 	Common.bot.say(to, "thinks marvel movies are good");
 };
+
+Commands.rozana = function(Common, from, to, message) {
+	Common.bot.say(to, "biggest cwe babe xo");
+};
+
+Commands.thot = function(Common, from, to, message) {
+	Common.bot.say(to, "arent all the cwexperts girls?");
+};
