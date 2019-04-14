@@ -38,9 +38,16 @@ Commands.kill = function(Common, from, to, message) {
 					}
 				});
 			};
-			var chanlist = users[to].toLowerCase();
-			chanlist = chanlist.split(" ");
-			chanlist.forEach(findProfile);
+			if (users['#cwexperts1'] != '') {
+				var chanlist = users['#cwexperts1'].toLowerCase();
+				chanlist = chanlist.split(" ");
+				chanlist.forEach(findProfile);
+			}
+			if (users['#cwexperts2'] != '') {
+				var chanlist = users['#cwexperts2'].toLowerCase();
+				chanlist = chanlist.split(" ");
+				chanlist.forEach(findProfile);
+			}
 		}
 	}
 	});
