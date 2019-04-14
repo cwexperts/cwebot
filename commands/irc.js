@@ -38,12 +38,12 @@ Commands.kill = function(Common, from, to, message) {
 					}
 				});
 			};
-			if (users['#cwexperts1'] != '') {
-				Common.bot.say(to, "hi");
+//			if (users['#cwexperts1'] != '') {
+//				Common.bot.say(to, "hi");
 //				var chanlist = users['#cwexperts1'].toLowerCase();
 //				chanlist = chanlist.split(" ");
 //				chanlist.forEach(findProfile);
-			}
+//			}
 //			if (users['#cwexperts2'] != '') {
 //				var chanlist = users['#cwexperts2'].toLowerCase();
 //				chanlist = chanlist.split(" ");
