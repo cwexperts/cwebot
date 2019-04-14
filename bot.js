@@ -157,7 +157,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 		}
 	});
-	function findProfile(item) {
+/*	function findProfile(item) {
 		item = item.toString();
 		Common.db.users.findOne({name: item}, function(err, user) {
 			if (err || !user) {
@@ -177,7 +177,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		chanlist = chanlist.split(" ");
 		chanlist.forEach(findProfile);
 	}
-//     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
+*///     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4How To Join12: http://cwexperts.org/how-to-join/. 3Thank you for visiting #CwExperts12.");
