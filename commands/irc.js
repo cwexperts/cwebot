@@ -28,6 +28,19 @@ Commands.kill = function(Common, from, to, message) {
 			Common.bot.say('#cwexperts.staff', alert);
 			Common.bot.say('#key', alert);
 			totalshutdown = 'false';
+			function findProfile(item) {
+				item = item.toString();
+				Common.db.users.findOne({name: item}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+					} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+						Common.utils.completeProfileTimer(Common, to, 'complete', 60, 5, item);
+					}
+				});
+			};
+			var chanlist = users[to].toLowerCase();
+			chanlist = chanlist.split(" ");
+			chanlist.forEach(findProfile);
 		}
 	}
 	});
