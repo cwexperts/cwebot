@@ -167,8 +167,13 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 		});
 	};
-	if (users[channel] != '') {
-		var chanlist = users[channel].toLowerCase();
+	if (users['#cwexperts1'] != '') {
+		var chanlist = users['#cwexperts1'].toLowerCase();
+		chanlist = chanlist.split(" ");
+		chanlist.forEach(findProfile);
+	}
+	if (users['#cwexperts2'] != '') {
+		var chanlist = users['#cwexperts2'].toLowerCase();
 		chanlist = chanlist.split(" ");
 		chanlist.forEach(findProfile);
 	}
