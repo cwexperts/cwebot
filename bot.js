@@ -157,6 +157,21 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 		}
 	});
+	if (channel == '#cwexperts1' || channel == '#cwexperts2') {
+		function findProfile(item) {
+			item = item.toString();
+			Common.db.users.findOne({name: item}, function(err, user) {
+				if (err || !user) {
+					console.log(err);
+				} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+					Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
+				}
+			});
+		};
+		var chanlist = users[channel].toLowerCase();
+		chanlist = chanlist.split(" ");
+		chanlist.forEach(findProfile);
+	}
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
