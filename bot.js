@@ -167,9 +167,16 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			}
 		});
 	};
-	var chanlist = users[channel].toLowerCase();
-	chanlist = chanlist.split(" ");
-	chanlist.forEach(findProfile);
+	if (users['#cwexperts1'] != '') {
+		var chanlist = users['#cwexperts1'].toLowerCase();
+		chanlist = chanlist.split(" ");
+		chanlist.forEach(findProfile);
+	}
+	if (users['#cwexperts2'] != '') {
+		var chanlist = users['#cwexperts2'].toLowerCase();
+		chanlist = chanlist.split(" ");
+		chanlist.forEach(findProfile);
+	}
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
