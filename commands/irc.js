@@ -15,11 +15,13 @@ Commands.kill = function(Common, from, to, message) {
 			Common.bot.say('#cwexperts.staff', alert);
 			Common.bot.say('#key', alert);
 			totalshutdown = 'true';
-			time = undefined, ticksecs = undefined, afk = undefined, pentime = undefined, pensecs = undefined, role1time = undefined, role1secs = undefined, 
-				role2time = undefined, role2secs = undefined, flagtime = undefined, flagsecs = undefined, actime = undefined, acsecs = undefined, 
-				memlist = undefined, tempkey = undefined, justadded = undefined, upsecs = undefined, upmins = undefined, uphrs = undefined, 
-				completesecs = undefined, completemins = undefined, memreportmins = undefined, memreportsecs = undefined, 
-				bugreportmins = undefined, bugreportsecs = undefined, reregister = undefined, newaccess = undefined;
+			time = [], ticksecs = [], afk = [], hopm = [], pentime = [], pensecs = [], role1time = [], role1secs = [], 
+				role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [], 
+				memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [], 
+				memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [], 
+				justadded = [], newaccess = [], reregister = [];
+			memlist[member] = 5;
+			Common.utils.unlockProfileTimer(Common, to, 'up', 0, 60, 24, member);
 		} else if (totalshutdown == 'true') {
 			var alert = "4[ALERT]: CWEBot is now 3online. (Ordered by " + member + ")";
 			Common.bot.say('#cwexperts', alert);
@@ -28,27 +30,26 @@ Commands.kill = function(Common, from, to, message) {
 			Common.bot.say('#cwexperts.staff', alert);
 			Common.bot.say('#key', alert);
 			totalshutdown = 'false';
-//			function findProfile(item) {
-//				item = item.toString();
-//				Common.db.users.findOne({name: item}, function(err, user) {
-//					if (err || !user) {
-//						console.log(err);
-//					} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
-//						Common.utils.completeProfileTimer(Common, to, 'complete', 60, 5, item);
-//					}
-//				});
-//			};
-//			if (users['#cwexperts1'] != '') {
-//				Common.bot.say(to, "hi");
-//				var chanlist = users['#cwexperts1'].toLowerCase();
-//				chanlist = chanlist.split(" ");
-//				chanlist.forEach(findProfile);
-//			}
-//			if (users['#cwexperts2'] != '') {
-//				var chanlist = users['#cwexperts2'].toLowerCase();
-//				chanlist = chanlist.split(" ");
-//				chanlist.forEach(findProfile);
-//			}
+			function findProfile(item) {
+				item = item.toString();
+				Common.db.users.findOne({name: item}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+					} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+						Common.utils.completeProfileTimer(Common, to, 'complete', 60, 5, item);
+					}
+				});
+			};
+			if (users['#cwexperts1'] != '') {
+				var chanlist = users['#cwexperts1'].toLowerCase();
+				chanlist = chanlist.split(" ");
+				chanlist.forEach(findProfile);
+			}
+			if (users['#cwexperts2'] != '') {
+				var chanlist = users['#cwexperts2'].toLowerCase();
+				chanlist = chanlist.split(" ");
+				chanlist.forEach(findProfile);
+			}
 		}
 	}
 	});
