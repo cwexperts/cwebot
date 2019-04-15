@@ -40,19 +40,15 @@ Commands.kill = function(Common, from, to, message) {
 					}
 				});
 			};
-			if (users['#cwexperts1'] != '') {
-				var chanlist1 = users['#cwexperts1'].toLowerCase();
-				Common.bot.say(to, "1a " + chanlist1);
+			if (everyoneLcString['#cwexperts1'] != '') {
+				var chanlist1 = everyoneLcString['#cwexperts1'].toLowerCase();
 				chanlist1 = chanlist1.split(" ");
-				Common.bot.say(to, "1b " + chanlist1);
-//				chanlist1.forEach(findProfile);
+				chanlist1.forEach(findProfile);
 			}
-			if (users['#cwexperts2'] != '') {
-				var chanlist2 = users['#cwexperts2'].toLowerCase();
-				Common.bot.say(to, "2a " + chanlist2);
+			if (everyoneLcString['#cwexperts2'] != '') {
+				var chanlist2 = everyoneLcString['#cwexperts2'].toLowerCase();
 				chanlist2 = chanlist2.split(" ");
-				Common.bot.say(to, "2b " + chanlist2);
-//				chanlist2.forEach(findProfile);
+				chanlist2.forEach(findProfile);
 			}
 		}
 	}
