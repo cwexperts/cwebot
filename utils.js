@@ -379,7 +379,7 @@ module.exports = {
 						daysRemain = daysRound.toString();
 						daysRemain = daysRemain.substr(0, daysRemain.length-5);
 						slDays = daysRemain;
-						slCountdown = "CURRENTLY ACTIVE! - " + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms remaining";
+						slCountdown = "14*** ( 2CW SPOTLIGHT REMAINING:10 " + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms 14) ***"
 					} else if (today>slEnd2) {
 						slCountdown = "unknown";
 					} else {
@@ -416,7 +416,7 @@ module.exports = {
 						daysRemain = daysRound.toString();
 						daysRemain = daysRemain.substr(0, daysRemain.length-5);
 						slDays = daysRemain;
-						slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
+						slCountdown = "14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms 14) ***"
 					}
 					var slStartNotif1a = new Date("2019-05-12T00:00:00Z");
 					var slStartNotif2a = new Date("2019-05-12T00:00:01Z");
@@ -444,7 +444,7 @@ module.exports = {
 											var list = [
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
-												"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
+												slCountdown,
 												"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
 											]
 											var rand = list[Math.floor(Math.random() * list.length)];
@@ -462,7 +462,7 @@ module.exports = {
 																var list = [
 																	"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 																	"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
-																	"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
+																	slCountdown,
 																	"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
 																]
 																var rand = list[Math.floor(Math.random() * list.length)];
@@ -473,7 +473,7 @@ module.exports = {
 														var list = [
 															"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 															"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
-															"14*** ( 2CW SPOTLIGHT COUNTDOWN:10 " + slCountdown + " 14) ***",
+															slCountdown,
 															"14*** ( 6ACTIVE PROMO CODES:13 apr2019 14) ***"
 														]
 														var rand = list[Math.floor(Math.random() * list.length)];
