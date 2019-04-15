@@ -43,12 +43,14 @@ Commands.kill = function(Common, from, to, message) {
 			if (everyoneLc['#cwexperts1'] != '') {
 				var chanlist = everyoneLc['#cwexperts1'];
 				chanlist = chanlist.split(" ");
-				chanlist.forEach(findProfile);
+				Common.bot.say(to, "hi 1");
+//				chanlist.forEach(findProfile);
 			}
 			if (everyoneLc['#cwexperts2'] != '') {
 				var chanlist = everyoneLc['#cwexperts2'];
 				chanlist = chanlist.split(" ");
-				chanlist.forEach(findProfile);
+				Common.bot.say(to, "hi 2");
+//				chanlist.forEach(findProfile);
 			}
 		}
 	}
