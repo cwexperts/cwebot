@@ -42,13 +42,17 @@ Commands.kill = function(Common, from, to, message) {
 			};
 			if (everyone['#cwexperts1'] != '') {
 				var chanlist1 = everyone['#cwexperts1'].toLowerCase();
+				Common.bot.say(to, "1a " + chanlist1);
 				chanlist1 = chanlist1.split(" ");
-				chanlist1.forEach(findProfile);
+				Common.bot.say(to, "1b " + chanlist1);
+//				chanlist1.forEach(findProfile);
 			}
 			if (everyone['#cwexperts2'] != '') {
 				var chanlist2 = everyone['#cwexperts2'].toLowerCase();
+				Common.bot.say(to, "2a " + chanlist2);
 				chanlist2 = chanlist2.split(" ");
-				chanlist2.forEach(findProfile);
+				Common.bot.say(to, "2b " + chanlist2);
+//				chanlist2.forEach(findProfile);
 			}
 		}
 	}
