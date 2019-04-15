@@ -440,7 +440,7 @@ module.exports = {
 								seconds = 0;
 								Common.db.channels.update({channel: channel}, {$set: {seconds: seconds, minutes: minutes}}, function(err, updated) {
 									Common.db.channels.findOne({channel: channel}, function(err, ch) {
-										if (ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
+										if (ch.minutes == 1 || ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
 											var list = [
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",
