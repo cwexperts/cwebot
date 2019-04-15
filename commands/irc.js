@@ -40,13 +40,13 @@ Commands.kill = function(Common, from, to, message) {
 					}
 				});
 			};
-			if (users['#cwexperts1'] != '') {
-				var chanlist = users['#cwexperts1'].toLowerCase();
+			if (everyoneLc['#cwexperts1'] != '') {
+				var chanlist = everyoneLc['#cwexperts1'];
 				chanlist = chanlist.split(" ");
 				chanlist.forEach(findProfile);
 			}
-			if (users['#cwexperts2'] != '') {
-				var chanlist = users['#cwexperts2'].toLowerCase();
+			if (everyoneLc['#cwexperts2'] != '') {
+				var chanlist = everyoneLc['#cwexperts2'];
 				chanlist = chanlist.split(" ");
 				chanlist.forEach(findProfile);
 			}
