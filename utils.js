@@ -298,10 +298,10 @@ module.exports = {
 					from = 'self';
 				} else {
 					var today = new Date();
-					var slStart = new Date("2019-03-19T00:00:00Z");
-					var slEnd = new Date("2019-03-22T00:00:00Z");
-					var slStart2 = new Date("2019-04-12T00:00:00Z");
-					var slEnd2 = new Date("2019-04-15T00:00:00Z");
+					var slStart = new Date("2019-05-12T00:00:00Z");
+					var slEnd = new Date("2019-05-15T00:00:00Z");
+					var slStart2 = new Date("2019-06-08T00:00:00Z");
+					var slEnd2 = new Date("2019-06-11T00:00:00Z");
 					var slDays = '';
 					var slHours = '';
 					var slMinutes = '';
@@ -376,13 +376,18 @@ module.exports = {
 						slDays = daysRemain;
 						slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 					}
-					var slStartNotif1 = new Date("2019-04-12T00:00:00Z");
-					var slStartNotif2 = new Date("2019-04-12T00:00:01Z");
-					var slEndNotif1 = new Date("2019-04-15T00:00:00Z");
-					var slEndNotif2 = new Date("2019-04-15T00:00:01Z");
-					if (today>slStartNotif1 && today<slStartNotif2) {
+					var slStartNotif1a = new Date("2019-05-12T00:00:00Z");
+					var slStartNotif2a = new Date("2019-05-12T00:00:01Z");
+					var slEndNotif1a = new Date("2019-05-15T00:00:00Z");
+					var slEndNotif2a = new Date("2019-05-15T00:00:01Z");
+					var slStartNotif1b = new Date("2019-06-08T00:00:00Z");
+					var slStartNotif2b = new Date("2019-06-08T00:00:01Z");
+					var slEndNotif1b = new Date("2019-06-11T00:00:00Z");
+					var slEndNotif2b = new Date("2019-06-11T00:00:01Z");
+					if ((today>slStartNotif1a && today<slStartNotif2a) || (today>slStartNotif1b && today<slStartNotif2b)) {
 						Common.bot.say(channel, "14*** ( 2THE CASTLE WARS SPOTLIGHT HAS JUST STARTED! 14) ***");
-					} if (today>slEndNotif1 && today<slEndNotif2) {
+					}
+					if ((today>slEndNotif1a && today<slEndNotif2a) || (today>slEndNotif1b && today<slEndNotif2b)) {
 						Common.bot.say(channel, "14*** ( 2THE CASTLE WARS SPOTLIGHT HAS JUST ENDED! 14) ***");
 					}
 					var seconds = ch.seconds + 1;
