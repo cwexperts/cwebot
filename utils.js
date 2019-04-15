@@ -298,8 +298,8 @@ module.exports = {
 					from = 'self';
 				} else {
 					var today = new Date();
-					var slStart = new Date("2019-05-12T00:00:00Z");
-					var slEnd = new Date("2019-05-15T00:00:00Z");
+					var slStart = new Date("2019-04-15T00:00:00Z");
+					var slEnd = new Date("2019-04-16T00:00:00Z");
 					var slStart2 = new Date("2019-06-08T00:00:00Z");
 					var slEnd2 = new Date("2019-06-11T00:00:00Z");
 					var slDays = '';
@@ -329,6 +329,8 @@ module.exports = {
 					var daysRemain = 0;
 					var startmath1 = '';
 					var startmath2 = '';
+					var currentmath1 = '';
+					var currentmath2 = '';
 					if (today<slStart) {
 						startmath1 = slStart
 						startmath2 = today
@@ -336,8 +338,48 @@ module.exports = {
 						startmath1 = slStart2
 						startmath2 = today
 					}
+					if (today<slEnd) {
+						currentmath1 = slEnd
+						currentmath2 = today
+					} else if (today<slEnd2) {
+						currentmath1 = slEnd2
+						currentmath2 = today
+					}
 					if ((today>slStart && today<slEnd) || (today>slStart2 && today<slEnd2)) {
-						slCountdown = "CURRENTLY ACTIVE!";
+						millisecsLeft = (currentmath1 - currentmath2) / secTics;
+						millisecsRound = Math.floor(millisecsLeft);
+						millisecsRemain = millisecsLeft - millisecsRound;
+						millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
+						millisecsRemain = millisecsRemain.toFixed(12);
+						millisecsRemain = millisecsRemain.toString();
+						slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
+						secsLeft = (currentmath1 - currentmath2) / minTics;
+						secsRound = Math.floor(secsLeft);
+						secsRemain = secsLeft - secsRound;
+						secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
+						secsRemain = secsRemain.toFixed(4);
+						secsRemain = secsRemain.toString();
+						slSeconds = secsRemain.substr(0, secsRemain.length-5);
+						minsLeft = (currentmath1 - currentmath2) / hourTics;
+						minsRound = Math.floor(minsLeft);
+						minsRemain = minsLeft - minsRound;
+						minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
+						minsRemain = minsRemain.toFixed(4);
+						minsRemain = minsRemain.toString();
+						slMinutes = minsRemain.substr(0, minsRemain.length-5);
+						hoursLeft = (currentmath1 - currentmath2) / dayTics;
+						hoursRound = Math.floor(hoursLeft);
+						hoursRemain = hoursLeft - hoursRound;
+						hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
+						hoursRemain = hoursRemain.toFixed(4);
+						hoursRemain = hoursRemain.toString();
+						slHours = hoursRemain.substr(0, hoursRemain.length-5);
+						daysLeft = (currentmath1 - currentmath2) / dayTics;
+						daysRound = daysLeft.toFixed(4);
+						daysRemain = daysRound.toString();
+						daysRemain = daysRemain.substr(0, daysRemain.length-5);
+						slDays = daysRemain;
+						slCountdown = "CURRENTLY ACTIVE! - " + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms remaining";
 					} else if (today>slEnd2) {
 						slCountdown = "unknown";
 					} else {
@@ -398,7 +440,7 @@ module.exports = {
 								seconds = 0;
 								Common.db.channels.update({channel: channel}, {$set: {seconds: seconds, minutes: minutes}}, function(err, updated) {
 									Common.db.channels.findOne({channel: channel}, function(err, ch) {
-										if (ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
+										if (ch.minutes == 1 || ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
 											var list = [
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",

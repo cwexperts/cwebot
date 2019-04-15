@@ -101,8 +101,7 @@ Common.bot.addListener('message', function(from, to, message) {
   }
 
   if (totalshutdown == 'true' && command != 'kill' && command != 'unlockprofile' && command != 'unlockp' && command != 'up' && command != 'lockprofile' && command != 'lockp' && command != 'lp' && (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function')) {
-	Common.bot.send(from, "Sorry " + from + ", CWEBot is currently offline. 1");
-	Common.bot.send('query', from, "Sorry " + from + ", CWEBot is currently offline. 2");
+	Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) === 'function') {
 	Common.commands[command](Common, from, to, message);
   } else if (Common.utils.isCmd(message) && typeof(Common.commands[command]) !== 'function') {
