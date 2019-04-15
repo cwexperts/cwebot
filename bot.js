@@ -126,7 +126,6 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		} else {
 			if (ch.games !== 0) {
 				Common.bot.say(channel, "0,1Connection lost. Please wait - attempting to reestablish. Use !connectionLost to learn more.");
-			}
 			if (ch.seconds !== 0 || ch.minutes !== 0 || ch.hours !== 0 || ch.days !== 0) {
 				Common.bot.say(channel, "2CWEBot has restarted the playtime counters for this channel.");
 				var gtdays = 0;
@@ -157,6 +156,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 				Common.bot.say(channel, "2Current session playtime:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s2 - Max gold tickets earned: 10" + gtall + "2; with enhancers: 10" + gtallen + "2 - Max thaler earned: 10" + thall + "2; on spotlight: 10" + thallsl);
 				Common.utils.remindPlaytime(Common, channel, 1, 'playtime');
 			}
+			}
 		}
 	});
 	function findProfile(item) {
@@ -174,10 +174,10 @@ Common.bot.addListener('join', function(channel, nick, message) {
 			if (everyoneLcString[channel] != '') {
 				var chanlist = everyoneLcString[channel].toLowerCase();
 				chanlist = chanlist.split(" ");
-//				chanlist.forEach(findProfile);
+				chanlist.forEach(findProfile);
 			}
 		}
-	}, 10000);
+	}, 5000);
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 //       Common.bot.say(channel, "12Hello! I am CWEBot. 4Operating Manual12: http://cwexperts.org/bot-commands/. 3Thank you for playing with #CwExperts12.");
 //     } else if (channel == '#cwexperts') {
