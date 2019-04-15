@@ -153,7 +153,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
 					console.log(err);
-				} else if ((user.status == 'Admin' || user.status == 'Owner') && (user.key !== undefined) {
+				} else if ((user.status == 'Admin' || user.status == 'Owner') && user.key !== undefined) {
 					if (prof[1] !== undefined) {
 						if (memlist[name] === 5) {
 							Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
