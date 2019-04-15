@@ -173,7 +173,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		if (everyoneLcString[channel] != '') {
 			var chanlist = everyoneLcString[channel].toLowerCase();
 			chanlist = chanlist.split(" ");
-			chanlist.forEach(findProfile);
+//			chanlist.forEach(findProfile);
 		}
 	}
 //     if (channel == '#cwexperts1' || channel == '#cwexperts2') {
