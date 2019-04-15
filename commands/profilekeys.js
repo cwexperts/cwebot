@@ -153,6 +153,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
 					console.log(err);
+					Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 				} else if ((user.status == 'Admin' || user.status == 'Owner') && user.key !== undefined) {
 					if (prof[1] !== undefined) {
 						if (memlist[name] === 5) {
@@ -175,8 +176,12 @@ Commands.unlockprofile = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5" + name + ", you must enter your profile key to unlock your profile. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
 					}
+				} else {
+					Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 				}
 			});
+		} else {
+			Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 		}
 	} else {
 	if (to == '#key') {
@@ -248,6 +253,7 @@ Commands.lockprofile = function(Common, from, to, message) {
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user) {
 					console.log(err);
+					Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 				} else if (user.status == 'Admin' || user.status == 'Owner') {
 					if (memlist[name] === 5) {
 						memlist[name] = 0;
@@ -258,8 +264,12 @@ Commands.lockprofile = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile to unlock your profile.");
 					}
+				} else {
+					Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 				}
 			});
+		} else {
+			Common.bot.notice(from, "Sorry " + from + ", CWEBot is currently offline.");
 		}
 	} else {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
