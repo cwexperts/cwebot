@@ -42,15 +42,15 @@ Commands.kill = function(Common, from, to, message) {
 			};
 			if (everyoneLc['#cwexperts1'] != '') {
 				Common.bot.say(to, "hi 1");
-				var chanlist = everyoneLc['#cwexperts1'].toLowerCase;
-				chanlist = chanlist.split(" ");
-//				chanlist.forEach(findProfile);
+				var chanlist1 = everyoneLc['#cwexperts1'].toLowerCase();
+				chanlist1 = chanlist1.split(" ");
+//				chanlist1.forEach(findProfile);
 			}
 			if (everyoneLc['#cwexperts2'] != '') {
 				Common.bot.say(to, "hi 2");
-				var chanlist = everyoneLc['#cwexperts2'].toLowerCase;
-				chanlist = chanlist.split(" ");
-//				chanlist.forEach(findProfile);
+				var chanlist2 = everyoneLc['#cwexperts2'].toLowerCase();
+				chanlist2 = chanlist2.split(" ");
+//				chanlist2.forEach(findProfile);
 			}
 		}
 	}
