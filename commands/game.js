@@ -1170,11 +1170,11 @@ Commands.ptt = function(Common, from, to, message) {
 
 Commands.spotlight = function(Common, from, to, message) {
 	var today = new Date();
-	var slEndPrev = new Date("2019-02-23T00:00:00Z");
-	var slStart = new Date("2019-03-19T00:00:00Z");
-	var slEnd = new Date("2019-03-22T00:00:00Z");
-	var slStart2 = new Date("2019-04-12T00:00:00Z");
-	var slEnd2 = new Date("2019-04-15T00:00:00Z");
+	var slEndPrev = new Date("2019-04-15T00:00:00Z");
+	var slStart = new Date("2019-05-12T00:00:00Z");
+	var slEnd = new Date("2019-05-15T00:00:00Z");
+	var slStart2 = new Date("2019-06-08T00:00:00Z");
+	var slEnd2 = new Date("2019-06-11T00:00:00Z");
 	var slDays = '';
 	var slHours = '';
 	var slMinutes = '';
@@ -1257,18 +1257,18 @@ Commands.spotlight = function(Common, from, to, message) {
 	if (today<slEnd) {
 		endmath1 = today
 		endmath2 = slEndPrev
-		sldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
-		prevsldate = "Wed Feb 20th-Sat Feb 23rd 2019 00:00 GT";
+		sldate = "Sun May 12th-Wed May 15th 2019 00:00 GT";
+		prevsldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
 	} else if (today<slEnd2) {
 		endmath1 = today
 		endmath2 = slEnd
-		sldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
-		prevsldate = "Tue Mar 19th-Fri Mar 22nd 2019 00:00 GT";
+		sldate = "Sat Jun 8th-Tue Jun 11th 2019 00:00 GT";
+		prevsldate = "Sun May 12th-Wed May 15th 2019 00:00 GT";
 	} else if (today>slEnd2) {
 		endmath1 = today
 		endmath2 = slEnd2
 		sldate = "unknown";
-		prevsldate = "Fri Apr 12th-Mon Apr 15th 2019 00:00 GT";
+		prevsldate = "Sat Jun 8th-Tue Jun 11th 2019 00:00 GT";
 	}
 		millisecsLeft = (endmath1 - endmath2) / secTics;
 		millisecsRound = Math.floor(millisecsLeft);
