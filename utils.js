@@ -581,9 +581,6 @@ module.exports = {
 		}
 	},
 	unlockProfileTimer: function(Common, channel, from, secondsTo, minutesTo, hoursTo, member) {
-		if (totalshutdown == 'true') {
-			from = 'stop';
-		}
 		if (from != 'stop') {
 			if (from == 'up') {
 				from = 'self';
