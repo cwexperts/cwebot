@@ -1,4 +1,4 @@
-everyone = [], users = [], voices = [], halfops = [], ops = [], everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [];
+everyone = [], users = [], voices = [], halfops = [], ops = [], everyoneLc = [], usersLc = [], voicesLc = [], halfopsLc = [], opsLc = [], everyoneLcString = [];
 time = [], ticksecs = [], afk = [], uptime = '', hopm = [], totalshutdown = '';
 pentime = [], pensecs = [], role1time = [], role1secs = [], role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [];
 
@@ -46,6 +46,7 @@ Common.bot.addListener('registered', function(message) {
 Common.bot.addListener('names', function(channel, nicks) {
   everyone[channel] = [], users[channel] = [], voices[channel] = [], halfops[channel] = [], ops[channel] = [];
   everyoneLc[channel] = [], usersLc[channel] = [], voicesLc[channel] = [], halfopsLc[channel] = [], opsLc[channel] = [];
+  everyoneLcString[channel] = [];
   
   for (var nick in nicks) {
     if (nick != Common.config.botName && nick.indexOf('RuneScript') == -1 
@@ -76,6 +77,7 @@ Common.bot.addListener('names', function(channel, nicks) {
     }
     
     everyoneLc[channel].push(Common.utils.toLc(nick));
+    everyoneLcString[channel] += Common.utils.toLc(nick) + ' ';
     if (nicks[nick] == '+') {
       voicesLc[channel].push(Common.utils.toLc(nick));
     }
