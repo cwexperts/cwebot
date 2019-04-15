@@ -142,6 +142,43 @@ Commands.epk = function(Common, from, to, message) {
 };
 
 Commands.unlockprofile = function(Common, from, to, message) {
+	if (totalshutdown == 'true') {
+		if (to == '#key') {
+			var name = Common.utils.toDb(from);
+			var prof = message.match(/\S+/g);
+			if (prof[1] !== undefined) {
+				var pk = prof[1];
+				var conf = Common.utils.toLc(prof[1]);
+			}
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user) {
+					console.log(err);
+				} else if ((user.status == 'Admin' || user.status == 'Owner')) && user.key !== undefined) {
+					if (prof[1] !== undefined) {
+						if (memlist[name] === 5) {
+							Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
+						} else if (memlist[name] === undefined || memlist[name] === 0) {
+							if (pk == user.key) {
+								memlist[name] = 5;
+								Common.utils.unlockProfileTimer(Common, to, 'up', 0, 60, 24, name);
+								if (user.status == 'Owner') {
+									Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked. Use !lockProfile to lock your profile.");
+								} else {
+									Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked - please leave this channel. Use !lockProfile to lock your profile when you are done playing games.");
+								}
+							} else {
+								Common.bot.say(to, "4" + name + ", your profile key was incorrect. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+							}
+						}
+					} else if (memlist[name] === 5) {
+						Common.bot.say(to, "5" + name + ", your profile is already unlocked! Use !lockProfile to lock your profile.");
+					} else {
+						Common.bot.say(to, "5" + name + ", you must enter your profile key to unlock your profile. Use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+					}
+				}
+			});
+		}
+	} else {
 	if (to == '#key') {
 		var name = Common.utils.toDb(from);
 		var prof = message.match(/\S+/g);
@@ -168,7 +205,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 						if (pk == user.key) {
 							memlist[name] = 5;
 							Common.utils.unlockProfileTimer(Common, to, 'up', 0, 60, 24, name);
-							if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna' || name == 'alexis') {
+							if (user.status == 'Owner') {
 								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked. Use !lockProfile to lock your profile.");
 							} else {
 								Common.bot.say(to, "3" + name + ", your profile has been temporarily unlocked - please leave this channel. Use !lockProfile to lock your profile when you are done playing games.");
@@ -193,6 +230,7 @@ Commands.unlockprofile = function(Common, from, to, message) {
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
 	}
+	}
 };
 
 Commands.unlockp = function(Common, from, to, message) {
@@ -204,6 +242,26 @@ Commands.up = function(Common, from, to, message) {
 };
 
 Commands.lockprofile = function(Common, from, to, message) {
+	if (totalshutdown == 'true') {
+		if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
+			var name = Common.utils.toDb(from);
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user) {
+					console.log(err);
+				} else if (user.status == 'Admin' || user.status == 'Owner') {
+					if (memlist[name] === 5) {
+						memlist[name] = 0;
+						upsecs[name] = 0;
+						upmins[name] = 0;
+						uphrs[name] = 0;
+						Common.bot.say(to, "4" + name + ", your profile has been locked. Use !unlockProfile to unlock your profile.");
+					} else {
+						Common.bot.say(to, "5" + name + ", your profile is already locked! Use !unlockProfile to unlock your profile.");
+					}
+				}
+			});
+		}
+	} else {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
 		var name = Common.utils.toDb(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
@@ -226,6 +284,7 @@ Commands.lockprofile = function(Common, from, to, message) {
 		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels and the profile key channel to display member-only information.");
+	}
 	}
 };
 					
