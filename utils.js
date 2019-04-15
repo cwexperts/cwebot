@@ -298,8 +298,8 @@ module.exports = {
 					from = 'self';
 				} else {
 					var today = new Date();
-					var slStart = new Date("2019-04-15T00:00:00Z");
-					var slEnd = new Date("2019-04-16T00:00:00Z");
+					var slStart = new Date("2019-05-12T00:00:00Z");
+					var slEnd = new Date("2019-05-15T00:00:00Z");
 					var slStart2 = new Date("2019-06-08T00:00:00Z");
 					var slEnd2 = new Date("2019-06-11T00:00:00Z");
 					var slDays = '';
@@ -381,7 +381,7 @@ module.exports = {
 						slDays = daysRemain;
 						slCountdown = "14*** ( 2CW SPOTLIGHT REMAINING:10 " + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms 14) ***"
 					} else if (today>slEnd2) {
-						slCountdown = "unknown";
+						slCountdown = "14*** ( 2CW SPOTLIGHT COUNTDOWN:10 unknown 14) ***"
 					} else {
 						millisecsLeft = (startmath1 - startmath2) / secTics;
 						millisecsRound = Math.floor(millisecsLeft);
@@ -440,7 +440,7 @@ module.exports = {
 								seconds = 0;
 								Common.db.channels.update({channel: channel}, {$set: {seconds: seconds, minutes: minutes}}, function(err, updated) {
 									Common.db.channels.findOne({channel: channel}, function(err, ch) {
-										if (ch.minutes == 1 || ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
+										if (ch.minutes == 15 || ch.minutes == 30 || ch.minutes == 45) {
 											var list = [
 												"14*** ( 2CURRENT SESSION PLAYTIME:10 " + ch.days + "d " + ch.hours + "h " + ch.minutes + "m " + ch.seconds + "s 14) ***",
 												"14*** ( 3RECRUIT NEW MEMBERS - ADVERTISE CWE CHANNELS! 14) ***",

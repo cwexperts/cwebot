@@ -1207,6 +1207,9 @@ Commands.spotlight = function(Common, from, to, message) {
 	var startmath2 = '';
 	var endmath1 = '';
 	var endmath2 = '';
+	var currentmath1 = '';
+	var currentmath2 = '';
+	var introtext = '';
 	if (today<slStart) {
 		startmath1 = slStart;
 		startmath2 = today;
@@ -1214,10 +1217,52 @@ Commands.spotlight = function(Common, from, to, message) {
 		startmath1 = slStart2;
 		startmath2 = today;
 	}
+	if (today<slEnd) {
+		currentmath1 = slEnd
+		currentmath2 = today
+	} else if (today<slEnd2) {
+		currentmath1 = slEnd2
+		currentmath2 = today
+	}
 	if ((today>slStart && today<slEnd) || (today>slStart2 && today<slEnd2)) {
-		slCountdown = "CURRENTLY ACTIVE!";
+		millisecsLeft = (currentmath1 - currentmath2) / secTics;
+		millisecsRound = Math.floor(millisecsLeft);
+		millisecsRemain = millisecsLeft - millisecsRound;
+		millisecsRemain = (millisecsRemain < 0) ? millisecsRemain = 1000 - ((millisecsRound - millisecsLeft) * 1000) : millisecsRemain = ((millisecsLeft - millisecsRound) * 1000);
+		millisecsRemain = millisecsRemain.toFixed(12);
+		millisecsRemain = millisecsRemain.toString();
+		slMilliseconds = millisecsRemain.substr(0, millisecsRemain.length-13);
+		secsLeft = (currentmath1 - currentmath2) / minTics;
+		secsRound = Math.floor(secsLeft);
+		secsRemain = secsLeft - secsRound;
+		secsRemain = (secsRemain < 0) ? secsRemain = 60 - ((secsRound - secsLeft) * 60) : secsRemain = ((secsLeft - secsRound) * 60);
+		secsRemain = secsRemain.toFixed(4);
+		secsRemain = secsRemain.toString();
+		slSeconds = secsRemain.substr(0, secsRemain.length-5);
+		minsLeft = (currentmath1 - currentmath2) / hourTics;
+		minsRound = Math.floor(minsLeft);
+		minsRemain = minsLeft - minsRound;
+		minsRemain = (minsRemain < 0) ? minsRemain = 60 - ((minsRound - minsLeft)  * 60) : minsRemain = ((minsLeft - minsRound) * 60);
+		minsRemain = minsRemain.toFixed(4);
+		minsRemain = minsRemain.toString();
+		slMinutes = minsRemain.substr(0, minsRemain.length-5);
+		hoursLeft = (currentmath1 - currentmath2) / dayTics;
+		hoursRound = Math.floor(hoursLeft);
+		hoursRemain = hoursLeft - hoursRound;
+		hoursRemain = (hoursRemain < 0) ? hoursRemain = 24 - ((hoursRound - hoursLeft)  * 24) : hoursRemain = ((hoursLeft - hoursRound) * 24);
+		hoursRemain = hoursRemain.toFixed(4);
+		hoursRemain = hoursRemain.toString();
+		slHours = hoursRemain.substr(0, hoursRemain.length-5);
+		daysLeft = (currentmath1 - currentmath2) / dayTics;
+		daysRound = daysLeft.toFixed(4);
+		daysRemain = daysRound.toString();
+		daysRemain = daysRemain.substr(0, daysRemain.length-5);
+		slDays = daysRemain;
+		introtext = "2Current CW SL:10 ";
+		slCountdown = "remaining: 10" + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 	} else if (today>slEnd2) {
-		slCountdown = "unknown";
+		introtext = "2Next CW SL:10 ";
+		slCountdown = "countdown: 10unknown";
 	} else {
 		millisecsLeft = (startmath1 - startmath2) / secTics;
 		millisecsRound = Math.floor(millisecsLeft);
@@ -1252,7 +1297,8 @@ Commands.spotlight = function(Common, from, to, message) {
 		daysRemain = daysRound.toString();
 		daysRemain = daysRemain.substr(0, daysRemain.length-5);
 		slDays = daysRemain;
-		slCountdown = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
+		introtext = "2Next CW SL:10 ";
+		slCountdown = "countdown: 10" + slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
 	}
 	if (today<slEnd) {
 		endmath1 = today
@@ -1304,7 +1350,7 @@ Commands.spotlight = function(Common, from, to, message) {
 		daysRemain = daysRemain.substr(0, daysRemain.length-5);
 		slDays = daysRemain;
 		slEndedAgo = slDays + "d " + slHours + "h " + slMinutes + "m " + slSeconds + "s " + slMilliseconds + "ms";
-	Common.bot.say(to, "2Next CW SL:10 " + sldate + "2, countdown: 10" + slCountdown + "2 - Previous CW SL:10 " + prevsldate + "2, ended: 10" + slEndedAgo);
+	Common.bot.say(to, introtext + sldate + "2, " + slCountdown + "2 - Previous CW SL:10 " + prevsldate + "2, ended: 10" + slEndedAgo);
 };
 
 Commands.sl = function(Common, from, to, message) {
