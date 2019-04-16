@@ -4669,12 +4669,12 @@ Commands.remindprofile = function(Common, from, to, message) {
 										}
 									} else {
 										justadded[name] = 0;
-										Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because they are not present in a games channel, however their immunity has been removed and it will now start automatically when appropriate.");
+										Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because they are not present in a games channel - however, their immunity has been removed and it will now automatically start when appropriate.");
 									}
 								} else if (everyoneLc['#cwexperts1'].indexOf(name) > -1 || everyoneLc['#cwexperts2'].indexOf(name) > -1) {
-									Common.bot.say(to, "5The 'complete profile' reminder for " + name + " is already active.");
+									Common.bot.say(to, "5The 'complete profile' reminder for " + name + " is already active!");
 								} else {
-									Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because it will start automatically when appropriate.");
+									Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because they are not present in a games channel - it will automatically start when appropriate.");
 								}
 							} else {
 								Common.bot.say(to, "5" + name + "'s profile is already complete - the 'complete profile' reminder may not be force started for them.");
