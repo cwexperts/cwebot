@@ -305,3 +305,70 @@ Commands.lockp = function(Common, from, to, message) {
 Commands.lp = function(Common, from, to, message) {
 	Commands.lockprofile(Common, from, to, message);
 };
+
+Commands.remindprofile = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toDb(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to force start the 'complete profile' reminder for a new member.");
+			} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+				if (memlist[member] != 5 || perms.key === undefined) {
+					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else {
+					if (Common.utils.msg(message)) {
+						var name = message.match(/\S+/g);
+						name = Common.utils.toLc(name[1]);
+						Common.db.users.findOne({name: name}, function(err, user) {
+							if (err || !user) {
+								console.log(err);
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+							} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+								if (justadded[name] == 1
+									if (everyoneLc['#cwexperts1'].indexOf(name) > -1 || everyoneLc['#cwexperts2'].indexOf(name) > -1) {
+										var rp = "2" + member + " has force started the 'complete profile' reminder for " + name + "."
+										justadded[name] = 0;
+										Common.utils.completeProfileTimer(Common, to, 'complete', 60, 5, name);
+										if (everyoneLc['#cwexperts1'].indexOf(name) > -1) {
+											Common.bot.say('#cwexperts1', rp);
+										}
+										if (everyoneLc['#cwexperts2'].indexOf(name) > -1) {
+											Common.bot.say('#cwexperts2', rp);
+										}
+										if (to == '#cwexperts.staff') {
+											Common.bot.say(to, rp);
+										}
+									} else {
+										justadded[name] = 0;
+										Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because they are not present in a games channel, however their immunity has been removed and it will now start automatically when appropriate.");
+									}
+								} else if (everyoneLc['#cwexperts1'].indexOf(name) > -1 || everyoneLc['#cwexperts2'].indexOf(name) > -1) {
+									Common.bot.say(to, "5The 'complete profile' reminder for " + name + " is already active.");
+								} else {
+									Common.bot.say(to, "5" + member + ", you may not force start the 'complete profile' reminder for " + name + " because it will start automatically when appropriate.");
+								}
+							} else {
+								Common.bot.say(to, "5" + name + "'s profile is already complete - the 'complete profile' reminder may not be force started for them.");
+							}
+						});
+					} else {
+						Common.bot.say(to, "5You must specify a member to force start the 'complete profile' reminder for when using this command. Use the format !remindProfile IRC_NICKNAME_HERE to force start the 'complete profile' reminder for a new member.");
+					}
+				}
+			} else {
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to force start the 'complete profile' reminder for a new member.");
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.remindp = function(Common, from, to, message) {
+	Commands.remindprofile(Common, from, to, message);
+};
+
+Commands.rp = function(Common, from, to, message) {
+	Commands.remindprofile(Common, from, to, message);
+};
