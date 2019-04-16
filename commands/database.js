@@ -2844,155 +2844,119 @@ Commands.idiots = function(Common, from, to, message) {
 
 Commands.warn = function(Common, from, to, message) {
 	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-	var member = Common.utils.toLc(from);
-	Common.db.users.findOne({name: member}, function(err, perms) {
-	if (err || !perms) {
-		console.log(err);
-		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
-	} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
-		if (memlist[member] != 5 || perms.key === undefined) {
-			Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
-		} else {
-		if (Common.utils.msg(message)) {
-		name = message.match(/\S+/g);
-		if (name.indexOf("abdel") > -1) {
-			Common.bot.say(to, "4Nice try, " + from + "! Abdel never fucks up!");
-		} else {
-			Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-			if (err || !user) {
-			console.log(err);
-			Common.bot.say(to, "5" + "IRC Nickname '" + Common.utils.toLc(name[1]) + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
-			} else {
-				Common.db.users.update({name: Common.utils.toDb(name[1])}, {$inc: { "warns": 1 }}, function(err, updated) {
-				if (err || !updated) {
-				console.log("User not updated");
-				}
-				Common.db.users.findOne({name: Common.utils.toDb(name[1])}, function(err, user) {
-					if (user.warns == 1) {
-						var warn_msg = "4" + Common.utils.toLc(name[1]) + ", you just fucked up! You now have a total of " + user.warns + " warn.";
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
+			} else if (perms.status == 'Staff' || perms.status == 'Admin' || perms.status == 'Owner') {
+				if (memlist[member] != 5 || perms.key === undefined) {
+					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else if (Common.utils.msg(message)) {
+					name = message.match(/\S+/g);
+					name = Common.utils.toLc(name[1]);
+					if (name == 'abdel') {
+						Common.bot.say(to, "4Nice try, " + from + "! Abdel never fucks up!");
 					} else {
-						var warn_msg = "4" + Common.utils.toLc(name[1]) + ", you just fucked up! You now have a total of " + user.warns + " warns.";
+						Common.db.users.findOne({name: name}, function(err, user) {
+							if (err || !user) {
+								console.log(err);
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+							} else {
+								Common.db.users.update({name: name}, {$inc: { "warns": 1 }}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated");
+									}
+									Common.db.users.findOne({name: name}, function(err, user) {
+										if (user.warns == 1) {
+											var warn_msg = "4" + name + ", you just fucked up! You now have a total of " + user.warns + " warn.";
+										} else {
+											var warn_msg = "4" + name + ", you just fucked up! You now have a total of " + user.warns + " warns.";
+										}
+										if (user.warns == 1 || user.warns == 4 || user.warns == 10 || user.warns == 13) {
+											warn_msg += " You will earn a 24 hour temporary ban after 2 more warns.";
+										} else if (user.warns == 2 || user.warns == 5 || user.warns == 11 || user.warns == 14) {
+											warn_msg += " You will earn a 24 hour temporary ban after 1 more warn.";
+										} else if (user.warns == 3 || user.warns == 6 || user.warns == 12 || user.warns == 15) {
+											warn_msg += " Oh no, you have earned a 24 hour temporary ban!";
+											setTimeout(function() {
+												Common.bot.say(to, "4" + name + ", you will be temporarily banned in 30 seconds, any last words?");
+											}, 5000);
+											setTimeout(function() {
+												Common.bot.say("#cwexperts1", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts2", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts.staff", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+											}, 35000);
+										} else if (user.warns == 7 || user.warns == 16) {
+											warn_msg += " You will earn a 72 hour temporary ban after 2 more warns.";
+										} else if (user.warns == 8 || user.warns == 17) {
+											warn_msg += " You will earn a 72 hour temporary ban after 1 more warn.";
+										} else if (user.warns == 9 || user.warns == 18) {
+											warn_msg += " Oh no, you have earned a 72 hour temporary ban!";
+											setTimeout(function() {
+												Common.bot.say(to, "4" + name + ", you will be temporarily banned in 30 seconds, any last words?");
+											}, 5000);
+											setTimeout(function() {
+												Common.bot.say("#cwexperts1", "!tb " + name + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts2", "!tb " + name + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts.staff", "!tb " + name + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
+											}, 35000);
+										} else if (user.warns == 19) {
+											warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and then you must make a 500m deposit to continue playing games.";
+										} else if (user.warns == 20) {
+											warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and then you must make a 500m deposit to continue playing games.";
+										} else if (user.warns == 21) {
+											warn_msg += " Oh no, you have earned a 24 hour temporary ban, after which you must make a 500m deposit to continue playing games!";
+											setTimeout(function() {
+												Common.bot.say(to, "4" + name + ", you will be temporarily banned in 30 seconds, any last words?");
+											}, 5000);
+											setTimeout(function() {
+												Common.bot.say("#cwexperts1", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts2", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts.staff", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+											}, 35000);
+										} else if (user.warns == 22) {
+											warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and you will earn a permanent ban after 3 more warns.";
+										} else if (user.warns == 23) {
+											warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and you will earn a permanent ban after 2 more warns.";
+										} else if (user.warns == 24) {
+											warn_msg += " Oh no, you have earned a 24 hour temporary ban, and you will earn a permanent ban after 1 more warn!";
+											setTimeout(function() {
+												Common.bot.say(to, "4" + name + ", you will be temporarily banned in 30 seconds, any last words?");
+											}, 5000);
+											setTimeout(function() {
+												Common.bot.say("#cwexperts1", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts2", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts.staff", "!tb " + name + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
+											}, 35000);
+										} else if (user.warns == 25) {
+											warn_msg += " Oh no, you have earned a permanent ban, and you will not be refunded your 500m deposit!";
+											setTimeout(function() {
+												Common.bot.say(to, "4" + name + ", you will be permanently banned in 30 seconds, any last words?");
+											}, 5000);
+											setTimeout(function() {
+												Common.bot.say("#cwexperts1", "!kb " + name + " permanent ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts2", "!kb " + name + " permanent ban from #CwExperts via CWEBot");
+												Common.bot.say("#cwexperts.staff", "!kb " + name + " permanent ban from #CwExperts via CWEBot");
+											}, 35000);
+										} else if (user.warns == 100 || user.warns == 500|| user.warns == 1000|| user.warns == 5000|| user.warns == 10000) {
+											warn_msg += " You should probably stop fucking up...";
+										} else {
+											warn_msg += " No one is surprised.";
+										}
+										Common.bot.say(to, warn_msg);
+									});
+								});
+							}
+						});
 					}
-				if (user.warns == 1 || user.warns == 4 || user.warns == 10 || user.warns == 13) {
-					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns.";
-				} else if (user.warns == 2 || user.warns == 5 || user.warns == 11 || user.warns == 14) {
-					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn.";
-				} else if (user.warns == 3 || user.warns == 6 || user.warns == 12 || user.warns == 15) {
-					warn_msg += " Oh no, you have earned a 24 hour temporary ban!";
-					setTimeout(function() {
-						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
-					}, 5000);
-					setTimeout(function() {
-						to = "#cwexperts1";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts2";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts.staff";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-				} else if (user.warns == 7 || user.warns == 16) {
-					warn_msg += " You will earn a 72 hour temporary ban after 2 more warns.";
-				} else if (user.warns == 8 || user.warns == 17) {
-					warn_msg += " You will earn a 72 hour temporary ban after 1 more warn.";
-				} else if (user.warns == 9 || user.warns == 18) {
-					warn_msg += " Oh no, you have earned a 72 hour temporary ban!";
-					setTimeout(function() {
-						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
-					}, 5000);
-					setTimeout(function() {
-						to = "#cwexperts1";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts2";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts.staff";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 72hr 72 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-				} else if (user.warns == 19) {
-					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and then you must make a 500m deposit to continue playing games.";
-				} else if (user.warns == 20) {
-					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and then you must make a 500m deposit to continue playing games.";
-				} else if (user.warns == 21) {
-					warn_msg += " Oh no, you have earned a 24 hour temporary ban, after which you must make a 500m deposit to continue playing games!";
-					setTimeout(function() {
-						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
-					}, 5000);
-					setTimeout(function() {
-						to = "#cwexperts1";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts2";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts.staff";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-				} else if (user.warns == 22) {
-					warn_msg += " You will earn a 24 hour temporary ban after 2 more warns, and you will earn a permanent ban after 3 more warns.";
-				} else if (user.warns == 23) {
-					warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and you will earn a permanent ban after 2 more warns.";
-				} else if (user.warns == 24) {
-					warn_msg += " Oh no, you have earned a 24 hour temporary ban, and you will earn a permanent ban after 1 more warn!";
-					setTimeout(function() {
-						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be temporarily banned in 30 seconds, any last words?");
-					}, 5000);
-					setTimeout(function() {
-						to = "#cwexperts1";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts2";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts.staff";
-						Common.bot.say(to, "!tb " + Common.utils.toLc(name[1]) + " 24hr 24 hour temporary ban from #CwExperts via CWEBot");
-					}, 35000);
-				} else if (user.warns == 25) {
-					warn_msg += " Oh no, you have earned a permanent ban, and you will not be refunded your 500m deposit!";
-					setTimeout(function() {
-						Common.bot.say(to, "4" + Common.utils.toLc(name[1]) + ", you will be permanently banned in 30 seconds, any last words?");
-					}, 5000);
-					setTimeout(function() {
-						to = "#cwexperts1";
-						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts2";
-						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
-					}, 35000);
-					setTimeout(function() {
-						to = "#cwexperts.staff";
-						Common.bot.say(to, "!kb " + Common.utils.toLc(name[1]) + " permanent ban from #CwExperts via CWEBot");
-					}, 35000);
-				} else if (user.warns == 100 || user.warns == 500|| user.warns == 1000|| user.warns == 10000) {
-					warn_msg += " You should probably stop fucking up...";
 				} else {
-					warn_msg += " No one is surprised.";
+					Common.bot.say(to, '5You must specify a member to warn when using this command.');
 				}
-				Common.bot.say(to, warn_msg);
-				});
-				});
+			} else {
+				Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
 			}
-			});
-		}
-		} else {
-			Common.bot.say(to, '5You must specify a member to warn when using this command.');
-		}
-		}
-	} else {
-		Common.bot.say(to, "5This command may only be used by members with Staff, Admin, or Owner member status to warn a member.");
-	}
-	});
+		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
 	}
