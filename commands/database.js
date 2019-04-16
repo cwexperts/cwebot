@@ -4653,7 +4653,7 @@ Commands.remindprofile = function(Common, from, to, message) {
 								console.log(err);
 								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 							} else if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
-								if (justadded[name] == 1
+								if (justadded[name] == 1) {
 									if (everyoneLc['#cwexperts1'].indexOf(name) > -1 || everyoneLc['#cwexperts2'].indexOf(name) > -1) {
 										var rp = "2" + member + " has force started the 'complete profile' reminder for " + name + "."
 										justadded[name] = 0;
