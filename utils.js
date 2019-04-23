@@ -747,7 +747,7 @@ module.exports = {
 		if (minutesTo == 0 && from != 'stop') {
 			from = 'stop';
 			afk[user] = 0;
-			Common.bot.say(channel, "4" + user + ", stop AFKing!");
+			Common.bot.say(channel, "4" + user + ", your " + OGminutesTo + " minute timer has ended - stop AFKing!");
 		}
 		if (from != 'stop') {
 			setTimeout(Common.utils.goingAfk, 1000, Common, channel, minutesTo, user, from, OGminutesTo);
