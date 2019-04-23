@@ -630,7 +630,7 @@ Commands.cl = function(Common, from, to, message) {
 Commands.afk = function(Common, from, to, message) {
   var data = message.match(/\S+/g);
   var time = ((data[1] % 1 === 0) ? data[1] : 4);
-  Common.utils.goingAfk(Common, to, time, from, 'afk');
+  Common.utils.goingAfk(Common, to, time, '60', from, 'afk', time);
 	if (data[1] == 1) {
 		Common.bot.say(to, "4" + from + ", you will be highlighted in " + time + " minute.");
 	} else {
