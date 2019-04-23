@@ -726,7 +726,7 @@ module.exports = {
 			setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
 		}
 	},
-	goingAfk: function(Common, channel, minutesTo, user, from, OGminutesTo) {
+	goingAfk: function(Common, channel, minutesTo, secondsTo, user, from, OGminutesTo) {
 		if (totalshutdown == 'true') {
 			from = 'stop';
 		}
@@ -734,7 +734,6 @@ module.exports = {
 			if (from == 'afk') {
 				from = 'self';
 				secondsTo = 60;
-				OGminutesTo = minutesTo;
 			} else {
 				secondsTo--;
 				if (secondsTo == 0) {
@@ -750,7 +749,7 @@ module.exports = {
 			Common.bot.say(channel, "4" + user + ", your " + OGminutesTo + " minute timer has ended - stop AFKing!");
 		}
 		if (from != 'stop') {
-			setTimeout(Common.utils.goingAfk, 1000, Common, channel, minutesTo, user, from, OGminutesTo);
+			setTimeout(Common.utils.goingAfk, 1000, Common, channel, minutesTo, secondsTo, user, from, OGminutesTo);
 		}
 	},
   /*
