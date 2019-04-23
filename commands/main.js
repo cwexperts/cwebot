@@ -186,9 +186,11 @@ Commands.add = function(Common, from, to, message) {
 										accmsg = "3" + access[1] + ", you have been added to the #CwExperts SwiftIRC access list at level 4.";
 										function accmsg1(Common, from, to, message) {
 											Common.bot.say(to, "You must follow the steps below to ensure that you’re prepared to handle your new position:");
-											Common.bot.say(to, "1. Review the ranks, permissions, and responsibilities applicable to all staff members");
+											Common.bot.say(to, "1. Join the staff channel - You should edit your IRC settings to auto join this channel");
+											Common.bot.say(to, "Type: /join #cwexperts.staff");
+											Common.bot.say(to, "2. Review the ranks, permissions, and responsibilities applicable to all staff members");
 											Common.bot.say(to, "Go to: http://cwexperts.org/management/");
-											Common.bot.say(to, "2. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
+											Common.bot.say(to, "3. Review the staff-only CWEBot commands, as well as other SwiftIRC commands restricted to half-operator+");
 											Common.bot.say(to, "Go to: http://cwexperts.org/bot-commands/");
 										}
 										if (user.status != 'Staff') {
