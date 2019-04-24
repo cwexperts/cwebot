@@ -3459,21 +3459,22 @@ Commands.rolerq = function(Common, from, to, message) {
 Commands.gw = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var time = message.match(/\S+/g);
+	var from1 = Common.utils.toLc(from);
 	if (typeof time[1] != 'undefined') {
 		var gw = time[1];
 		if (time[1] == '0' || time[1] == '1' || Common.utils.toLc(time[1]) == 'now') {
-			Common.utils.gameWarning(Common, to, from, 'gw', '13', '60', '1');
+			Common.utils.gameWarning(Common, to, from1, 'gw', '13', '60', '1', from);
 			Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
 		} else if (Common.utils.toLc(time[1]) == 'soon') {
-			Common.utils.gameWarning(Common, to, from, 'gw', '26', '60', '2');
+			Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
 			Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
 		} else {
 			var gwmins = gw * 13;
-			Common.utils.gameWarning(Common, to, from, 'gw', gwmins, '60', gw);
+			Common.utils.gameWarning(Common, to, from1, 'gw', gwmins, '60', gw, from);
 			Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
 		}
 	} else {
-		Common.utils.gameWarning(Common, to, from, 'gw', '26', '60', '2');
+		Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
 	  	Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
 	}
 	} else {
