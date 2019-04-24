@@ -726,6 +726,39 @@ module.exports = {
 			setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
 		}
 	},
+	gameWarning: function(Common, channel, member, from, minutesTo, secondsTo, games, upname) {
+		if (totalshutdown == 'true') {
+			from = 'stop';
+		}
+		if (from != 'stop') {
+			if (from == 'gw') {
+				from = 'self';
+				gwmins[member] = minutesTo;
+				gwsecs[member] = secondsTo;
+			} else if (secondsTo == gwsecs[member] && minutesTo == gwmins[member]) {
+				secondsTo--;
+				gwsecs[member] = gwsecs[member] - 1;
+				if (secondsTo == 0) {
+					minutesTo--;
+					gwmins[member] = gwmins[member] - 1;
+					secondsTo = 60;
+					gwsecs[member] = 60;
+					if (minutesTo == 0) {
+						if (everyoneLc[channel].indexOf(member) > -1) {
+							Common.bot.say('#cwexperts2', "4" + upname + ", you gave your game warning " + games + " games ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
+						} else {
+							from = 'stop';
+						}
+					}
+				}
+			} else {
+				from = 'stop';
+			}			
+		}
+		if (from != 'stop') {
+			setTimeout(Common.utils.gameWarning, 1000, Common, channel, member, from, minutesTo, secondsTo, games, upname);
+		}
+	},
 	goingAfk: function(Common, channel, minutesTo, secondsTo, user, from, OGminutesTo) {
 		if (totalshutdown == 'true') {
 			from = 'stop';
