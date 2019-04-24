@@ -745,7 +745,11 @@ module.exports = {
 					gwsecs[member] = 60;
 					if (minutesTo == 0) {
 						if (everyoneLc[channel].indexOf(member) > -1) {
-							Common.bot.say('#cwexperts2', "4" + upname + ", you gave your game warning " + games + " games ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
+							if (games == '1') {
+								Common.bot.say(channel, "4" + upname + ", you gave your game warning " + games + " game ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
+							} else {
+								Common.bot.say(channel, "4" + upname + ", you gave your game warning " + games + " games ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
+							}
 						} else {
 							from = 'stop';
 						}
