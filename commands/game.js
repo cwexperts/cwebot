@@ -3474,7 +3474,7 @@ Commands.gamewarn = function(Common, from, to, message) {
 					Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
 				} else {
 					var gwmins = gw * 2;
-					if (gwmins !== NaN) {
+					if (gwmins != 'NaN') {
 						Common.utils.gameWarning(Common, to, from1, 'gw', gwmins, '60', gw, from);
 						Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
 					} else {
@@ -3486,7 +3486,7 @@ Commands.gamewarn = function(Common, from, to, message) {
 	  			Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
 			}
 		} else {
-			Common.bot.say(to, "5There is no reason to give a game warning; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
+			Common.bot.say(to, "2There is no reason to give a game warning; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
 		}
 	});
 	} else {
