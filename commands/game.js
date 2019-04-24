@@ -3470,7 +3470,7 @@ Commands.gamewarn = function(Common, from, to, message) {
 					Common.utils.gameWarning(Common, to, from1, 'gw', '13', '60', '1', from);
 					Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
 				} else if (Common.utils.toLc(time[1]) == 'soon') {
-					Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
+					Common.utils.gameWarning(Common, to, from1, 'soon', '26', '60', '2', from);
 					Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
 				} else {
 					var gwmins = gw * 2;
