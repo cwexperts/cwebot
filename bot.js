@@ -8,6 +8,9 @@ memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs =
 //TEMP VARIABLES FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
 
+//TEMP VARIABLES FOR MEMBER GAME WARNINGS
+gwmins = [], gwsecs = [];
+
 //TEMP VARIABLE FOR CREATING CWE PROFILE
 justadded = [];
 
