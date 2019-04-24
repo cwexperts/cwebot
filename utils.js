@@ -758,7 +758,7 @@ module.exports = {
 								if (everyoneLc[channel].indexOf(member) > -1) {
 									from = 'stop';
 									if (type == 'soon') {
-										Common.bot.say(channel, "4" + upname + ", your 'soon' game warning has expired. Use the format !gameWarn NUMBER_HERE to give your official game warning.");
+										Common.bot.say(channel, "4" + upname + ", your 'sometime soon' game warning has expired. Use the format !gameWarn NUMBER_HERE to give your official game warning.");
 									} else {
 										Common.bot.say(channel, "4" + upname + ", your " + games + " world game warning has expired. Use the format !gameWarn NUMBER_HERE to give your new game warning if you are not ready to leave games.");
 									}
