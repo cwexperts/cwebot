@@ -19,7 +19,7 @@ Commands.kill = function(Common, from, to, message) {
 				role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [], 
 				memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [], 
 				memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [], 
-				justadded = [], newaccess = [], reregister = [];
+				justadded = [], newaccess = [], reregister = [], gwmins = [], gwsecs = [];
 			memlist[member] = 5;
 			Common.utils.unlockProfileTimer(Common, to, 'up', 0, 60, 24, member);
 		} else if (totalshutdown == 'true') {
