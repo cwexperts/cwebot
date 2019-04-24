@@ -743,7 +743,7 @@ module.exports = {
 					gwmins[member] = gwmins[member] - 1;
 					secondsTo = 60;
 					gwsecs[member] = 60;
-					if (minutesTo == 0) {
+					if (minutesTo <= 0) {
 						if (everyoneLc[channel].indexOf(member) > -1) {
 							if (games == '1') {
 								Common.bot.say(channel, "4" + upname + ", you gave your game warning " + games + " game ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
