@@ -730,38 +730,41 @@ module.exports = {
 		if (totalshutdown == 'true') {
 			from = 'stop';
 		}
-		if (from != 'stop') {
-			if (from == 'gw') {
-				from = 'self';
-				gwmins[member] = minutesTo;
-				gwsecs[member] = secondsTo;
-			} else if (secondsTo == gwsecs[member] && minutesTo == gwmins[member]) {
-				secondsTo--;
-				gwsecs[member] = gwsecs[member] - 1;
-				if (secondsTo == 0) {
-					minutesTo--;
-					gwmins[member] = gwmins[member] - 1;
-					secondsTo = 60;
-					gwsecs[member] = 60;
-					if (minutesTo <= 0) {
-						if (everyoneLc[channel].indexOf(member) > -1) {
-							if (games == '1') {
-								Common.bot.say(channel, "4" + upname + ", you gave your game warning " + games + " game ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
-							} else {
-								Common.bot.say(channel, "4" + upname + ", you gave your game warning " + games + " games ago, do you still plan on leaving? If so, use !d when you leave games, and reassign roles if necessary.");
-							}
-						} else {
-							from = 'stop';
-						}
-					}
-				}
-			} else {
+		Common.db.channels.findOne({channel: channel}, function(err, ch) {
+			if (ch.games === 0) {
 				from = 'stop';
-			}			
-		}
-		if (from != 'stop') {
-			setTimeout(Common.utils.gameWarning, 1000, Common, channel, member, from, minutesTo, secondsTo, games, upname);
-		}
+			} else {
+				if (from != 'stop') {
+					if (from == 'gw') {
+						from = 'self';
+						gwmins[member] = minutesTo;
+						gwsecs[member] = secondsTo;
+					} else if (secondsTo == gwsecs[member] && minutesTo == gwmins[member]) {
+						secondsTo--;
+						gwsecs[member] = gwsecs[member] - 1;
+						if (secondsTo == 0) {
+							minutesTo--;
+							gwmins[member] = gwmins[member] - 1;
+							secondsTo = 60;
+							gwsecs[member] = 60;
+							if (minutesTo <= 0) {
+								if (everyoneLc[channel].indexOf(member) > -1) {
+									from = 'stop';
+									Common.bot.say(channel, "4" + upname + ", your " + games + " world game warning has expired. Use the format !gameWarn NUMBER_HERE to give your new game warning if you are not ready to leave games.");
+								} else {
+									from = 'stop';
+								}
+							}
+						}
+					} else {
+						from = 'stop';
+					}			
+				}
+				if (from != 'stop') {
+					setTimeout(Common.utils.gameWarning, 1000, Common, channel, member, from, minutesTo, secondsTo, games, upname);
+				}
+			}
+		});
 	},
 	goingAfk: function(Common, channel, minutesTo, secondsTo, user, from, OGminutesTo) {
 		if (totalshutdown == 'true') {
