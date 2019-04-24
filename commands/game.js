@@ -3474,12 +3474,13 @@ Commands.gamewarn = function(Common, from, to, message) {
 					Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
 				} else {
 					var gwmins = gw * 2;
-					if (gwmins != 'NaN') {
+					if (gwmins != 'NaN' && gwmins != NaN) {
 						Common.utils.gameWarning(Common, to, from1, 'gw', gwmins, '60', gw, from);
 						Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
 					} else {
 						Common.bot.say(to, "5You must specify the number of games you plan to leave after when using this command. Use the format !gameWarn NUMBER_HERE to give your game warning.");
 					}
+					Common.bot.say(to, gwmins);
 				}
 			} else {
 				Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
