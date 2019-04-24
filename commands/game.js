@@ -3456,31 +3456,47 @@ Commands.rolerq = function(Common, from, to, message) {
 	Commands.rolerequest(Common, from, to, message);
 };
 
-Commands.gw = function(Common, from, to, message) {
+Commands.gamewarn = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var time = message.match(/\S+/g);
 	var from1 = Common.utils.toLc(from);
-	if (typeof time[1] != 'undefined') {
-		var gw = time[1];
-		if (time[1] == '0' || time[1] == '1' || Common.utils.toLc(time[1]) == 'now') {
-			Common.utils.gameWarning(Common, to, from1, 'gw', '13', '60', '1', from);
-			Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
-		} else if (Common.utils.toLc(time[1]) == 'soon') {
-			Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
-			Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
+	Common.db.channels.findOne({channel: to}, function(err, channel) {
+		if (err || !channel) {
+			console.log("Channel not found.");
+		} else if (channel.games == 1) {
+			if (typeof time[1] != 'undefined') {
+				var gw = time[1];
+				if (time[1] == '0' || time[1] == '1' || Common.utils.toLc(time[1]) == 'now') {
+					Common.utils.gameWarning(Common, to, from1, 'gw', '13', '60', '1', from);
+					Common.bot.say(to, "2" + from + " must leave games immediately due to a matter of urgency - use !d when you leave games, and reassign roles if necessary.");
+				} else if (Common.utils.toLc(time[1]) == 'soon') {
+					Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
+					Common.bot.say(to, "2" + from + " plans to leave games sometime soon - use !gw again to give your official 2 game warning, use !d when you leave games, and reassign roles if necessary.");
+				} else {
+					var gwmins = gw * 2;
+					if (gwmins !== NaN) {
+						Common.utils.gameWarning(Common, to, from1, 'gw', gwmins, '60', gw, from);
+						Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
+					} else {
+						Common.bot.say(to, "5You must specify the number of games you plan to leave after when using this command. Use the format !gameWarn NUMBER_HERE to give your game warning.");
+					}
+				}
+			} else {
+				Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
+	  			Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
+			}
 		} else {
-			var gwmins = gw * 13;
-			Common.bot.say(to, gwmins);
-			Common.utils.gameWarning(Common, to, from1, 'gw', gwmins, '60', gw, from);
-			Common.bot.say(to, "2" + from + " plans to leave games after " + time[1] + " more worlds - use !d when you leave games, and reassign roles if necessary.");
+			Common.bot.say(to, "5There is no reason to give a game warning; there are currently no games in this channel. You may start games by using !hopw WORLD_HERE.");
 		}
-	} else {
-		Common.utils.gameWarning(Common, to, from1, 'gw', '26', '60', '2', from);
-	  	Common.bot.say(to, "2" + from + " plans to leave games after 2 more worlds - use !d when you leave games, and reassign roles if necessary.");
-	}
+	});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
+};
+		
+		
+Commands.gw = function(Common, from, to, message) {
+	Commands.gamewarn(Common, from, to, message);
 };
 
 function noticks(Common, from, to, message) {
