@@ -755,7 +755,7 @@ module.exports = {
 							secondsTo = 60;
 							gwsecs[member] = 60;
 							if (minutesTo <= 0) {
-								if (everyoneLc[channel].indexOf(member) > -1) {
+								if (voicesLc[channel].indexOf(member) > -1 || halfopsLc[channel].indexOf(member) > -1) {
 									from = 'stop';
 									if (type == 'soon') {
 										Common.bot.say(channel, "4" + upname + ", your 'sometime soon' game warning has expired. Use the format !gameWarn NUMBER_HERE to give your official game warning.");
