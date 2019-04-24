@@ -726,7 +726,7 @@ module.exports = {
 			setTimeout(Common.utils.completeProfileTimer, 1000, Common, channel, from, secondsTo, minutesTo, member);
 		}
 	},
-	gameWarning: function(Common, channel, member, from, minutesTo, secondsTo, games, upname) {
+	gameWarning: function(Common, channel, member, from, minutesTo, secondsTo, games, upname, type) {
 		if (totalshutdown == 'true') {
 			from = 'stop';
 		}
@@ -739,6 +739,13 @@ module.exports = {
 						from = 'self';
 						gwmins[member] = minutesTo;
 						gwsecs[member] = secondsTo;
+					} else if (from == 'soon') {
+						from = 'self';
+						type = 'soon';
+						minutesTo = 60;
+						secondsTo = 60;
+						gwmins[member] = 60;
+						gwsecs[member] = 60;
 					} else if (secondsTo == gwsecs[member] && minutesTo == gwmins[member]) {
 						secondsTo--;
 						gwsecs[member] = gwsecs[member] - 1;
@@ -750,7 +757,11 @@ module.exports = {
 							if (minutesTo <= 0) {
 								if (everyoneLc[channel].indexOf(member) > -1) {
 									from = 'stop';
-									Common.bot.say(channel, "4" + upname + ", your " + games + " world game warning has expired. Use the format !gameWarn NUMBER_HERE to give your new game warning if you are not ready to leave games.");
+									if (type == 'soon') {
+										Common.bot.say(channel, "4" + upname + ", your 'soon' game warning has expired. Use the format !gameWarn NUMBER_HERE to give your game warning.");
+									} else {
+										Common.bot.say(channel, "4" + upname + ", your " + games + " world game warning has expired. Use the format !gameWarn NUMBER_HERE to give your new game warning if you are not ready to leave games.");
+									}
 								} else {
 									from = 'stop';
 								}
@@ -761,7 +772,7 @@ module.exports = {
 					}			
 				}
 				if (from != 'stop') {
-					setTimeout(Common.utils.gameWarning, 1000, Common, channel, member, from, minutesTo, secondsTo, games, upname);
+					setTimeout(Common.utils.gameWarning, 1000, Common, channel, member, from, minutesTo, secondsTo, games, upname, type);
 				}
 			}
 		});
