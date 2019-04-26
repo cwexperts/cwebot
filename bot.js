@@ -3,7 +3,7 @@ time = [], ticksecs = [], afk = [], uptime = '', hopm = [], totalshutdown = '';
 pentime = [], pensecs = [], role1time = [], role1secs = [], role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [];
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
+memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [], viewkey = [];
 
 //TEMP VARIABLES FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
