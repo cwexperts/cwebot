@@ -1,6 +1,6 @@
 Commands.profilekey = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff' || to == '#key') {
-		var name = Common.utils.toDb(from);
+		var name = Common.utils.toLc(from);
 		Common.db.users.findOne({name: name}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
@@ -16,8 +16,36 @@ Commands.profilekey = function(Common, from, to, message) {
 						Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may edit your profile key at a later date.");
 					}
 				});
+			} else if (user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+				if (user.viewedKey == undefined || user.viewedKey == 0 || user.viewedKey == 1) {
+					if (to == '#key') {
+						if (viewkey[name] == 1) {
+							viewkey[name] = 0;
+							var conf = message.match(/\S+/g);
+							if (conf[1] !== undefined) {
+								conf = Common.utils.toLc(conf[1]);
+							}
+							if (conf == 'no') {
+								
+							} else {
+								
+							}
+						} else {
+							viewkey[name] = 1;
+							if (user.viewedKey == undefined || user.viewedKey == 0) {
+								Common.bot.say(to, "2" + name + ", you may view your profile key a total of 2 more times. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
+							} else if (user.viewedKey == 1) {
+								Common.bot.say(to, "2" + name + ", you may view your profile key a total of 1 more time. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
+							}
+						}
+					} else {
+						Common.bot.say(to, "5" + name + ", you may only view your profile key in the profile key channel. Use /join #key to join the #CwExperts profile key channel, and then use !profileKey for further instructions.");
+					}
+				} else {
+					Common.bot.say(to, "5" + name + ", you have viewed your profile key the maximum number of times - ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
+				}
 			} else {
-				Common.bot.say(to, "5" + name + ", your profile key has already been set - you may not view your profile key again. Use !editProfileKey to edit your profile key.");
+				Common.bot.say(to, "5" + name + ", you have already completed your profile - you may not view your profile key again. Use !editProfileKey to edit your profile key.");
 			}
 		});
 	} else {
