@@ -3,7 +3,7 @@ time = [], ticksecs = [], afk = [], uptime = '', hopm = [], totalshutdown = '';
 pentime = [], pensecs = [], role1time = [], role1secs = [], role2time = [], role2secs = [], flagtime = [], flagsecs = [], actime = [], acsecs = [];
 
 //TEMP VARIABLES FOR MEMBER PROFILE KEYS
-memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [];
+memlist = [], tempkey = [], upsecs = [], upmins = [], uphrs = [], completesecs = [], completemins = [], viewkey = [];
 
 //TEMP VARIABLES FOR MEMBER & BUG REPORTS
 memreportmins = [], memreportsecs = [], bugreportmins = [], bugreportsecs = [];
@@ -195,28 +195,33 @@ Common.bot.addListener('join', function(channel, nick, message) {
 //         Common.bot.say(channel, "12Hello " + nick + "! 4How To Join12: http://cwexperts.org/how-to-join/. 4Type 7!join 4for instructions12.");
 //       }
 //     }, 10000);
-	var name = Common.utils.toLc(nick);
-	Common.db.users.findOne({name: name}, function(err, user) {
-		if (err || !user) {
-			console.log(err);
-			Common.bot.say(channel, "3Welcome " + nick + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
-		} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
-			reregister[name] = 1;
-			Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
-		} else {
-			var lastSeenMs = user.lastSeen.getTime();
-			var exp = lastSeenMs + 5184000000;
-			var timenow = new Date();
-			timenow = timenow.getTime();
-			if (timenow > exp) {
+	var nickcaps = nick;
+	var nick = Common.utils.toLc(nick);
+	if (nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
+		&& nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
+		&& nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
+		Common.db.users.findOne({name: nick}, function(err, user) {
+			if (err || !user) {
+				console.log(err);
+				Common.bot.say(channel, "3Welcome " + nickcaps + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
+			} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
 				reregister[name] = 1;
-				var diff = timenow - exp;
-				var lastSeenDays = diff / 86400000;
-				lastSeenDays = lastSeenDays.toFixed(0);
-				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for " + lastSeenDays + " days, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+			} else {
+				var lastSeenMs = user.lastSeen.getTime();
+				var exp = lastSeenMs + 5184000000;
+				var timenow = new Date();
+				timenow = timenow.getTime();
+				if (timenow > exp) {
+					reregister[name] = 1;
+					var diff = timenow - exp;
+					var lastSeenDays = diff / 86400000;
+					lastSeenDays = lastSeenDays.toFixed(0);
+					Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for " + lastSeenDays + " days, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+				}
 			}
-		}
-	});
+		});
+	}
   } else if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 	var nickver = Common.utils.toLc(nick);
 	var nickcaps = nick;
@@ -288,6 +293,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
           }
       }, 2000);
     }
+	var nickcaps = nick;
 	var nick = Common.utils.toLc(nick);
 	if (nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
 		&& nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
@@ -298,7 +304,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 					if (err || !user) {
 						console.log(err);
 						if (newaccess[nick] != 1) {
-							Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
+							Common.bot.say(channel, "2" + nickcaps + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
 						}
 					} else if (justadded[nick] != 1) {
 						if (user.key === undefined) {
