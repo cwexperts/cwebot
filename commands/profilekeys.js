@@ -33,7 +33,7 @@ Commands.profilekey = function(Common, from, to, message) {
 										console.log('Error', err);
 									} else {
 										Common.bot.say(to, "2" + name + ", you have successfully viewed your profile key - you may view your profile key a total of 1 more time.");
-										Common.bot.say(to, "2YOUR PROFILE KEY: " + user.key);
+										Common.bot.say(to, "2" + name + ", your profile key is: " + user.key);
 									}
 								});
 							} else if (user.viewedKey == 1) {
@@ -42,7 +42,7 @@ Commands.profilekey = function(Common, from, to, message) {
 										console.log('Error', err);
 									} else {
 										Common.bot.say(to, "2" + name + ", you have successfully viewed your profile key - you have viewed your profile key the maximum number of times.");
-										Common.bot.say(to, "2YOUR PROFILE KEY: " + user.key);
+										Common.bot.say(to, "2" + name + ", your profile key is: " + user.key);
 									}
 								});
 							}
