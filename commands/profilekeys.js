@@ -13,7 +13,7 @@ Commands.profilekey = function(Common, from, to, message) {
 					} else {
 						Common.bot.say(to, "2" + name + ", a unique profile key has been sent to your private messages. Use !editProfileKey to edit your profile key.");
 						Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-						Common.bot.notice(from, "2You will not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may edit your profile key at a later date.");
+						Common.bot.notice(from, "2You may not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may edit your profile key at a later date.");
 					}
 				});
 			} else if (user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
@@ -26,16 +26,32 @@ Commands.profilekey = function(Common, from, to, message) {
 								conf = Common.utils.toLc(conf[1]);
 							}
 							if (conf == 'no') {
-								
-							} else {
-								
+								Common.bot.say(to, "4" + name + ", your request to view your profile key has been abandoned.");
+							} else if (user.viewedKey == undefined || user.viewedKey == 0) {
+								Common.db.users.update({name: name}, {$set: {viewedKey: 1}}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										Common.bot.say(to, "2" + name + ", you have successfully viewed your profile key - you may view your profile key a total of 1 more time.");
+										Common.bot.say(to, "2YOUR PROFILE KEY: " + user.key);
+									}
+								});
+							} else if (user.viewedKey == 1) {
+								Common.db.users.update({name: name}, {$set: {viewedKey: 2}}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										Common.bot.say(to, "2" + name + ", you have successfully viewed your profile key - you have viewed your profile key the maximum number of times.");
+										Common.bot.say(to, "2YOUR PROFILE KEY: " + user.key);
+									}
+								});
 							}
 						} else {
 							viewkey[name] = 1;
 							if (user.viewedKey == undefined || user.viewedKey == 0) {
-								Common.bot.say(to, "2" + name + ", you may view your profile key a total of 2 more times. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
+								Common.bot.say(to, "2" + name + ", your request to view your profile key has been recognised - you may view your profile key a total of 2 more times. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
 							} else if (user.viewedKey == 1) {
-								Common.bot.say(to, "2" + name + ", you may view your profile key a total of 1 more time. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
+								Common.bot.say(to, "2" + name + ", your request to view your profile key has been recognised - you may view your profile key a total of 1 more time. Use !profileKey to advance your request, or use !profileKey NO to abandon your request.");
 							}
 						}
 					} else {
@@ -132,7 +148,7 @@ Commands.editprofilekey = function(Common, from, to, message) {
 								tempkey[name] = 0;
 								Common.bot.say(to, "4" + name + ", your request to edit your profile key has been abandoned.");
 							} else if (conf == 'yes') {
-								if (name == 'abdel' || name == 'dxnxex7' || name == 'hanna') {
+								if (user.status == 'Owner') {
 									Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget.");
 								} else {
 									Common.bot.say(to, "3[5/5]: " + name + ", your profile key has been successfully edited - please save your profile key somewhere you won't forget, and then leave this channel.");
