@@ -4310,8 +4310,8 @@ Commands.addgoal = function(Common, from, to, message) {
 				} else {
 					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary Castle Wars goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
 				}
-			//} else if (memlist[member] != 5 || perms.key === undefined) {
-			//	Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
 				var goal = message.match(/\S+/g);
 				goal = Common.utils.toLc(goal[1]);
