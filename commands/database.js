@@ -3082,7 +3082,11 @@ Commands.member = function(Common, from, to, message) {
 	if (err || !user) {
 		Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 	} else {
-		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
+		if (user.blacklist == 1) {
+			var member_msg = "4[BLACKLISTED]: 2IRC Nickname: " + Common.utils.toLc(name) + "";
+		} else {
+			var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
+		}
 		if (user.main !== 0 && user.main !== undefined) {
 			member_msg += ", Main RSNs: " + user.main + "";
 		} else if (user.main === 0) {
