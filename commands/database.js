@@ -455,7 +455,7 @@ Commands.addmain = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0}, function(err, saved) {
+					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -529,7 +529,7 @@ Commands.addalt = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0}, function(err, saved) {
+					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -3082,7 +3082,11 @@ Commands.member = function(Common, from, to, message) {
 	if (err || !user) {
 		Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 	} else {
-		var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
+		if (user.blacklist == 1) {
+			var member_msg = "4[BLACKLISTED]: 2IRC Nickname: " + Common.utils.toLc(name) + "";
+		} else {
+			var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
+		}
 		if (user.main !== 0 && user.main !== undefined) {
 			member_msg += ", Main RSNs: " + user.main + "";
 		} else if (user.main === 0) {
@@ -3964,7 +3968,7 @@ Commands.reportmember = function(Common, from, to, message) {
 							Common.bot.say(to, "5" + "IRC Nickname '" + report_name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
 						} else if (reportmsg[2] !== undefined) {
 							if (reportmsg[2].length < 5 && reportmsg[3] === undefined) {
-								Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember MEMBER_HERE REPORT HERE to submit a member report.");
+								Common.bot.say(to, "5You must provide a detailed report about a member when using this command. Use the format !reportMember IRC_NICKNAME_HERE REPORT HERE to submit a member report.");
 							} else {
 								var overflow = 0;
 								if (report_detail.length > 400) {
@@ -4310,8 +4314,8 @@ Commands.addgoal = function(Common, from, to, message) {
 				} else {
 					Common.bot.say(to, "5" + member + ", you have already set your primary Castle Wars goal to: " + perms.goal + " - you may not change your primary Castle Wars goal. Use !editGoal GOAL_HERE in the games channels to link your new/secondary Castle Wars goal to your profile.");
 				}
-			//} else if (memlist[member] != 5 || perms.key === undefined) {
-			//	Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
 			} else if (Common.utils.msg(message)) {
 				var goal = message.match(/\S+/g);
 				goal = Common.utils.toLc(goal[1]);
@@ -4663,4 +4667,53 @@ Commands.remindp = function(Common, from, to, message) {
 
 Commands.rp = function(Common, from, to, message) {
 	Commands.remindprofile(Common, from, to, message);
+};
+
+Commands.addblacklist = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add a member to the blacklist.");
+			} else if (perms.status == 'Admin' || perms.status == 'Owner') {
+				if (memlist[member] != 5 || perms.key === undefined) {
+					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else if (Common.utils.msg(message)) {
+					var blmsg = message.match(/\S+/g);
+					var name = Common.utils.toLc(blmsg[1]);
+					Common.db.users.findOne({name: name}, function(err, user) {
+						if (err || !user) {
+							console.log(err);
+							Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+						} else if (member == name) {
+							Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
+						} else if (user.status == 'Admin' || user.status == 'Owner') {
+							Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
+						} else if (user.blacklist == 1) {
+							Common.bot.say(to, "5" + name + " is already on the blacklist. Use !blacklist to see the list of all members currently on the blacklist, or use !blacklistReason IRC_NICKNAME_HERE to view the reason why a member was added to the blacklist.");
+						} else if (blmsg[2] !== undefined) {
+							if (blmsg[2].length < 5 && blmsg[3] === undefined) {
+								Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a member to the blacklist when using this command. Use the format !addBlacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");
+							} else {
+								Common.bot.say(to, "3" + name + " is already");
+							}
+						} else {
+							Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a member to the blacklist when using this command. Use the format !addBlacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");	       
+						}
+					});
+				} else {
+					
+				}
+			} else {
+				Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add a member to the blacklist.");	
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+
+Commands.addbl = function(Common, from, to, message) {
+	Commands.addblacklist(Common, from, to, message);
 };
