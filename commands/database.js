@@ -455,7 +455,7 @@ Commands.addmain = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0, blacklistReason: 0}, function(err, saved) {
+					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0, blacklistReason: 0, blacklistRetires: 0}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -529,7 +529,7 @@ Commands.addalt = function(Common, from, to, message) {
 					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 				} else {
 					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0, blacklistReason: 0}, function(err, saved) {
+					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklist: 0, blacklistReason: 0, blacklistRetires: 0}, function(err, saved) {
 						if (err || !saved) {
 							console.log('Error', err)
 						} else {
@@ -3084,7 +3084,7 @@ Commands.member = function(Common, from, to, message) {
 	} else {
 		if (user.blacklist === undefined) {
 			var member_msg = "2IRC Nickname: " + Common.utils.toLc(name) + "";
-			Common.db.users.update({name: name}, {$set: {blacklist: 0, blacklistReason: 0}}, {upsert: false}, function(err, updated) {
+			Common.db.users.update({name: name}, {$set: {blacklist: 0, blacklistReason: 0, blacklistRetires: 0}}, {upsert: false}, function(err, updated) {
 				if (err || !updated) {
 					console.log('Error', err);
 				}
