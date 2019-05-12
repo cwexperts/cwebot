@@ -4697,12 +4697,12 @@ Commands.blacklist = function(Common, from, to, message) {
 									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
 										if (err || !bluser) {
 											if (blmsg[3] !== undefined) {
-												if (blmsg[2] == '1') {
+												if (blmsg[3] == '1') {
 													var blacklist_reason = "failed to join and give reasoning before leaving the cwexperts discord server";
 												} else {
 													var blacklist_reason = Common.utils.msg(Common.utils.msg(Common.utils.msg(message)));
 												}
-												if (blmsg[3].length < 5 && blmsg[4] === undefined) {
+												if (blmsg[3] != '1' && blmsg[3].length < 5 && blmsg[4] === undefined) {
 													Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a non-member to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist.");
 												} else {
 													Common.db.blacklists.save({identity: identity, blacklistReason: blacklist_reason}, function(err, saved) {
@@ -4759,7 +4759,7 @@ Commands.blacklist = function(Common, from, to, message) {
 								} else {
 									var blacklist_reason = Common.utils.msg(Common.utils.msg(message));
 								}
-								if (blmsg[2].length < 5 && blmsg[3] === undefined) {
+								if (blmsg[2] != '1' && blmsg[2].length < 5 && blmsg[3] === undefined) {
 									Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a member to the blacklist when using this command. Use the format !blacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");
 								} else {
 									Common.db.users.update({name: name}, {$set: {blacklist: 1, blacklistReason: blacklist_reason}}, {upsert: false}, function(err, updated) {
