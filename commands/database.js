@@ -51,7 +51,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 //												if (err || !updated) {
 //													console.log('Error', err);
 //												} else {
-//													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+//													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + ".");
 //												}
 //											});
 										}
@@ -69,7 +69,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
@@ -94,7 +94,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 													if (err || !updated) {
 														console.log('Error', err);
 													} else {
-														Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+														Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 													}
 												});
 											} else if (perms.status == 'Admin') {
@@ -105,7 +105,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
@@ -131,7 +131,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Admin') {
@@ -145,7 +145,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Staff') {
@@ -156,7 +156,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+												Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 											}
 										});
 									} else {
