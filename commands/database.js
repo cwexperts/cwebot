@@ -4697,59 +4697,88 @@ Commands.blacklist = function(Common, from, to, message) {
 									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
 										if (err || !bluser) {
 											if (blmsg[3] !== undefined) {
-												if (blmsg[3] == '1') {
-													var blacklist_reason = "failed to join and give reasoning before leaving the cwexperts discord server";
-												} else {
-													var blacklist_reason = Common.utils.msg(Common.utils.msg(Common.utils.msg(message)));
-												}
-												if (blmsg[3] != '1' && blmsg[3].length < 5 && blmsg[4] === undefined) {
-													Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a non-member to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist.");
-												} else {
-													Common.db.blacklists.save({identity: identity, blacklistReason: blacklist_reason}, function(err, saved) {
-														if (err || !saved) {
-															console.log('Error', err);
-														} else {
-															Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+												var blr = Common.utils.toLc(blmsg[3]);
+												if (blr == 'failedjoin' || blr == 'crasher' || blr == 'other' || blr == '1' || blr == '2' || blr == '3') {
+													var blacklist_reason = '';
+													var additional_comment = '';
+													if (blr == 'failedjoin' || blr == '1') {
+														blr = 'failedjoin';
+														blacklist_reason = "failed to join cwexperts and give reasoning before leaving the cwexperts discord server";
+														if (blmsg[4] !== undefined) {
+															additional_comment = Common.utils.msg(Common.utils.msg(Common.utils.msg(Common.utils.msg(message))));
 														}
-													});
+													} else if (blr == 'crasher' || blr == '2') {
+														blr = 'crasher';
+														blacklist_reason = "confirmed crasher spotted at cwexperts games";
+														if (blmsg[4] !== undefined) {
+															additional_comment = Common.utils.msg(Common.utils.msg(Common.utils.msg(Common.utils.msg(message))));
+														}
+													} else if (blr == 'other' || blr == '3') {
+														blr == 'other'
+														if (blmsg[4] !== undefined) {
+															if (blmsg[4].length < 5 && blmsg[5] === undefined) {
+																blacklist_reason = Common.utils.msg(Common.utils.msg(Common.utils.msg(Common.utils.msg(message))));
+															}
+														}
+													}
+													if (blacklist_reason != '') {
+														Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason}, function(err, saved) {
+															if (err || !saved) {
+																console.log('Error', err);
+															} else {
+																Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+															}
+														});
+														if (additional_comment != '') {
+															Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
+																if (err || !updated) {
+																	console.log('Error', err);
+																}
+															});
+														}
+													} else {
+														Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
+													}
+												} else {
+													Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 												}
 											} else {
-												Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a non-member to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist.");
+												Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 											}
 										} else {
-											Common.bot.say(to, "5" + identity + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+											Common.bot.say(to, "5" + identity + " is already on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 										}
 									});
 								} else if (member == identity) {
 									if (user.blacklist == 1) {
-										Common.bot.say(to, "5" + member + " you are already on the blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+										Common.bot.say(to, "5" + member + " you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 									}
 								} else if (user.blacklist == 1) {
-									Common.bot.say(to, "5" + identity + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + identity + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 								} else if (user.status == 'Admin' || user.status == 'Owner') {
 									Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
 								} else {
-									Common.bot.say(to, "5" + member + ", you may not add a member to the non-member blacklist. Use the format !blacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");
+									Common.bot.say(to, "5" + member + ", you may not add a member to the non-member blacklist. Use the format !blacklist IRC_NICKNAME_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a member to the blacklist.");
 								}
 							});
 						} else {
-							Common.bot.say(to, "5You must specify a non-member to add to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist.");
+							Common.bot.say(to, "5You must specify a non-member to add to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 						}
 					} else {
 						Common.db.users.findOne({name: name}, function(err, user) {
 							if (err || !user) {
 								console.log(err);
-								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist.");
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 							} else if (member == name) {
 								if (user.blacklist == 1) {
-									Common.bot.say(to, "5" + member + " you are already on the blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + member + " you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 								} else {
 									Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 								}
 							} else if (user.blacklist == 1) {
-								Common.bot.say(to, "5" + name + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+								Common.bot.say(to, "5" + name + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 							} else if (user.status == 'Admin' || user.status == 'Owner') {
 								Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
 							} else if (blmsg[2] !== undefined) {
@@ -4787,12 +4816,12 @@ Commands.blacklist = function(Common, from, to, message) {
 									}
 								}
 							} else {
-								Common.bot.say(to, "5You must provide a detailed reason as to why you are adding a member to the blacklist when using this command. Use the format !blacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");	       
+								Common.bot.say(to, "5You must provide a valid reason as to why you are adding a member to the blacklist when using this command: 1 (failedretire), 2 (crasher), 3 (warns), or 4 (other). Use the format !blacklist IRC_NICKNAME_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a member to the blacklist.");	       
 							}
 						});
 					}
 				} else {
-					Common.bot.say(to, "5You must specify a user to add to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON HERE to add a non-member to the blacklist, or use the format !blacklist IRC_NICKNAME_HERE REASON HERE to add a member to the blacklist.");
+					Common.bot.say(to, "5You must specify a user to add to the blacklist when using this command. Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist, or use the format !blacklist IRC_NICKNAME_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a member to the blacklist.");
 				}
 			} else {
 				Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to add a user to the blacklist.");	
