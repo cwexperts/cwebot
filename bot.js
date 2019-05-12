@@ -203,7 +203,9 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		Common.db.users.findOne({name: nick}, function(err, user) {
 			if (err || !user) {
 				console.log(err);
-				Common.bot.say(channel, "3Welcome " + nickcaps + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
+				if (newaccess[nick] != 1) {
+					Common.bot.say(channel, "3Welcome " + nickcaps + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
+				}
 			} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
 				reregister[name] = 1;
 				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
