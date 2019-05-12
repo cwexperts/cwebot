@@ -51,7 +51,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 //												if (err || !updated) {
 //													console.log('Error', err);
 //												} else {
-//													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + ".");
+//													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + ".");
 //												}
 //											});
 										}
@@ -69,7 +69,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
@@ -94,7 +94,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 													if (err || !updated) {
 														console.log('Error', err);
 													} else {
-														Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+														Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 													}
 												});
 											} else if (perms.status == 'Admin') {
@@ -105,7 +105,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else {
@@ -131,7 +131,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Admin') {
@@ -145,7 +145,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 												if (err || !updated) {
 													console.log('Error', err);
 												} else {
-													Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+													Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 												}
 											});
 										} else if (perms.status == 'Staff') {
@@ -156,7 +156,7 @@ Commands.setmemberstatus = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "2" + from + " has changed the member status of " + name + " to: " + stat + "");
+												Common.bot.say(to, "2" + member + " has changed the member status of " + name + " to: " + stat + "");
 											}
 										});
 									} else {
@@ -4720,14 +4720,14 @@ Commands.blacklist = function(Common, from, to, message) {
 											Common.bot.say(to, "5" + identity + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 										}
 									});
-								} else if (member == name) {
+								} else if (member == identity) {
 									if (user.blacklist == 1) {
 										Common.bot.say(to, "5" + member + " you are already on the blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 									}
 								} else if (user.blacklist == 1) {
-									Common.bot.say(to, "5" + name + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + identity + " is already on the blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 								} else if (user.status == 'Admin' || user.status == 'Owner') {
 									Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
 								} else {
@@ -4805,4 +4805,10 @@ Commands.blacklist = function(Common, from, to, message) {
 
 Commands.bl = function(Common, from, to, message) {
 	Commands.blacklist(Common, from, to, message);
+};
+
+
+
+Commands.wl = function(Common, from, to, message) {
+	Commands.whitelist(Common, from, to, message);
 };
