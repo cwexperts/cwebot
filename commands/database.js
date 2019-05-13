@@ -4792,20 +4792,22 @@ Commands.blacklist = function(Common, from, to, message) {
 										var retireplus1 = 'yes';
 										var retiredeposit = '';
 										if (user.blacklistRetires === undefined || user.blacklistRetires === 0) {
-											retiredeposit = '250';
+											retiredeposit = '250m';
 										} else if (user.blacklistRetires === 1) {
-											retiredeposit = '500';
+											retiredeposit = '500m';
 										} else if (user.blacklistRetires === 2) {
-											retiredeposit = '1000';
+											retiredeposit = '1000m';
 										} else if (user.blacklistRetires === 3) {
-											retiredeposit = '2000';
+											retiredeposit = '2000m';
 										} else if (user.blacklistRetires === 4) {
-											retiredeposit = '4000';
+											retiredeposit = '4000m';
 										} else if (user.blacklistRetires === 5) {
-											retiredeposit = '8000';
+											retiredeposit = '8000m';
+										} else {
+											retiredeposit = 'Lots!';
 										}
 										blr = 'failedretire';
-										blacklist_reason = "failed to complete the retirement process and must make a " + retiredeposit + "m deposit to rejoin";
+										blacklist_reason = "failed to complete the retirement process and must make a " + retiredeposit + " deposit to rejoin";
 										if (blmsg[3] !== undefined) {
 											additional_comment = Common.utils.msg(Common.utils.msg(Common.utils.msg(message)));
 										}
