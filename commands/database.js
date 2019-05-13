@@ -4695,7 +4695,7 @@ Commands.blacklist = function(Common, from, to, message) {
 							Common.db.users.findOne({name: identity}, function(err, user) {
 								if (err || !user) {
 									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
-										if (err || !bluser) {
+										if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
 											if (blmsg[3] !== undefined) {
 												var blr = Common.utils.toLc(blmsg[3]);
 												if (blr == 'failedjoin' || blr == 'crasher' || blr == 'other' || blr == '1' || blr == '2' || blr == '3') {
@@ -4824,7 +4824,7 @@ Commands.blacklist = function(Common, from, to, message) {
 										} else if (user.warns >= 25) {
 											blacklist_reason = "earned at least 25 warns and may not rejoin unless an agreement is made with owners";
 										} else {
-											blacklist_reason = "earned only " + user.warns + " but made severe enough mistakes to warrant perm ban";
+											blacklist_reason = "earned only " + user.warns + " warns but made severe enough mistakes to warrant a perm ban";
 										}
 										if (blmsg[3] !== undefined) {
 											additional_comment = Common.utils.msg(Common.utils.msg(Common.utils.msg(message)));
