@@ -3989,8 +3989,8 @@ Commands.reportmember = function(Common, from, to, message) {
 								});
 								reportnum = reportnum + 1;
 								reportnum = reportnum.toString();
-								var time = new Date();
-								Common.db.reportmembers.save({reportnumber: reportnum, date: time, reviewed: "no", reporter: member, member: report_name, report: report_detail}, function(err, saved) {
+								var rmtime = new Date();
+								Common.db.reportmembers.save({reportnumber: reportnum, date: rmtime, reviewed: "no", reporter: member, member: report_name, report: report_detail}, function(err, saved) {
 									if (err || !saved) {
 										console.log('Error', err)
 									} else {
@@ -4089,8 +4089,8 @@ Commands.reportbug = function(Common, from, to, message) {
 						});
 						reportnum = reportnum + 1;
 						reportnum = reportnum.toString();
-						var time = new Date();
-						Common.db.reportbugs.save({reportnumber: reportnum, date: time, reviewed: "no", reporter: member, report: report_detail}, function(err, saved) {
+						var rbtime = new Date();
+						Common.db.reportbugs.save({reportnumber: reportnum, date: rbtime, reviewed: "no", reporter: member, report: report_detail}, function(err, saved) {
 							if (err || !saved) {
 								console.log('Error', err)
 							} else {
@@ -4701,6 +4701,7 @@ Commands.blacklist = function(Common, from, to, message) {
 												if (blr == 'failedjoin' || blr == 'crasher' || blr == 'other' || blr == '1' || blr == '2' || blr == '3') {
 													var blacklist_reason = '';
 													var additional_comment = '';
+													var bltime = new Date();
 													if (blr == 'failedjoin' || blr == '1') {
 														blr = 'failedjoin';
 														blacklist_reason = "failed to join cwexperts and give reasoning before leaving cwexperts discord server";
@@ -4725,7 +4726,7 @@ Commands.blacklist = function(Common, from, to, message) {
 													if (blacklist_reason != '') {
 														Common.db.blacklists.findOne({identity: identity}, function(err, bluser1) {
 															if (err || !bluser1) {
-																Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason}, function(err, saved) {
+																Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason, blacklistedBy: member, blacklistDate: bltime}, function(err, saved) {
 																	if (err || !saved) {
 																		console.log('Error', err);
 																	} else {
@@ -4733,7 +4734,7 @@ Commands.blacklist = function(Common, from, to, message) {
 																	}
 																});
 															} else {
-																Common.db.blacklists.update({identity: identity}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason}}, {upsert: false}, function(err, updated) {
+																Common.db.blacklists.update({identity: identity}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason, blacklistedBy: member, blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
 																	if (err || !updated) {
 																		console.log('Error', err);
 																	} else {
@@ -4800,6 +4801,7 @@ Commands.blacklist = function(Common, from, to, message) {
 								if (blr == 'failedretire' || blr == 'crasher' || blr == 'warns' || blr == 'other'|| blr == '1' || blr == '2' || blr == '3' || blr == '4') {
 									var blacklist_reason = '';
 									var additional_comment = '';
+									var bltime = new Date();
 									if (blr == 'failedretire' || blr == '1') {
 										var retireplus1 = 'yes';
 										var retiredeposit = '';
@@ -4851,7 +4853,26 @@ Commands.blacklist = function(Common, from, to, message) {
 									}
 									setTimeout(function() {
 									if (blacklist_reason != '') {
-										Common.db.users.update({name: name}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason}}, {upsert: false}, function(err, updated) {
+										if (user.joinDate === undefined) {
+											Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: bltime, retired: 1}}, function(err, updated) {
+												if (err || !updated) {
+													console.log("User not updated!");
+												}
+											});
+										} else if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
+											Common.db.users.update({name: name}, {$set: {leaveDate: bltime, retired: 1}}, function(err, updated) {
+												if (err || !updated) {
+													console.log("User not updated!");
+												}
+											});
+										} else {
+											Common.db.users.update({name: name}, {$set: {retired: 1}}, function(err, updated) {
+												if (err || !updated) {
+													console.log("User not updated!");
+												}
+											});
+										}
+										Common.db.users.update({name: name}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason, blacklistedBy: member, blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
