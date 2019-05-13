@@ -4723,20 +4723,32 @@ Commands.blacklist = function(Common, from, to, message) {
 													}
 													setTimeout(function() {
 													if (blacklist_reason != '') {
-														Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason}, function(err, saved) {
-															if (err || !saved) {
-																console.log('Error', err);
+														Common.db.blacklists.findOne({identity: identity}, function(err, bluser1) {
+															if (err || !bluser1) {
+																Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason}, function(err, saved) {
+																	if (err || !saved) {
+																		console.log('Error', err);
+																	} else {
+																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																	}
+																});
 															} else {
-																Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																Common.db.blacklists.update({identity: identity}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason}}, {upsert: false}, function(err, updated) {
+																	if (err || !updated) {
+																		console.log('Error', err);
+																	} else {
+																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																	}
+																});
+															}
+															if (additional_comment != '') {
+																Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
+																	if (err || !updated) {
+																		console.log('Error', err);
+																	}
+																});
 															}
 														});
-														if (additional_comment != '') {
-															Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
-																if (err || !updated) {
-																	console.log('Error', err);
-																}
-															});
-														}
 													} else {
 														Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 													}
