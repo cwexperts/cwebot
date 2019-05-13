@@ -4695,7 +4695,7 @@ Commands.blacklist = function(Common, from, to, message) {
 							Common.db.users.findOne({name: identity}, function(err, user) {
 								if (err || !user) {
 									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
-										if (err || !bluser || bluser.blacklistType === undefined || user.blacklistType === 0) {
+										if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
 											if (blmsg[3] !== undefined) {
 												var blr = Common.utils.toLc(blmsg[3]);
 												if (blr == 'failedjoin' || blr == 'crasher' || blr == 'other' || blr == '1' || blr == '2' || blr == '3') {
