@@ -4721,6 +4721,7 @@ Commands.blacklist = function(Common, from, to, message) {
 															}
 														}
 													}
+													setTimeout(function() {
 													if (blacklist_reason != '') {
 														Common.db.blacklists.save({identity: identity, blacklistType: blr, blacklistReason: blacklist_reason}, function(err, saved) {
 															if (err || !saved) {
@@ -4739,6 +4740,7 @@ Commands.blacklist = function(Common, from, to, message) {
 													} else {
 														Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 													}
+													}, 1000);
 												} else {
 													Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 												}
@@ -4833,6 +4835,7 @@ Commands.blacklist = function(Common, from, to, message) {
 											}
 										}
 									}
+									setTimeout(function() {
 									if (blacklist_reason != '') {
 										Common.db.users.update({name: name}, {$set: {blacklistType: blr, blacklistReason: blacklist_reason}}, {upsert: false}, function(err, updated) {
 											if (err || !updated) {
@@ -4867,6 +4870,7 @@ Commands.blacklist = function(Common, from, to, message) {
 									} else {
 										Common.bot.say(to, "5You must provide a valid reason as to why you are adding a member to the blacklist when using this command: 1 (failedretire), 2 (crasher), 3 (warns), or 4 (other). Use the format !blacklist IRC_NICKNAME_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a member to the blacklist.");
 									}
+									}, 1000);
 								} else {
 									Common.bot.say(to, "5You must provide a valid reason as to why you are adding a member to the blacklist when using this command: 1 (failedretire), 2 (crasher), 3 (warns), or 4 (other). Use the format !blacklist IRC_NICKNAME_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a member to the blacklist.");
 								}
