@@ -4716,7 +4716,7 @@ Commands.blacklist = function(Common, from, to, message) {
 													} else if (blr == 'other' || blr == '3') {
 														blr == 'other'
 														if (blmsg[4] !== undefined) {
-															if (blmsg[4].length < 5 && blmsg[5] === undefined) {
+															if (blmsg[4].length > 5 && blmsg[5] !== undefined) {
 																blacklist_reason = Common.utils.msg(Common.utils.msg(Common.utils.msg(Common.utils.msg(message))));
 															}
 														}
@@ -4830,7 +4830,7 @@ Commands.blacklist = function(Common, from, to, message) {
 									} else if (blr == 'other' || blr == '4') {
 										blr == 'other'
 										if (blmsg[3] !== undefined) {
-											if (blmsg[3].length < 5 && blmsg[4] === undefined) {
+											if (blmsg[3].length > 5 && blmsg[4] !== undefined) {
 												blacklist_reason = Common.utils.msg(Common.utils.msg(Common.utils.msg(message)));
 											}
 										}
