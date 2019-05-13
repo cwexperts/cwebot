@@ -4731,6 +4731,13 @@ Commands.blacklist = function(Common, from, to, message) {
 																		console.log('Error', err);
 																	} else {
 																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																		if (additional_comment != '') {
+																			Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
+																				if (err || !updated) {
+																					console.log('Error', err);
+																				}
+																			});
+																		}
 																	}
 																});
 															} else {
@@ -4739,13 +4746,13 @@ Commands.blacklist = function(Common, from, to, message) {
 																		console.log('Error', err);
 																	} else {
 																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
-																	}
-																});
-															}
-															if (additional_comment != '') {
-																Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
-																	if (err || !updated) {
-																		console.log('Error', err);
+																		if (additional_comment != '') {
+																			Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
+																				if (err || !updated) {
+																					console.log('Error', err);
+																				}
+																			});
+																		}
 																	}
 																});
 															}
