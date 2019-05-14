@@ -4787,17 +4787,17 @@ Commands.blacklist = function(Common, from, to, message) {
 												Common.bot.say(to, "5You must provide a valid reason as to why you are adding a non-member to the blacklist when using this command: 1 (failedjoin), 2 (crasher), or 3 (other). Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 											}
 										} else {
-											Common.bot.say(to, "5" + identity + " is already on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+											Common.bot.say(to, "5" + identity + " is already on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 										}
 									});
 								} else if (member == identity) {
 									if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-										Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+										Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 									}
 								} else if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-									Common.bot.say(to, "5" + identity + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + identity + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 								} else if (user.status == 'Admin' || user.status == 'Owner') {
 									Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
 								} else {
@@ -4814,12 +4814,12 @@ Commands.blacklist = function(Common, from, to, message) {
 								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 							} else if (member == name) {
 								if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-									Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 								} else {
 									Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 								}
 							} else if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-								Common.bot.say(to, "5" + name + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+								Common.bot.say(to, "5" + name + " is already on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 							} else if (user.status == 'Admin' || user.status == 'Owner') {
 								Common.bot.say(to, "5Permission denied - " + member + ", you may not add a member with Admin or Owner member status to the blacklist.");
 							} else if (blmsg[2] !== undefined) {
@@ -4976,7 +4976,7 @@ Commands.whitelist = function(Common, from, to, message) {
 								if (err || !user) {
 									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
 										if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
-											Common.bot.say(to, "5" + identity + " is not on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");	
+											Common.bot.say(to, "5" + identity + " is not on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");	
 										} else {
 											Common.db.blacklists.update({identity: identity}, {$set: {blacklistType: 0, blacklistReason: 0, additionalComment: 0, blacklistedBy: 0, blacklistDate: 0}}, {upsert: false}, function(err, updated) {
 												if (err || !updated) {
@@ -4989,12 +4989,12 @@ Commands.whitelist = function(Common, from, to, message) {
 									});
 								} else if (member == identity) {
 									if (user.blacklistType === undefined || user.blacklistType === 0) {
-										Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+										Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
 									}
 								} else if (user.blacklistType === undefined || user.blacklistType === 0) {
-									Common.bot.say(to, "5" + identity + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + identity + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 								} else if (user.status == 'Admin' || user.status == 'Owner') {
 									Common.bot.say(to, "5Permission denied - " + member + ", you may not remove a member with Admin or Owner member status from the blacklist.");
 								} else {
@@ -5011,12 +5011,12 @@ Commands.whitelist = function(Common, from, to, message) {
 								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !whitelist non/member IDENTITY_HERE to remove a non-member from the blacklist.");
 							} else if (member == name) {
 								if (user.blacklistType === undefined || user.blacklistType === 0) {
-									Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 								} else {
 									Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
 								}
 							} else if (user.blacklistType === undefined || user.blacklistType === 0) {
-								Common.bot.say(to, "5" + name + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+								Common.bot.say(to, "5" + name + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
 							} else if (user.status == 'Admin' || user.status == 'Owner') {
 								Common.bot.say(to, "5Permission denied - " + member + ", you may not remove a member with Admin or Owner member status from the blacklist.");
 							} else {
