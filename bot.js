@@ -229,7 +229,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 					}
 				}
 			} else {
-				Common.bot.say(channel, "4" + nick + ", you are currently on the member blacklist for the following reason: " + user.blacklistReason + "! If you attempt to join any other official #CwExperts SwiftIRC channel, you will be kicked and banned.");
+				Common.bot.say(channel, "4" + nick + ", you are currently on the member blacklist for the following reason: " + user.blacklistReason + "! If you attempt to join any other official #CwExperts SwiftIRC channel, you will automatically be kicked and banned.");
 			}
 		});
 	}
