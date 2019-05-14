@@ -5027,35 +5027,135 @@ Commands.wl = function(Common, from, to, message) {
 	Commands.whitelist(Common, from, to, message);
 };
 
-Commands.blacklists = function(Common, from, to, message) {
-	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
-		Common.db.users.find({usercount: undefined}, function(err, users) {
-			var mbl_list = '';
+function blacklists(Common, from, to, message) {
+	Common.db.users.find({usercount: undefined}, function(err, users) {
+		var mbl_list = '';
+		users.forEach(function(usercount) {
+			if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
+				mbl_list += usercount.name + ", ";
+			}
+		});
+		Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+			var nbl_list = '';
 			users.forEach(function(usercount) {
 				if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
-					mbl_list += usercount.name + ", ";
+					nbl_list += usercount.identity + ", ";
 				}
 			});
-			Common.db.blacklists.find({usercount: undefined}, function(err, users) {
-				var nbl_list = '';
-				users.forEach(function(usercount) {
-					if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
-						nbl_list += usercount.name + ", ";
+			if (mbl_list != '') {
+				var newmbl_list = mbl_list.substr(0, mbl_list.length-2);
+				Common.bot.say(to, "2Member Blacklist: " + newmbl_list);
+			}
+			if (nbl_list != '') {
+				var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
+				Common.bot.say(to, "2Non-Member Blacklist: " + newnbl_list);
+			}
+			if (mbl_list == '' && nbl_list == '') {
+				Common.bot.say(to, "5Surprisingly, there aren't any blacklisted users!");
+			}
+		});
+	});
+};
+
+Commands.blacklists = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		if (Common.utils.msg(message)) {
+			var blmsg = message.match(/\S+/g);
+			blmsg = Common.utils.toLc(blmsg[1]);
+			if (blmsg == 'members' || blmsg == 'member' || blmsg == 'mems' || blmsg == 'mem' || blmsg == 'm') {
+				Common.db.users.find({usercount: undefined}, function(err, users) {
+					var mbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
+							mbl_list += usercount.name + ", ";
+						}
+					});
+					if (mbl_list != '') {
+						var newmbl_list = mbl_list.substr(0, mbl_list.length-2);
+						Common.bot.say(to, "2Member Blacklist: " + newmbl_list);
+					} else {
+						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted members!");
 					}
 				});
-				if (mbl_list != '') {
-					var newmbl_list = mbl_list.substr(0, mbl_list.length-2);
-					Common.bot.say(to, "2Member Blacklist: " + newmbl_list);
-				}
-				if (nbl_list != '') {
-					var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
-					Common.bot.say(to, "2Non-Member Blacklist: " + newnbl_list);
-				}
-				if (mbl_list == '' && nbl_list == '') {
-					Common.bot.say(to, "5Surprisingly, there aren't any blacklisted users!");
-				}
-			});
-		});
+			} else if (blmsg == 'non-members' || blmsg == 'non-member' || blmsg == 'non-mems' || blmsg == 'non-mem' || blmsg == 'nm') {
+				Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+					var nbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
+							nbl_list += usercount.identity + ", ";
+						}
+					});
+					if (nbl_list != '') {
+						var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
+						Common.bot.say(to, "2Non-Member Blacklist: " + newnbl_list);
+					} else {
+						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted non-members!");
+					}
+				});
+			} else if (blmsg == 'failedjoin' || blmsg == 'fj') {
+				Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+					var nbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType == 'failedjoin') {
+							nbl_list += usercount.identity + ", ";
+						}
+					});
+					if (nbl_list != '') {
+						var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
+						Common.bot.say(to, "2Failed To Join Blacklist : " + newnbl_list);
+					} else {
+						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted non-members who failed to join!");
+					}
+				});
+			} else if (blmsg == 'failedretire' || blmsg == 'fr') {
+				Common.db.users.find({usercount: undefined}, function(err, users) {
+					var nbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType == 'failedretire') {
+							nbl_list += usercount.name + ", ";
+						}
+					});
+					if (nbl_list != '') {
+						var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
+						Common.bot.say(to, "2Failed To Retire Blacklist : " + newnbl_list);
+					} else {
+						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted members who failed to retire!");
+					}
+				});
+			} else if (blmsg == 'crashers' || blmsg == 'crasher' || blmsg == 'cr' || blmsg == 'c') {
+				Common.db.users.find({usercount: undefined}, function(err, users) {
+					var mbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType == 'crasher') {
+							mbl_list += usercount.name + ", ";
+						}
+					});
+					Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+						var nbl_list = '';
+						users.forEach(function(usercount) {
+							if (usercount.blacklistType == 'crasher') {
+								nbl_list += usercount.identity + ", ";
+							}
+						});
+						var blc = mbl_list + nbl_list;
+						if (mbl_list == '' || nbl_list == '') {
+							var newblc = blc.substr(0, blc.length-2);
+							Common.bot.say(to, "2Crasher Blacklist: " + newblc);
+						} else {
+							Common.bot.say(to, "5Surprisingly, there aren't any blacklisted crashers!");
+						}
+					});
+				});
+			} else if (blmsg == 'warns' || blmsg == 'warn' || blmsg == 'w') {
+				
+			} else if (blmsg == 'others' || blmsg == 'other' || blmsg == 'o') {
+				
+			} else {
+				blacklists(Common, from, to, message);
+			}
+		} else {
+			blacklists(Common, from, to, message);
+		}
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
