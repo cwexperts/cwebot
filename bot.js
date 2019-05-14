@@ -349,11 +349,11 @@ Common.bot.addListener('join', function(channel, nick, message) {
 						}, 2000);
 					}
 				} else {
-					Common.bot.say(channel, "!kb " + nick + " detected on non-member blacklist");
+					Common.bot.say(channel, "!kb " + nickver + " detected on non-member blacklist");	
 				}
 			});
 		} else {
-			Common.bot.say(channel, "!kb " + nick + " detected on member blacklist");
+			Common.bot.say(channel, "!kb " + nickver + " detected on member blacklist");
 		}
 	});
   } else if (channel == '#cwexperts.staff') {
