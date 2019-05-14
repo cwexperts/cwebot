@@ -449,27 +449,33 @@ Commands.addmain = function(Common, from, to, message) {
 	var timedate = new Date();
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			if (Common.utils.msg(message)) {
-				var main_1 = Common.utils.toLc(main[1]);
-				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
-					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
-				} else {
-					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklistType: 0, blacklistReason: 0, blacklistComment: 0, blacklistRetires: 0, blacklistedBy: 0, blacklistDate: 0}, function(err, saved) {
-						if (err || !saved) {
-							console.log('Error', err)
+			Common.db.blacklists.findOne({identity: name}, function(err, bluser) {
+				if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+					if (Common.utils.msg(message)) {
+						var main_1 = Common.utils.toLc(main[1]);
+						if (name == 'unknown' || name == 'undefined' || name == 'n/a' || main_1 == 'unknown' || main_1 == 'undefined' || main_1 == 'n/a') {
+							Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 						} else {
-							memlist[name] = 5;
-							justadded[name] = 1;
-							Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your main has been set to: " + main_1 + "");
-							Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-							Common.bot.notice(from, "2You may not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+							var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+							Common.db.users.save({name: name, main: main_1, main2: 0, main3: 0, main4: 0, main5: 0, alt: 0, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklistType: 0, blacklistReason: 0, blacklistComment: 0, blacklistRetires: 0, blacklistedBy: 0, blacklistDate: 0}, function(err, saved) {
+								if (err || !saved) {
+									console.log('Error', err)
+								} else {
+									memlist[name] = 5;
+									justadded[name] = 1;
+									Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your main has been set to: " + main_1 + "");
+									Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+									Common.bot.notice(from, "2You may not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+								}
+							});
 						}
-					});
+					} else {
+						Common.bot.say(to, "5You must specify the RSN of your main account when using this command. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
+					}
+				} else {
+					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and then /ns group IRC_NICKNAME PASSWORD to change and group your IRC nickname.");
 				}
-			} else {
-				Common.bot.say(to, "5You must specify the RSN of your main account when using this command. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
-			}
+			});
 		} else if (user.main != undefined && user.main != 0) {
 			if (user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !profileKey to set up your profile key and secure your profile.");
@@ -523,28 +529,34 @@ Commands.addalt = function(Common, from, to, message) {
 	var timedate = new Date();
 	Common.db.users.findOne({name: name}, function(err, user) {
 		if (err || !user) {
-			if (Common.utils.msg(message)) {
-				var alt_1 = Common.utils.toLc(alt[1]);
-				if (name == 'unknown' || name == 'undefined' || name == 'n/a' || alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
-					Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
-				} else {
-					var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
-					Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklistType: 0, blacklistReason: 0, blacklistComment: 0, blacklistRetires: 0, blacklistedBy: 0, blacklistDate: 0}, function(err, saved) {
-						if (err || !saved) {
-							console.log('Error', err)
+			Common.db.blacklists.findOne({identity: name}, function(err, bluser) {
+				if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+					if (Common.utils.msg(message)) {
+						var alt_1 = Common.utils.toLc(alt[1]);
+						if (name == 'unknown' || name == 'undefined' || name == 'n/a' || alt_1 == 'unknown' || alt_1 == 'undefined' || alt_1 == 'n/a') {
+							Common.bot.say(to, '5You may not create your profile using the following invalid names: n/a, undefined, unknown. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.');
 						} else {
-							memlist[name] = 5;
-							justadded[name] = 1;
-							Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + alt_1 + "");
-							Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
-							Common.bot.notice(from, "2You may not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+							var key = Math.random().toString(36).substring(2, 17) + Math.random().toString(36).substring(2, 17);
+							Common.db.users.save({name: name, main: 0, main2: 0, main3: 0, main4: 0, main5: 0, alt: alt_1, alt2: 0, alt3: 0, alt4: 0, alt5: 0, alt6: 0, alt7: 0, alt8: 0, alt9: 0, alt10: 0, discord: 'unknown', status: 'Normal', retired: 0, recruiter: 0, recruits: 0, goal: 0, goal2: 0, warns: 0, pen: 1, idiot: 1, cache: 0, joinDate: timedate, leaveDate: 0, lastSeen: timedate, smemreports: 0, rmemreports: 0, sbugreports: 0, key: key, viewedKey: 0, blacklistType: 0, blacklistReason: 0, blacklistComment: 0, blacklistRetires: 0, blacklistedBy: 0, blacklistDate: 0}, function(err, saved) {
+								if (err || !saved) {
+									console.log('Error', err)
+								} else {
+									memlist[name] = 5;
+									justadded[name] = 1;
+									Common.bot.say(to, "2" + name + ", your profile has been created and a unique profile key has been sent to your private messages. Your alt has been set to: " + alt_1 + "");
+									Common.bot.notice(from, "2YOUR PROFILE KEY: " + key);
+									Common.bot.notice(from, "2You may not be able to view your profile key again - please save your profile key somewhere you won't forget, and do not share your profile key with anyone. Your profile key is required to edit your and other member's profiles. You may change your profile key at a later date.");
+								}
+							});
 						}
-					});
-				}
-			} else {
-				Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
+					} else {
+						Common.bot.say(to, "5You must specify the RSN of your level 90+ combat alt when using this command. Use !addAlt ALT_RSN_HERE to link the RSN of your level 90+ combat alt to your profile.");
 
-			}
+					}
+				} else {
+					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and then /ns group IRC_NICKNAME PASSWORD to change and group your IRC nickname.");
+				}
+			});
 		} else if (user.alt != undefined && user.alt != 0) {
 			if (user.key === undefined) {
 				Common.bot.say(to, "5" + name + ", you have already created a profile! Use !profileKey to set up your profile key and secure your profile.");
