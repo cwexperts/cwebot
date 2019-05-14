@@ -3619,7 +3619,7 @@ Commands.channel = function(Common, from, to, message) {
 Commands.chan = function(Common, from, to, message) {
 	Commands.channel(Common, from, to, message);
 };
-
+/*
 Commands.addcrasher = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	var member = Common.utils.toLc(from);
@@ -3803,7 +3803,7 @@ Commands.crashersreformed = function(Common, from, to, message) {
 Commands.crashersr = function(Common, from, to, message) {
 	Commands.crashersreformed(Common, from, to, message);
 };
-
+*/
 Commands.members = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 	Common.db.users.find({usercount: undefined}, function(err, users) {
@@ -4501,6 +4501,13 @@ Commands.date = function(Common, from, to, message) {
 					lastseen = lastseen.substr(0, lastseen.length-14);
 					lastseen = lastseen + "UTC";
 					date_msg += ", Last seen date: " + lastseen + "";
+				}
+				if (user.blacklistDate !== undefined && user.blacklistDate !== 0) {
+					var bldate = user.blacklistDate;
+					bldate = bldate.toString();
+					bldate = bldate.substr(0, bldate.length-14);
+					bldate = bldate + "UTC";
+					date_msg += ", Blacklisted date: " + bldate + "";
 				}
 				Common.bot.say(to, date_msg);
 			}
@@ -5209,7 +5216,6 @@ Commands.checkblacklist = function(Common, from, to, message) {
 			Common.db.users.findOne({name: name}, function(err, user) {
 				if (err || !user || user.blacklistType === undefined || user.blacklistType === 0) {
 					nobl = nobl + 1;
-					Common.bot.say(to, "test hehe");
 				} else {
 					var timemsg = user.blacklistDate
 					timemsg = timemsg.toString();
