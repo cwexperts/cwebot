@@ -5102,7 +5102,7 @@ Commands.blacklists = function(Common, from, to, message) {
 					});
 					if (nbl_list != '') {
 						var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
-						Common.bot.say(to, "2Failed To Join Blacklist : " + newnbl_list);
+						Common.bot.say(to, "2Failed To Join Blacklist: " + newnbl_list);
 					} else {
 						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted non-members who failed to join!");
 					}
@@ -5117,7 +5117,7 @@ Commands.blacklists = function(Common, from, to, message) {
 					});
 					if (nbl_list != '') {
 						var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
-						Common.bot.say(to, "2Failed To Retire Blacklist : " + newnbl_list);
+						Common.bot.say(to, "2Failed To Retire Blacklist: " + newnbl_list);
 					} else {
 						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted members who failed to retire!");
 					}
@@ -5147,9 +5147,44 @@ Commands.blacklists = function(Common, from, to, message) {
 					});
 				});
 			} else if (blmsg == 'warns' || blmsg == 'warn' || blmsg == 'w') {
-				
+				Common.db.users.find({usercount: undefined}, function(err, users) {
+					var mbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType == 'warns') {
+							mbl_list += usercount.name + ", ";
+						}
+					});
+					if (mbl_list != '') {
+						var newmbl_list = mbl_list.substr(0, mbl_list.length-2);
+						Common.bot.say(to, "2Warns Blacklist: " + newmbl_list);
+					} else {
+						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted members who have too many warns!");
+					}
+				});
 			} else if (blmsg == 'others' || blmsg == 'other' || blmsg == 'o') {
-				
+				Common.db.users.find({usercount: undefined}, function(err, users) {
+					var mbl_list = '';
+					users.forEach(function(usercount) {
+						if (usercount.blacklistType == 'other') {
+							mbl_list += usercount.name + ", ";
+						}
+					});
+					Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+						var nbl_list = '';
+						users.forEach(function(usercount) {
+							if (usercount.blacklistType == 'other') {
+								nbl_list += usercount.identity + ", ";
+							}
+						});
+						var blc = mbl_list + nbl_list;
+						if (mbl_list == '' || nbl_list == '') {
+							var newblc = blc.substr(0, blc.length-2);
+							Common.bot.say(to, "2Miscellaneous Blacklist: " + newblc);
+						} else {
+							Common.bot.say(to, "5Surprisingly, there aren't any blacklisted users for miscellaneous reasons!");
+						}
+					});
+				});
 			} else {
 				blacklists(Common, from, to, message);
 			}
@@ -5163,4 +5198,48 @@ Commands.blacklists = function(Common, from, to, message) {
 
 Commands.bls = function(Common, from, to, message) {
 	Commands.blacklists(Common, from, to, message);
+};
+
+Commands.checkblacklist = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		if (Common.utils.msg(message)) {
+			var name = message.match(/\S+/g);
+			name = Common.utils.toLc(name[1]);
+			var nobl = 1;
+			Common.db.users.findOne({name: name}, function(err, user) {
+				if (err || !user || user.blacklistType === undefined || user.blacklistType === 0) {
+					nobl = nobl + 1;
+					Common.bot.say(to, "test hehe");
+				} else {
+					var timemsg = user.blacklistDate
+					timemsg = timemsg.toString();
+					timemsg = timemsg.substr(0, timemsg.length-14);
+					timemsg = timemsg + "UTC";
+					var cblmsg = "2" + name + " is on the member blacklist. Submitted by: " + user.blacklistedBy + " - Time stamp: " + timemsg + " - Offence: " + user.blacklistType + " - Details: " + user.blacklistReason;
+					if (user.blacklistComment !== undefined && user.blacklistComment !== 0) {
+						cblmsg += " - Additional comment: " + user.blacklistComment;
+					}
+					Common.bot.say(to, cblmsg);
+				}
+				Common.db.blacklists.findOne({identity: name}, function(err, bluser) {
+					if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+						nobl = nobl + 1;
+					} else {
+						
+					}
+					if (nobl == 3) {
+						
+					}
+				});
+			});
+		} else {
+			Common.bot.say(to, "5You must specify a user to search the blacklist for when using this command. Use the format !checkBlacklist IDENTITY/IRC_NICKNAME_HERE to search the blacklist for a user.");
+		}
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+			
+Commands.cbl = function(Common, from, to, message) {
+	Commands.checkblacklist(Common, from, to, message);
 };
