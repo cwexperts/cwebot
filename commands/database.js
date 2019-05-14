@@ -473,7 +473,7 @@ Commands.addmain = function(Common, from, to, message) {
 						Common.bot.say(to, "5You must specify the RSN of your main account when using this command. Use !addMain MAIN_RSN_HERE to link the RSN of your main account to your profile.");
 					}
 				} else {
-					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and then /ns group IRC_NICKNAME PASSWORD to change and group your IRC nickname.");
+					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and /ns group IRC_NICKNAME PASSWORD to change and then group your IRC nickname.");
 				}
 			});
 		} else if (user.main != undefined && user.main != 0) {
@@ -554,7 +554,7 @@ Commands.addalt = function(Common, from, to, message) {
 
 					}
 				} else {
-					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and then /ns group IRC_NICKNAME PASSWORD to change and group your IRC nickname.");
+					Common.bot.say(to, "5The identity '" + name + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and /ns group IRC_NICKNAME PASSWORD to change and then group your IRC nickname.");
 				}
 			});
 		} else if (user.alt != undefined && user.alt != 0) {
