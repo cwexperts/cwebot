@@ -229,124 +229,133 @@ Common.bot.addListener('join', function(channel, nick, message) {
 					}
 				}
 			} else {
-				Common.bot.say(channel, "4" + nick + ", you are currently on the member blacklist! If you attempt to join any other official #CwExperts SwiftIRC channel, you will be kicked and banned.");
+				Common.bot.say(channel, "4" + nick + ", you are currently on the member blacklist for the following reason: " + user.blacklistReason + "! If you attempt to join any other official #CwExperts SwiftIRC channel, you will be kicked and banned.");
 			}
 		});
 	}
   } else if (channel == '#cwexperts1' || channel == '#cwexperts2') {
 	var nickver = Common.utils.toLc(nick);
 	var nickcaps = nick;
-	if (nickver != 'abdel' && nickver != 'hanna' && nickver != 'alan_' && nickver != 'alan__' && nickver != 'base_tank' && nickver != 'fable' && nickver != 'ipso' && nickver != 'anna' && nickver != 'runescript' && nickver != 'chanstat-01' && nickver != 'chanstat-02' && nickver != 'chanstat-03' && nickver != 'chanstat-04' && nickver != 'chanstat-05' && nickver != 'chanstat-06' && nickver != 'chanstat-07' && nickver != 'chanstat-08' && nickver != 'chanstat-09' && nickver != 'chanstat-10' 
-		&& nickver != 'chanstat-11' && nickver != 'chanstat-12' && nickver != 'chanstat-13' && nickver != 'chanstat-14' && nickver != 'chanstat-15' && nickver != 'chanstat-16' && nickver != 'chanstat-17' && nickver != 'chanstat-18' && nickver != 'chanstat-19' && nickver != 'chanstat-20' 
-		&& nickver != 'chanstat-21' && nickver != 'chanstat-22' && nickver != 'chanstat-23' && nickver != 'chanstat-24' && nickver != 'chanstat-25' && nickver != 'chanstat-26' && nickver != 'chanstat-27' && nickver != 'chanstat-28' && nickver != 'chanstat-29' && nickver != 'chanstat-30') {
-      var greetmsg = "4[GREET]: 2" + nickcaps + " has arrived! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
-      var players = [];
-      setTimeout(function() {
-          if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
-            if (users[channel] != '') {
-              players = users[channel].match(/\S+/g);
-            }
-            Common.db.channels.findOne({channel: channel}, function(err, ch) {
-              if (err || !ch) {
-                console.log("Error: Unable to fetch world for " + channel);
-                console.log(err);
-              } else {
-                if (ch.games !== 0) {
-                  if (ch.world === 0) {
-                    greetmsg += " 2- 2Current world: unknown";
-                  } else {
-                    greetmsg += " 2- 2Current world: " + ch.world + "";
-                  }
-                  
-                  if (time[channel] == undefined) {
-                    greetmsg += ", ticks left: unknown";
-                  } else if (time[channel] == 2) {
-                    greetmsg += ", ticks left: 7" + time[channel] + "2";
-                  } else if (time[channel] == 1 || time[channel] == 0) {
-                    greetmsg += ", ticks left: 4" + time[channel] + "2";
-                  } else {
-                    greetmsg += ", ticks left: 3" + time[channel] + "2";
-                  }
-                  
-                  if (ch.cycle === 2) {
-                    greetmsg += " - World cycle: Two";
-                  } else if (ch.cycle === 3) {
-                    greetmsg += " - World cycle: Three";
-                  }
-                  
-                  if (ch.team == 'saradomin') {
-                    greetmsg += " - Winning team: 10Saradomin";
-                  } else if (ch.team == 'zamorak') {
-                    greetmsg += " - Winning team: 4Zamorak";
-                  }
-                  greetmsg += " 2- Active player count: " + players.length;
-                } else {
-                  greetmsg += " 2- Active member count: " + players.length;
-                }
-                Common.bot.say(channel, greetmsg);
-		if (ch.unlobCheck == 1 && ch.world !== 0 && time[channel] !== undefined && time[channel] != 0) {
-			var tickcolor = '';
-			if (time[channel] == 2) {
-				tickcolor = "7" + time[channel] + "2";
-			} else if (time[channel] == 1) {
-				tickcolor = "4" + time[channel] + "2";
-			} else {
-				tickcolor = "3" + time[channel] + "2";
-			}
-			if (time[channel] == 1) {
-				Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there is still " + tickcolor + " tick left on world " + ch.world + " - you may use !lobby if you wish to join, but hurry!");
-			} else {
-				Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there are still " + tickcolor + " ticks left on world " + ch.world + " - you may use !lobby if you wish to join.");
-			}
-		}
-              }
-            });
-          }
-      }, 2000);
-    }
-	var nickcaps = nick;
-	var nick = Common.utils.toLc(nick);
-	if (nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
-		&& nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
-		&& nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
-		setTimeout(function() {
-			if (everyoneLc[channel].indexOf(nick) > -1) {
-				Common.db.users.findOne({name: nick}, function(err, user) {
-					if (err || !user) {
-						console.log(err);
-						if (newaccess[nick] != 1) {
-							Common.bot.say(channel, "2" + nickcaps + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
-						}
-					} else if (justadded[nick] != 1) {
-						if (user.key === undefined) {
-							Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
-						}
-						if (user.main === undefined || user.main === 0) {
-							Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE to complete your profile.");
-						}
-						if (user.alt === undefined || user.alt === 0) {
-							Common.bot.say(channel, "2" + nick + ", please use !addAlt ALT_RSN_HERE to complete your profile.");
-						}
-						if (user.discord === undefined || user.discord == 'unknown') {
-							Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to complete your profile.");
-						}
-						if (user.recruiter === undefined || user.recruiter === 0) {
-							Common.bot.say(channel, "2" + nick + ", please use !addRecruiter IRC_NICKNAME_HERE to complete your profile.");
-						}
-						if (user.goal === undefined|| user.goal === 0) {
-							Common.bot.say(channel, "2" + nick + ", please use !addGoal GOAL_HERE to complete your profile.");
-						}
-						if (user.joinDate === undefined || user.joinDate == 'unknown') {
-							Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status of the date you joined to complete your profile.");
-						}
-						if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
-							Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
-						}
+	Common.db.users.findOne({name: nickver}, function(err, user) {
+		if (err || !user || user.blacklistType === undefined || user.blacklistType === 0) {
+			Common.db.blacklists.findOne({identity: nickver}, function(err, bluser) {
+				if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {			
+					if (nickver != 'abdel' && nickver != 'hanna' && nickver != 'alan_' && nickver != 'alan__' && nickver != 'base_tank' && nickver != 'fable' && nickver != 'ipso' && nickver != 'anna' && nickver != 'runescript' && nickver != 'chanstat-01' && nickver != 'chanstat-02' && nickver != 'chanstat-03' && nickver != 'chanstat-04' && nickver != 'chanstat-05' && nickver != 'chanstat-06' && nickver != 'chanstat-07' && nickver != 'chanstat-08' && nickver != 'chanstat-09' && nickver != 'chanstat-10' 
+						&& nickver != 'chanstat-11' && nickver != 'chanstat-12' && nickver != 'chanstat-13' && nickver != 'chanstat-14' && nickver != 'chanstat-15' && nickver != 'chanstat-16' && nickver != 'chanstat-17' && nickver != 'chanstat-18' && nickver != 'chanstat-19' && nickver != 'chanstat-20' 
+						&& nickver != 'chanstat-21' && nickver != 'chanstat-22' && nickver != 'chanstat-23' && nickver != 'chanstat-24' && nickver != 'chanstat-25' && nickver != 'chanstat-26' && nickver != 'chanstat-27' && nickver != 'chanstat-28' && nickver != 'chanstat-29' && nickver != 'chanstat-30') {
+						var greetmsg = "4[GREET]: 2" + nickcaps + " has arrived! 4P7A8R9T11Y 12T6I13M4E 7B8I9T11C12H6E13S4!";
+						var players = [];
+						setTimeout(function() {
+							if (everyoneLc[channel].indexOf(Common.utils.toLc(nick)) > -1) {
+								if (users[channel] != '') {
+									players = users[channel].match(/\S+/g);
+								}
+								Common.db.channels.findOne({channel: channel}, function(err, ch) {
+									if (err || !ch) {
+										console.log("Error: Unable to fetch world for " + channel);
+										console.log(err);
+									} else {
+										if (ch.games !== 0) {
+											if (ch.world === 0) {
+												greetmsg += " 2- 2Current world: unknown";
+											} else {
+												greetmsg += " 2- 2Current world: " + ch.world + "";
+											}
+											if (time[channel] == undefined) {
+												greetmsg += ", ticks left: unknown";
+											} else if (time[channel] == 2) {
+												greetmsg += ", ticks left: 7" + time[channel] + "2";
+											} else if (time[channel] == 1 || time[channel] == 0) {
+												greetmsg += ", ticks left: 4" + time[channel] + "2";
+											} else {
+												greetmsg += ", ticks left: 3" + time[channel] + "2";
+											}
+											if (ch.cycle === 2) {
+												greetmsg += " - World cycle: Two";
+											} else if (ch.cycle === 3) {
+												greetmsg += " - World cycle: Three";
+											}
+											if (ch.team == 'saradomin') {
+												greetmsg += " - Winning team: 10Saradomin";
+											} else if (ch.team == 'zamorak') {
+												greetmsg += " - Winning team: 4Zamorak";
+											}
+											greetmsg += " 2- Active player count: " + players.length;
+										} else {
+											greetmsg += " 2- Active member count: " + players.length;
+										}
+										Common.bot.say(channel, greetmsg);
+										if (ch.unlobCheck == 1 && ch.world !== 0 && time[channel] !== undefined && time[channel] != 0) {
+											var tickcolor = '';
+											if (time[channel] == 2) {
+												tickcolor = "7" + time[channel] + "2";
+											} else if (time[channel] == 1) {
+												tickcolor = "4" + time[channel] + "2";
+											} else {
+												tickcolor = "3" + time[channel] + "2";
+											}
+											if (time[channel] == 1) {
+												Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there is still " + tickcolor + " tick left on world " + ch.world + " - you may use !lobby if you wish to join, but hurry!");
+											} else {
+												Common.bot.say(channel, "2" + nickcaps + ", all mains have unlobbied but there are still " + tickcolor + " ticks left on world " + ch.world + " - you may use !lobby if you wish to join.");
+											}
+										}
+									}
+								});
+							}
+						}, 2000);
 					}
-				});
-			}
-		}, 2000);
-	}
+					var nickcaps = nick;
+					var nick = Common.utils.toLc(nick);
+					if (nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
+						&& nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
+						&& nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
+						setTimeout(function() {
+							if (everyoneLc[channel].indexOf(nick) > -1) {
+								Common.db.users.findOne({name: nick}, function(err, user) {
+									if (err || !user) {
+										console.log(err);
+										if (newaccess[nick] != 1) {
+											Common.bot.say(channel, "2" + nickcaps + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
+										}
+									} else if (justadded[nick] != 1) {
+										if (user.key === undefined) {
+											Common.bot.say(channel, "2" + nick + ", please use !profileKey to set up your profile key and secure your profile.");
+										}
+										if (user.main === undefined || user.main === 0) {
+											Common.bot.say(channel, "2" + nick + ", please use !addMain MAIN_RSN_HERE to complete your profile.");
+										}
+										if (user.alt === undefined || user.alt === 0) {
+											Common.bot.say(channel, "2" + nick + ", please use !addAlt ALT_RSN_HERE to complete your profile.");
+										}
+										if (user.discord === undefined || user.discord == 'unknown') {
+											Common.bot.say(channel, "2" + nick + ", please use !addDiscordID EXAMPLE_NAME # 0 0 0 0 to complete your profile.");
+										}
+										if (user.recruiter === undefined || user.recruiter === 0) {
+											Common.bot.say(channel, "2" + nick + ", please use !addRecruiter IRC_NICKNAME_HERE to complete your profile.");
+										}
+										if (user.goal === undefined|| user.goal === 0) {
+											Common.bot.say(channel, "2" + nick + ", please use !addGoal GOAL_HERE to complete your profile.");
+										}
+										if (user.joinDate === undefined || user.joinDate == 'unknown') {
+											Common.bot.say(channel, "2" + nick + ", please inform a member with Owner member status of the date you joined to complete your profile.");
+										}
+										if (user.key === undefined || user.main === undefined || user.main === 0 || user.alt === undefined || user.alt === 0 || user.discord === undefined || user.discord == 'unknown' || user.recruiter === undefined || user.recruiter === 0 || user.goal === undefined || user.goal === 0 || user.joinDate === undefined || user.joinDate == 'unknown') {
+											Common.utils.completeProfileTimer(Common, channel, 'complete', 60, 5, nick);
+										}
+									}
+								});
+							}
+						}, 2000);
+					}
+				} else {
+					Common.bot.say(channel, "!kb " + nick + " detected on non-member blacklist");
+				}
+			});
+		} else {
+			Common.bot.say(channel, "!kb " + nick + " detected on member blacklist");
+		}
+	});
   } else if (channel == '#cwexperts.staff') {
 //     4red 7orange 8yellow 9lightgreen 10cyan 11lightcyan 12lightblue 2blue 6purple 13pink 3green
   } else if (channel == '#key') {
