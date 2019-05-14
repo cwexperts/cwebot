@@ -5023,7 +5023,6 @@ Commands.whitelist = function(Common, from, to, message) {
 	}
 };
 										
-
 Commands.wl = function(Common, from, to, message) {
 	Commands.whitelist(Common, from, to, message);
 };
@@ -5031,19 +5030,37 @@ Commands.wl = function(Common, from, to, message) {
 Commands.blacklists = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		Common.db.users.find({usercount: undefined}, function(err, users) {
-			var bl_list = '';
+			var mbl_list = '';
 			users.forEach(function(usercount) {
 				if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
-					bl_list += usercount.name + ", ";
+					mbl_list += usercount.name + ", ";
 				}
 			});
-			if (bl_list != '') {
-				Common.bot.say(to, "2Member Blacklist: " + bl_list);
-			} else {
-				Common.bot.say(to, "member blacklist is empty");
-			}
+			Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+				var nbl_list = '';
+				users.forEach(function(usercount) {
+					if (usercount.blacklistType !== undefined && usercount.blacklistType !== 0) {
+						nbl_list += usercount.name + ", ";
+					}
+				});
+				if (mbl_list != '') {
+					var newmbl_list = mbl_list.substr(0, mbl_list.length-2);
+					Common.bot.say(to, "2Member Blacklist: " + newmbl_list);
+				}
+				if (nbl_list != '') {
+					var newnbl_list = nbl_list.substr(0, nbl_list.length-2);
+					Common.bot.say(to, "2Non-Member Blacklist: " + newnbl_list);
+				}
+				if (mbl_list == '' && nbl_list == '') {
+					Common.bot.say(to, "5Surprisingly, there aren't any blacklisted users!");
+				}
+			});
 		});
 	} else {
 		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
 	}
+};
+
+Commands.bls = function(Common, from, to, message) {
+	Commands.blacklists(Common, from, to, message);
 };
