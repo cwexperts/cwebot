@@ -314,7 +314,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 									if (err || !user) {
 										console.log(err);
 										if (newaccess[nickver] != 1) {
-											Common.bot.say(channel, "2" + nickcaps + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then ask a member with Staff, Admin, or Owner member status for guidance to complete your profile.");
+											Common.bot.say(channel, "2" + nickcaps + ", please use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile, and then use !checkProfile to see what is required to complete your profile.");
 										}
 									} else if (justadded[nickver] != 1) {
 										if (user.key === undefined) {
@@ -347,7 +347,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
 						}, 2000);
 					}
 				} else {
-					Common.bot.say(channel, "!kb " + nickver + " detected on non-member blacklist");	
+					Common.bot.say(channel, "!kb " + nickver + " detected on non-member blacklist");
 				}
 			});
 		} else {
@@ -356,17 +356,43 @@ Common.bot.addListener('join', function(channel, nick, message) {
 	});
   } else if (channel == '#cwexperts.staff') {
 //     4red 7orange 8yellow 9lightgreen 10cyan 11lightcyan 12lightblue 2blue 6purple 13pink 3green
+	var nickver = Common.utils.toLc(nick);
+	Common.db.users.findOne({name: nickver}, function(err, user) {
+		if (err || !user || user.blacklistType === undefined || user.blacklistType === 0) {
+			Common.db.blacklists.findOne({identity: nickver}, function(err, bluser) {
+				if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+					
+				} else {
+					Common.bot.say(channel, "!kb " + nickver + " detected on non-member blacklist");
+				}
+			});
+		} else {
+			Common.bot.say(channel, "!kb " + nickver + " detected on member blacklist");
+		}
+	});
   } else if (channel == '#key') {
 	var nick = Common.utils.toLc(nick);
-	setTimeout(function() {
-		if (everyoneLc[channel].indexOf(nick) > -1) {
-			if (nick != 'abdel' && nick != 'dxnxex7' && nick != 'hanna' && nick != 'alexis' && nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
-		 	  && nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
-		 	  && nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
-				Common.bot.say(channel, "4[WARNING]: Do not enter your profile key if there are other users present in this channel - use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
-			}
+	Common.db.users.findOne({name: nick}, function(err, user) {
+		if (err || !user || user.blacklistType === undefined || user.blacklistType === 0) {
+			Common.db.blacklists.findOne({identity: nick}, function(err, bluser) {
+				if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+					setTimeout(function() {
+						if (everyoneLc[channel].indexOf(nick) > -1) {
+							if (nick != 'abdel' && nick != 'dxnxex7' && nick != 'hanna' && nick != 'alexis' && nick != 'anna' && nick != 'runescript' && nick != 'chanstat-01' && nick != 'chanstat-02' && nick != 'chanstat-03' && nick != 'chanstat-04' && nick != 'chanstat-05' && nick != 'chanstat-06' && nick != 'chanstat-07' && nick != 'chanstat-08' && nick != 'chanstat-09' && nick != 'chanstat-10' 
+		 					  && nick != 'chanstat-11' && nick != 'chanstat-12' && nick != 'chanstat-13' && nick != 'chanstat-14' && nick != 'chanstat-15' && nick != 'chanstat-16' && nick != 'chanstat-17' && nick != 'chanstat-18' && nick != 'chanstat-19' && nick != 'chanstat-20' 
+		 					  && nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
+								Common.bot.say(channel, "4[WARNING]: Do not enter your profile key if there are other users present in this channel - use !unlockProfile CURRENT_PROFILE_KEY to unlock your profile.");
+							}
+						}
+					}, 2000);
+				} else {
+					Common.bot.say(channel, "!kb " + nick + " detected on non-member blacklist");
+				}
+			});
+		} else {
+			Common.bot.say(channel, "!kb " + nick + " detected on member blacklist");
 		}
-	}, 2000);
+	});
   }
 	}
 });
