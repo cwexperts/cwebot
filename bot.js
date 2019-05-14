@@ -202,25 +202,34 @@ Common.bot.addListener('join', function(channel, nick, message) {
 		&& nick != 'chanstat-21' && nick != 'chanstat-22' && nick != 'chanstat-23' && nick != 'chanstat-24' && nick != 'chanstat-25' && nick != 'chanstat-26' && nick != 'chanstat-27' && nick != 'chanstat-28' && nick != 'chanstat-29' && nick != 'chanstat-30') {
 		Common.db.users.findOne({name: nick}, function(err, user) {
 			if (err || !user) {
-				console.log(err);
-				if (newaccess[nick] != 1) {
-					Common.bot.say(channel, "3Welcome " + nickcaps + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
-				}
-			} else if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
-				reregister[name] = 1;
-				Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
-			} else {
-				var lastSeenMs = user.lastSeen.getTime();
-				var exp = lastSeenMs + 5184000000;
-				var timenow = new Date();
-				timenow = timenow.getTime();
-				if (timenow > exp) {
+				Common.db.blacklists.findOne({identity: nick}, function(err, bluser) {
+					if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+						if (newaccess[nick] != 1) {
+							Common.bot.say(channel, "3Welcome " + nickcaps + "! You are new around here, if you would like to join #CwExperts you may use !register to display the instructions for registering a SwiftIRC nickname.");
+						}
+					} else {
+						Common.bot.say(channel, "4The identity '" + nick + "' is currently on the non-member blacklist. If you believe this is a mistake, please contact a member with Admin or Owner member status for assistance, or if you believe you share an identity with this non-member, you should use /nick NEW_IRC_NICKNAME_HERE and /ns group IRC_NICKNAME PASSWORD to change and then group your IRC nickname.");
+					}
+				});
+			} else if (user.blacklistType === undefined || user.blacklistType === 0) {
+				if (user.lastSeen == 'unknown' || user.lastSeen == undefined) {
 					reregister[name] = 1;
-					var diff = timenow - exp;
-					var lastSeenDays = diff / 86400000;
-					lastSeenDays = lastSeenDays.toFixed(0);
-					Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for " + lastSeenDays + " days, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+					Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for an unknown amount of time, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+				} else {
+					var lastSeenMs = user.lastSeen.getTime();
+					var exp = lastSeenMs + 5184000000;
+					var timenow = new Date();
+					timenow = timenow.getTime();
+					if (timenow > exp) {
+						reregister[name] = 1;
+						var diff = timenow - exp;
+						var lastSeenDays = diff / 86400000;
+						lastSeenDays = lastSeenDays.toFixed(0);
+						Common.bot.say(channel, "3Welcome back " + nick + "! You have been absent for " + lastSeenDays + " days, possibly resulting in your SwiftIRC nickname becoming unregistered. Use !register to display the instructions for reregistering your SwiftIRC nickname.");
+					}
 				}
+			} else {
+				Common.bot.say(channel, "4" + nick + ", you are currently on the member blacklist! If you attempt to join any other official #CwExperts SwiftIRC channel, you will be kicked and banned.");
 			}
 		});
 	}
