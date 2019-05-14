@@ -4773,7 +4773,7 @@ Commands.blacklist = function(Common, from, to, message) {
 									});
 								} else if (member == identity) {
 									if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-										Common.bot.say(to, "5" + member + " you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+										Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 									}
@@ -4795,7 +4795,7 @@ Commands.blacklist = function(Common, from, to, message) {
 								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !blacklist non/member IDENTITY_HERE REASON_HERE ADDITIONAL REASON/COMMENT HERE to add a non-member to the blacklist.");
 							} else if (member == name) {
 								if (user.blacklistType !== undefined && user.blacklistType !== 0) {
-									Common.bot.say(to, "5" + member + " you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + member + ", you are already on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 								} else {
 									Common.bot.say(to, "5" + member + ", you may not add yourself to the blacklist! You have been added to the niggerlist, though.");
 								}
@@ -4970,7 +4970,7 @@ Commands.whitelist = function(Common, from, to, message) {
 									});
 								} else if (member == identity) {
 									if (user.blacklistType === undefined || user.blacklistType === 0) {
-										Common.bot.say(to, "5" + member + " you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+										Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 									} else {
 										Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
 									}
@@ -4992,7 +4992,7 @@ Commands.whitelist = function(Common, from, to, message) {
 								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !whitelist non/member IDENTITY_HERE to remove a non-member from the blacklist.");
 							} else if (member == name) {
 								if (user.blacklistType === undefined || user.blacklistType === 0) {
-									Common.bot.say(to, "5" + member + " you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									Common.bot.say(to, "5" + member + ", you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
 								} else {
 									Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
 								}
