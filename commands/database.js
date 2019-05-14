@@ -5161,7 +5161,7 @@ Commands.blacklists = function(Common, from, to, message) {
 						Common.bot.say(to, "5Surprisingly, there aren't any blacklisted members who have too many warns!");
 					}
 				});
-			} else if (blmsg == 'others' || blmsg == 'other' || blmsg == 'o') {
+			} else if (blmsg == 'others' || blmsg == 'other' || blmsg == 'o' || blmsg == 'miscellaneous' || blmsg == 'misc') {
 				Common.db.users.find({usercount: undefined}, function(err, users) {
 					var mbl_list = '';
 					users.forEach(function(usercount) {
@@ -5225,10 +5225,18 @@ Commands.checkblacklist = function(Common, from, to, message) {
 					if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
 						nobl = nobl + 1;
 					} else {
-						
+						var timemsg = bluser.blacklistDate
+						timemsg = timemsg.toString();
+						timemsg = timemsg.substr(0, timemsg.length-14);
+						timemsg = timemsg + "UTC";
+						var cblmsg = "2" + name + " is on the non-member blacklist. Submitted by: " + bluser.blacklistedBy + " - Time stamp: " + timemsg + " - Offence: " + bluser.blacklistType + " - Details: " + bluser.blacklistReason;
+						if (bluser.additionalComment !== undefined && bluser.additionalComment !== 0) {
+							cblmsg += " - Additional comment: " + bluser.additionalComment;
+						}
+						Common.bot.say(to, cblmsg);
 					}
 					if (nobl == 3) {
-						
+						Common.bot.say(to, "5" + name + " is not on the blacklist. :)");
 					}
 				});
 			});
