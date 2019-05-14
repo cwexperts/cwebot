@@ -4730,7 +4730,7 @@ Commands.blacklist = function(Common, from, to, message) {
 																	if (err || !saved) {
 																		console.log('Error', err);
 																	} else {
-																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the non-member blacklist for the following reason: " + blacklist_reason);
 																		if (additional_comment != '') {
 																			Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
 																				if (err || !updated) {
@@ -4745,7 +4745,7 @@ Commands.blacklist = function(Common, from, to, message) {
 																	if (err || !updated) {
 																		console.log('Error', err);
 																	} else {
-																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the blacklist for the following reason: " + blacklist_reason);
+																		Common.bot.say(to, "2" + member + " has just added " + identity + " to the non-member blacklist for the following reason: " + blacklist_reason);
 																		if (additional_comment != '') {
 																			Common.db.blacklists.update({identity: identity}, {$set: {additionalComment: additional_comment}}, {upsert: false}, function(err, updated) {
 																				if (err || !updated) {
@@ -4883,7 +4883,7 @@ Commands.blacklist = function(Common, from, to, message) {
 											if (err || !updated) {
 												console.log('Error', err);
 											} else {
-												Common.bot.say(to, "2" + member + " has just added " + name + " to the blacklist for the following reason: " + blacklist_reason);
+												Common.bot.say(to, "2" + member + " has just added " + name + " to the member blacklist for the following reason: " + blacklist_reason);
 											}
 										});
 										if (additional_comment != '') {
@@ -4937,7 +4937,92 @@ Commands.bl = function(Common, from, to, message) {
 	Commands.blacklist(Common, from, to, message);
 };
 
-
+Commands.whitelist = function(Common, from, to, message) {
+	if (to == '#cwexperts' || to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+			if (err || !perms) {
+				console.log(err);
+				Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to remove a user from the blacklist.");
+			} else if (perms.status == 'Admin' || perms.status == 'Owner') {
+				if (memlist[member] != 5 || perms.key === undefined) {
+					Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+				} else if (Common.utils.msg(message)) {
+					var blmsg = message.match(/\S+/g);
+					var name = Common.utils.toLc(blmsg[1]);
+					if (name == 'non/member' || name == 'n/m') {
+						if (blmsg[2] !== undefined) {
+							var identity = Common.utils.toLc(blmsg[2]);
+							Common.db.users.findOne({name: identity}, function(err, user) {
+								if (err || !user) {
+									Common.db.blacklists.findOne({identity: identity}, function(err, bluser) {
+										if (err || !bluser || bluser.blacklistType === undefined || bluser.blacklistType === 0) {
+											Common.bot.say(to, "5" + identity + " is not on the non-member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");	
+										} else {
+											Common.db.blacklists.update({identity: identity}, {$set: {blacklistType: 0, blacklistReason: 0, additionalComment: 0, blacklistedBy: 0, blacklistDate: 0}}, {upsert: false}, function(err, updated) {
+												if (err || !updated) {
+													console.log('Error', err);
+												} else {
+													Common.bot.say(to, "2" + member + " has just removed " + identity + " from the non-member blacklist.");
+												}
+											});
+										}
+									});
+								} else if (member == identity) {
+									if (user.blacklistType === undefined || user.blacklistType === 0) {
+										Common.bot.say(to, "5" + member + " you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+									} else {
+										Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
+									}
+								} else if (user.blacklistType === undefined || user.blacklistType === 0) {
+									Common.bot.say(to, "5" + identity + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+								} else if (user.status == 'Admin' || user.status == 'Owner') {
+									Common.bot.say(to, "5Permission denied - " + member + ", you may not remove a member with Admin or Owner member status from the blacklist.");
+								} else {
+									Common.bot.say(to, "5IRC Nickname '" + identity + "' is a member and is therefore on the member blacklist, not the non-member blacklist. Use the format !whitelist IRC_NICKNAME_HERE to remove a member from the blacklist.");
+								}
+							});
+						} else {
+							Common.bot.say(to, "5You must specify a non-member to remove from the blacklist when using this command. Use the format !whitelist non/member IDENTITY_HERE to remove a non-member from the blacklist.");
+						}
+					} else {
+						Common.db.users.findOne({name: name}, function(err, user) {
+							if (err || !user) {
+								console.log(err);
+								Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use the format !whitelist non/member IDENTITY_HERE to remove a non-member from the blacklist.");
+							} else if (member == name) {
+								if (user.blacklistType === undefined || user.blacklistType === 0) {
+									Common.bot.say(to, "5" + member + " you are not on the member blacklist! Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+								} else {
+									Common.bot.say(to, "5" + member + ", you may not remove yourself from the blacklist! You have been removed from Santa's nice list, though.");
+								}
+							} else if (user.blacklistType === undefined || user.blacklistType === 0) {
+								Common.bot.say(to, "5" + name + " is not on the member blacklist. Use !blacklists to view the list of all users currently on the blacklist, or use !blacklistReason IDENTITY/IRC_NICKNAME_HERE to view the reason why a user was added to the blacklist.");
+							} else if (user.status == 'Admin' || user.status == 'Owner') {
+								Common.bot.say(to, "5Permission denied - " + member + ", you may not remove a member with Admin or Owner member status from the blacklist.");
+							} else {
+								Common.db.users.update({name: name}, {$set: {blacklistType: 0, blacklistReason: 0, blacklistComment: 0, blacklistedBy: 0, blacklistDate: 0}}, {upsert: false}, function(err, updated) {
+									if (err || !updated) {
+										console.log('Error', err);
+									} else {
+										Common.bot.say(to, "2" + member + " has just removed " + name + " from the member blacklist.");
+									}
+								});
+							}
+						});
+					}
+				} else {
+					Common.bot.say(to, "5You must specify a user to remove from the blacklist when using this command. Use the format !whitelist non/member IDENTITY_HERE to remove a non-member from the blacklist, or use the format !whitelist IRC_NICKNAME_HERE to remove a member from the blacklist.");
+				}
+			} else {
+				Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to remove a user from the blacklist.");	
+			}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the lobby channel and the games channels to display member-only information.");
+	}
+};
+										
 
 Commands.wl = function(Common, from, to, message) {
 	Commands.whitelist(Common, from, to, message);
