@@ -5108,11 +5108,11 @@ Commands.blacklists = function(Common, from, to, message) {
 					}
 				});
 			} else if (blmsg == 'failedretire' || blmsg == 'fr') {
-				Common.db.blacklists.find({usercount: undefined}, function(err, users) {
+				Common.db.users.find({usercount: undefined}, function(err, users) {
 					var nbl_list = '';
 					users.forEach(function(usercount) {
 						if (usercount.blacklistType == 'failedretire') {
-							nbl_list += usercount.identity + ", ";
+							nbl_list += usercount.name + ", ";
 						}
 					});
 					if (nbl_list != '') {
