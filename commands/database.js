@@ -2919,31 +2919,33 @@ Commands.warn = function(Common, from, to, message) {
 											warn_msg += " You will earn a 24 hour temporary ban after 1 more warn, and then you must make a 500m deposit to continue playing games.";
 										} else if (user.warns == 21) {
 											warn_msg += " Oh no, you have earned a 24 hour temporary ban, after which you must make a 500m deposit to continue playing games!";
-											var bltime = new Date();
-											if (user.joinDate === undefined) {
-												Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: bltime, retired: 1}}, function(err, updated) {
-													if (err || !updated) {
-														console.log("User not updated!");
-													}
-												});
-											} else if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
-												Common.db.users.update({name: name}, {$set: {leaveDate: bltime, retired: 1}}, function(err, updated) {
-													if (err || !updated) {
-														console.log("User not updated!");
-													}
-												});
-											} else {
-												Common.db.users.update({name: name}, {$set: {retired: 1}}, function(err, updated) {
+											if (user.blacklistType === undefined || user.blacklistType === 0) {
+												var bltime = new Date();
+												if (user.joinDate === undefined) {
+													Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: bltime, retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												} else if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
+													Common.db.users.update({name: name}, {$set: {leaveDate: bltime, retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												} else {
+													Common.db.users.update({name: name}, {$set: {retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												}
+												Common.db.users.update({name: name}, {$set: {blacklistType: 'warns', blacklistReason: 'earned 21 warns and must make a 500m deposit to rejoin', blacklistedBy: 'cwebot', blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
 													if (err || !updated) {
 														console.log("User not updated!");
 													}
 												});
 											}
-											Common.db.users.update({name: name}, {$set: {blacklistType: 'warns', blacklistReason: 'earned 21 warns and must make a 500m deposit to rejoin', blacklistedBy: 'cwebot', blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
-												if (err || !updated) {
-													console.log('Error', err);
-												}
-											});
 											setTimeout(function() {
 												Common.bot.say(to, "4" + name + ", you will be temporarily banned in 30 seconds, any last words?");
 											}, 5000);
@@ -2968,31 +2970,33 @@ Commands.warn = function(Common, from, to, message) {
 											}, 35000);
 										} else if (user.warns == 25) {
 											warn_msg += " Oh no, you have earned a permanent ban, and you will not be refunded your 500m deposit!";
-											var bltime = new Date();
-											if (user.joinDate === undefined) {
-												Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: bltime, retired: 1}}, function(err, updated) {
-													if (err || !updated) {
-														console.log("User not updated!");
-													}
-												});
-											} else if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
-												Common.db.users.update({name: name}, {$set: {leaveDate: bltime, retired: 1}}, function(err, updated) {
-													if (err || !updated) {
-														console.log("User not updated!");
-													}
-												});
-											} else {
-												Common.db.users.update({name: name}, {$set: {retired: 1}}, function(err, updated) {
+											if (user.blacklistType === undefined || user.blacklistType === 0) {
+												var bltime = new Date();
+												if (user.joinDate === undefined) {
+													Common.db.users.update({name: name}, {$set: {joinDate: 'unknown', leaveDate: bltime, retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												} else if (user.leaveDate === 0 || user.leaveDate == 'unknown') {	
+													Common.db.users.update({name: name}, {$set: {leaveDate: bltime, retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												} else {
+													Common.db.users.update({name: name}, {$set: {retired: 1}}, function(err, updated) {
+														if (err || !updated) {
+															console.log("User not updated!");
+														}
+													});
+												}
+												Common.db.users.update({name: name}, {$set: {blacklistType: 'warns', blacklistReason: 'earned at least 25 warns and may not rejoin unless an agreement is made with owners', blacklistedBy: 'cwebot', blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
 													if (err || !updated) {
 														console.log("User not updated!");
 													}
 												});
 											}
-											Common.db.users.update({name: name}, {$set: {blacklistType: 'warns', blacklistReason: 'earned at least 25 warns and may not rejoin unless an agreement is made with owners', blacklistedBy: 'cwebot', blacklistDate: bltime}}, {upsert: false}, function(err, updated) {
-												if (err || !updated) {
-													console.log('Error', err);
-												}
-											});
 											setTimeout(function() {
 												Common.bot.say(to, "4" + name + ", you will be permanently banned in 30 seconds, any last words?");
 											}, 5000);
