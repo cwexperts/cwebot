@@ -2288,6 +2288,75 @@ Commands.ircn = function(Common, from, to, message) {
 	Commands.ircnickname(Common, from, to, message);
 };
 
+Commands.setjoindate = function(Common, from, to, message) {
+	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
+		var member = Common.utils.toLc(from);
+		Common.db.users.findOne({name: member}, function(err, perms) {
+		if (err || !perms) {
+			console.log(err);
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to set the join date for a member.");
+		} else if (perms.status == 'Admin' || perms.status == 'Owner') {
+			if (memlist[member] != 5 || perms.key === undefined) {
+				Common.bot.say(to, "5" + member + ", you must unlock your profile before you may use this command. Use !unlockProfile to unlock your profile.");
+			} else {
+			if (Common.utils.msg(message)) {
+				name = message.match(/\S+/g);
+				name = Common.utils.toLc(name[1])
+				var timedate = new Date();
+				timemsg = timedate.toString();
+				timemsg = timemsg.substr(0, timemsg.length-14);
+				timemsg = timemsg + "UTC";
+				Common.db.users.findOne({name: name}, function(err, user) {
+					if (err || !user) {
+						console.log(err);
+						Common.bot.say(to, "5" + "IRC Nickname '" + name + "' not found. Use !addMain MAIN_RSN_HERE or !addAlt ALT_RSN_HERE to create your profile.");
+					} else {
+						if (user.leaveDate === undefined) {
+							Common.db.users.update({name: name}, {$set: {joinDate: timedate, leaveDate: 0, retired: 0}}, function(err, updated) {
+								if (err || !updated) {
+									console.log("User not updated!");
+								}
+							});
+							Common.bot.say(to, "2" + from + " has set the join date for " + name + " to: " + timemsg);
+						} else {
+							if (user.joinDate === undefined || user.joinDate == 'unknown') {	
+								Common.db.users.update({name: name}, {$set: {joinDate: timedate}}, function(err, updated) {
+									if (err || !updated) {
+										console.log("User not updated!");
+									}
+								});
+								Common.bot.say(to, "2" + from + " has set the join date for " + name + " to: " + timemsg);
+							} else {
+								joind = user.joinDate;
+								joind = joind.toString();
+								joind = joind.substr(0, joind.length-14);
+								joind = joind + "UTC";
+								if (perms.status == 'Owner') {
+									Common.bot.say(to, "5The join date for " + name + " has already been set to: " + joind + " - use !forceSetJoinDate MEMBER_HERE YEAR MONTH DAY HOURS MINUTES SECONDS MILLISECONDS to force set the join date for a member.");
+								} else if (perms.status == 'Admin') {
+									Common.bot.say(to, "5The join date for " + name + " has already been set to: " + joind + " - you may not change this date.");
+								}
+							}
+						}
+					}
+				});
+			} else {
+				Common.bot.say(to, '5You must specify a member to set the join date for when using this command.');
+			}
+			}
+		} else {
+			Common.bot.say(to, "5This command may only be used by members with Admin or Owner member status to set the join date for a member.");
+		}
+		});
+	} else {
+		Common.bot.say(to, "5This command may only be used in the games channels to display member-only information.");
+	}
+};
+
+Commands.sjd = function(Common, from, to, message) {
+	Commands.setjoindate(Common, from, to, message);
+};
+
 Commands.setleavedate = function(Common, from, to, message) {
 	if (to == '#cwexperts1' || to == '#cwexperts2' || to == '#cwexperts.staff') {
 		var member = Common.utils.toLc(from);
