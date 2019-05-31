@@ -117,7 +117,7 @@ Common.bot.addListener('invite', function(channel, from, message) {
     Common.bot.join(channel);
   }
 });
-
+/*
 Common.bot.addListener('join', function(channel, nick, message) {
 	if (totalshutdown != 'true') {
   Common.bot.send("NAMES", channel);
@@ -396,7 +396,7 @@ Common.bot.addListener('join', function(channel, nick, message) {
   }
 	}
 });
-
+*/
 Common.bot.addListener('+mode', function(channel, by, mode, argument, message) {
   Common.bot.send("NAMES", channel);
 });
