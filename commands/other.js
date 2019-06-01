@@ -317,8 +317,13 @@ Commands.abdel_dirt = function(Common, from, to, message) {
      Common.bot.say(to, rand);
 };
  
- Commands.filo = function(Common, from, to, message) {
-     Common.bot.say(to, "U are lost as fk. Maybe u should leave ur special palace and talk to ppl like a person and not a king");
+Commands.filo = function(Common, from, to, message) {
+	var list = [
+		"U are lost as fk. Maybe u should leave ur special palace and talk to ppl like a person and not a king",
+		"i dont even care that black zeus is a big black nigger what bothers me that he is darker in his mind than his skin"
+	]
+	var rand = list[Math.floor(Math.random() * list.length)];
+	Common.bot.say(to, rand);
 };
  
  Commands.katarina = function(Common, from, to, message) {
