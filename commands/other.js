@@ -1203,7 +1203,7 @@ Commands.lathow = function(Common, from, to, message) {
 		      + "she unironically pissed me off because a stranger now thinks I'm abusing her or fuck knows what yea dude I tie her up in my dungeon and punch her right in the pussy bad white guy abusing poor asian girl");
 };
 
-Commands.merch = function(Common, from, to, message) {
+Commands.mercher = function(Common, from, to, message) {
 	Common.bot.say(to, "basicly investors have seen better oppatiniatys and have decided to free up funds");
 };
 
