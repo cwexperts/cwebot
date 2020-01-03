@@ -1197,3 +1197,71 @@ Commands.rozana = function(Common, from, to, message) {
 Commands.thot = function(Common, from, to, message) {
 	Common.bot.say(to, "arent all the cwexperts girls?");
 };
+
+Commands.lathow = function(Common, from, to, message) {
+	Common.bot.say(to, "my gf and I were like tickling each other and shit in bed and she got bruises on her arm and her boss asked her if I did it and she said yes to him if she does this kind of autistic shit again I'm gonna break up with her " 
+		      + "she unironically pissed me off because a stranger now thinks I'm abusing her or fuck knows what yea dude I tie her up in my dungeon and punch her right in the pussy bad white guy abusing poor asian girl");
+};
+
+Commands.merch = function(Common, from, to, message) {
+	Common.bot.say(to, "basicly investors have seen better oppatiniatys and have decided to free up funds");
+};
+
+Commands.gay = function(Common, from, to, message) {
+	Common.bot.say(to, "only gay people are allowed to joke about hating gay people. if you're straight you CANNOT say 'this is why i hate gay people' or '__ is the only gay i respect' if youre a mf heteronoi and cheese you do not get to joke about hating gay people EVER");
+};
+
+Commands.payout = function(Common, from, to, message) {
+	Common.bot.say(to, "This is last my grandmom is falling down the stairs soon");
+};
+
+Commands.artimas = function(Common, from, to, message) {
+	Common.bot.say(to, "i cbf to sign");
+};
+
+Commands.inque = function(Common, from, to, message) {
+	Common.bot.say(to, "sgb is useless tbh");
+};
+
+Commands.destroy = function(Common, from, to, message) {
+	Common.bot.say(to, "Love the PM lol I know you know better than getting lowballed by scammers like rsn Destroy but good to see some people that try to make people aware of it. Gl on 3a dye");
+};
+
+Commands.rose = function(Common, from, to, message) {
+	var msg = [
+	"Fine I’ll nap the begging stops now I’ll do it",
+	"Fine ladies I’ll go to bed 😪 but first ☝️ 😳 I’m gonna need a goodnight from you 😏 ❤️",
+	"Are you begging me to nap, fine I will partake",
+	"Fine you’ll head pat me while I nap all day",
+	"I swear if you keep begging me to nap",
+	"Fine quit begging I’ll go nap",
+	"Depression nap it is",
+	"As I’ve been begged by so many I will now nap",
+	"Are you once again begging me to nap",
+	"Fine I’ve listened to your begging and I’ll have a nap",
+	"Fine you have all begged enough get off your knees every one, I will go nap",
+	"I’ve listened to requests and my statement is stop begging me to nap, I’ll do it.",
+	"Ok fine after all your copious begging I’ll nap",
+	"Ok you’ve begged enough, I’ll nap",
+	"Well if ur begging I guess I’ll nap 🙄",
+	"Double dog dare me to nap?",
+	"1 like and ill nap",
+	"thinking bout nap",
+	"Y’all really stop begging me daily to nap fine I get it I’ll nap things I do for y’all",
+	"Ok stop begging me omfg please stop begging I’ll have a nap just stop begging",
+	"CAN YALLL STOP THE BULLYING I S2G I WILL GO NAP",
+	"Just wanted to say good morning, I’m going for a nap",
+	"i know i just woke up from a nap but i totes wanna nap again",
+	"Wake up ✔️ Nap again ✔️",
+	"Well that nap was longer then I intended",
+	"i need a super long depression nap rt",
+	"So who gonna stroke my hair and complement me while I nap",
+	"Gonna nap when I wake hmu ladies"
+	]
+	var nap = msg[Math.floor(Math.random() * msg.length)];
+	Common.bot.say(to, nap);
+};
+
+Commands.ttss = function(Common, from, to, message) {
+	Common.bot.say(to, "all these true trimmers and doc is 2 1/2 years out of date??");
+};
