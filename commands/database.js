@@ -3679,18 +3679,18 @@ Commands.channel = function(Common, from, to, message) {
 					} else if (channel.coor === 0) {
 						channel_msg += ", Coordinator: 7n/a2";
 					} if (channel.pen == 0) {
-						channel_msg += ", Pen reminder: Voluntary";
+						channel_msg += ", Pen reminder: On";
 					} else if (channel.pen == 1) {
-						channel_msg += ", Pen reminder: Idiot";
+						channel_msg += ", Pen reminder: Off";
 					} else {
-						channel_msg += ", Pen reminder: Voluntary";
+						channel_msg += ", Pen reminder: On";
 						Common.db.channels.update({channel: chanl}, {$set: {pen: 0}}, function(err, updated) {
 						if (err || !updated) {
 							console.log("Channel not updated!");
 						} else {
 							setTimeout(function() {
-								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the voluntary pen reminder - the pen reminder for idiots has been disabled.");
-								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the voluntary pen reminder - the pen reminder for idiots has been disabled.");
+								Common.bot.say(to, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the pen reminder - members with either the voluntary or idiot pen reminder enabled will now be highlighted 3.5 minutes after !hopw.");
+								Common.bot.say(chanl, "4[FORCE UPDATE " + chanl + "]: 6" + from+" has enabled the pen reminder - members with either the voluntary or idiot pen reminder enabled will now be highlighted 3.5 minutes after !hopw.");
 							}, 1000);
 						}
 						});
