@@ -1275,27 +1275,48 @@ Commands.aod = function(Common, from, to, message) {
 		var aod = message.match(/\S+/g);
 		var split = Common.utils.toLc(aod[1]);
 		if (isNaN(split) === false) {
-			if (aod[2] !== undefined) {
-				var drops = Common.utils.toLc(aod[2]);
-				Common.bot.say(to, "test - drops is defined");
+			split = split + '000000';
+		} else {
+			split = 450000000;
+			var error1 = 'true';
+		}
+		if (aod[2] !== undefined) {
+			var drops = Common.utils.toLc(aod[2]);
+			if (isNaN(drops) === false) {
+				drops = drops;
 			} else {
-				var math = split + ',000,000';
-				Common.bot.say(to, math);
-				setTimeout(function() {
-				math = math - 12,000,000;
-				Common.bot.say(to, math);
-				}, 2000);
-				setTimeout(function() {
-				math = math / 7;
-				Common.bot.say(to, math);
-				}, 4000);
-				setTimeout(function() {
-				Common.bot.say(to, "your 7 man split is: " + math + ' ook');
-				}, 5000);
+				drops = 1;
+				var error2 = 'true';
 			}
 		} else {
-			Common.bot.say(to, "your split was not a number, use !aod LOOT_IN_MILLIONS NUMBER_OF_DROPS");
+			var drops = 1;
 		}
+		if (aod[3] !== undefined) {
+			var hamsplit = Common.utils.toLc(aod[3]);
+			if (isNaN(hamsplit) === false) {
+				hamsplit = hamsplit + '000000';
+			} else {
+				hamsplit = 12000000;
+				var error3 = 'true';
+			}
+		} else {
+			var hamsplit = 12000000;
+		}
+		if (aod[4] !== undefined) {
+			var teamsize = Common.utils.toLc(aod[4]);
+			if (isNaN(teamsize) === false) {
+				teamsize = teamsize;
+			} else {
+				teamsize = 7;
+				var error4 = 'true';
+			}
+		} else {
+			var teamsize = 7;
+		}
+		var totalham = drops * hamsplit;
+		var totalloot = split - totalham;
+		var totalsplit = totalloot / teamsize;
+		Common.bot.say(to, "AOD Loot Value: " + split + ", Number Of Drops: " + drops + ", Hammer Split Per Drop: " + hamsplit + ", Team Size: " + teamsize + ", Final Split: " + totalsplit + "");
 	} else {
 		Common.bot.say(to, "message required");
 	}
