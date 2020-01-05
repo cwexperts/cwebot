@@ -1270,21 +1270,21 @@ Commands.aod = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {
 		var aod = message.match(/\S+/g);
 		var split = Common.utils.toLc(aod[1]);
-		var drops = Common.utils.toLc(aod[2]);
 		if (isNaN(split) === false) {
-			if (drops !== undefined) {
-				Common.bot.say(to, "test");
+			if (aod[2] !== undefined) {
+				var drops = Common.utils.toLc(aod[2]);
+				Common.bot.say(to, "test - drops is defined");
 			} else {
 				var math = split + ',000,000';
 				Common.bot.say(to, math);
-				//math = math - 12,000,000;
-				//math = math / 7;
-				//Common.bot.say(to, "your 7 man split is: " + math);
+				math = math - 12,000,000;
+				math = math / 7;
+				Common.bot.say(to, "your 7 man split is: " + math);
 			}
 		} else {
 			Common.bot.say(to, "your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
 		}
 	} else {
-		Common.bot.say(to, "2your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
+		Common.bot.say(to, "message required");
 	}
 };
