@@ -1277,7 +1277,7 @@ Commands.aod = function(Common, from, to, message) {
 		if (isNaN(split) === false) {
 			split = split + '000000';
 		} else {
-			split = 450,000,000;
+			split = 450000000;
 			var error1 = 'true';
 		}
 		if (aod[2] !== undefined) {
@@ -1296,11 +1296,11 @@ Commands.aod = function(Common, from, to, message) {
 			if (isNaN(hamsplit) === false) {
 				hamsplit = hamsplit + '000000';
 			} else {
-				hamsplit = 12,000,000;
+				hamsplit = 12000000;
 				var error3 = 'true';
 			}
 		} else {
-			var hamsplit = 12,000,000;
+			var hamsplit = 12000000;
 		}
 		if (aod[4] !== undefined) {
 			var teamsize = Common.utils.toLc(aod[4]);
