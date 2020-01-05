@@ -1266,6 +1266,10 @@ Commands.ttss = function(Common, from, to, message) {
 	Common.bot.say(to, "all these true trimmers and doc is 2 1/2 years out of date??");
 };
 
+Commands.liddles = function(Common, from, to, message) {
+	Common.bot.say(to, "Shit like this makes me think some people dont see me as a person sometimes but an emotionless robot streaming runescape lol.");
+};
+
 Commands.aod = function(Common, from, to, message) {
 	if (Common.utils.msg(message)) {
 		var aod = message.match(/\S+/g);
@@ -1277,12 +1281,20 @@ Commands.aod = function(Common, from, to, message) {
 			} else {
 				var math = split + ',000,000';
 				Common.bot.say(to, math);
+				setTimeout(function() {
 				math = math - 12,000,000;
+				Common.bot.say(to, math);
+				}, 2000);
+				setTimeout(function() {
 				math = math / 7;
-				Common.bot.say(to, "your 7 man split is: " + math);
+				Common.bot.say(to, math);
+				}, 4000);
+				setTimeout(function() {
+				Common.bot.say(to, "your 7 man split is: " + math + ' ook');
+				}, 5000);
 			}
 		} else {
-			Common.bot.say(to, "your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
+			Common.bot.say(to, "your split was not a number, use !aod LOOT_IN_MILLIONS NUMBER_OF_DROPS");
 		}
 	} else {
 		Common.bot.say(to, "message required");
