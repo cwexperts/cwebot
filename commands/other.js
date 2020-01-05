@@ -1276,9 +1276,10 @@ Commands.aod = function(Common, from, to, message) {
 				Common.bot.say(to, "test");
 			} else {
 				var math = split + ',000,000';
-				math = math - 12,000,000;
-				math = math / 7;
-				Common.bot.say(to, "your 7 man split is: " + math);
+				Common.bot.say(to, math);
+				//math = math - 12,000,000;
+				//math = math / 7;
+				//Common.bot.say(to, "your 7 man split is: " + math);
 			}
 		} else {
 			Common.bot.say(to, "your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
