@@ -1337,7 +1337,7 @@ Commands.aod = function(Common, from, to, message) {
 		} else {
 			cedit4 = "13";
 		}
-		Common.bot.say(to, "13AOD Loot Value:" + cedit1 + " " + totalloot + "13, Number Of Drops:" + cedit2 + " " + drops + "13, Hammer Split Per Drop:" + cedit3 + " " + hamsplit + "13, Team Size:" + cedit4 + " " + teamsize + "13, Final Split: " + finalsplit + "");
+		Common.bot.say(to, "13AOD Loot Value:" + cedit1 + " " + totalloot + "13, Number Of Drops:" + cedit2 + " " + drops + "13, Hammer Split Per Drop:" + cedit3 + " " + hamsplit + "13, Team Size:" + cedit4 + " " + teamsize + "13, Final Split: " + finalsplit + "");
 	} else {
 		Common.bot.say(to, "message required");
 	}
