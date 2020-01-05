@@ -1314,9 +1314,30 @@ Commands.aod = function(Common, from, to, message) {
 			var teamsize = 7;
 		}
 		var totalham = drops * hamsplit;
-		var totalloot = split - totalham;
-		var totalsplit = totalloot / teamsize;
-		Common.bot.say(to, "AOD Loot Value: " + split + ", Number Of Drops: " + drops + ", Hammer Split Per Drop: " + hamsplit + ", Team Size: " + teamsize + ", Final Split: " + totalsplit + "");
+		var totalloot = split * drops;
+		var finalloot = totalloot - totalham;
+		var finalsplit = finalloot / teamsize;
+		if (error1 == 'true') {
+			cedit1 = "4";
+		} else {
+			cedit1 = "13";
+		}
+		if (error2 == 'true') {
+			cedit2 = "4";
+		} else {
+			cedit2 = "13";
+		}
+		if (error3 == 'true') {
+			cedit3 = "4";
+		} else {
+			cedit3 = "13";
+		}
+		if (error4 == 'true') {
+			cedit4 = "4";
+		} else {
+			cedit4 = "13";
+		}
+		Common.bot.say(to, "13AOD Loot Value:" + cedit1 + " " + totalloot + ", Number Of Drops:" + cedit2 + " " + drops + ", Hammer Split Per Drop:" + cedit3 + " " + hamsplit + ", Team Size:" + cedit4 + " " + teamsize + ", Final Split: " + finalsplit + "");
 	} else {
 		Common.bot.say(to, "message required");
 	}
