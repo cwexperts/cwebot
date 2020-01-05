@@ -1265,3 +1265,25 @@ Commands.rose = function(Common, from, to, message) {
 Commands.ttss = function(Common, from, to, message) {
 	Common.bot.say(to, "all these true trimmers and doc is 2 1/2 years out of date??");
 };
+
+Commands.aod = function(Common, from, to, message) {
+	if (Common.utils.msg(message)) {
+		var aod = message.match(/\S+/g);
+		var split = Common.utils.toLc(aod[1]);
+		var drops = Common.utils.toLc(aod[2]);
+		if (isNaN(split) === false) {
+			if (drops !== undefined) {
+				Common.bot.say(to, "test");
+			} else {
+				var math = split + ',000,000';
+				math = math - 12,000,000;
+				math = math / 7;
+				Common.bot.say(to, "your 7 man split is: " + math);
+			}
+		} else {
+			Common.bot.say(to, "your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
+		}
+	} else {
+		Common.bot.say(to, "2your split was not a number, use !aod NUMBER_IN_MILLIONS NUMBER_OF_DROPS");
+	}
+};
