@@ -1316,7 +1316,7 @@ Commands.aod = function(Common, from, to, message) {
 		var totalham = drops * hamsplit;
 		var totalloot = split - totalham;
 		var totalsplit = totalloot / teamsize;
-		Common.bot.say(to, "AOD Loot Value: " + split + ", Number Of Drops: " + drops + ", Hammer Split Per Drop: " + hamsplit + ", Team Size: " + teamsize + ", Final Split: " + totalsplit "");
+		Common.bot.say(to, "AOD Loot Value: " + split + ", Number Of Drops: " + drops + ", Hammer Split Per Drop: " + hamsplit + ", Team Size: " + teamsize + ", Final Split: " + totalsplit + "");
 	} else {
 		Common.bot.say(to, "message required");
 	}
